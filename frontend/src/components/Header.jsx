@@ -7,7 +7,6 @@ const navItems = [
   { name: 'Home', path: '/' },
   { name: 'About', path: '/about' },
   { name: 'Product', path: '/product' },
-  { name: 'Team', path: '/team' },
   { name: 'Blog', path: '/blog' },
   { name: 'Image', path: '/image' }
 ];

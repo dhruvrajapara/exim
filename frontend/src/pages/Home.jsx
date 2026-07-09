@@ -4,6 +4,7 @@ import About from '../components/About';
 import FeaturedProducts from '../components/FeaturedProducts';
 import ProductCategories from '../components/ProductCategories';
 import Certifications from '../components/Certifications';
+import Testimonials from '../components/Testimonials';
 import LatestBlogs from '../components/LatestBlogs';
 
 export default function Home() {
@@ -37,6 +38,9 @@ export default function Home() {
       
       {/* Dynamic Certifications */}
       <Certifications />
+      
+      {/* Client Testimonials Slider */}
+      <Testimonials />
       
       {/* Dynamic Latest Blogs */}
       <LatestBlogs />
