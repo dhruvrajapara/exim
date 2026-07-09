@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             AboutSectionSeeder::class,
             ProductSeeder::class,
             CertificationSeeder::class,
+            BlogSeeder::class,
         ]);
     }
 }

@@ -67,3 +67,17 @@ export const fetchCertifications = async () => {
     return [];
   }
 };
+
+export const fetchLatestBlogs = async () => {
+  try {
+    const response = await fetch('/api/latest-blogs');
+    if (!response.ok) {
+      throw new Error('Failed to fetch latest blogs');
+    }
+    const data = await response.json();
+    return data.data;
+  } catch (error) {
+    console.error('Error fetching latest blogs:', error);
+    return [];
+  }
+};
