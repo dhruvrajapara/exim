@@ -1,5 +1,6 @@
 import SEO from '../components/SEO';
 import Hero from '../components/Hero';
+import About from '../components/About';
 import ProductCategories from '../components/ProductCategories';
 
 export default function Home() {
@@ -21,6 +22,9 @@ export default function Home() {
       
       {/* Full-Screen Hero */}
       <Hero />
+      
+      {/* Dynamic About Section */}
+      <About />
       
       {/* Dynamic Product Categories */}
       <ProductCategories />

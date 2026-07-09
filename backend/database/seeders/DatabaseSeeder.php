@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             HeroSlideSeeder::class,
             ProductCategorySeeder::class,
+            AboutSectionSeeder::class,
         ]);
     }
 }

@@ -25,3 +25,17 @@ export const fetchProductCategories = async () => {
     return [];
   }
 };
+
+export const fetchAboutSection = async () => {
+  try {
+    const response = await fetch('/api/about-section');
+    if (!response.ok) {
+      throw new Error('Failed to fetch about section');
+    }
+    const data = await response.json();
+    return data.data;
+  } catch (error) {
+    console.error('Error fetching about section:', error);
+    return null;
+  }
+};
