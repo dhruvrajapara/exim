@@ -3,6 +3,7 @@ import Hero from '../components/Hero';
 import About from '../components/About';
 import FeaturedProducts from '../components/FeaturedProducts';
 import ProductCategories from '../components/ProductCategories';
+import Certifications from '../components/Certifications';
 
 export default function Home() {
   const schema = {
@@ -32,6 +33,9 @@ export default function Home() {
       
       {/* Dynamic Featured Products */}
       <FeaturedProducts />
+      
+      {/* Dynamic Certifications */}
+      <Certifications />
       
     </>
   );

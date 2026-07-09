@@ -53,3 +53,17 @@ export const fetchFeaturedProducts = async () => {
     return [];
   }
 };
+
+export const fetchCertifications = async () => {
+  try {
+    const response = await fetch('/api/certifications');
+    if (!response.ok) {
+      throw new Error('Failed to fetch certifications');
+    }
+    const data = await response.json();
+    return data.data;
+  } catch (error) {
+    console.error('Error fetching certifications:', error);
+    return [];
+  }
+};
