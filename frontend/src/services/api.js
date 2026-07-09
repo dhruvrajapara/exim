@@ -81,3 +81,17 @@ export const fetchLatestBlogs = async () => {
     return [];
   }
 };
+
+export const fetchFooter = async () => {
+  try {
+    const response = await fetch('/api/footer');
+    if (!response.ok) {
+      throw new Error('Failed to fetch footer');
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching footer:', error);
+    return null;
+  }
+};

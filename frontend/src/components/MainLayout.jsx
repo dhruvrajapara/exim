@@ -1,5 +1,6 @@
 import { Outlet as RouterOutlet, useLocation } from 'react-router-dom';
 import Header from './Header';
+import Footer from './Footer';
 
 export default function MainLayout() {
   const location = useLocation();
@@ -13,11 +14,7 @@ export default function MainLayout() {
         <RouterOutlet />
       </main>
 
-      <footer className="bg-slate-900 text-slate-300 py-8 text-center">
-        <div className="max-w-7xl mx-auto px-4">
-          <p>&copy; {new Date().getFullYear()} Enterprise AI Platform. All rights reserved.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

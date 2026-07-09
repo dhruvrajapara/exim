@@ -14,3 +14,4 @@ Route::get('/about-section', [App\Http\Controllers\AboutSectionController::class
 Route::get('/featured-products', [App\Http\Controllers\ProductController::class, 'featured']);
 Route::get('/certifications', [App\Http\Controllers\CertificationController::class, 'index']);
 Route::get('/latest-blogs', [App\Http\Controllers\BlogController::class, 'latest']);
+Route::get('/footer', [App\Http\Controllers\FooterSettingController::class, 'index']);
