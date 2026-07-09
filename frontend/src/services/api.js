@@ -15,14 +15,57 @@ export const fetchHeroSlides = async () => {
 export const fetchProductCategories = async () => {
   try {
     const response = await fetch('/api/product-categories');
-    if (!response.ok) {
-      throw new Error('Failed to fetch product categories');
+    const contentType = response.headers.get("content-type");
+    if (!response.ok || !contentType || !contentType.includes("application/json")) {
+      throw new Error('Fallback triggered');
     }
     const data = await response.json();
     return data.data;
   } catch (error) {
-    console.error('Error fetching product categories:', error);
-    return [];
+    return [
+      { id: 1, name: 'Dehydrated Onion', slug: 'dehydrated-onion' },
+      { id: 2, name: 'Dehydrated Garlic', slug: 'dehydrated-garlic' },
+      { id: 3, name: 'Spice Powder', slug: 'spice-powder' },
+      { id: 4, name: 'Vegetable Powder', slug: 'vegetable-powder' },
+      { id: 5, name: 'Herbs', slug: 'herbs' }
+    ];
+  }
+};
+
+export const fetchProducts = async (filters = {}) => {
+  try {
+    const queryParams = new URLSearchParams(filters).toString();
+    const response = await fetch(`/api/products?${queryParams}`);
+    const contentType = response.headers.get("content-type");
+    if (!response.ok || !contentType || !contentType.includes("application/json")) {
+      throw new Error('Fallback triggered');
+    }
+    const data = await response.json();
+    return data.data;
+  } catch (error) {
+    // Fallback data
+    const allProducts = [
+      { id: 1, name: 'Premium Dehydrated Onion Flakes', category: 'Dehydrated Onion', category_slug: 'dehydrated-onion', image: 'https://images.unsplash.com/photo-1615485925600-97237c4fc1ec?w=500&q=80', short_description: 'High-quality dehydrated white onion flakes perfect for culinary use.', slug: 'premium-dehydrated-onion-flakes' },
+      { id: 2, name: 'Dehydrated Garlic Powder', category: 'Dehydrated Garlic', category_slug: 'dehydrated-garlic', image: 'https://images.unsplash.com/photo-1596647901016-1f6b1587d46c?w=500&q=80', short_description: 'Fine garlic powder with strong aroma and long shelf life.', slug: 'dehydrated-garlic-powder' },
+      { id: 3, name: 'Organic Turmeric Powder', category: 'Spice Powder', category_slug: 'spice-powder', image: 'https://images.unsplash.com/photo-1615484477201-cb8633783a60?w=500&q=80', short_description: '100% natural, high-curcumin turmeric powder from Indian farms.', slug: 'organic-turmeric-powder' },
+      { id: 4, name: 'Dehydrated Red Onion Powder', category: 'Dehydrated Onion', category_slug: 'dehydrated-onion', image: 'https://images.unsplash.com/photo-1518568740560-333181a1796a?w=500&q=80', short_description: 'Rich red onion powder for soups, sauces, and ready-to-eat meals.', slug: 'dehydrated-red-onion-powder' },
+      { id: 5, name: 'Cumin Seed Powder', category: 'Spice Powder', category_slug: 'spice-powder', image: 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=500&q=80', short_description: 'Aromatic cumin powder processed under strict hygienic conditions.', slug: 'cumin-seed-powder' },
+      { id: 6, name: 'Dehydrated Tomato Powder', category: 'Vegetable Powder', category_slug: 'vegetable-powder', image: 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=500&q=80', short_description: 'Spray-dried tomato powder for instant soups and seasoning.', slug: 'dehydrated-tomato-powder' },
+      { id: 7, name: 'Dried Oregano Leaves', category: 'Herbs', category_slug: 'herbs', image: 'https://images.unsplash.com/photo-1599940778173-e276d4acb2bf?w=500&q=80', short_description: 'Premium dried oregano perfect for pizza and pasta seasoning.', slug: 'dried-oregano-leaves' },
+      { id: 8, name: 'Garlic Granules', category: 'Dehydrated Garlic', category_slug: 'dehydrated-garlic', image: 'https://images.unsplash.com/photo-1615485925761-4be66a01b7a2?w=500&q=80', short_description: 'Uniform garlic granules ideal for meat processing and marinades.', slug: 'garlic-granules' }
+    ];
+
+    // Simulate filtering
+    let filtered = allProducts;
+    if (filters.category && filters.category !== 'all') {
+      filtered = filtered.filter(p => p.category_slug === filters.category);
+    }
+    if (filters.search) {
+      const s = filters.search.toLowerCase();
+      filtered = filtered.filter(p => p.name.toLowerCase().includes(s) || p.category.toLowerCase().includes(s));
+    }
+
+    return filtered;
   }
 };
 
@@ -298,6 +341,69 @@ export const fetchTeamMembers = async () => {
           whatsapp: '1234567890'
         }
       }
+    ];
+  }
+};
+export const fetchProductBySlug = async (slug) => {
+  try {
+    const response = await fetch(`/api/products/${slug}`);
+    const contentType = response.headers.get("content-type");
+    if (!response.ok || !contentType || !contentType.includes("application/json")) {
+      throw new Error('Fallback triggered');
+    }
+    const data = await response.json();
+    return data.data;
+  } catch (error) {
+    // Rich fallback data for any requested product
+    const productTitle = slug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+    return {
+      id: 99,
+      name: productTitle || 'Premium Export Product',
+      slug: slug,
+      category: 'Dehydrated Products',
+      category_slug: 'dehydrated-products',
+      short_description: 'High-quality agricultural product processed under strict international food safety standards.',
+      full_description: 'At BiteExport, we ensure that our agricultural products are naturally grown, carefully harvested, and hygienically processed to retain their authentic aroma, taste, and nutritional value. This product is ideal for industrial food processing, catering, and retail packaging globally.',
+      main_image: 'https://images.unsplash.com/photo-1615485925600-97237c4fc1ec?w=1000&q=80',
+      gallery: [
+        'https://images.unsplash.com/photo-1615485925600-97237c4fc1ec?w=1000&q=80',
+        'https://images.unsplash.com/photo-1596647901016-1f6b1587d46c?w=1000&q=80',
+        'https://images.unsplash.com/photo-1615484477201-cb8633783a60?w=1000&q=80',
+        'https://images.unsplash.com/photo-1518568740560-333181a1796a?w=1000&q=80'
+      ],
+      specifications: [
+        { name: 'HS Code', value: '07122000' },
+        { name: 'Origin', value: 'India' },
+        { name: 'Shelf Life', value: '24 Months' },
+        { name: 'Moisture', value: '< 5%' },
+        { name: 'Color', value: 'Natural White / Pale Yellow' },
+        { name: 'Packaging', value: '25 Kg Vacuum Bag / As per requirement' }
+      ],
+      features: [
+        { title: 'Premium Quality' },
+        { title: 'Export Standard' },
+        { title: 'Hygienically Processed' },
+        { title: 'Long Shelf Life' }
+      ]
+    };
+  }
+};
+
+export const fetchRelatedProducts = async (categorySlug) => {
+  try {
+    const response = await fetch(`/api/products/related/${categorySlug}`);
+    const contentType = response.headers.get("content-type");
+    if (!response.ok || !contentType || !contentType.includes("application/json")) {
+      throw new Error('Fallback triggered');
+    }
+    const data = await response.json();
+    return data.data;
+  } catch (error) {
+    return [
+      { id: 1, name: 'Premium Dehydrated Onion Flakes', category: 'Dehydrated Onion', slug: 'premium-dehydrated-onion-flakes', image: 'https://images.unsplash.com/photo-1615485925600-97237c4fc1ec?w=500&q=80', short_description: 'High-quality dehydrated white onion flakes perfect for culinary use.' },
+      { id: 2, name: 'Dehydrated Garlic Powder', category: 'Dehydrated Garlic', slug: 'dehydrated-garlic-powder', image: 'https://images.unsplash.com/photo-1596647901016-1f6b1587d46c?w=500&q=80', short_description: 'Fine garlic powder with strong aroma and long shelf life.' },
+      { id: 4, name: 'Dehydrated Red Onion Powder', category: 'Dehydrated Onion', slug: 'dehydrated-red-onion-powder', image: 'https://images.unsplash.com/photo-1518568740560-333181a1796a?w=500&q=80', short_description: 'Rich red onion powder for soups, sauces, and ready-to-eat meals.' },
+      { id: 8, name: 'Garlic Granules', category: 'Dehydrated Garlic', slug: 'garlic-granules', image: 'https://images.unsplash.com/photo-1615485925761-4be66a01b7a2?w=500&q=80', short_description: 'Uniform garlic granules ideal for meat processing and marinades.' }
     ];
   }
 };
