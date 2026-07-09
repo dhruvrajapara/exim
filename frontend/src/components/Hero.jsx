@@ -38,8 +38,16 @@ export default function Hero() {
 
   if (isLoading) {
     return (
-      <section className="w-full h-screen bg-[#000821] flex items-center justify-center overflow-hidden">
-        <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+      <section className="relative w-full h-[100vh] bg-dark/90 animate-pulse overflow-hidden flex items-center justify-center">
+         <div className="container-custom z-10 flex flex-col items-center w-full">
+            <div className="w-32 h-6 bg-gray-600 rounded-full mb-6"></div>
+            <div className="w-3/4 max-w-4xl h-16 md:h-24 bg-gray-700 rounded-xl mb-8"></div>
+            <div className="w-1/2 max-w-2xl h-6 bg-gray-700 rounded-xl mb-12"></div>
+            <div className="flex gap-4">
+              <div className="w-40 h-12 bg-gray-600 rounded-[12px]"></div>
+              <div className="w-40 h-12 bg-gray-700 rounded-[12px]"></div>
+            </div>
+         </div>
       </section>
     );
   }

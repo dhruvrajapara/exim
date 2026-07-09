@@ -32,8 +32,26 @@ export default function About() {
 
   if (isLoading) {
     return (
-      <section className="py-[50px] w-full flex justify-center items-center">
-        <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+      <section className="w-full bg-white overflow-hidden flex flex-col items-center justify-center min-h-screen lg:min-h-[calc(100vh-80px)] py-[40px] lg:py-0 animate-pulse">
+        <div className="container-custom h-full flex flex-col justify-center">
+          <div className="flex flex-col-reverse lg:flex-row items-center justify-between h-full gap-12 lg:gap-16">
+            <div className="w-full lg:w-[55%] flex flex-col justify-center items-center lg:items-start text-center lg:text-left h-full py-4">
+               <div className="w-32 h-4 bg-gray-200 rounded mb-3"></div>
+               <div className="w-3/4 h-12 bg-gray-200 rounded mb-6"></div>
+               <div className="w-full h-4 bg-gray-200 rounded mb-2"></div>
+               <div className="w-5/6 h-4 bg-gray-200 rounded mb-10"></div>
+               <div className="w-full grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-6">
+                 {[1,2,3,4].map(i => (
+                   <div key={i} className="bg-gray-100 rounded-[12px] h-[120px] w-full"></div>
+                 ))}
+               </div>
+               <div className="w-40 h-12 bg-gray-200 rounded-[12px]"></div>
+            </div>
+            <div className="w-[90%] sm:w-[80%] lg:w-[45%] h-full flex justify-center items-center relative py-6">
+               <div className="w-full aspect-square max-h-[400px] lg:max-h-[70vh] bg-gray-100 rounded-full"></div>
+            </div>
+          </div>
+        </div>
       </section>
     );
   }

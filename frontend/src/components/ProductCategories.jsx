@@ -18,8 +18,19 @@ export default function ProductCategories() {
 
   if (isLoading) {
     return (
-      <section className="py-[50px] w-full flex justify-center items-center">
-        <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+      <section className="w-full py-[40px] lg:py-[50px] bg-light animate-pulse">
+        <div className="container-custom">
+          <div className="text-center mb-12">
+            <div className="w-24 h-4 bg-gray-200 rounded mx-auto mb-2"></div>
+            <div className="w-64 h-10 bg-gray-200 rounded mx-auto mb-4"></div>
+            <div className="w-96 h-4 bg-gray-200 rounded mx-auto hidden md:block"></div>
+          </div>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
+            {[1, 2, 3, 4].map((i) => (
+              <div key={i} className="rounded-[12px] md:rounded-[16px] bg-gray-200 aspect-square lg:aspect-auto lg:h-[420px]"></div>
+            ))}
+          </div>
+        </div>
       </section>
     );
   }

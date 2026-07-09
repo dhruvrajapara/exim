@@ -17,8 +17,24 @@ export default function Certifications() {
 
   if (isLoading) {
     return (
-      <section className="py-[50px] w-full flex justify-center items-center">
-        <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+      <section className="w-full py-[40px] lg:py-[50px] bg-white animate-pulse">
+        <div className="container-custom">
+          <div className="text-center mb-10 md:mb-12">
+             <div className="w-40 h-4 bg-gray-200 rounded mx-auto mb-2"></div>
+             <div className="w-80 h-10 bg-gray-200 rounded mx-auto mb-4"></div>
+             <div className="w-96 h-4 bg-gray-200 rounded mx-auto hidden md:block"></div>
+          </div>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+            {[1,2,3,4].map((i) => (
+              <div key={i} className="bg-white rounded-[12px] md:rounded-[16px] border border-gray-100 p-3 md:p-6 flex flex-col items-center">
+                 <div className="w-24 h-16 md:h-24 bg-gray-200 rounded mb-4 md:mb-6"></div>
+                 <div className="w-20 h-6 bg-gray-200 rounded-full mb-3 md:mb-4"></div>
+                 <div className="w-32 h-4 bg-gray-200 rounded mb-1 md:mb-2"></div>
+                 <div className="w-24 h-3 bg-gray-200 rounded"></div>
+              </div>
+            ))}
+          </div>
+        </div>
       </section>
     );
   }
