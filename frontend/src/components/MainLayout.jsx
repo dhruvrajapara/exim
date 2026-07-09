@@ -1,12 +1,15 @@
-import { Outlet as RouterOutlet } from 'react-router-dom';
+import { Outlet as RouterOutlet, useLocation } from 'react-router-dom';
 import Header from './Header';
 
 export default function MainLayout() {
+  const location = useLocation();
+  const isHomePage = location.pathname === '/';
+
   return (
     <div className="min-h-screen flex flex-col bg-light text-text font-sans">
       <Header />
       
-      <main className="flex-grow w-full max-w-[1440px] mx-auto py-10 md:py-12">
+      <main className={`flex-grow w-full ${!isHomePage ? 'pt-[80px]' : ''}`}>
         <RouterOutlet />
       </main>
 

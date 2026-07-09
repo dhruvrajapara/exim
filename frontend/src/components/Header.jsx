@@ -17,6 +17,9 @@ export default function Header() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const location = useLocation();
 
+  const isHomePage = location.pathname === '/';
+  const isTransparent = isHomePage && !isScrolled;
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
@@ -44,7 +47,6 @@ export default function Header() {
     return () => { document.body.style.overflow = ''; };
   }, [isDrawerOpen]);
 
-  // Close drawer on route change
   useEffect(() => {
     setIsDrawerOpen(false);
   }, [location]);
@@ -52,15 +54,21 @@ export default function Header() {
   return (
     <>
       <header 
-        className={`sticky top-0 z-50 w-full h-[80px] bg-white/95 backdrop-blur-md transition-shadow duration-300 ${
-          isScrolled ? 'shadow-md' : 'shadow-none'
+        className={`fixed top-0 z-50 w-full h-[80px] transition-all duration-300 ${
+          isTransparent 
+            ? 'bg-transparent shadow-none' 
+            : 'bg-white/95 backdrop-blur-md shadow-md'
         }`}
       >
         <div className="container-custom h-full flex items-center justify-between">
           
           {/* Logo */}
           <Link to="/" className="flex-shrink-0" aria-label="Home">
-            <img src="/logo.png" alt="Company Logo" className="h-[40px] w-auto object-contain" />
+            <img 
+              src="/logo.png" 
+              alt="Company Logo" 
+              className="h-[40px] w-auto object-contain transition-all duration-300" 
+            />
           </Link>
 
           {/* Desktop Navigation */}
@@ -72,7 +80,10 @@ export default function Header() {
                     to={item.path}
                     className={({ isActive }) => `
                       text-[16px] whitespace-nowrap transition-colors duration-300 py-2 relative
-                      ${isActive ? 'text-primary font-medium' : 'text-dark hover:text-primary'}
+                      ${isActive 
+                        ? 'text-primary font-medium' 
+                        : (isTransparent ? 'text-white/80 hover:text-white' : 'text-dark hover:text-primary')
+                      }
                     `}
                   >
                     {({ isActive }) => (
@@ -99,7 +110,9 @@ export default function Header() {
           {/* Mobile Hamburger Menu */}
           <button 
             type="button"
-            className="lg:hidden p-2 text-dark hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary rounded-md"
+            className={`lg:hidden p-2 transition-colors focus:outline-none rounded-md ${
+              isTransparent ? 'text-white hover:text-gray-300' : 'text-dark hover:text-primary'
+            }`}
             onClick={() => setIsDrawerOpen(true)}
             aria-label="Open menu"
             aria-expanded={isDrawerOpen}
@@ -122,7 +135,7 @@ export default function Header() {
           </Link>
           <button 
             type="button"
-            className="p-2 text-dark hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary rounded-md"
+            className="p-2 text-dark hover:text-primary transition-colors focus:outline-none rounded-md"
             onClick={() => setIsDrawerOpen(false)}
             aria-label="Close menu"
           >
