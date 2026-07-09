@@ -99,13 +99,14 @@ export const fetchFooter = async () => {
 export const fetchWhyChooseUs = async () => {
   try {
     const response = await fetch('/api/why-choose-us');
-    if (!response.ok) {
-      throw new Error('Failed to fetch why choose us');
+    const contentType = response.headers.get("content-type");
+    if (!response.ok || !contentType || !contentType.includes("application/json")) {
+      throw new Error('Fallback triggered');
     }
     const data = await response.json();
     return data.data;
   } catch (error) {
-    console.error('Error fetching why choose us (using fallback):', error);
+    // Suppressed console.error to keep the console clean during frontend development
     // Robust fallback data for the frontend to render perfectly while backend is built
     return [
       { id: 1, title: 'Premium Quality Products', short_description: 'We source and deliver only the highest grade agricultural products.', icon: 'WorkspacePremium' },
@@ -123,13 +124,14 @@ export const fetchWhyChooseUs = async () => {
 export const fetchVisionMission = async () => {
   try {
     const response = await fetch('/api/vision-mission');
-    if (!response.ok) {
-      throw new Error('Failed to fetch vision and mission');
+    const contentType = response.headers.get("content-type");
+    if (!response.ok || !contentType || !contentType.includes("application/json")) {
+      throw new Error('Fallback triggered');
     }
     const data = await response.json();
     return data.data;
   } catch (error) {
-    console.error('Error fetching vision and mission (using fallback):', error);
+    // Suppressed console.error to keep the console clean during frontend development
     // Fallback data
     return [
       { 
