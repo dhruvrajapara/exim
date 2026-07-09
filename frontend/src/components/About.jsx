@@ -6,6 +6,7 @@ import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import LanguageIcon from '@mui/icons-material/Language';
 import PublicIcon from '@mui/icons-material/Public';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import Reveal from './Reveal';
 
 // Mapping icons dynamically since the database stores strings
 const getIcon = (title) => {
@@ -32,7 +33,7 @@ export default function About() {
 
   if (isLoading) {
     return (
-      <section className="w-full bg-white overflow-hidden flex flex-col items-center justify-center min-h-screen lg:min-h-[calc(100vh-80px)] py-[40px] lg:py-0 animate-pulse">
+      <section className="w-full bg-white overflow-hidden flex flex-col items-center justify-center min-h-[auto] lg:min-h-[calc(100vh-80px)] py-[40px] lg:py-[40px] animate-pulse">
         <div className="container-custom h-full flex flex-col justify-center">
           <div className="flex flex-col-reverse lg:flex-row items-center justify-between h-full gap-12 lg:gap-16">
             <div className="w-full lg:w-[55%] flex flex-col justify-center items-center lg:items-start text-center lg:text-left h-full py-4">
@@ -64,7 +65,7 @@ export default function About() {
         <div className="flex flex-col-reverse lg:flex-row items-center justify-between h-full gap-12 lg:gap-16">
           
           {/* Left Side: Content & Statistics (w-[55%] on Desktop) */}
-          <div className="w-full lg:w-[55%] flex flex-col justify-center items-center lg:items-start text-center lg:text-left h-full py-4">
+          <Reveal delay={0} className="w-full lg:w-[55%] flex flex-col justify-center items-center lg:items-start text-center lg:text-left h-full py-4">
             {data.label && (
               <span className="text-primary font-semibold tracking-widest uppercase text-sm mb-3 block">
                 {data.label}
@@ -111,10 +112,10 @@ export default function About() {
                 </Link>
               </div>
             )}
-          </div>
+          </Reveal>
 
           {/* Right Side: Image (w-[45%] on Desktop) */}
-          <div className="w-[90%] sm:w-[80%] lg:w-[45%] flex justify-center items-center relative py-6">
+          <Reveal delay={200} className="w-[90%] sm:w-[80%] lg:w-[45%] flex justify-center items-center relative py-6">
             <div className="relative w-full max-h-[400px] lg:max-h-[70vh] aspect-square flex justify-center items-center group">
               
               {/* Premium Multi-Layered Background Glow */}
@@ -127,13 +128,13 @@ export default function About() {
                 alt={data.image_alt || data.heading} 
                 title={data.image_title}
                 loading="lazy"
-                className="relative z-10 w-full h-full object-contain drop-shadow-2xl transition-transform duration-700 ease-out group-hover:scale-105 animate-fade-in-up"
+                className="relative z-10 w-full h-full object-contain drop-shadow-2xl transition-transform duration-700 ease-out group-hover:scale-105"
               />
 
-              {/* Decorative Dots Pattern (Optional subtle detail) */}
+              {/* Decorative Dots Pattern */}
               <div className="absolute -bottom-6 -left-6 w-24 h-24 bg-[radial-gradient(#039639_2px,transparent_2px)] [background-size:16px_16px] opacity-20 z-0"></div>
             </div>
-          </div>
+          </Reveal>
 
         </div>
       </div>

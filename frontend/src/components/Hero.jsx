@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { fetchHeroSlides } from '../services/api';
+import Reveal from './Reveal';
 
 export default function Hero() {
   const [slides, setSlides] = useState([]);
@@ -94,31 +95,39 @@ export default function Hero() {
 
               <div className="w-full md:w-[80%] lg:w-[60%] flex flex-col justify-center items-start text-left space-y-4 md:space-y-6">
                 {slide.label && (
-                  <span className="text-sm md:text-base font-semibold tracking-widest uppercase text-[#6BC72A] opacity-90">
-                    {slide.label}
-                  </span>
+                  <Reveal delay={0}>
+                    <span className="text-sm md:text-base font-semibold tracking-widest uppercase text-[#6BC72A] opacity-90">
+                      {slide.label}
+                    </span>
+                  </Reveal>
                 )}
 
-                <h1 className="text-[36px] md:text-[48px] lg:text-[56px] xl:text-[64px] font-bold leading-[1.1] text-white line-clamp-3">
-                  {slide.heading}
-                </h1>
+                <Reveal delay={100}>
+                  <h1 className="text-[36px] md:text-[48px] lg:text-[56px] xl:text-[64px] font-bold leading-[1.1] text-white line-clamp-3">
+                    {slide.heading}
+                  </h1>
+                </Reveal>
 
                 {slide.description && (
-                  <p className="text-[16px] md:text-[18px] lg:text-[20px] text-gray-200 max-w-xl line-clamp-3 leading-[1.6] opacity-90 font-light">
-                    {slide.description}
-                  </p>
+                  <Reveal delay={200}>
+                    <p className="text-[16px] md:text-[18px] lg:text-[20px] text-gray-200 max-w-xl line-clamp-3 leading-[1.6] opacity-90 font-light">
+                      {slide.description}
+                    </p>
+                  </Reveal>
                 )}
 
-                <div className="flex flex-col sm:flex-row gap-4 pt-6 w-full sm:w-auto">
-                  <a href={slide.primary_btn_url} className="btn-primary w-full sm:w-auto px-8">
-                    {slide.primary_btn_text}
-                  </a>
-                  {slide.secondary_btn_text && (
-                    <a href={slide.secondary_btn_url} className="inline-flex items-center justify-center bg-white/10 hover:bg-white/20 text-white h-[48px] px-8 rounded-md transition-all duration-300 backdrop-blur-md border border-white/20 w-full sm:w-auto">
-                      {slide.secondary_btn_text}
+                <Reveal delay={300} className="w-full sm:w-auto">
+                  <div className="flex flex-col sm:flex-row gap-4 pt-6 w-full sm:w-auto">
+                    <a href={slide.primary_btn_url} className="btn-primary w-full sm:w-auto px-8">
+                      {slide.primary_btn_text}
                     </a>
-                  )}
-                </div>
+                    {slide.secondary_btn_text && (
+                      <a href={slide.secondary_btn_url} className="inline-flex items-center justify-center bg-white/10 hover:bg-white/20 text-white h-[48px] px-8 rounded-md transition-all duration-300 backdrop-blur-md border border-white/20 w-full sm:w-auto">
+                        {slide.secondary_btn_text}
+                      </a>
+                    )}
+                  </div>
+                </Reveal>
               </div>
 
             </div>

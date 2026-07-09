@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { fetchCertifications } from '../services/api';
+import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
+import Reveal from './Reveal';
 import VerifiedIcon from '@mui/icons-material/Verified';
 
 export default function Certifications() {
@@ -45,23 +47,24 @@ export default function Certifications() {
     <section className="w-full py-[40px] lg:py-[50px] bg-white">
       <div className="container-custom">
         {/* Section Header */}
-        <div className="text-center mb-10 md:mb-12">
+        <Reveal delay={0} className="text-center mb-10 md:mb-12">
           <span className="text-primary font-semibold tracking-widest uppercase text-sm mb-2 block">
-            TRUST & COMPLIANCE
+            TRUST & QUALITY
           </span>
           <h2 className="text-[32px] md:text-[38px] lg:text-[44px] font-bold text-dark leading-tight mb-4">
             Our Certifications
           </h2>
           <p className="text-[16px] text-text max-w-2xl mx-auto leading-relaxed">
-            Our certifications and registrations demonstrate our commitment to quality, compliance, and reliable international export services.
+            We operate under stringent international guidelines. Our officially recognized registrations and quality control certifications guarantee premium grade export standards.
           </p>
-        </div>
+        </Reveal>
 
         {/* Certifications Grid (4 Desktop, 2 Mobile) */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-          {certs.map((cert) => (
-            <div 
+          {certs.map((cert, index) => (
+            <Reveal 
               key={cert.id}
+              delay={index * 100}
               className="group bg-white rounded-[12px] md:rounded-[16px] border border-border hover:border-primary shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-2 flex flex-col items-center text-center p-3 md:p-6 overflow-hidden"
             >
               {/* Logo */}
@@ -94,7 +97,7 @@ export default function Certifications() {
                   {cert.short_description}
                 </p>
               )}
-            </div>
+            </Reveal>
           ))}
         </div>
       </div>

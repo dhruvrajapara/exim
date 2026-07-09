@@ -12,6 +12,7 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import CallIcon from '@mui/icons-material/Call';
 import EmailIcon from '@mui/icons-material/Email';
 import PublicIcon from '@mui/icons-material/Public'; // Fallback icon
+import Reveal from './Reveal';
 
 const getSocialIcon = (platform) => {
   switch (platform?.toLowerCase()) {
@@ -66,7 +67,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 text-left mb-12">
           
           {/* Column 1: Logo & About */}
-          <div className="flex flex-col items-start">
+          <Reveal delay={0} className="flex flex-col items-start">
             <div className="h-12 mb-6">
               <img 
                 src={footer.company_logo} 
@@ -93,10 +94,10 @@ export default function Footer() {
                 </a>
               ))}
             </div>
-          </div>
+          </Reveal>
 
           {/* Column 2: Quick Links */}
-          <div className="flex flex-col items-start">
+          <Reveal delay={100} className="flex flex-col items-start">
             <h3 className="text-white font-rubik font-semibold text-[18px] mb-6">Quick Links</h3>
             <ul className="flex flex-col gap-3">
               {footer.quick_links?.map((link, index) => (
@@ -110,10 +111,10 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
-          </div>
+          </Reveal>
 
           {/* Column 3: Product Categories */}
-          <div className="flex flex-col items-start">
+          <Reveal delay={200} className="flex flex-col items-start">
             <h3 className="text-white font-rubik font-semibold text-[18px] mb-6">Products</h3>
             <ul className="flex flex-col gap-3">
               {categories?.map((cat) => (
@@ -127,10 +128,10 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
-          </div>
+          </Reveal>
 
           {/* Column 4: Contact Information */}
-          <div className="flex flex-col items-start">
+          <Reveal delay={300} className="flex flex-col items-start">
             <h3 className="text-white font-rubik font-semibold text-[18px] mb-6">Contact Us</h3>
             <div className="flex flex-col gap-4 w-full max-w-[280px]">
               
@@ -163,12 +164,12 @@ export default function Footer() {
               ))}
 
             </div>
-          </div>
+          </Reveal>
 
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-6 border-t border-white/10 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <Reveal delay={400} className="pt-6 border-t border-white/10 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <p className="text-[13px] text-gray-500">
             {footer.copyright_text}
           </p>
@@ -183,7 +184,7 @@ export default function Footer() {
               </Link>
             ))}
           </div>
-        </div>
+        </Reveal>
 
       </div>
     </footer>

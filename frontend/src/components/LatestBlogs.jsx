@@ -5,6 +5,7 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import Reveal from './Reveal';
 
 export default function LatestBlogs() {
   const [blogs, setBlogs] = useState([]);
@@ -72,7 +73,7 @@ export default function LatestBlogs() {
     <section className="w-full py-[40px] lg:py-[50px] bg-light relative">
       <div className="container-custom">
         {/* Section Header */}
-        <div className="text-center mb-10 md:mb-12 relative">
+        <Reveal delay={0} className="text-center mb-10 md:mb-12 relative">
           <span className="text-primary font-semibold tracking-widest uppercase text-sm mb-2 block">
             LATEST ARTICLES
           </span>
@@ -100,14 +101,15 @@ export default function LatestBlogs() {
               <ChevronRightIcon />
             </button>
           </div>
-        </div>
+        </Reveal>
 
         {/* Native CSS Scroll-Snap Slider */}
-        <div 
-          ref={sliderRef}
-          className="flex overflow-x-auto snap-x snap-mandatory gap-4 md:gap-6 pb-6 hide-scrollbar cursor-grab active:cursor-grabbing"
-          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-        >
+        <Reveal delay={100} className="relative">
+          <div 
+            ref={sliderRef}
+            className="flex overflow-x-auto snap-x snap-mandatory gap-4 md:gap-6 pb-6 hide-scrollbar cursor-grab active:cursor-grabbing"
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+          >
           {blogs.map((blog) => (
             <div 
               key={blog.id}
@@ -154,17 +156,18 @@ export default function LatestBlogs() {
               </div>
             </div>
           ))}
-        </div>
+          </div>
+        </Reveal>
 
         {/* View All Blogs Button */}
-        <div className="flex justify-center mt-6">
+        <Reveal delay={200} className="flex justify-center mt-6">
           <Link 
             to="/blog"
             className="btn-primary h-[48px] px-8 rounded-[12px] shadow-sm hover:shadow-lg transition-all duration-300 hover:scale-[1.02] flex items-center text-[16px]"
           >
             View All Blogs
           </Link>
-        </div>
+        </Reveal>
       </div>
     </section>
   );
