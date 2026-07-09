@@ -407,3 +407,147 @@ export const fetchRelatedProducts = async (categorySlug) => {
     ];
   }
 };
+
+export const fetchBlogCategories = async () => {
+  try {
+    const response = await fetch('/api/blog-categories');
+    const contentType = response.headers.get("content-type");
+    if (!response.ok || !contentType || !contentType.includes("application/json")) {
+      throw new Error('Fallback triggered');
+    }
+    const data = await response.json();
+    return data.data;
+  } catch (error) {
+    return [
+      { id: 1, name: 'Export Guides', slug: 'export-guides' },
+      { id: 2, name: 'Market Trends', slug: 'market-trends' },
+      { id: 3, name: 'Product Insights', slug: 'product-insights' },
+      { id: 4, name: 'Company News', slug: 'company-news' }
+    ];
+  }
+};
+
+export const fetchFeaturedBlog = async () => {
+  try {
+    const response = await fetch('/api/blogs/featured');
+    const contentType = response.headers.get("content-type");
+    if (!response.ok || !contentType || !contentType.includes("application/json")) {
+      throw new Error('Fallback triggered');
+    }
+    const data = await response.json();
+    return data.data;
+  } catch (error) {
+    return {
+      id: 99,
+      title: 'The Ultimate Guide to Exporting Dehydrated Vegetables in 2026',
+      slug: 'guide-to-exporting-dehydrated-vegetables-2026',
+      category: 'Export Guides',
+      category_slug: 'export-guides',
+      featured_image: 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=1200&q=80',
+      short_description: 'Discover the latest regulations, packaging standards, and global demand trends for exporting high-quality dehydrated vegetables to Europe and North America.',
+      published_date: '2026-06-15',
+      author: 'Dhruv Rajapara'
+    };
+  }
+};
+
+export const fetchBlogs = async (filters = {}) => {
+  try {
+    const queryParams = new URLSearchParams(filters).toString();
+    const response = await fetch(`/api/blogs?${queryParams}`);
+    const contentType = response.headers.get("content-type");
+    if (!response.ok || !contentType || !contentType.includes("application/json")) {
+      throw new Error('Fallback triggered');
+    }
+    const data = await response.json();
+    return data.data;
+  } catch (error) {
+    const allBlogs = [
+      { id: 1, title: 'Top 5 Spices in Demand Globally', slug: 'top-5-spices', category: 'Market Trends', category_slug: 'market-trends', featured_image: 'https://images.unsplash.com/photo-1615484477201-cb8633783a60?w=600&q=80', short_description: 'An analysis of the most sought-after Indian spices in the international market.', published_date: '2026-07-01' },
+      { id: 2, title: 'How We Maintain Food Safety Standards', slug: 'food-safety-standards', category: 'Company News', category_slug: 'company-news', featured_image: 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=600&q=80', short_description: 'A deep dive into our quality control processes and certifications.', published_date: '2026-06-28' },
+      { id: 3, title: 'Benefits of Dehydrated Garlic', slug: 'benefits-dehydrated-garlic', category: 'Product Insights', category_slug: 'product-insights', featured_image: 'https://images.unsplash.com/photo-1596647901016-1f6b1587d46c?w=600&q=80', short_description: 'Why more food manufacturers are switching to dehydrated garlic powder.', published_date: '2026-06-20' },
+      { id: 4, title: 'Navigating European Import Laws', slug: 'european-import-laws', category: 'Export Guides', category_slug: 'export-guides', featured_image: 'https://images.unsplash.com/photo-1518568740560-333181a1796a?w=600&q=80', short_description: 'Everything you need to know about exporting agriculture products to the EU.', published_date: '2026-06-10' },
+      { id: 5, title: 'Sustainable Farming Practices', slug: 'sustainable-farming', category: 'Company News', category_slug: 'company-news', featured_image: 'https://images.unsplash.com/photo-1599940778173-e276d4acb2bf?w=600&q=80', short_description: 'How BiteExport partners with local farmers for sustainable agriculture.', published_date: '2026-06-05' },
+      { id: 6, title: 'The Rise of Ready-to-Eat Meals', slug: 'ready-to-eat-meals', category: 'Market Trends', category_slug: 'market-trends', featured_image: 'https://images.unsplash.com/photo-1615485925761-4be66a01b7a2?w=600&q=80', short_description: 'How the global shift towards convenience is driving dehydrated ingredient sales.', published_date: '2026-05-28' },
+    ];
+
+    let filtered = allBlogs;
+    if (filters.category && filters.category !== 'all') {
+      filtered = filtered.filter(b => b.category_slug === filters.category);
+    }
+    if (filters.search) {
+      const s = filters.search.toLowerCase();
+      filtered = filtered.filter(b => b.title.toLowerCase().includes(s) || b.short_description.toLowerCase().includes(s));
+    }
+    return filtered;
+  }
+};
+
+export const fetchBlogBySlug = async (slug) => {
+  try {
+    const response = await fetch(`/api/blogs/${slug}`);
+    const contentType = response.headers.get("content-type");
+    if (!response.ok || !contentType || !contentType.includes("application/json")) {
+      throw new Error('Fallback triggered');
+    }
+    const data = await response.json();
+    return data.data;
+  } catch (error) {
+    const blogTitle = slug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+    
+    return {
+      id: 100,
+      title: blogTitle || 'The Ultimate Guide to Exporting Dehydrated Vegetables in 2026',
+      slug: slug,
+      category: 'Export Guides',
+      category_slug: 'export-guides',
+      featured_image: 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=1200&q=80',
+      short_description: 'Discover the latest regulations, packaging standards, and global demand trends for exporting high-quality dehydrated vegetables to Europe and North America.',
+      published_date: '2026-06-15',
+      author: 'Dhruv Rajapara',
+      content: `
+        <h2>The Global Demand for Dehydrated Vegetables</h2>
+        <p>In recent years, the global market for dehydrated vegetables has experienced unprecedented growth. Driven by the rising demand for convenience foods, long shelf-life ingredients, and emergency food supplies, exporting dehydrated onions, garlic, and tomatoes has never been more lucrative.</p>
+        
+        <h3>1. Quality Control and Sourcing</h3>
+        <p>To succeed in the highly competitive European and North American markets, <strong>quality is paramount</strong>. Buyers demand products that are free from foreign matter, pesticides, and microbial contamination. This requires stringent sorting, grading, and testing protocols before packaging.</p>
+        
+        <blockquote>
+          "Exporting isn't just about finding buyers; it's about building trust through consistent, unwavering product quality."
+        </blockquote>
+        
+        <h3>2. Packaging Standards</h3>
+        <p>Moisture is the enemy of dehydrated products. Exporters must utilize export-grade packaging, typically involving:</p>
+        <ul>
+          <li>High-density polyethylene (HDPE) inner liners</li>
+          <li>Vacuum-sealed aluminum foil bags</li>
+          <li>Double-wall corrugated cartons</li>
+        </ul>
+        
+        <h3>3. Navigating Customs and Documentation</h3>
+        <p>Documentation is the backbone of international trade. Ensure that you have your Bill of Lading, Commercial Invoice, Packing List, Certificate of Origin, and Phytosanitary Certificate perfectly aligned. A single typo can result in customs delays costing thousands of dollars.</p>
+        
+        <h2>Conclusion</h2>
+        <p>Exporting dehydrated vegetables in 2026 offers massive potential for those who prioritize food safety, premium packaging, and robust supply chain management. By partnering with a trusted merchant exporter like BiteExport, you can navigate these complexities with ease.</p>
+      `
+    };
+  }
+};
+
+export const fetchRelatedBlogs = async (categorySlug) => {
+  try {
+    const response = await fetch(`/api/blogs/related/${categorySlug}`);
+    const contentType = response.headers.get("content-type");
+    if (!response.ok || !contentType || !contentType.includes("application/json")) {
+      throw new Error('Fallback triggered');
+    }
+    const data = await response.json();
+    return data.data;
+  } catch (error) {
+    return [
+      { id: 1, title: 'Top 5 Spices in Demand Globally', slug: 'top-5-spices', category: 'Market Trends', category_slug: 'market-trends', featured_image: 'https://images.unsplash.com/photo-1615484477201-cb8633783a60?w=600&q=80', short_description: 'An analysis of the most sought-after Indian spices in the international market.', published_date: '2026-07-01' },
+      { id: 2, title: 'How We Maintain Food Safety Standards', slug: 'food-safety-standards', category: 'Company News', category_slug: 'company-news', featured_image: 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=600&q=80', short_description: 'A deep dive into our quality control processes and certifications.', published_date: '2026-06-28' },
+      { id: 3, title: 'Benefits of Dehydrated Garlic', slug: 'benefits-dehydrated-garlic', category: 'Product Insights', category_slug: 'product-insights', featured_image: 'https://images.unsplash.com/photo-1596647901016-1f6b1587d46c?w=600&q=80', short_description: 'Why more food manufacturers are switching to dehydrated garlic powder.', published_date: '2026-06-20' }
+    ];
+  }
+};
