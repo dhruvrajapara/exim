@@ -1,6 +1,7 @@
 import SEO from '../components/SEO';
 import Hero from '../components/Hero';
 import About from '../components/About';
+import FeaturedProducts from '../components/FeaturedProducts';
 import ProductCategories from '../components/ProductCategories';
 
 export default function Home() {
@@ -28,6 +29,9 @@ export default function Home() {
       
       {/* Dynamic Product Categories */}
       <ProductCategories />
+      
+      {/* Dynamic Featured Products */}
+      <FeaturedProducts />
       
     </>
   );

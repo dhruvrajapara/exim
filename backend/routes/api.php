@@ -11,3 +11,4 @@ Route::get('/user', function (Request $request) {
 Route::get('/hero-slides', [HeroSlideController::class, 'index']);
 Route::get('/product-categories', [App\Http\Controllers\ProductCategoryController::class, 'index']);
 Route::get('/about-section', [App\Http\Controllers\AboutSectionController::class, 'index']);
+Route::get('/featured-products', [App\Http\Controllers\ProductController::class, 'featured']);

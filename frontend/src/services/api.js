@@ -39,3 +39,17 @@ export const fetchAboutSection = async () => {
     return null;
   }
 };
+
+export const fetchFeaturedProducts = async () => {
+  try {
+    const response = await fetch('/api/featured-products');
+    if (!response.ok) {
+      throw new Error('Failed to fetch featured products');
+    }
+    const data = await response.json();
+    return data.data;
+  } catch (error) {
+    console.error('Error fetching featured products:', error);
+    return [];
+  }
+};
