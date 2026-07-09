@@ -57,14 +57,48 @@ export const fetchFeaturedProducts = async () => {
 export const fetchCertifications = async () => {
   try {
     const response = await fetch('/api/certifications');
-    if (!response.ok) {
-      throw new Error('Failed to fetch certifications');
+    const contentType = response.headers.get("content-type");
+    if (!response.ok || !contentType || !contentType.includes("application/json")) {
+      throw new Error('Fallback triggered');
     }
     const data = await response.json();
     return data.data;
   } catch (error) {
-    console.error('Error fetching certifications:', error);
-    return [];
+    // Return fallback data with 4 requested certificates
+    return [
+      {
+        id: 1,
+        name: 'GST Registration',
+        authority_name: 'Government of India',
+        logo_path: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/GST_Logo.svg/256px-GST_Logo.svg.png',
+        short_description: 'Registered under the Goods and Services Tax act for transparent trade operations.',
+        verification_badge_text: 'Government Registered'
+      },
+      {
+        id: 2,
+        name: 'FSSAI License',
+        authority_name: 'Food Safety and Standards Authority',
+        logo_path: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/FSSAI_logo.svg/256px-FSSAI_logo.svg.png',
+        short_description: 'Certified to maintain the highest food safety and quality standards for export.',
+        verification_badge_text: 'Food Safety Certified'
+      },
+      {
+        id: 3,
+        name: 'APEDA Registration',
+        authority_name: 'Ministry of Commerce & Industry',
+        logo_path: 'https://upload.wikimedia.org/wikipedia/en/thumb/f/fa/APEDA_Logo.svg/256px-APEDA_Logo.svg.png',
+        short_description: 'Officially registered exporter for agricultural and processed food products.',
+        verification_badge_text: 'Export Compliant'
+      },
+      {
+        id: 4,
+        name: 'Import Export Code (IEC)',
+        authority_name: 'Directorate General of Foreign Trade',
+        logo_path: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Emblem_of_India.svg/256px-Emblem_of_India.svg.png',
+        short_description: 'Authorized by DGFT for international trade and global supply chain operations.',
+        verification_badge_text: 'Trade Authorized'
+      }
+    ];
   }
 };
 

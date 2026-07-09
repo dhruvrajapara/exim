@@ -1,6 +1,7 @@
 import AboutHero from '../components/AboutHero';
 import WhyChooseUs from '../components/WhyChooseUs';
 import VisionMission from '../components/VisionMission';
+import AboutCertifications from '../components/AboutCertifications';
 import { useEffect } from 'react';
 
 export default function AboutPage() {
@@ -15,6 +16,7 @@ export default function AboutPage() {
       <AboutHero />
       <WhyChooseUs />
       <VisionMission />
+      <AboutCertifications />
     </div>
   );
 }
