@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Rubik", system-ui, sans-serif;
+
+  --color-primary: #039639;
+  --color-primary-light: #6BC72A;
+  --color-secondary: #3599FF;
+  --color-dark: #000821;
+  --color-text: #4B5563;
+  --color-border: #E5E7EB;
+  --color-light: #F8FAFC;
+  --color-success: #22C55E;
+  --color-warning: #F59E0B;
+  --color-error: #EF4444;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-hero: 24px;
+
+  --spacing-container-mobile: 16px;
+  --spacing-container-tablet: 24px;
+  --spacing-container-desktop: 32px;
+}
+
+@layer base {
+  body {
+    @apply font-sans text-text bg-white;
+  }
+
+  h1 {
+    @apply text-[56px] font-bold leading-[1.2] text-dark;
+  }
+
+  h2 {
+    @apply text-[42px] font-bold text-dark;
+  }
+
+  h3 {
+    @apply text-[32px] font-semibold text-dark;
+  }
+
+  h4 {
+    @apply text-[24px] font-semibold text-dark;
+  }
+
+  h5 {
+    @apply text-[20px] font-medium text-dark;
+  }
+
+  h6 {
+    @apply text-[18px] font-medium text-dark;
+  }
+
+  p {
+    @apply text-[16px] leading-[1.7];
+  }
+
+  /* Utilities for the container */
+  .container-custom {
+    @apply w-full max-w-[1320px] mx-auto px-4 md:px-6 lg:px-8;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center bg-gradient-to-r from-[#3599FF] to-[#0463C3] text-white h-[48px] px-6 rounded-md hover:shadow-md hover:scale-[1.02] transition-all duration-300;
+  }
+}
