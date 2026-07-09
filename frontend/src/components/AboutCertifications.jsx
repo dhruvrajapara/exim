@@ -41,11 +41,11 @@ export default function AboutCertifications() {
         
         {/* Section Header */}
         <Reveal delay={0} className="text-center mb-10 md:mb-12">
-          <span className="text-primary font-semibold tracking-widest uppercase text-[12px] md:text-[14px] mb-3 block">
+          <span className="text-secondary font-semibold tracking-widest uppercase text-[12px] md:text-[14px] mb-3 block">
             TRUST & COMPLIANCE
           </span>
           <h2 className="text-[32px] md:text-[38px] lg:text-[44px] font-bold text-dark leading-tight mb-4 font-rubik">
-            Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-green-500">Certifications</span>
+            Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-[#0463C3]">Certifications</span>
           </h2>
           <p className="text-[15px] md:text-[16px] lg:text-[18px] text-text/90 max-w-2xl mx-auto leading-relaxed">
             Our official registrations and certifications demonstrate our commitment to quality, compliance, transparency, and international export standards.
@@ -58,7 +58,7 @@ export default function AboutCertifications() {
             <Reveal 
               key={cert.id || index}
               delay={index * 100}
-              className="group bg-white rounded-[20px] border border-gray-100 hover:border-primary shadow-sm hover:shadow-[0_15px_35px_rgba(3,150,57,0.1)] transition-all duration-300 transform hover:-translate-y-2 flex flex-col items-center text-center p-6 lg:p-8 overflow-hidden h-full relative"
+              className="group bg-white rounded-[20px] border border-gray-100 hover:border-secondary shadow-sm hover:shadow-[0_15px_35px_rgba(53,153,255,0.1)] transition-all duration-300 transform hover:-translate-y-2 flex flex-col items-center text-center p-6 lg:p-8 overflow-hidden h-full relative"
             >
               {/* Official Logo */}
               <div className="w-full h-16 md:h-20 lg:h-24 mb-5 flex items-center justify-center">
@@ -81,11 +81,11 @@ export default function AboutCertifications() {
               </div>
 
               {/* Secure Info */}
-              <h3 className="font-rubik font-semibold text-[15px] md:text-[18px] text-dark leading-tight mb-2 group-hover:text-primary transition-colors">
+              <h3 className="font-rubik font-semibold text-[15px] md:text-[18px] text-dark leading-tight mb-2 group-hover:text-secondary transition-colors">
                 {cert.name}
               </h3>
               
-              <p className="text-[12px] md:text-[13px] text-primary/80 font-semibold mb-3 uppercase tracking-wider">
+              <p className="text-[12px] md:text-[13px] text-secondary/80 font-semibold mb-3 uppercase tracking-wider">
                 {cert.authority_name}
               </p>
 
@@ -105,7 +105,7 @@ export default function AboutCertifications() {
              "Trusted by Global Buyers"
            ].map((text, i) => (
              <div key={i} className="flex items-center gap-2 group cursor-default">
-               <CheckCircleIcon className="text-primary group-hover:scale-110 transition-transform" />
+               <CheckCircleIcon className="text-secondary group-hover:scale-110 transition-transform" />
                <span className="font-medium text-dark text-[14px] md:text-[15px]">{text}</span>
              </div>
            ))}

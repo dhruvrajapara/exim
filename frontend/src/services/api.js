@@ -242,3 +242,62 @@ export const fetchTestimonials = async () => {
     ];
   }
 };
+
+export const fetchTeamMembers = async () => {
+  try {
+    const response = await fetch('/api/team-members');
+    const contentType = response.headers.get("content-type");
+    if (!response.ok || !contentType || !contentType.includes("application/json")) {
+      throw new Error('Fallback triggered');
+    }
+    const data = await response.json();
+    return data.data;
+  } catch (error) {
+    return [
+      {
+        id: 1,
+        full_name: 'Dhruv Rajapara',
+        role: 'Founder & CEO',
+        profile_image: 'https://i.pravatar.cc/300?img=11',
+        short_description: 'Leading BiteExport with a vision to deliver premium Indian agricultural products to global markets.',
+        social_links: {
+          linkedin: 'https://linkedin.com',
+          email: 'founder@biteexport.com'
+        }
+      },
+      {
+        id: 2,
+        full_name: 'Aisha Sharma',
+        role: 'Head of Quality Assurance',
+        profile_image: 'https://i.pravatar.cc/300?img=5',
+        short_description: 'Ensuring every export shipment strictly adheres to international food safety standards.',
+        social_links: {
+          linkedin: 'https://linkedin.com',
+          email: 'qa@biteexport.com'
+        }
+      },
+      {
+        id: 3,
+        full_name: 'Rohan Mehta',
+        role: 'Global Logistics Director',
+        profile_image: 'https://i.pravatar.cc/300?img=15',
+        short_description: 'Optimizing supply chains for fast, secure, and cost-effective international deliveries.',
+        social_links: {
+          linkedin: 'https://linkedin.com'
+        }
+      },
+      {
+        id: 4,
+        full_name: 'Priya Patel',
+        role: 'International Relations',
+        profile_image: 'https://i.pravatar.cc/300?img=9',
+        short_description: 'Building strong, trustworthy, and long-lasting partnerships with our buyers worldwide.',
+        social_links: {
+          linkedin: 'https://linkedin.com',
+          email: 'relations@biteexport.com',
+          whatsapp: '1234567890'
+        }
+      }
+    ];
+  }
+};

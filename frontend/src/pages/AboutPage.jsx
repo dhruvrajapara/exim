@@ -2,6 +2,7 @@ import AboutHero from '../components/AboutHero';
 import WhyChooseUs from '../components/WhyChooseUs';
 import VisionMission from '../components/VisionMission';
 import AboutCertifications from '../components/AboutCertifications';
+import AboutTeam from '../components/AboutTeam';
 import { useEffect } from 'react';
 
 export default function AboutPage() {
@@ -17,6 +18,7 @@ export default function AboutPage() {
       <WhyChooseUs />
       <VisionMission />
       <AboutCertifications />
+      <AboutTeam />
     </div>
   );
 }

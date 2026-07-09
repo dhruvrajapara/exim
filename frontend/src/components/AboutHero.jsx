@@ -44,19 +44,19 @@ export default function AboutHero() {
               <nav className="flex items-center text-[12px] md:text-[14px] font-medium tracking-wide bg-white/5 backdrop-blur-md border border-white/10 px-4 py-2 rounded-full">
                 <Link to="/" className="text-gray-400 hover:text-white transition-colors" aria-label="Go to Home">Home</Link>
                 <KeyboardArrowRightIcon fontSize="small" className="mx-1 text-gray-500" />
-                <span className="text-primary" aria-current="page">About Us</span>
+                <span className="text-secondary" aria-current="page">About Us</span>
               </nav>
             </Reveal>
 
             <Reveal delay={100} className="mb-3 md:mb-4">
-              <span className="text-primary font-semibold tracking-[0.2em] uppercase text-[12px] md:text-[14px]">
+              <span className="text-secondary font-semibold tracking-[0.2em] uppercase text-[12px] md:text-[14px]">
                 ABOUT US
               </span>
             </Reveal>
 
             <Reveal delay={200} className="mb-6">
               <h1 className="text-[32px] md:text-[42px] lg:text-[48px] xl:text-[56px] font-bold text-white leading-[1.1] font-rubik">
-                About <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-green-400">BiteExport</span>
+                About <span className="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-[#0463C3]">BiteExport</span>
               </h1>
             </Reveal>
 
@@ -71,8 +71,8 @@ export default function AboutHero() {
               <Reveal delay={400} className="w-full mb-10">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-3 gap-x-4 max-w-xl mx-auto lg:mx-0">
                   {stats.map((stat, idx) => (
-                    <div key={idx} className="flex items-center justify-center sm:justify-start gap-3 text-gray-200 bg-white/5 border border-white/10 rounded-[10px] p-3 hover:bg-white/10 hover:border-primary/40 transition-all duration-300 group">
-                      <CheckCircleOutlinedIcon className="text-primary flex-shrink-0 group-hover:scale-110 transition-transform" fontSize="small" />
+                    <div key={idx} className="flex items-center justify-center sm:justify-start gap-3 text-gray-200 bg-white/5 border border-white/10 rounded-[10px] p-3 hover:bg-white/10 hover:border-secondary/40 transition-all duration-300 group">
+                      <CheckCircleOutlinedIcon className="text-secondary flex-shrink-0 group-hover:scale-110 transition-transform" fontSize="small" />
                       <span className="text-[14px] md:text-[15px] font-medium leading-tight">
                         {stat.number_value} {stat.title}
                       </span>
@@ -87,7 +87,7 @@ export default function AboutHero() {
               <div className="flex flex-col sm:flex-row gap-4 w-full justify-center lg:justify-start">
                 <Link 
                   to="/contact" 
-                  className="btn-primary w-full sm:w-auto h-[48px] px-8 rounded-[12px] shadow-lg hover:shadow-[0_8px_25px_rgba(3,150,57,0.4)] transition-all duration-300 hover:scale-[1.02] flex items-center justify-center font-medium"
+                  className="btn-primary w-full sm:w-auto h-[48px] px-8 rounded-[12px] shadow-lg hover:shadow-[0_8px_25px_rgba(53,153,255,0.4)] transition-all duration-300 hover:scale-[1.02] flex items-center justify-center font-medium"
                 >
                   Contact Us
                 </Link>
@@ -105,7 +105,7 @@ export default function AboutHero() {
           <Reveal delay={300} className="w-[85%] sm:w-[70%] lg:w-[45%] flex justify-center items-center">
             <div className="relative w-full aspect-square max-h-[300px] lg:max-h-[450px]">
               {/* Premium Glow Effect */}
-              <div className="absolute inset-0 bg-primary/20 blur-[100px] animate-pulse"></div>
+              <div className="absolute inset-0 bg-secondary/20 blur-[100px] animate-pulse"></div>
               
               {/* Premium Dummy Image - Square */}
               <img 

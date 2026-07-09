@@ -77,11 +77,11 @@ export default function VisionMission() {
         
         {/* Section Header */}
         <Reveal delay={0} className="text-center mb-10 lg:mb-16">
-          <span className="text-primary font-semibold tracking-[0.2em] uppercase text-[12px] md:text-[14px] mb-3 block">
+          <span className="text-secondary font-semibold tracking-[0.2em] uppercase text-[12px] md:text-[14px] mb-3 block">
             OUR PURPOSE
           </span>
           <h2 className="text-[32px] md:text-[38px] lg:text-[44px] font-bold text-dark leading-[1.2] mb-4 font-rubik">
-            Vision <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-green-500">& Mission</span>
+            Vision <span className="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-[#0463C3]">& Mission</span>
           </h2>
           <p className="text-[15px] md:text-[16px] lg:text-[18px] text-text/90 max-w-2xl mx-auto leading-relaxed">
             Our vision and mission guide every step of our journey as we strive to become a trusted global exporter of premium agricultural products.
@@ -96,7 +96,7 @@ export default function VisionMission() {
               delay={index * 200} // Staggered delay (0ms, 200ms)
               className="h-full"
             >
-              <div className="group relative bg-white rounded-[20px] p-6 md:p-8 lg:p-10 flex flex-col h-full border border-gray-100 shadow-md hover:border-primary/50 hover:shadow-[0_20px_40px_rgba(3,150,57,0.12)] transition-all duration-300 transform hover:-translate-y-2 overflow-hidden">
+              <div className="group relative bg-white rounded-[20px] p-6 md:p-8 lg:p-10 flex flex-col h-full border border-gray-100 shadow-md hover:border-secondary/50 hover:shadow-[0_20px_40px_rgba(53,153,255,0.12)] transition-all duration-300 transform hover:-translate-y-2 overflow-hidden">
                 
                 {/* Subtle Decorative Pattern Inside Card */}
                 <div className="absolute -bottom-10 -right-10 text-gray-50 opacity-10 group-hover:scale-125 transition-transform duration-700 pointer-events-none">
@@ -107,18 +107,18 @@ export default function VisionMission() {
 
                 <div className="relative z-10 flex flex-col h-full">
                   {/* Dynamic Icon */}
-                  <div className="w-[48px] h-[48px] lg:w-[60px] lg:h-[60px] rounded-[14px] bg-[#039639]/10 text-primary flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all duration-300 shadow-sm">
+                  <div className="w-[48px] h-[48px] lg:w-[60px] lg:h-[60px] rounded-[14px] bg-secondary/10 text-secondary flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-secondary group-hover:text-white transition-all duration-300 shadow-sm">
                     <span className="text-[28px] lg:text-[34px] flex items-center justify-center">
                       {getDynamicIcon(item.icon)}
                     </span>
                   </div>
 
                   {/* Content */}
-                  <span className="text-primary font-semibold tracking-widest uppercase text-[12px] mb-2 block">
+                  <span className="text-secondary font-semibold tracking-widest uppercase text-[12px] mb-2 block">
                     {item.label}
                   </span>
                   
-                  <h3 className="font-rubik font-bold text-[28px] lg:text-[40px] text-dark mb-4 leading-tight group-hover:text-primary transition-colors">
+                  <h3 className="font-rubik font-bold text-[28px] lg:text-[40px] text-dark mb-4 leading-tight group-hover:text-secondary transition-colors">
                     {item.title}
                   </h3>
                   

@@ -68,11 +68,11 @@ export default function WhyChooseUs() {
         
         {/* Section Header */}
         <Reveal delay={0} className="text-center mb-10 md:mb-12">
-          <span className="text-primary font-semibold tracking-[0.2em] uppercase text-[12px] md:text-[14px] mb-3 block">
+          <span className="text-secondary font-semibold tracking-[0.2em] uppercase text-[12px] md:text-[14px] mb-3 block">
             WHY CHOOSE US
           </span>
           <h2 className="text-[32px] md:text-[38px] lg:text-[44px] font-bold text-dark leading-[1.2] mb-4 font-rubik">
-            Why Choose <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-green-500">BiteExport</span>
+            Why Choose <span className="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-[#0463C3]">BiteExport</span>
           </h2>
           <p className="text-[15px] md:text-[16px] lg:text-[18px] text-text/90 max-w-2xl mx-auto leading-relaxed">
             At BiteExport, we deliver premium-quality agricultural products backed by reliable export services, international standards, and long-term business relationships.
@@ -88,17 +88,17 @@ export default function WhyChooseUs() {
               className="h-full"
             >
               {/* Premium Feature Card */}
-              <div className="group bg-white rounded-[16px] p-5 md:p-6 lg:p-8 flex flex-col items-center text-center h-full border border-gray-100 shadow-sm hover:border-primary/50 hover:shadow-[0_12px_30px_rgba(3,150,57,0.12)] transition-all duration-300 transform hover:-translate-y-2 overflow-hidden">
+              <div className="group bg-white rounded-[16px] p-5 md:p-6 lg:p-8 flex flex-col items-center text-center h-full border border-gray-100 shadow-sm hover:border-secondary/50 hover:shadow-[0_12px_30px_rgba(53,153,255,0.12)] transition-all duration-300 transform hover:-translate-y-2 overflow-hidden">
                 
                 {/* Dynamic Icon Wrapper */}
-                <div className="w-[44px] h-[44px] lg:w-[56px] lg:h-[56px] rounded-full bg-[#039639]/10 text-primary flex items-center justify-center mb-4 md:mb-6 group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all duration-300 shadow-sm group-hover:shadow-md">
+                <div className="w-[44px] h-[44px] lg:w-[56px] lg:h-[56px] rounded-full bg-secondary/10 text-secondary flex items-center justify-center mb-4 md:mb-6 group-hover:scale-110 group-hover:bg-secondary group-hover:text-white transition-all duration-300 shadow-sm group-hover:shadow-md">
                   <span className="text-[24px] lg:text-[30px] flex items-center justify-center">
                     {getDynamicIcon(feature.icon)}
                   </span>
                 </div>
 
                 {/* Typography */}
-                <h3 className="font-rubik font-semibold text-[15px] md:text-[18px] text-dark mb-2 leading-snug group-hover:text-primary transition-colors line-clamp-2">
+                <h3 className="font-rubik font-semibold text-[15px] md:text-[18px] text-dark mb-2 leading-snug group-hover:text-secondary transition-colors line-clamp-2">
                   {feature.title}
                 </h3>
                 
