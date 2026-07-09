@@ -70,24 +70,26 @@ export default function ProductCategories() {
                     className="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-110"
                     loading="lazy"
                   />
-                  {/* Subtle Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-dark/60 via-dark/0 to-dark/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  
+                  {/* Dark Hover Overlay & Centered Button */}
+                  <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center">
+                    <span className="inline-flex items-center justify-center bg-primary text-white h-[40px] md:h-[44px] px-6 rounded-[12px] font-medium text-[13px] md:text-[14px] shadow-lg transform translate-y-8 group-hover:translate-y-0 transition-all duration-500 delay-75">
+                      View Products
+                      <ArrowForwardIcon fontSize="small" className="ml-2" />
+                    </span>
+                  </div>
                 </div>
 
-                {/* Content Box */}
-                <div className="p-4 md:p-6 flex flex-col flex-grow items-center text-center bg-white z-10 relative">
+                {/* Content Box (Fixed Height) */}
+                <div className="p-4 md:p-6 flex flex-col flex-grow items-center text-center bg-white z-10 relative border-t border-border/50">
                   <h3 className="font-rubik font-semibold text-[16px] md:text-[20px] text-dark mb-2 group-hover:text-primary transition-colors">
                     {category.name}
                   </h3>
                   {category.short_description && (
-                    <p className="text-[13px] md:text-[14px] text-text/80 line-clamp-2 mb-4 hidden md:block">
+                    <p className="text-[13px] md:text-[14px] text-text/80 line-clamp-2">
                       {category.short_description}
                     </p>
                   )}
-                  {/* View Products Arrow */}
-                  <div className="mt-auto flex items-center justify-center w-10 h-10 rounded-full bg-light text-primary group-hover:bg-primary group-hover:text-white transition-all duration-300">
-                    <ArrowForwardIcon fontSize="small" className="transform group-hover:translate-x-1 transition-transform" />
-                  </div>
                 </div>
               </Link>
             </Reveal>
