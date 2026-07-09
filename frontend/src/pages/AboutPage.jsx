@@ -1,4 +1,5 @@
 import AboutHero from '../components/AboutHero';
+import WhyChooseUs from '../components/WhyChooseUs';
 import { useEffect } from 'react';
 
 export default function AboutPage() {
@@ -11,7 +12,7 @@ export default function AboutPage() {
   return (
     <div className="w-full bg-white flex flex-col font-sans">
       <AboutHero />
-      {/* Future About Page Sections (e.g. Our Team, Timeline, Certifications) will go here */}
+      <WhyChooseUs />
     </div>
   );
 }
