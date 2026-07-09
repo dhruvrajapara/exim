@@ -9,3 +9,4 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::get('/hero-slides', [HeroSlideController::class, 'index']);
+Route::get('/product-categories', [App\Http\Controllers\ProductCategoryController::class, 'index']);
