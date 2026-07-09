@@ -119,3 +119,35 @@ export const fetchWhyChooseUs = async () => {
     ];
   }
 };
+
+export const fetchVisionMission = async () => {
+  try {
+    const response = await fetch('/api/vision-mission');
+    if (!response.ok) {
+      throw new Error('Failed to fetch vision and mission');
+    }
+    const data = await response.json();
+    return data.data;
+  } catch (error) {
+    console.error('Error fetching vision and mission (using fallback):', error);
+    // Fallback data
+    return [
+      { 
+        id: 1, 
+        type: 'vision', 
+        label: 'OUR VISION', 
+        title: 'Empowering Global Trade', 
+        description: 'To become the world\'s most trusted exporter of premium agricultural products, bridging the gap between local farmers and international markets with uncompromising quality and sustainable practices.', 
+        icon: 'Visibility' 
+      },
+      { 
+        id: 2, 
+        type: 'mission', 
+        label: 'OUR MISSION', 
+        title: 'Delivering Excellence Daily', 
+        description: 'To source, process, and deliver the finest quality products while maintaining competitive pricing, strict international food safety standards, and building long-lasting partnerships globally.', 
+        icon: 'TrackChanges' 
+      }
+    ];
+  }
+};

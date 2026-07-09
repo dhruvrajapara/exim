@@ -1,5 +1,6 @@
 import AboutHero from '../components/AboutHero';
 import WhyChooseUs from '../components/WhyChooseUs';
+import VisionMission from '../components/VisionMission';
 import { useEffect } from 'react';
 
 export default function AboutPage() {
@@ -13,6 +14,7 @@ export default function AboutPage() {
     <div className="w-full bg-white flex flex-col font-sans">
       <AboutHero />
       <WhyChooseUs />
+      <VisionMission />
     </div>
   );
 }
