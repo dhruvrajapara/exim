@@ -10,6 +10,8 @@ import ImageGalleryPage from './pages/ImageGalleryPage';
 import ContactPage from './pages/ContactPage';
 import FloatingActionButtons from './components/FloatingActionButtons';
 
+import SEO from './components/SEO';
+
 function App() {
   return (
     <BrowserRouter>
@@ -23,7 +25,7 @@ function App() {
           <Route path="blog/:slug" element={<BlogDetailPage />} />
           <Route path="image" element={<ImageGalleryPage />} />
           <Route path="contact" element={<ContactPage />} />
-          <Route path="*" element={<div className="p-8 text-center"><h1 className="text-4xl font-bold mb-4">404 - Not Found</h1><p>The page you are looking for does not exist.</p></div>} />
+          <Route path="*" element={<><SEO title="Page Not Found" /><div className="p-8 text-center"><h1 className="text-4xl font-bold mb-4">404 - Not Found</h1><p>The page you are looking for does not exist.</p></div></>} />
         </Route>
       </Routes>
       <FloatingActionButtons />

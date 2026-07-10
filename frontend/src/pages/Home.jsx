@@ -18,7 +18,8 @@ export default function Home() {
   return (
     <>
       <SEO 
-        title="Home" 
+        title="BiteExport | Premium Food Export Company"
+        exactTitle={true}
         description="Welcome to the AI-First Enterprise Platform built with React and Laravel."
         canonical="https://example.com/"
         schema={schema}

@@ -100,7 +100,7 @@ export default function ProductDetailPage() {
   return (
     <div className="w-full bg-white min-h-screen">
       <SEO
-        title={`${product.name} - Premium Export Product`}
+        title={product.name}
         description={product.short_description}
         canonical={`https://example.com/product/${product.slug}`}
       />

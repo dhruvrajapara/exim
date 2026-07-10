@@ -92,7 +92,7 @@ export default function BlogDetailPage() {
   return (
     <div className="w-full bg-[#F9FAFB] min-h-screen">
       <SEO 
-        title={`${blog.title} - Export Insights`}
+        title={blog.title}
         description={blog.short_description}
         canonical={`https://example.com/blog/${blog.slug}`}
       />

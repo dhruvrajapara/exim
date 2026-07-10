@@ -9,7 +9,7 @@ export default function ImageGalleryPage() {
   return (
     <div className="w-full bg-[#F9FAFB] min-h-screen">
       <SEO 
-        title="Achievements & Global Presence | BiteExport Gallery"
+        title="Gallery"
         description="Explore our export milestones, global buyer meetings, advanced manufacturing processes, and international trade fair participations."
         canonical="https://example.com/image"
       />

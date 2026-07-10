@@ -68,7 +68,7 @@ export default function BlogPage() {
   return (
     <div className="w-full bg-[#F9FAFB] min-h-screen">
       <SEO
-        title="Export Blog & Industry Insights"
+        title="Blog"
         description="Latest export news, market trends, food industry updates, business guides and international trade insights."
         canonical="https://example.com/blog"
       />

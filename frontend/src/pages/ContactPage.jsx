@@ -50,7 +50,7 @@ export default function ContactPage() {
   return (
     <div className="w-full bg-[#F9FAFB] min-h-screen">
       <SEO 
-        title="Contact Us | Export Inquiries & Quotes"
+        title="Contact Us"
         description="Get in touch with BiteExport for premium dehydrated vegetables and spices. Request quotations and explore international trade opportunities."
         canonical="https://example.com/contact"
       />
