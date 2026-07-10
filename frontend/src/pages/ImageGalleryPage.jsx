@@ -1,25 +1,17 @@
+import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import SEO from '../components/SEO';
-import ProductListing from '../components/ProductListing';
+import GlobalGallery from '../components/gallery/GlobalGallery';
 
-export default function ProductPage() {
-  const schema = {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "name": "Premium Export Products - BiteExport",
-    "url": "https://example.com/product",
-    "description": "BiteExport provides premium dehydrated vegetables, spices, and agricultural products with international export quality standards."
-  };
-
+export default function ImageGalleryPage() {
   return (
     <div className="w-full bg-[#F9FAFB] min-h-screen">
-      <SEO
-        title="Products"
-        description="BiteExport provides premium dehydrated vegetables, spices, and agricultural products with international export quality standards."
-        canonical="https://example.com/product"
-        schema={schema}
+      <SEO 
+        title="Achievements & Global Presence | BiteExport Gallery"
+        description="Explore our export milestones, global buyer meetings, advanced manufacturing processes, and international trade fair participations."
+        canonical="https://example.com/image"
       />
 
       {/* Hero Banner matched to BlogHeroRedesign */}
@@ -42,20 +34,21 @@ export default function ProductPage() {
             <nav aria-label="Breadcrumb" className="flex items-center text-[14px] font-medium text-gray-500 mb-4">
               <Link to="/" className="hover:text-[#0B63CE] transition-colors">Home</Link>
               <KeyboardArrowRightIcon fontSize="small" className="mx-1 opacity-60" />
-              <span className="text-[#0B63CE]">Products</span>
+              <span className="text-[#0B63CE]">Gallery</span>
             </nav>
 
             <h1 className="font-rubik text-[36px] md:text-[48px] font-bold text-dark leading-tight mb-3 tracking-tight">
-              Premium Export Products
+              Image Gallery
             </h1>
             <p className="text-gray-600 text-[16px] max-w-2xl">
-              Discover our export-grade dehydrated vegetables, spices, and agricultural ingredients sourced globally.
+              Discover the visual story behind BiteExport's commitment to quality, sustainability, and global trade excellence.
             </p>
           </motion.div>
         </div>
       </section>
 
-      <ProductListing />
+      {/* Main Gallery Section */}
+      <GlobalGallery />
 
     </div>
   );

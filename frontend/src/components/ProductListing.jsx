@@ -91,20 +91,7 @@ export default function ProductListing() {
       <div className="container-custom">
         
         {/* Top Header Area */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8 pb-6 border-b border-gray-200">
-          
-          {/* Left Side - Breadcrumb */}
-          <nav aria-label="Breadcrumb" className="flex items-center text-[13px] md:text-[14px] font-medium text-gray-500">
-            <Link to="/" className="hover:text-primary transition-colors">Home</Link>
-            <KeyboardArrowRightIcon fontSize="small" className="mx-1" />
-            <Link to="/product" className={activeCategory === 'all' ? 'text-primary' : 'hover:text-primary transition-colors'}>Products</Link>
-            {activeCategory !== 'all' && (
-              <>
-                <KeyboardArrowRightIcon fontSize="small" className="mx-1" />
-                <span className="text-primary">{getCategoryName()}</span>
-              </>
-            )}
-          </nav>
+        <div className="flex flex-col md:flex-row md:items-center justify-end gap-4 mb-8 pb-6 border-b border-gray-200">
 
           {/* Right Side - Search Bar & Mobile Filter Btn */}
           <div className="flex items-center gap-3 w-full md:w-auto">
