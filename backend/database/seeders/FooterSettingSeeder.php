@@ -45,11 +45,7 @@ class FooterSettingSeeder extends Seeder
                 'sales@biteexport.com'
             ],
             'copyright_text' => '© ' . date('Y') . ' BiteExport. All Rights Reserved.',
-            'bottom_links' => [
-                ['label' => 'Privacy Policy', 'url' => '/privacy'],
-                ['label' => 'Terms & Conditions', 'url' => '/terms'],
-                ['label' => 'Sitemap', 'url' => '/sitemap'],
-            ]
+            'bottom_links' => []
         ]);
     }
 }

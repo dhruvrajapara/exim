@@ -162,14 +162,56 @@ export const fetchLatestBlogs = async () => {
 export const fetchFooter = async () => {
   try {
     const response = await fetch('/api/footer');
-    if (!response.ok) {
-      throw new Error('Failed to fetch footer');
+    const contentType = response.headers.get("content-type");
+    if (!response.ok || !contentType || !contentType.includes("application/json")) {
+      throw new Error('Fallback triggered');
     }
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error('Error fetching footer:', error);
-    return null;
+    return {
+      footer: {
+        company_logo: '/hero.png',
+        company_description: 'BiteExport is a trusted merchant exporter specializing in premium dehydrated vegetables, spices, and agricultural products, serving buyers across international markets.',
+        social_links: [
+          { platform: 'facebook', url: 'https://facebook.com' },
+          { platform: 'instagram', url: 'https://instagram.com' },
+          { platform: 'linkedin', url: 'https://linkedin.com' },
+          { platform: 'youtube', url: 'https://youtube.com' },
+          { platform: 'whatsapp', url: 'https://whatsapp.com' }
+        ],
+        quick_links: [
+          { label: 'Home', url: '/' },
+          { label: 'About', url: '/about' },
+          { label: 'Products', url: '/products' },
+          { label: 'Team', url: '/team' },
+          { label: 'Blog', url: '/blog' },
+          { label: 'Gallery', url: '/gallery' },
+          { label: 'Contact', url: '/contact' }
+        ],
+        office_addresses: [
+          '123 Export Avenue, Global Trade Center, Mumbai, India',
+          '45 International Business Hub, Dubai, UAE'
+        ],
+        contact_numbers: [
+          '+91 98765 43210',
+          '+971 50 123 4567'
+        ],
+        email_addresses: [
+          'info@biteexport.com',
+          'sales@biteexport.com'
+        ],
+        copyright_text: `© ${new Date().getFullYear()} BiteExport. All Rights Reserved.`,
+        bottom_links: []
+      },
+      categories: [
+        { id: 1, name: 'Dehydrated Onion', slug: 'dehydrated-onion' },
+        { id: 2, name: 'Dehydrated Garlic', slug: 'dehydrated-garlic' },
+        { id: 3, name: 'Spice Powder', slug: 'spice-powder' },
+        { id: 4, name: 'Vegetable Powder', slug: 'vegetable-powder' },
+        { id: 5, name: 'Herbs', slug: 'herbs' }
+      ]
+    };
   }
 };
 
