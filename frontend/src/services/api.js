@@ -410,6 +410,7 @@ export const fetchRelatedProducts = async (categorySlug) => {
 
 export const fetchBlogCategories = async () => {
   try {
+    throw new Error('Bypass fetch for instant load during dev');
     const response = await fetch('/api/blog-categories');
     const contentType = response.headers.get("content-type");
     if (!response.ok || !contentType || !contentType.includes("application/json")) {
@@ -429,6 +430,7 @@ export const fetchBlogCategories = async () => {
 
 export const fetchFeaturedBlog = async () => {
   try {
+    throw new Error('Bypass fetch for instant load during dev');
     const response = await fetch('/api/blogs/featured');
     const contentType = response.headers.get("content-type");
     if (!response.ok || !contentType || !contentType.includes("application/json")) {
@@ -453,6 +455,7 @@ export const fetchFeaturedBlog = async () => {
 
 export const fetchBlogs = async (filters = {}) => {
   try {
+    throw new Error('Bypass fetch for instant load during dev');
     const queryParams = new URLSearchParams(filters).toString();
     const response = await fetch(`/api/blogs?${queryParams}`);
     const contentType = response.headers.get("content-type");
@@ -463,12 +466,18 @@ export const fetchBlogs = async (filters = {}) => {
     return data.data;
   } catch (error) {
     const allBlogs = [
-      { id: 1, title: 'Top 5 Spices in Demand Globally', slug: 'top-5-spices', category: 'Market Trends', category_slug: 'market-trends', featured_image: 'https://images.unsplash.com/photo-1615484477201-cb8633783a60?w=600&q=80', short_description: 'An analysis of the most sought-after Indian spices in the international market.', published_date: '2026-07-01' },
-      { id: 2, title: 'How We Maintain Food Safety Standards', slug: 'food-safety-standards', category: 'Company News', category_slug: 'company-news', featured_image: 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=600&q=80', short_description: 'A deep dive into our quality control processes and certifications.', published_date: '2026-06-28' },
-      { id: 3, title: 'Benefits of Dehydrated Garlic', slug: 'benefits-dehydrated-garlic', category: 'Product Insights', category_slug: 'product-insights', featured_image: 'https://images.unsplash.com/photo-1596647901016-1f6b1587d46c?w=600&q=80', short_description: 'Why more food manufacturers are switching to dehydrated garlic powder.', published_date: '2026-06-20' },
-      { id: 4, title: 'Navigating European Import Laws', slug: 'european-import-laws', category: 'Export Guides', category_slug: 'export-guides', featured_image: 'https://images.unsplash.com/photo-1518568740560-333181a1796a?w=600&q=80', short_description: 'Everything you need to know about exporting agriculture products to the EU.', published_date: '2026-06-10' },
-      { id: 5, title: 'Sustainable Farming Practices', slug: 'sustainable-farming', category: 'Company News', category_slug: 'company-news', featured_image: 'https://images.unsplash.com/photo-1599940778173-e276d4acb2bf?w=600&q=80', short_description: 'How BiteExport partners with local farmers for sustainable agriculture.', published_date: '2026-06-05' },
-      { id: 6, title: 'The Rise of Ready-to-Eat Meals', slug: 'ready-to-eat-meals', category: 'Market Trends', category_slug: 'market-trends', featured_image: 'https://images.unsplash.com/photo-1615485925761-4be66a01b7a2?w=600&q=80', short_description: 'How the global shift towards convenience is driving dehydrated ingredient sales.', published_date: '2026-05-28' },
+      { id: 1, title: 'Top 5 Spices in Demand Globally', slug: 'top-5-spices', category: 'Market Trends', category_slug: 'market-trends', featured_image: 'https://images.unsplash.com/photo-1615484477201-cb8633783a60?w=600&q=80', short_description: 'An analysis of the most sought-after Indian spices in the international market.', published_date: '2026-07-01', reading_time: '4 min read', trending: true, author: 'Dhruv Rajapara' },
+      { id: 2, title: 'How We Maintain Food Safety Standards', slug: 'food-safety-standards', category: 'Company News', category_slug: 'company-news', featured_image: 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=600&q=80', short_description: 'A deep dive into our quality control processes and certifications.', published_date: '2026-06-28', reading_time: '6 min read', trending: true, author: 'Aisha Sharma' },
+      { id: 3, title: 'Benefits of Dehydrated Garlic', slug: 'benefits-dehydrated-garlic', category: 'Product Insights', category_slug: 'product-insights', featured_image: 'https://images.unsplash.com/photo-1596647901016-1f6b1587d46c?w=600&q=80', short_description: 'Why more food manufacturers are switching to dehydrated garlic powder.', published_date: '2026-06-20', reading_time: '3 min read', trending: false, author: 'Rohan Mehta' },
+      { id: 4, title: 'Navigating European Import Laws', slug: 'european-import-laws', category: 'Export Guides', category_slug: 'export-guides', featured_image: 'https://images.unsplash.com/photo-1518568740560-333181a1796a?w=600&q=80', short_description: 'Everything you need to know about exporting agriculture products to the EU.', published_date: '2026-06-10', reading_time: '8 min read', trending: true, author: 'Dhruv Rajapara' },
+      { id: 5, title: 'Sustainable Farming Practices', slug: 'sustainable-farming', category: 'Company News', category_slug: 'company-news', featured_image: 'https://images.unsplash.com/photo-1599940778173-e276d4acb2bf?w=600&q=80', short_description: 'How BiteExport partners with local farmers for sustainable agriculture.', published_date: '2026-06-05', reading_time: '5 min read', trending: false, author: 'Priya Patel' },
+      { id: 6, title: 'The Rise of Ready-to-Eat Meals', slug: 'ready-to-eat-meals', category: 'Market Trends', category_slug: 'market-trends', featured_image: 'https://images.unsplash.com/photo-1615485925761-4be66a01b7a2?w=600&q=80', short_description: 'How the global shift towards convenience is driving dehydrated ingredient sales.', published_date: '2026-05-28', reading_time: '4 min read', trending: true, author: 'Dhruv Rajapara' },
+      { id: 7, title: 'Choosing the Right Packaging for Exports', slug: 'choosing-packaging-exports', category: 'Export Guides', category_slug: 'export-guides', featured_image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=600&q=80', short_description: 'A comprehensive guide to moisture-proof packaging for dehydrated vegetables.', published_date: '2026-05-15', reading_time: '7 min read', trending: false, author: 'Rohan Mehta' },
+      { id: 8, title: 'Understanding Phytosanitary Certificates', slug: 'understanding-phytosanitary', category: 'Export Guides', category_slug: 'export-guides', featured_image: 'https://images.unsplash.com/photo-1589829085413-56de8ae18c73?w=600&q=80', short_description: 'Why you need a phytosanitary certificate and how to obtain one.', published_date: '2026-05-10', reading_time: '5 min read', trending: false, author: 'Dhruv Rajapara' },
+      { id: 9, title: 'Top Importers of Dehydrated Onion', slug: 'top-importers-onion', category: 'Market Trends', category_slug: 'market-trends', featured_image: 'https://images.unsplash.com/photo-1518568740560-333181a1796a?w=600&q=80', short_description: 'A look at the countries importing the most dehydrated onion in 2026.', published_date: '2026-05-02', reading_time: '4 min read', trending: false, author: 'Aisha Sharma' },
+      { id: 10, title: 'How Climate Change Affects Crop Yields', slug: 'climate-change-crops', category: 'Product Insights', category_slug: 'product-insights', featured_image: 'https://images.unsplash.com/photo-1599940778173-e276d4acb2bf?w=600&q=80', short_description: 'Analyzing the impact of changing weather patterns on global spice production.', published_date: '2026-04-20', reading_time: '6 min read', trending: true, author: 'Priya Patel' },
+      { id: 11, title: 'Our New Facility in Gujarat', slug: 'new-facility-gujarat', category: 'Company News', category_slug: 'company-news', featured_image: 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=600&q=80', short_description: 'BiteExport expands operations with a state-of-the-art processing facility.', published_date: '2026-04-15', reading_time: '3 min read', trending: false, author: 'Rohan Mehta' },
+      { id: 12, title: 'Why Buy Dehydrated vs Fresh?', slug: 'dehydrated-vs-fresh', category: 'Product Insights', category_slug: 'product-insights', featured_image: 'https://images.unsplash.com/photo-1596647901016-1f6b1587d46c?w=600&q=80', short_description: 'A cost-benefit analysis of dehydrated vegetables for restaurant chains.', published_date: '2026-04-05', reading_time: '5 min read', trending: false, author: 'Dhruv Rajapara' },
     ];
 
     let filtered = allBlogs;
@@ -485,6 +494,7 @@ export const fetchBlogs = async (filters = {}) => {
 
 export const fetchBlogBySlug = async (slug) => {
   try {
+    throw new Error('Bypass fetch for instant load during dev');
     const response = await fetch(`/api/blogs/${slug}`);
     const contentType = response.headers.get("content-type");
     if (!response.ok || !contentType || !contentType.includes("application/json")) {
@@ -504,7 +514,12 @@ export const fetchBlogBySlug = async (slug) => {
       featured_image: 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=1200&q=80',
       short_description: 'Discover the latest regulations, packaging standards, and global demand trends for exporting high-quality dehydrated vegetables to Europe and North America.',
       published_date: '2026-06-15',
+      reading_time: '8 min read',
+      views: '12,450',
       author: 'Dhruv Rajapara',
+      author_image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&q=80',
+      author_designation: 'Head of Export Operations',
+      author_bio: 'Dhruv has over 15 years of experience in the global agricultural export market, specializing in dehydrated vegetables and international food safety regulations.',
       content: `
         <h2>The Global Demand for Dehydrated Vegetables</h2>
         <p>In recent years, the global market for dehydrated vegetables has experienced unprecedented growth. Driven by the rising demand for convenience foods, long shelf-life ingredients, and emergency food supplies, exporting dehydrated onions, garlic, and tomatoes has never been more lucrative.</p>
@@ -536,6 +551,7 @@ export const fetchBlogBySlug = async (slug) => {
 
 export const fetchRelatedBlogs = async (categorySlug) => {
   try {
+    throw new Error('Bypass fetch for instant load during dev');
     const response = await fetch(`/api/blogs/related/${categorySlug}`);
     const contentType = response.headers.get("content-type");
     if (!response.ok || !contentType || !contentType.includes("application/json")) {
@@ -545,9 +561,10 @@ export const fetchRelatedBlogs = async (categorySlug) => {
     return data.data;
   } catch (error) {
     return [
-      { id: 1, title: 'Top 5 Spices in Demand Globally', slug: 'top-5-spices', category: 'Market Trends', category_slug: 'market-trends', featured_image: 'https://images.unsplash.com/photo-1615484477201-cb8633783a60?w=600&q=80', short_description: 'An analysis of the most sought-after Indian spices in the international market.', published_date: '2026-07-01' },
-      { id: 2, title: 'How We Maintain Food Safety Standards', slug: 'food-safety-standards', category: 'Company News', category_slug: 'company-news', featured_image: 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=600&q=80', short_description: 'A deep dive into our quality control processes and certifications.', published_date: '2026-06-28' },
-      { id: 3, title: 'Benefits of Dehydrated Garlic', slug: 'benefits-dehydrated-garlic', category: 'Product Insights', category_slug: 'product-insights', featured_image: 'https://images.unsplash.com/photo-1596647901016-1f6b1587d46c?w=600&q=80', short_description: 'Why more food manufacturers are switching to dehydrated garlic powder.', published_date: '2026-06-20' }
+      { id: 1, title: 'Top 5 Spices in Demand Globally', slug: 'top-5-spices', category: 'Market Trends', category_slug: 'market-trends', featured_image: 'https://images.unsplash.com/photo-1615484477201-cb8633783a60?w=600&q=80', short_description: 'An analysis of the most sought-after Indian spices in the international market.', published_date: '2026-07-01', reading_time: '4 min read', trending: true, author: 'Dhruv Rajapara' },
+      { id: 2, title: 'How We Maintain Food Safety Standards', slug: 'food-safety-standards', category: 'Company News', category_slug: 'company-news', featured_image: 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=600&q=80', short_description: 'A deep dive into our quality control processes and certifications.', published_date: '2026-06-28', reading_time: '6 min read', trending: true, author: 'Aisha Sharma' },
+      { id: 3, title: 'Benefits of Dehydrated Garlic', slug: 'benefits-dehydrated-garlic', category: 'Product Insights', category_slug: 'product-insights', featured_image: 'https://images.unsplash.com/photo-1596647901016-1f6b1587d46c?w=600&q=80', short_description: 'Why more food manufacturers are switching to dehydrated garlic powder.', published_date: '2026-06-20', reading_time: '3 min read', trending: false, author: 'Rohan Mehta' },
+      { id: 4, title: 'Navigating European Import Laws', slug: 'european-import-laws', category: 'Export Guides', category_slug: 'export-guides', featured_image: 'https://images.unsplash.com/photo-1518568740560-333181a1796a?w=600&q=80', short_description: 'Everything you need to know about exporting agriculture products to the EU.', published_date: '2026-06-10', reading_time: '8 min read', trending: true, author: 'Dhruv Rajapara' }
     ];
   }
 };

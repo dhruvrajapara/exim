@@ -2,8 +2,20 @@ export default function BlogContent({ content }) {
   if (!content) return null;
 
   return (
-    <div className="prose prose-lg max-w-none prose-headings:font-rubik prose-headings:font-bold prose-headings:text-dark prose-h2:text-[28px] md:prose-h2:text-[32px] prose-h2:mt-12 prose-h2:mb-6 prose-h3:text-[22px] md:prose-h3:text-[24px] prose-h3:mt-8 prose-h3:mb-4 prose-p:text-gray-600 prose-p:leading-relaxed prose-p:mb-6 prose-a:text-[#3599FF] hover:prose-a:text-[#0463C3] prose-a:no-underline prose-strong:text-dark prose-strong:font-semibold prose-ul:list-disc prose-ul:pl-6 prose-ul:mb-6 prose-li:text-gray-600 prose-li:mb-2 prose-blockquote:border-l-4 prose-blockquote:border-primary prose-blockquote:bg-gray-50 prose-blockquote:pl-6 prose-blockquote:py-4 prose-blockquote:my-8 prose-blockquote:text-gray-700 prose-blockquote:font-medium prose-blockquote:italic prose-blockquote:rounded-r-lg">
-      <div dangerouslySetInnerHTML={{ __html: content }} />
-    </div>
+    <article 
+      className="text-gray-600 text-[18px] leading-[1.9] max-w-none 
+                 [&>h2]:text-[32px] [&>h2]:font-bold [&>h2]:text-dark [&>h2]:mb-6 [&>h2]:mt-12 [&>h2]:font-rubik
+                 [&>h3]:text-[24px] [&>h3]:font-bold [&>h3]:text-dark [&>h3]:mb-4 [&>h3]:mt-8 [&>h3]:font-rubik
+                 [&>p]:mb-6
+                 [&>ul]:list-disc [&>ul]:pl-6 [&>ul]:mb-6 [&>ul>li]:mb-2 [&>ul>li]:pl-2
+                 [&>ol]:list-decimal [&>ol]:pl-6 [&>ol]:mb-6 [&>ol>li]:mb-2
+                 [&>blockquote]:border-l-4 [&>blockquote]:border-[#0B63CE] [&>blockquote]:pl-6 [&>blockquote]:py-2 [&>blockquote]:my-8 [&>blockquote]:bg-[#EAF4FF] [&>blockquote]:rounded-r-[12px] [&>blockquote]:text-dark [&>blockquote]:italic [&>blockquote]:font-medium
+                 [&>img]:rounded-[20px] [&>img]:shadow-md [&>img]:my-8 [&>img]:w-full
+                 [&>pre]:bg-[#00143A] [&>pre]:text-white [&>pre]:p-6 [&>pre]:rounded-[16px] [&>pre]:my-8 [&>pre]:overflow-x-auto
+                 [&>code]:bg-gray-100 [&>code]:text-[#0B63CE] [&>code]:px-2 [&>code]:py-1 [&>code]:rounded-[6px] [&>code]:text-[15px]
+                 [&>strong]:text-dark [&>strong]:font-bold
+                 [&>a]:text-[#0B63CE] [&>a]:underline [&>a]:underline-offset-4 hover:[&>a]:text-dark"
+      dangerouslySetInnerHTML={{ __html: content }}
+    />
   );
 }
