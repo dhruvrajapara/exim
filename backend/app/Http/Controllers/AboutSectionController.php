@@ -46,7 +46,22 @@ class AboutSectionController extends Controller
                 $oldPath = str_replace('/storage/', '', $aboutSection->image_path);
                 \Illuminate\Support\Facades\Storage::disk('public')->delete($oldPath);
             }
-            $path = $request->file('image')->store('about-section', 'public');
+            
+            $imageFile = $request->file('image');
+            $manager = \Intervention\Image\ImageManager::gd();
+            $img = $manager->read($imageFile->getRealPath());
+            
+            // Resize to 75% resolution
+            $newWidth = intval($img->width() * 0.75);
+            $img->scale(width: $newWidth);
+            
+            // Convert to WebP format
+            $encoded = $img->toWebp(90);
+            
+            $filename = uniqid('about_') . '.webp';
+            $path = 'about-section/' . $filename;
+            
+            \Illuminate\Support\Facades\Storage::disk('public')->put($path, $encoded->toString());
             $validated['image_path'] = '/storage/' . $path;
         }
 
