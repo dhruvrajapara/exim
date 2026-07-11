@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\HeroSlide;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\ImageManager;
 
 class HeroSlideController extends Controller
 {
@@ -48,7 +49,21 @@ class HeroSlideController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('hero-slides', 'public');
+            $imageFile = $request->file('image');
+            $manager = ImageManager::gd();
+            $img = $manager->read($imageFile->getRealPath());
+            
+            // Resize to 75% resolution
+            $newWidth = intval($img->width() * 0.75);
+            $img->scale(width: $newWidth);
+            
+            // Convert to WebP format
+            $encoded = $img->toWebp(90);
+            
+            $filename = uniqid('hero_') . '.webp';
+            $path = 'hero-slides/' . $filename;
+            
+            Storage::disk('public')->put($path, $encoded->toString());
             $validated['image_path'] = '/storage/' . $path;
         }
 
@@ -96,7 +111,21 @@ class HeroSlideController extends Controller
                 $oldPath = str_replace('/storage/', '', $slide->image_path);
                 Storage::disk('public')->delete($oldPath);
             }
-            $path = $request->file('image')->store('hero-slides', 'public');
+            $imageFile = $request->file('image');
+            $manager = ImageManager::gd();
+            $img = $manager->read($imageFile->getRealPath());
+            
+            // Resize to 75% resolution
+            $newWidth = intval($img->width() * 0.75);
+            $img->scale(width: $newWidth);
+            
+            // Convert to WebP format
+            $encoded = $img->toWebp(90);
+            
+            $filename = uniqid('hero_') . '.webp';
+            $path = 'hero-slides/' . $filename;
+            
+            Storage::disk('public')->put($path, $encoded->toString());
             $validated['image_path'] = '/storage/' . $path;
         }
 

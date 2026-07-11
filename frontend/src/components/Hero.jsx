@@ -5,16 +5,27 @@ import { fetchHeroSlides } from '../services/api';
 import Reveal from './Reveal';
 
 export default function Hero() {
-  const [slides, setSlides] = useState([]);
+  const [slides, setSlides] = useState(() => {
+    const cached = localStorage.getItem('heroSlides_cache');
+    return cached ? JSON.parse(cached) : [];
+  });
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(() => {
+    return !localStorage.getItem('heroSlides_cache');
+  });
 
   useEffect(() => {
     const loadSlides = async () => {
-      const data = await fetchHeroSlides();
-      setSlides(data);
-      setIsLoading(false);
+      try {
+        const data = await fetchHeroSlides();
+        setSlides(data);
+        setIsLoading(false);
+        localStorage.setItem('heroSlides_cache', JSON.stringify(data));
+      } catch (error) {
+        console.error("Failed to fetch slides:", error);
+        setIsLoading(false);
+      }
     };
     loadSlides();
   }, []);
@@ -80,7 +91,8 @@ export default function Hero() {
                 src={slide.image_path}
                 alt={slide.image_alt}
                 title={slide.image_title}
-                loading="lazy"
+                loading={index === 0 ? 'eager' : 'lazy'}
+                fetchpriority={index === 0 ? 'high' : 'auto'}
                 className="w-full h-full object-cover animate-[scale-in_10s_ease-out_forwards]"
                 style={{ transform: isActive ? 'scale(1.05)' : 'scale(1)', transition: 'transform 5s ease-out' }}
               />
