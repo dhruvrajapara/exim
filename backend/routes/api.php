@@ -22,4 +22,7 @@ Route::prefix('admin')->group(function () {
     Route::post('/hero-slides', [HeroSlideController::class, 'store']);
     Route::put('/hero-slides/{id}', [HeroSlideController::class, 'update']); // Use POST with _method=PUT to support multipart/form-data
     Route::delete('/hero-slides/{id}', [HeroSlideController::class, 'destroy']);
+    
+    Route::get('/about-section', [App\Http\Controllers\AboutSectionController::class, 'adminIndex']);
+    Route::put('/about-section/{id}', [App\Http\Controllers\AboutSectionController::class, 'update']);
 });

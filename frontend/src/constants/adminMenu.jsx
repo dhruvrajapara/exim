@@ -35,6 +35,7 @@ export const adminMenu = [
         icon: <HomeIcon fontSize="small" />,
         children: [
           { title: 'Hero Slider', path: '/admin/website/home/hero-slider' },
+          { title: 'About Section', path: '/admin/website/home/about-section' },
           { title: 'Why Choose Us', path: '/admin/website/home/why-choose-us' },
           { title: 'Statistics Counter', path: '/admin/website/home/statistics' },
           { title: 'Product Categories', path: '/admin/website/home/product-categories' },

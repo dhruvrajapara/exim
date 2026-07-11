@@ -17,6 +17,7 @@ import AdminLayout from './components/admin/AdminLayout';
 import AdminLogin from './pages/admin/AdminLogin';
 import Dashboard from './pages/admin/Dashboard';
 import HeroSlider from './pages/admin/website/home/HeroSlider';
+import AboutSection from './pages/admin/website/home/AboutSection';
 import { useLocation } from 'react-router-dom';
 
 const AdminPlaceholder = () => {
@@ -62,6 +63,7 @@ function App() {
               
               {/* Website Management */}
               <Route path="website/home/hero-slider" element={<HeroSlider />} />
+              <Route path="website/home/about-section" element={<AboutSection />} />
               
               <Route path="*" element={<AdminPlaceholder />} />
             </Route>
