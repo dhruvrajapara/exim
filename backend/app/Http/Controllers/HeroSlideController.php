@@ -13,8 +13,8 @@ class HeroSlideController extends Controller
      */
     public function index()
     {
-        // Return max 3 active slides ordered by display_order
-        $slides = HeroSlide::active()->ordered()->take(3)->get();
+        // Return active slides ordered by display_order
+        $slides = HeroSlide::active()->ordered()->get();
         return response()->json(['data' => $slides]);
     }
 
