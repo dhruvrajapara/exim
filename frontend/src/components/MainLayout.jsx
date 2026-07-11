@@ -1,6 +1,7 @@
 import { Outlet as RouterOutlet, useLocation } from 'react-router-dom';
 import Header from './Header';
 import Footer from './Footer';
+import FloatingActionButtons from './FloatingActionButtons';
 
 export default function MainLayout() {
   const location = useLocation();
@@ -15,6 +16,7 @@ export default function MainLayout() {
       </main>
 
       <Footer />
+      <FloatingActionButtons />
     </div>
   );
 }
