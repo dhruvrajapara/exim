@@ -55,8 +55,8 @@ class AboutSectionController extends Controller
             $newWidth = intval($img->width() * 0.75);
             $img->scale(width: $newWidth);
             
-            // Convert to WebP format
-            $encoded = $img->toWebp(90);
+            // Convert to WebP format at 75% quality
+            $encoded = $img->toWebp(75);
             
             $filename = uniqid('about_') . '.webp';
             $path = 'about-section/' . $filename;

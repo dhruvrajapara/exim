@@ -25,4 +25,16 @@ Route::prefix('admin')->group(function () {
     
     Route::get('/about-section', [App\Http\Controllers\AboutSectionController::class, 'adminIndex']);
     Route::put('/about-section/{id}', [App\Http\Controllers\AboutSectionController::class, 'update']);
+
+    // Product Categories
+    Route::get('/product-categories', [App\Http\Controllers\ProductCategoryController::class, 'adminIndex']);
+    Route::post('/product-categories', [App\Http\Controllers\ProductCategoryController::class, 'store']);
+    Route::put('/product-categories/{id}', [App\Http\Controllers\ProductCategoryController::class, 'update']);
+    Route::delete('/product-categories/{id}', [App\Http\Controllers\ProductCategoryController::class, 'destroy']);
+
+    // Section Settings
+    Route::put('/section-settings/{key}', [App\Http\Controllers\SectionSettingController::class, 'update']);
 });
+
+// Public Section Settings Route
+Route::get('/section-settings/{key}', [App\Http\Controllers\SectionSettingController::class, 'index']);

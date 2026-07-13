@@ -127,7 +127,7 @@ export default function About() {
                 src={data.image_path} 
                 alt={data.image_alt || data.heading} 
                 title={data.image_title}
-                loading="lazy"
+                fetchpriority="high"
                 className="relative z-10 w-full h-full object-contain drop-shadow-2xl transition-transform duration-700 ease-out group-hover:scale-105"
               />
 

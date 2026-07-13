@@ -11,12 +11,12 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://127.0.0.1:8000',
+        target: 'http://exim.test/backend/public',
         changeOrigin: true,
         secure: false,
       },
       '/storage': {
-        target: 'http://127.0.0.1:8000',
+        target: 'http://exim.test/backend/public',
         changeOrigin: true,
         secure: false,
       },

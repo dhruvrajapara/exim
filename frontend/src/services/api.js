@@ -12,6 +12,19 @@ export const fetchHeroSlides = async () => {
   }
 };
 
+export const fetchSectionSetting = async (key) => {
+  try {
+    const response = await fetch(`/api/section-settings/${key}`);
+    if (response.ok) {
+      const data = await response.json();
+      return data.data;
+    }
+    return null;
+  } catch (error) {
+    return null;
+  }
+};
+
 export const fetchProductCategories = async () => {
   try {
     const response = await fetch('/api/product-categories');

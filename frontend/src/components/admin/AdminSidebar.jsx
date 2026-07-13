@@ -111,15 +111,7 @@ export default function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
         </div>
 
         <div className="flex-1 overflow-y-auto overflow-x-hidden p-4 scrollbar-hide">
-          <div className="mb-6 px-4 flex items-center gap-3 p-3 bg-gray-50 rounded-xl border border-gray-100">
-            <div className="w-10 h-10 rounded-full bg-[#0B63CE]/10 text-[#0B63CE] flex items-center justify-center font-bold uppercase shadow-sm">
-              {user?.name?.charAt(0) || 'A'}
-            </div>
-            <div className="flex flex-col flex-1 min-w-0">
-              <span className="text-sm font-semibold text-gray-800 truncate">{user?.name}</span>
-              <span className="text-xs text-gray-500 capitalize truncate">{user?.role || 'Administrator'}</span>
-            </div>
-          </div>
+
 
           <nav className="flex flex-col gap-1 pb-20">
             {adminMenu.map((item, index) => (

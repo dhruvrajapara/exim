@@ -1,17 +1,22 @@
 import { useState, useEffect } from 'react';
-import { fetchProductCategories } from '../services/api';
+import { fetchProductCategories, fetchSectionSetting } from '../services/api';
 import { Link } from 'react-router-dom';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import Reveal from './Reveal';
 
 export default function ProductCategories() {
   const [categories, setCategories] = useState([]);
+  const [sectionSetting, setSectionSetting] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const loadData = async () => {
-      const result = await fetchProductCategories();
+      const [result, setting] = await Promise.all([
+        fetchProductCategories(),
+        fetchSectionSetting('home_categories')
+      ]);
       setCategories(result);
+      setSectionSetting(setting);
       setIsLoading(false);
     };
     loadData();
@@ -44,13 +49,13 @@ export default function ProductCategories() {
         {/* Section Header */}
         <Reveal delay={0} className="text-center mb-10 md:mb-12">
           <span className="text-primary font-semibold tracking-widest uppercase text-sm mb-2 block">
-            OUR CATEGORIES
+            {sectionSetting?.subtitle || "OUR CATEGORIES"}
           </span>
           <h2 className="text-[32px] md:text-[38px] lg:text-[44px] font-bold text-dark leading-tight mb-4">
-            Premium Export Products
+            {sectionSetting?.title || "Premium Export Products"}
           </h2>
-          <p className="text-[16px] text-text max-w-2xl mx-auto leading-relaxed">
-            Explore our diverse range of high-quality agricultural exports. We ensure international standards of quality, packing, and timely delivery.
+          <p className="text-[16px] text-text max-w-2xl mx-auto leading-relaxed whitespace-pre-wrap">
+            {sectionSetting?.description || "Explore our diverse range of high-quality agricultural exports. We ensure international standards of quality, packing, and timely delivery."}
           </p>
         </Reveal>
 
