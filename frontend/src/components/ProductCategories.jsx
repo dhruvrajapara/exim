@@ -12,7 +12,7 @@ export default function ProductCategories() {
   useEffect(() => {
     const loadData = async () => {
       const [result, setting] = await Promise.all([
-        fetchProductCategories(),
+        fetchProductCategories('?home=1'),
         fetchSectionSetting('home_categories')
       ]);
       setCategories(result);

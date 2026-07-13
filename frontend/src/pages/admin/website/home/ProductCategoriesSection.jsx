@@ -1,12 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Typography, TextField, Button, Paper, CircularProgress, Snackbar, Alert } from '@mui/material';
+import { 
+  Box, Typography, TextField, Button, Paper, CircularProgress, 
+  Snackbar, Alert, MenuItem, Select, InputLabel, FormControl, 
+  OutlinedInput, Checkbox, ListItemText 
+} from '@mui/material';
 
 export default function ProductCategoriesSection() {
   const [formData, setFormData] = useState({
     subtitle: '',
     title: '',
-    description: ''
+    description: '',
+    extra_data: {
+      limit: 'All',
+      selected_categories: []
+    }
   });
+  const [allCategories, setAllCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
@@ -14,24 +23,37 @@ export default function ProductCategoriesSection() {
   const handleCloseSnackbar = () => setSnackbar({ ...snackbar, open: false });
 
   useEffect(() => {
-    fetchSettings();
+    fetchData();
   }, []);
 
-  const fetchSettings = async () => {
+  const fetchData = async () => {
     try {
-      const response = await fetch('/api/section-settings/home_categories');
-      if (response.ok) {
-        const data = await response.json();
-        if (data.data) {
-          setFormData({
-            subtitle: data.data.subtitle || '',
-            title: data.data.title || '',
-            description: data.data.description || ''
-          });
-        }
+      const [settingsRes, categoriesRes] = await Promise.all([
+        fetch('/api/section-settings/home_categories'),
+        fetch('/api/admin/product-categories')
+      ]);
+
+      let settingsData = null;
+      if (settingsRes.ok) {
+        const resJson = await settingsRes.json();
+        settingsData = resJson.data;
+      }
+
+      if (categoriesRes.ok) {
+        const catJson = await categoriesRes.json();
+        setAllCategories(catJson.data || []);
+      }
+
+      if (settingsData) {
+        setFormData({
+          subtitle: settingsData.subtitle || '',
+          title: settingsData.title || '',
+          description: settingsData.description || '',
+          extra_data: settingsData.extra_data || { limit: 'All', selected_categories: [] }
+        });
       }
     } catch (error) {
-      console.error('Failed to fetch section settings:', error);
+      console.error('Failed to fetch data:', error);
     } finally {
       setLoading(false);
     }
@@ -42,6 +64,17 @@ export default function ProductCategoriesSection() {
     setFormData({
       ...formData,
       [name]: value
+    });
+  };
+
+  const handleExtraDataChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      extra_data: {
+        ...formData.extra_data,
+        [name]: value
+      }
     });
   };
 
@@ -81,7 +114,7 @@ export default function ProductCategoriesSection() {
       
       <Paper sx={{ p: 3, maxWidth: 800 }}>
         <Typography variant="body1" sx={{ mb: 3, color: 'text.secondary' }}>
-          Update the text that appears above the Product Categories grid on the Home Page.
+          Update the text and configuration for the Product Categories grid on the Home Page.
         </Typography>
 
         <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
@@ -110,7 +143,46 @@ export default function ProductCategoriesSection() {
             rows={4} 
           />
 
-          <Box>
+          <Typography variant="h6" sx={{ mt: 2 }}>Display Settings</Typography>
+          
+          <FormControl fullWidth>
+            <InputLabel>Category Limit</InputLabel>
+            <Select
+              name="limit"
+              value={formData.extra_data?.limit || 'All'}
+              onChange={handleExtraDataChange}
+              label="Category Limit"
+            >
+              <MenuItem value="All">Show All Categories</MenuItem>
+              <MenuItem value="4">Show 4 Categories</MenuItem>
+              <MenuItem value="8">Show 8 Categories</MenuItem>
+              <MenuItem value="12">Show 12 Categories</MenuItem>
+            </Select>
+          </FormControl>
+
+          <FormControl fullWidth>
+            <InputLabel>Select Specific Categories (Optional)</InputLabel>
+            <Select
+              multiple
+              name="selected_categories"
+              value={formData.extra_data?.selected_categories || []}
+              onChange={handleExtraDataChange}
+              input={<OutlinedInput label="Select Specific Categories (Optional)" />}
+              renderValue={(selected) => selected.map(id => allCategories.find(c => c.id === id)?.name).join(', ')}
+            >
+              {allCategories.map((category) => (
+                <MenuItem key={category.id} value={category.id}>
+                  <Checkbox checked={(formData.extra_data?.selected_categories || []).indexOf(category.id) > -1} />
+                  <ListItemText primary={category.name} />
+                </MenuItem>
+              ))}
+            </Select>
+            <Typography variant="caption" sx={{ mt: 1, color: 'text.secondary' }}>
+              If you select specific categories, only these will be shown (up to the limit). If left empty, it will show categories automatically based on their display order.
+            </Typography>
+          </FormControl>
+
+          <Box sx={{ mt: 2 }}>
             <Button 
               type="submit" 
               variant="contained" 

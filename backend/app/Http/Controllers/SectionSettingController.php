@@ -25,6 +25,7 @@ class SectionSettingController extends Controller
             'subtitle' => 'nullable|string|max:255',
             'title' => 'nullable|string|max:255',
             'description' => 'nullable|string',
+            'extra_data' => 'nullable|array',
         ]);
 
         $setting = SectionSetting::updateOrCreate(

@@ -25,9 +25,9 @@ export const fetchSectionSetting = async (key) => {
   }
 };
 
-export const fetchProductCategories = async () => {
+export const fetchProductCategories = async (query = '') => {
   try {
-    const response = await fetch('/api/product-categories');
+    const response = await fetch(`/api/product-categories${query}`);
     const contentType = response.headers.get("content-type");
     if (!response.ok || !contentType || !contentType.includes("application/json")) {
       throw new Error('Fallback triggered');

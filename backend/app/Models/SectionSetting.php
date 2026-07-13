@@ -11,5 +11,10 @@ class SectionSetting extends Model
         'subtitle',
         'title',
         'description',
+        'extra_data',
+    ];
+
+    protected $casts = [
+        'extra_data' => 'array',
     ];
 }

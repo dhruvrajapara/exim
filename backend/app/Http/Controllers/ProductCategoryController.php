@@ -13,10 +13,27 @@ class ProductCategoryController extends Controller
     /**
      * Display a listing of the active resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        // Return all active categories ordered by display_order
-        $categories = ProductCategory::active()->ordered()->get();
+        $query = ProductCategory::active()->ordered();
+
+        if ($request->query('home') == '1') {
+            $setting = \App\Models\SectionSetting::where('section_key', 'home_categories')->first();
+            if ($setting && $setting->extra_data) {
+                if (isset($setting->extra_data['selected_categories']) && is_array($setting->extra_data['selected_categories']) && count($setting->extra_data['selected_categories']) > 0) {
+                    $query->whereIn('id', $setting->extra_data['selected_categories']);
+                }
+                
+                if (isset($setting->extra_data['limit']) && $setting->extra_data['limit'] !== 'All') {
+                    $limit = intval($setting->extra_data['limit']);
+                    if ($limit > 0) {
+                        $query->limit($limit);
+                    }
+                }
+            }
+        }
+
+        $categories = $query->get();
         return response()->json(['data' => $categories]);
     }
 
@@ -33,8 +50,8 @@ class ProductCategoryController extends Controller
             'slug' => 'required|string|max:255|unique:product_categories',
             'description' => 'nullable|string',
             'is_active' => 'boolean',
-            'display_order' => 'integer',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'display_order' => 'nullable|integer',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
         ]);
 
         if ($request->hasFile('image')) {
@@ -45,6 +62,10 @@ class ProductCategoryController extends Controller
             Storage::disk('public')->put($filename, (string) $encoded);
             $validated['image_path'] = '/storage/' . $filename;
         }
+
+        $validated['image_path'] = $validated['image_path'] ?? '';
+        $validated['image_alt'] = $validated['image_alt'] ?? $validated['name'];
+        $validated['image_title'] = $validated['image_title'] ?? '';
 
         $category = ProductCategory::create($validated);
         return response()->json(['data' => $category, 'message' => 'Category created successfully']);
@@ -59,8 +80,8 @@ class ProductCategoryController extends Controller
             'slug' => 'required|string|max:255|unique:product_categories,slug,' . $id,
             'description' => 'nullable|string',
             'is_active' => 'boolean',
-            'display_order' => 'integer',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'display_order' => 'nullable|integer',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
         ]);
 
         if ($request->hasFile('image')) {
