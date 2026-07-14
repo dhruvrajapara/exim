@@ -19,7 +19,9 @@ import Dashboard from './pages/admin/Dashboard';
 import HeroSlider from './pages/admin/website/home/HeroSlider';
 import AboutSection from './pages/admin/website/home/AboutSection';
 import ProductCategoriesSection from './pages/admin/website/home/ProductCategoriesSection';
+import FeaturedProductsSection from './pages/admin/website/home/FeaturedProductsSection';
 import ProductCategories from './pages/admin/website/products/ProductCategories';
+import Products from './pages/admin/website/products/Products';
 import { useLocation } from 'react-router-dom';
 
 const AdminPlaceholder = () => {
@@ -67,7 +69,9 @@ function App() {
               <Route path="website/home/hero-slider" element={<HeroSlider />} />
               <Route path="website/home/about-section" element={<AboutSection />} />
               <Route path="website/home/product-categories-section" element={<ProductCategoriesSection />} />
+              <Route path="website/home/featured-products-section" element={<FeaturedProductsSection />} />
               <Route path="website/products/categories" element={<ProductCategories />} />
+              <Route path="website/products/list" element={<Products />} />
               
               <Route path="*" element={<AdminPlaceholder />} />
             </Route>

@@ -35,7 +35,7 @@ export const adminMenu = [
       { title: 'Product Categories', path: '/admin/website/home/product-categories-section' },
       { title: 'Why Choose Us', path: '/admin/website/home/why-choose-us' },
       { title: 'Statistics Counter', path: '/admin/website/home/statistics' },
-      { title: 'Featured Products', path: '/admin/website/home/featured-products' },
+      { title: 'Featured Products', path: '/admin/website/home/featured-products-section' },
       { title: 'Export Countries', path: '/admin/website/home/export-countries' },
       { title: 'Certifications', path: '/admin/website/home/certifications' },
       { title: 'Testimonials', path: '/admin/website/home/testimonials' },
@@ -64,7 +64,7 @@ export const adminMenu = [
     icon: <InventoryIcon fontSize="small" />,
     children: [
       { title: 'Manage Categories', path: '/admin/website/products/categories' },
-      { title: 'Manage Products', path: '/admin/website/products/manage' },
+      { title: 'Manage Products', path: '/admin/website/products/list' },
       { title: 'Inquiry List', path: '/admin/website/products/inquiries' },
     ],
   },

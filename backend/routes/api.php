@@ -32,6 +32,12 @@ Route::prefix('admin')->group(function () {
     Route::put('/product-categories/{id}', [App\Http\Controllers\ProductCategoryController::class, 'update']);
     Route::delete('/product-categories/{id}', [App\Http\Controllers\ProductCategoryController::class, 'destroy']);
 
+    // Products
+    Route::get('/products', [App\Http\Controllers\ProductController::class, 'adminIndex']);
+    Route::post('/products', [App\Http\Controllers\ProductController::class, 'store']);
+    Route::put('/products/{id}', [App\Http\Controllers\ProductController::class, 'update']);
+    Route::delete('/products/{id}', [App\Http\Controllers\ProductController::class, 'destroy']);
+
     // Section Settings
     Route::put('/section-settings/{key}', [App\Http\Controllers\SectionSettingController::class, 'update']);
 });

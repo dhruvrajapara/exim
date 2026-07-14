@@ -1,17 +1,32 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { fetchFeaturedProducts } from '../services/api';
+import { fetchFeaturedProducts, fetchSectionSetting } from '../services/api';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import Reveal from './Reveal';
 
 export default function FeaturedProducts() {
   const [products, setProducts] = useState([]);
+  const [sectionData, setSectionData] = useState({
+    subtitle: 'TOP EXPORTS',
+    title: 'Featured Products',
+    description: 'Discover our highest demanded export products, carefully processed and packaged to meet stringent global quality parameters.'
+  });
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const loadData = async () => {
-      const result = await fetchFeaturedProducts();
-      setProducts(result);
+      const [productsResult, sectionResult] = await Promise.all([
+        fetchFeaturedProducts(),
+        fetchSectionSetting('home_featured_products')
+      ]);
+      setProducts(productsResult);
+      if (sectionResult) {
+        setSectionData({
+          subtitle: sectionResult.subtitle || 'TOP EXPORTS',
+          title: sectionResult.title || 'Featured Products',
+          description: sectionResult.description || 'Discover our highest demanded export products, carefully processed and packaged to meet stringent global quality parameters.'
+        });
+      }
       setIsLoading(false);
     };
     loadData();
@@ -48,15 +63,21 @@ export default function FeaturedProducts() {
       <div className="container-custom">
         {/* Section Header */}
         <Reveal delay={0} className="text-center mb-10 md:mb-12">
-          <span className="text-primary font-semibold tracking-widest uppercase text-sm mb-2 block">
-            TOP EXPORTS
-          </span>
-          <h2 className="text-[32px] md:text-[38px] lg:text-[44px] font-bold text-dark leading-tight mb-4">
-            Featured Products
-          </h2>
-          <p className="text-[16px] text-text max-w-2xl mx-auto leading-relaxed">
-            Discover our highest demanded export products, carefully processed and packaged to meet stringent global quality parameters.
-          </p>
+          {sectionData.subtitle && (
+            <span className="text-primary font-semibold tracking-widest uppercase text-sm mb-2 block">
+              {sectionData.subtitle}
+            </span>
+          )}
+          {sectionData.title && (
+            <h2 className="text-[32px] md:text-[38px] lg:text-[44px] font-bold text-dark leading-tight mb-4">
+              {sectionData.title}
+            </h2>
+          )}
+          {sectionData.description && (
+            <p className="text-[16px] text-text max-w-2xl mx-auto leading-relaxed">
+              {sectionData.description}
+            </p>
+          )}
         </Reveal>
 
         {/* Products Grid - Mobile: 2x3 (6 items), Desktop: 4x2 (8 items) */}
