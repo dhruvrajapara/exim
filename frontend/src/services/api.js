@@ -286,60 +286,6 @@ export const fetchVisionMission = async () => {
   }
 };
 
-export const fetchTestimonials = async () => {
-  try {
-    const response = await fetch('/api/testimonials');
-    const contentType = response.headers.get("content-type");
-    if (!response.ok || !contentType || !contentType.includes("application/json")) {
-      throw new Error('Fallback triggered');
-    }
-    const data = await response.json();
-    return data.data;
-  } catch (error) {
-    return [
-      {
-        id: 1,
-        client_name: 'John Doe',
-        company_name: 'Global Fresh Imports',
-        country: 'USA',
-        flag_code: 'us',
-        avatar_url: 'https://i.pravatar.cc/150?img=11',
-        star_rating: 5,
-        review_text: 'BiteExport has been an incredible partner. Their agricultural products are of the highest quality and consistently delivered on time.'
-      },
-      {
-        id: 2,
-        client_name: 'Maria Garcia',
-        company_name: 'Mercado European Foods',
-        country: 'Spain',
-        flag_code: 'es',
-        avatar_url: 'https://i.pravatar.cc/150?img=47',
-        star_rating: 5,
-        review_text: 'We highly recommend their services. The stringent quality control and transparent documentation make importing completely stress-free.'
-      },
-      {
-        id: 3,
-        client_name: 'Liam Chen',
-        company_name: 'Asia Pacific Traders',
-        country: 'Singapore',
-        flag_code: 'sg',
-        avatar_url: 'https://i.pravatar.cc/150?img=15',
-        star_rating: 4,
-        review_text: 'Excellent packaging and competitive pricing. The support team is highly responsive to all our international trade inquiries.'
-      },
-      {
-        id: 4,
-        client_name: 'Sarah Smith',
-        company_name: 'UK Organics Ltd',
-        country: 'UK',
-        flag_code: 'gb',
-        avatar_url: 'https://i.pravatar.cc/150?img=32',
-        star_rating: 5,
-        review_text: 'Their commitment to sustainability and quality is evident in every shipment. Truly a reliable long-term export partner.'
-      }
-    ];
-  }
-};
 
 export const fetchTeamMembers = async () => {
   try {
@@ -648,6 +594,7 @@ export const createCertification = async (formData) => {
   try {
     const response = await fetch('/api/admin/certifications', {
       method: 'POST',
+      headers: { 'Accept': 'application/json' },
       body: formData, // FormData handles its own content-type for files
     });
     const data = await response.json();
@@ -663,6 +610,7 @@ export const updateCertification = async (id, formData) => {
   try {
     const response = await fetch(`/api/admin/certifications/${id}`, {
       method: 'POST', // Using POST for form-data containing files, backend handles method spoofing or interprets correctly
+      headers: { 'Accept': 'application/json' },
       body: formData,
     });
     const data = await response.json();
@@ -683,6 +631,76 @@ export const deleteCertification = async (id) => {
     return await response.json();
   } catch (error) {
     console.error('Error deleting certification:', error);
+    throw error;
+  }
+};
+
+// Admin Testimonial API Methods
+export const fetchTestimonials = async () => {
+  try {
+    const response = await fetch('/api/testimonials');
+    if (!response.ok) throw new Error('Failed to fetch testimonials');
+    const data = await response.json();
+    return data.data;
+  } catch (error) {
+    console.error('Error fetching public testimonials:', error);
+    return [];
+  }
+};
+
+export const fetchAdminTestimonials = async () => {
+  try {
+    const response = await fetch('/api/admin/testimonials');
+    if (!response.ok) throw new Error('Failed to fetch admin testimonials');
+    const data = await response.json();
+    return data.data;
+  } catch (error) {
+    console.error('Error fetching admin testimonials:', error);
+    throw error;
+  }
+};
+
+export const createTestimonial = async (formData) => {
+  try {
+    const response = await fetch('/api/admin/testimonials', {
+      method: 'POST',
+      headers: { 'Accept': 'application/json' },
+      body: formData,
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message || 'Failed to create testimonial');
+    return data;
+  } catch (error) {
+    console.error('Error creating testimonial:', error);
+    throw error;
+  }
+};
+
+export const updateTestimonial = async (id, formData) => {
+  try {
+    const response = await fetch(`/api/admin/testimonials/${id}`, {
+      method: 'POST',
+      headers: { 'Accept': 'application/json' },
+      body: formData,
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message || 'Failed to update testimonial');
+    return data;
+  } catch (error) {
+    console.error('Error updating testimonial:', error);
+    throw error;
+  }
+};
+
+export const deleteTestimonial = async (id) => {
+  try {
+    const response = await fetch(`/api/admin/testimonials/${id}`, {
+      method: 'DELETE',
+    });
+    if (!response.ok) throw new Error('Failed to delete testimonial');
+    return await response.json();
+  } catch (error) {
+    console.error('Error deleting testimonial:', error);
     throw error;
   }
 };

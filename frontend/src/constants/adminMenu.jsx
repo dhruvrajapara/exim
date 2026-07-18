@@ -32,6 +32,11 @@ export const adminMenu = [
     icon: <VerifiedIcon fontSize="small" />,
   },
   {
+    title: 'Testimonials',
+    path: '/admin/testimonials',
+    icon: <StarIcon fontSize="small" />,
+  },
+  {
     title: 'Home Page',
     icon: <HomeIcon fontSize="small" />,
     children: [

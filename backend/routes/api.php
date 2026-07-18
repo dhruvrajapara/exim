@@ -15,6 +15,7 @@ Route::get('/products/{slug}', [App\Http\Controllers\ProductController::class, '
 Route::get('/about-section', [App\Http\Controllers\AboutSectionController::class, 'index']);
 Route::get('/featured-products', [App\Http\Controllers\ProductController::class, 'featured']);
 Route::get('/certifications', [App\Http\Controllers\CertificationController::class, 'index']);
+Route::get('/testimonials', [App\Http\Controllers\TestimonialController::class, 'index']);
 Route::get('/latest-blogs', [App\Http\Controllers\BlogController::class, 'latest']);
 Route::get('/footer', [App\Http\Controllers\FooterSettingController::class, 'index']);
 
@@ -45,6 +46,12 @@ Route::prefix('admin')->group(function () {
     Route::post('/certifications', [App\Http\Controllers\CertificationController::class, 'store']);
     Route::post('/certifications/{id}', [App\Http\Controllers\CertificationController::class, 'update']); // Use POST to support multipart/form-data for image uploads
     Route::delete('/certifications/{id}', [App\Http\Controllers\CertificationController::class, 'destroy']);
+
+    // Testimonials
+    Route::get('/testimonials', [App\Http\Controllers\TestimonialController::class, 'adminIndex']);
+    Route::post('/testimonials', [App\Http\Controllers\TestimonialController::class, 'store']);
+    Route::post('/testimonials/{id}', [App\Http\Controllers\TestimonialController::class, 'update']); // Use POST to support multipart/form-data for image uploads
+    Route::delete('/testimonials/{id}', [App\Http\Controllers\TestimonialController::class, 'destroy']);
 
     // Section Settings
     Route::put('/section-settings/{key}', [App\Http\Controllers\SectionSettingController::class, 'update']);

@@ -1,0 +1,9 @@
+HTTP/1.1 200 OK
+Date: Sat, 18 Jul 2026 08:44:50 GMT
+Server: Apache/2.4.54 (Win64) OpenSSL/1.1.1q PHP/8.2.25
+X-Powered-By: PHP/8.2.25
+Cache-Control: no-cache, private
+Access-Control-Allow-Origin: *
+Transfer-Encoding: chunked
+Content-Type: application/json
+
