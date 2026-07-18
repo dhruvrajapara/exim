@@ -15,19 +15,24 @@ export default function FeaturedProducts() {
 
   useEffect(() => {
     const loadData = async () => {
-      const [productsResult, sectionResult] = await Promise.all([
-        fetchFeaturedProducts(),
-        fetchSectionSetting('home_featured_products')
-      ]);
-      setProducts(productsResult);
-      if (sectionResult) {
-        setSectionData({
-          subtitle: sectionResult.subtitle || 'TOP EXPORTS',
-          title: sectionResult.title || 'Featured Products',
-          description: sectionResult.description || 'Discover our highest demanded export products, carefully processed and packaged to meet stringent global quality parameters.'
-        });
+      try {
+        const [productsResult, sectionResult] = await Promise.all([
+          fetchFeaturedProducts(),
+          fetchSectionSetting('home_featured_products')
+        ]);
+        setProducts(productsResult);
+        if (sectionResult) {
+          setSectionData({
+            subtitle: sectionResult.subtitle || 'TOP EXPORTS',
+            title: sectionResult.title || 'Featured Products',
+            description: sectionResult.description || 'Discover our highest demanded export products, carefully processed and packaged to meet stringent global quality parameters.'
+          });
+        }
+      } catch (err) {
+        console.error("Error loading featured products:", err);
+      } finally {
+        setIsLoading(false);
       }
-      setIsLoading(false);
     };
     loadData();
   }, []);
@@ -74,7 +79,7 @@ export default function FeaturedProducts() {
             </h2>
           )}
           {sectionData.description && (
-            <p className="text-[16px] text-text max-w-2xl mx-auto leading-relaxed">
+            <p className="text-[16px] text-text max-w-2xl mx-auto leading-relaxed text-left line-clamp-2 md:line-clamp-3">
               {sectionData.description}
             </p>
           )}
@@ -109,9 +114,10 @@ export default function FeaturedProducts() {
                   </h3>
                   
                   {/* CSS-Only Truncation for Mobile */}
-                  <p className="text-[12px] md:text-[14px] text-text/80 line-clamp-2 md:line-clamp-3 mb-4 flex-grow">
-                    {product.short_description}
-                  </p>
+                  <div 
+                    className="text-gray-600 text-sm line-clamp-2 mb-4 [&>p]:mb-0 [&>p]:inline break-words"
+                    dangerouslySetInnerHTML={{ __html: product.short_description?.replace(/&nbsp;/g, ' ') }} 
+                  />
 
                   <div className="mt-auto w-full border-t border-gray-50 pt-3">
                     <span className="text-primary font-medium text-[13px] md:text-[14px] flex items-center justify-center group-hover:underline">

@@ -22,6 +22,7 @@ import ProductCategoriesSection from './pages/admin/website/home/ProductCategori
 import FeaturedProductsSection from './pages/admin/website/home/FeaturedProductsSection';
 import ProductCategories from './pages/admin/website/products/ProductCategories';
 import Products from './pages/admin/website/products/Products';
+import ProductForm from './pages/admin/website/products/ProductForm';
 import { useLocation } from 'react-router-dom';
 
 const AdminPlaceholder = () => {
@@ -40,10 +41,13 @@ const AdminPlaceholder = () => {
   );
 };
 
+import ScrollToTop from './components/ScrollToTop';
+
 function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
+        <ScrollToTop />
         <Routes>
           {/* Public Website Routes */}
           <Route path="/" element={<MainLayout />}>
@@ -72,6 +76,8 @@ function App() {
               <Route path="website/home/featured-products-section" element={<FeaturedProductsSection />} />
               <Route path="website/products/categories" element={<ProductCategories />} />
               <Route path="website/products/list" element={<Products />} />
+              <Route path="website/products/add" element={<ProductForm />} />
+              <Route path="website/products/edit/:id" element={<ProductForm />} />
               
               <Route path="*" element={<AdminPlaceholder />} />
             </Route>

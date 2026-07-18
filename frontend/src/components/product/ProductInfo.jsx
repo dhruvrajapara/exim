@@ -8,7 +8,7 @@ export default function ProductInfo({ product }) {
       
       {/* Category Tag */}
       <span className="inline-block bg-primary/10 text-primary px-4 py-1.5 rounded-full text-[13px] font-semibold tracking-wider uppercase mb-4 w-max">
-        {product.category}
+        {typeof product.category === 'object' ? product.category?.name : product.category}
       </span>
 
       {/* Title */}
@@ -18,8 +18,18 @@ export default function ProductInfo({ product }) {
 
       {/* Short & Full Description */}
       <div className="text-gray-600 text-[15px] md:text-[16px] leading-relaxed mb-8 flex flex-col gap-4">
-        <p className="font-medium text-dark/80">{product.short_description}</p>
-        <p>{product.full_description}</p>
+        {product.short_description && (
+          <div 
+            className="font-medium text-dark/80 prose prose-sm md:prose-base max-w-none [&>p]:mb-0" 
+            dangerouslySetInnerHTML={{ __html: product.short_description }} 
+          />
+        )}
+        {product.full_description && (
+          <div 
+            className="prose prose-sm md:prose-base max-w-none text-gray-600 leading-relaxed [&>p]:mb-4 last:[&>p]:mb-0" 
+            dangerouslySetInnerHTML={{ __html: product.full_description }} 
+          />
+        )}
       </div>
 
       {/* CTA Buttons */}

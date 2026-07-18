@@ -11,13 +11,18 @@ export default function ProductCategories() {
 
   useEffect(() => {
     const loadData = async () => {
-      const [result, setting] = await Promise.all([
-        fetchProductCategories('?home=1'),
-        fetchSectionSetting('home_categories')
-      ]);
-      setCategories(result);
-      setSectionSetting(setting);
-      setIsLoading(false);
+      try {
+        const [result, setting] = await Promise.all([
+          fetchProductCategories('?home=1'),
+          fetchSectionSetting('home_categories')
+        ]);
+        setCategories(result);
+        setSectionSetting(setting);
+      } catch (err) {
+        console.error("Error loading categories:", err);
+      } finally {
+        setIsLoading(false);
+      }
     };
     loadData();
   }, []);

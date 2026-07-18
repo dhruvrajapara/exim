@@ -92,7 +92,7 @@ export default function Hero() {
                 alt={slide.image_alt}
                 title={slide.image_title}
                 loading={index === 0 ? 'eager' : 'lazy'}
-                fetchpriority={index === 0 ? 'high' : 'auto'}
+                fetchPriority={index === 0 ? 'high' : 'auto'}
                 className="w-full h-full object-cover animate-[scale-in_10s_ease-out_forwards]"
                 style={{ transform: isActive ? 'scale(1.05)' : 'scale(1)', transition: 'transform 5s ease-out' }}
               />

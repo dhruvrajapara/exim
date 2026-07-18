@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import SearchIcon from '@mui/icons-material/Search';
 import FilterListIcon from '@mui/icons-material/FilterList';
@@ -12,22 +12,36 @@ import { fetchProductCategories, fetchProducts } from '../services/api';
 import Reveal from './Reveal';
 
 export default function ProductListing() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const initialCategory = searchParams.get('category') || 'all';
+
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
-  const [activeCategory, setActiveCategory] = useState('all');
+  const [activeCategory, setActiveCategory] = useState(initialCategory);
   const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(true);
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
 
+  // Sync state when URL searchParams change
+  useEffect(() => {
+    const cat = searchParams.get('category') || 'all';
+    setActiveCategory(cat);
+  }, [searchParams]);
+
   useEffect(() => {
     const loadData = async () => {
       setLoading(true);
-      const cats = await fetchProductCategories();
-      setCategories(cats);
-      
-      const prods = await fetchProducts({ category: activeCategory, search: searchQuery });
-      setProducts(prods);
-      setLoading(false);
+      try {
+        const cats = await fetchProductCategories();
+        setCategories(cats);
+        
+        const prods = await fetchProducts({ category: activeCategory, search: searchQuery });
+        setProducts(prods);
+      } catch (err) {
+        console.error("Error loading products:", err);
+      } finally {
+        setLoading(false);
+      }
     };
     loadData();
   }, [activeCategory, searchQuery]);
@@ -38,6 +52,12 @@ export default function ProductListing() {
 
   const handleCategoryChange = (slug) => {
     setActiveCategory(slug);
+    if (slug === 'all') {
+      searchParams.delete('category');
+    } else {
+      searchParams.set('category', slug);
+    }
+    setSearchParams(searchParams);
     setIsMobileFilterOpen(false); // Close mobile drawer if open
   };
 

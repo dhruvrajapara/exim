@@ -39,7 +39,7 @@ class ProductCategoryController extends Controller
 
     public function adminIndex()
     {
-        $categories = ProductCategory::orderBy('display_order', 'asc')->get();
+        $categories = ProductCategory::with('parent')->orderBy('display_order', 'asc')->get();
         return response()->json(['data' => $categories]);
     }
 
@@ -51,6 +51,7 @@ class ProductCategoryController extends Controller
             'description' => 'nullable|string',
             'is_active' => 'boolean',
             'display_order' => 'nullable|integer',
+            'parent_id' => 'nullable|exists:product_categories,id',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
         ]);
 
@@ -81,6 +82,7 @@ class ProductCategoryController extends Controller
             'description' => 'nullable|string',
             'is_active' => 'boolean',
             'display_order' => 'nullable|integer',
+            'parent_id' => 'nullable|exists:product_categories,id',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
         ]);
 

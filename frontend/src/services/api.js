@@ -407,9 +407,24 @@ export const fetchProductBySlug = async (slug) => {
       throw new Error('Fallback triggered');
     }
     const data = await response.json();
-    return data.data;
+    const product = data.data;
+    
+    // Format backend data to match frontend expectations
+    return {
+      id: product.id,
+      name: product.name,
+      slug: product.slug,
+      category: product.category ? product.category.name : 'Uncategorized',
+      category_slug: product.category ? product.category.slug : '',
+      short_description: product.short_description,
+      full_description: product.full_description,
+      main_image: product.image_path ? `http://localhost:8000${product.image_path}` : '',
+      gallery: product.gallery ? product.gallery.map(path => `http://localhost:8000${path}`) : [],
+      specifications: product.specifications ? product.specifications.map(s => ({ name: s.key, value: s.value })) : [],
+      features: product.features ? product.features.map(f => ({ title: f })) : []
+    };
   } catch (error) {
-    // Rich fallback data for any requested product
+    // Rich fallback data for any requested product if backend fails
     const productTitle = slug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
     return {
       id: 99,
@@ -422,23 +437,15 @@ export const fetchProductBySlug = async (slug) => {
       main_image: 'https://images.unsplash.com/photo-1615485925600-97237c4fc1ec?w=1000&q=80',
       gallery: [
         'https://images.unsplash.com/photo-1615485925600-97237c4fc1ec?w=1000&q=80',
-        'https://images.unsplash.com/photo-1596647901016-1f6b1587d46c?w=1000&q=80',
-        'https://images.unsplash.com/photo-1615484477201-cb8633783a60?w=1000&q=80',
-        'https://images.unsplash.com/photo-1518568740560-333181a1796a?w=1000&q=80'
+        'https://images.unsplash.com/photo-1596647901016-1f6b1587d46c?w=1000&q=80'
       ],
       specifications: [
-        { name: 'HS Code', value: '07122000' },
-        { name: 'Origin', value: 'India' },
-        { name: 'Shelf Life', value: '24 Months' },
-        { name: 'Moisture', value: '< 5%' },
-        { name: 'Color', value: 'Natural White / Pale Yellow' },
-        { name: 'Packaging', value: '25 Kg Vacuum Bag / As per requirement' }
+        { key: 'HS Code', value: '07122000' },
+        { key: 'Origin', value: 'India' }
       ],
       features: [
         { title: 'Premium Quality' },
-        { title: 'Export Standard' },
-        { title: 'Hygienically Processed' },
-        { title: 'Long Shelf Life' }
+        { title: 'Export Standard' }
       ]
     };
   }

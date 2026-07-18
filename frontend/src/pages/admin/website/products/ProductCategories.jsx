@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { 
   Box, Typography, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper,
-  IconButton, Dialog, DialogTitle, DialogContent, DialogActions, TextField, Switch, FormControlLabel
+  IconButton, Dialog, DialogTitle, DialogContent, DialogActions, TextField, Switch, FormControlLabel,
+  FormControl, InputLabel, Select, MenuItem
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -18,6 +19,7 @@ export default function ProductCategories() {
     description: '',
     is_active: true,
     display_order: 0,
+    parent_id: '',
     image: null
   });
   const [previewImage, setPreviewImage] = useState('');
@@ -47,6 +49,7 @@ export default function ProductCategories() {
         description: category.description || '',
         is_active: category.is_active,
         display_order: category.display_order || 0,
+        parent_id: category.parent_id || '',
         image: null
       });
       setPreviewImage(category.image_path || '');
@@ -58,6 +61,7 @@ export default function ProductCategories() {
         description: '',
         is_active: true,
         display_order: 0,
+        parent_id: '',
         image: null
       });
       setPreviewImage('');
@@ -100,7 +104,7 @@ export default function ProductCategories() {
         data.append('image', formData[key]);
       } else if (key === 'is_active') {
         data.append('is_active', formData[key] ? 1 : 0);
-      } else if (formData[key] !== null && key !== 'image') {
+      } else if (formData[key] !== null && formData[key] !== '' && key !== 'image') {
         data.append(key, formData[key]);
       }
     });
@@ -226,6 +230,22 @@ export default function ProductCategories() {
 
             <TextField label="Name" name="name" value={formData.name} onChange={handleInputChange} fullWidth required />
             <TextField label="Slug (Auto-generated)" name="slug" value={formData.slug} onChange={handleInputChange} fullWidth required disabled />
+            
+            <FormControl fullWidth>
+              <InputLabel>Parent Category</InputLabel>
+              <Select
+                name="parent_id"
+                value={formData.parent_id}
+                onChange={handleInputChange}
+                label="Parent Category"
+              >
+                <MenuItem value=""><em>None (Top Level)</em></MenuItem>
+                {categories.filter(c => c.id !== editingId).map(cat => (
+                  <MenuItem key={cat.id} value={cat.id}>{cat.name}</MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+
             <TextField label="Description" name="description" value={formData.description} onChange={handleInputChange} fullWidth multiline rows={3} />
             <TextField label="Display Order" name="display_order" type="number" value={formData.display_order} onChange={handleInputChange} fullWidth />
             <FormControlLabel

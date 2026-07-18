@@ -18,12 +18,28 @@ class ProductCategory extends Model
         'description',
         'display_order',
         'is_active',
+        'parent_id',
     ];
 
     protected $casts = [
         'is_active' => 'boolean',
         'display_order' => 'integer',
     ];
+
+    public function parent()
+    {
+        return $this->belongsTo(ProductCategory::class, 'parent_id');
+    }
+
+    public function children()
+    {
+        return $this->hasMany(ProductCategory::class, 'parent_id');
+    }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'category_id');
+    }
 
     public function scopeActive($query)
     {

@@ -10,6 +10,8 @@ Route::get('/user', function (Request $request) {
 
 Route::get('/hero-slides', [HeroSlideController::class, 'index']);
 Route::get('/product-categories', [App\Http\Controllers\ProductCategoryController::class, 'index']);
+Route::get('/products', [App\Http\Controllers\ProductController::class, 'index']);
+Route::get('/products/{slug}', [App\Http\Controllers\ProductController::class, 'show']);
 Route::get('/about-section', [App\Http\Controllers\AboutSectionController::class, 'index']);
 Route::get('/featured-products', [App\Http\Controllers\ProductController::class, 'featured']);
 Route::get('/certifications', [App\Http\Controllers\CertificationController::class, 'index']);

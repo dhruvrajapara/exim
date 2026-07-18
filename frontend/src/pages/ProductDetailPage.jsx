@@ -84,12 +84,17 @@ export default function ProductDetailPage() {
   };
 
   // Generate Product Schema
+  const stripHtml = (html) => {
+    if (!html) return '';
+    return html.replace(/<[^>]*>?/gm, '').replace(/&nbsp;/g, ' ').trim();
+  };
+
   const productSchema = {
     "@context": "https://schema.org",
     "@type": "Product",
     "name": product.name,
     "image": product.gallery,
-    "description": product.short_description,
+    "description": stripHtml(product.short_description),
     "sku": product.slug,
     "brand": {
       "@type": "Brand",
@@ -101,7 +106,7 @@ export default function ProductDetailPage() {
     <div className="w-full bg-white min-h-screen">
       <SEO
         title={product.name}
-        description={product.short_description}
+        description={stripHtml(product.short_description)}
         canonical={`https://example.com/product/${product.slug}`}
       />
 
@@ -128,7 +133,7 @@ export default function ProductDetailPage() {
         {/* Hero Product Section (Gallery + Info) */}
         <div className="flex flex-col lg:flex-row gap-10 lg:gap-16 mb-16">
           <div className="w-full lg:w-1/2">
-            <ProductGallery images={product.gallery} mainImage={product.main_image} />
+            <ProductGallery images={product.gallery} mainImage={product.image_path || product.main_image} />
           </div>
           <div className="w-full lg:w-1/2">
             <ProductInfo product={product} />
