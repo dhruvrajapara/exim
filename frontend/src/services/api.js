@@ -630,3 +630,59 @@ export const fetchRelatedBlogs = async (categorySlug) => {
     ];
   }
 };
+
+// Admin Certification API Methods
+export const fetchAdminCertifications = async () => {
+  try {
+    const response = await fetch('/api/admin/certifications');
+    if (!response.ok) throw new Error('Failed to fetch certifications');
+    const data = await response.json();
+    return data.data;
+  } catch (error) {
+    console.error('Error fetching admin certifications:', error);
+    throw error;
+  }
+};
+
+export const createCertification = async (formData) => {
+  try {
+    const response = await fetch('/api/admin/certifications', {
+      method: 'POST',
+      body: formData, // FormData handles its own content-type for files
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message || 'Failed to create certification');
+    return data;
+  } catch (error) {
+    console.error('Error creating certification:', error);
+    throw error;
+  }
+};
+
+export const updateCertification = async (id, formData) => {
+  try {
+    const response = await fetch(`/api/admin/certifications/${id}`, {
+      method: 'POST', // Using POST for form-data containing files, backend handles method spoofing or interprets correctly
+      body: formData,
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message || 'Failed to update certification');
+    return data;
+  } catch (error) {
+    console.error('Error updating certification:', error);
+    throw error;
+  }
+};
+
+export const deleteCertification = async (id) => {
+  try {
+    const response = await fetch(`/api/admin/certifications/${id}`, {
+      method: 'DELETE',
+    });
+    if (!response.ok) throw new Error('Failed to delete certification');
+    return await response.json();
+  } catch (error) {
+    console.error('Error deleting certification:', error);
+    throw error;
+  }
+};

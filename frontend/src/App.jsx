@@ -20,6 +20,7 @@ import HeroSlider from './pages/admin/website/home/HeroSlider';
 import AboutSection from './pages/admin/website/home/AboutSection';
 import ProductCategoriesSection from './pages/admin/website/home/ProductCategoriesSection';
 import FeaturedProductsSection from './pages/admin/website/home/FeaturedProductsSection';
+import Certifications from './pages/admin/website/home/Certifications';
 import ProductCategories from './pages/admin/website/products/ProductCategories';
 import Products from './pages/admin/website/products/Products';
 import ProductForm from './pages/admin/website/products/ProductForm';
@@ -74,6 +75,9 @@ function App() {
               <Route path="website/home/about-section" element={<AboutSection />} />
               <Route path="website/home/product-categories-section" element={<ProductCategoriesSection />} />
               <Route path="website/home/featured-products-section" element={<FeaturedProductsSection />} />
+              
+              <Route path="certifications" element={<Certifications />} />
+              
               <Route path="website/products/categories" element={<ProductCategories />} />
               <Route path="website/products/list" element={<Products />} />
               <Route path="website/products/add" element={<ProductForm />} />

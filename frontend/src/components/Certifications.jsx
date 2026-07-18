@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { fetchCertifications } from '../services/api';
+import { fetchCertifications, fetchSectionSetting } from '../services/api';
 import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
 import Reveal from './Reveal';
 import VerifiedIcon from '@mui/icons-material/Verified';
@@ -7,15 +7,53 @@ import VerifiedIcon from '@mui/icons-material/Verified';
 export default function Certifications() {
   const [certs, setCerts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [sectionData, setSectionData] = useState({
+    subtitle: 'TRUST & QUALITY',
+    title: 'Our Certifications',
+    description: 'We operate under stringent international guidelines. Our officially recognized registrations and quality control certifications guarantee premium grade export standards.'
+  });
 
   useEffect(() => {
     const loadData = async () => {
-      const result = await fetchCertifications();
-      setCerts(result);
-      setIsLoading(false);
+      try {
+        const [certsResult, sectionResult] = await Promise.all([
+          fetchCertifications(),
+          fetchSectionSetting('home_certifications')
+        ]);
+        
+        setCerts(certsResult);
+        
+        if (sectionResult) {
+          setSectionData({
+            subtitle: sectionResult.subtitle || 'TRUST & QUALITY',
+            title: sectionResult.title || 'Our Certifications',
+            description: sectionResult.description || 'We operate under stringent international guidelines. Our officially recognized registrations and quality control certifications guarantee premium grade export standards.'
+          });
+        }
+      } catch (err) {
+        console.error("Error loading certifications:", err);
+      } finally {
+        setIsLoading(false);
+      }
     };
     loadData();
   }, []);
+
+  const renderTwoColorTitle = (title) => {
+    if (!title) return null;
+    const words = title.trim().split(' ');
+    if (words.length <= 1) return title;
+    
+    const lastWord = words.pop();
+    const firstWords = words.join(' ');
+    
+    // For homepage, we'll use primary for the gradient to match the theme
+    return (
+      <>
+        {firstWords} <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-[#0463C3]">{lastWord}</span>
+      </>
+    );
+  };
 
   if (isLoading) {
     return (
@@ -48,15 +86,21 @@ export default function Certifications() {
       <div className="container-custom">
         {/* Section Header */}
         <Reveal delay={0} className="text-center mb-10 md:mb-12">
-          <span className="text-primary font-semibold tracking-widest uppercase text-sm mb-2 block">
-            TRUST & QUALITY
-          </span>
-          <h2 className="text-[32px] md:text-[38px] lg:text-[44px] font-bold text-dark leading-tight mb-4">
-            Our Certifications
-          </h2>
-          <p className="text-[16px] text-text max-w-2xl mx-auto leading-relaxed">
-            We operate under stringent international guidelines. Our officially recognized registrations and quality control certifications guarantee premium grade export standards.
-          </p>
+          {sectionData.subtitle && (
+            <span className="text-primary font-semibold tracking-widest uppercase text-sm mb-2 block">
+              {sectionData.subtitle}
+            </span>
+          )}
+          {sectionData.title && (
+            <h2 className="text-[32px] md:text-[38px] lg:text-[44px] font-bold text-dark leading-tight mb-4">
+              {renderTwoColorTitle(sectionData.title)}
+            </h2>
+          )}
+          {sectionData.description && (
+            <p className="text-[16px] text-text max-w-2xl mx-auto leading-relaxed">
+              {sectionData.description}
+            </p>
+          )}
         </Reveal>
 
         {/* Certifications Grid (4 Desktop, 2 Mobile) */}
@@ -96,6 +140,18 @@ export default function Certifications() {
                 <p className="hidden md:block text-[13px] text-text/80 leading-snug mt-auto">
                   {cert.short_description}
                 </p>
+              )}
+
+              {/* Action Button */}
+              {cert.btn_text && cert.btn_url && (
+                <a
+                  href={cert.btn_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-4 md:mt-5 inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-primary/5 text-primary text-xs md:text-sm font-medium transition-all hover:bg-primary hover:text-white"
+                >
+                  {cert.btn_text}
+                </a>
               )}
             </Reveal>
           ))}

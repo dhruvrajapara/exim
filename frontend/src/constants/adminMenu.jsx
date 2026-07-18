@@ -27,6 +27,11 @@ export const adminMenu = [
     icon: <DashboardIcon fontSize="small" />,
   },
   {
+    title: 'Certifications',
+    path: '/admin/certifications',
+    icon: <VerifiedIcon fontSize="small" />,
+  },
+  {
     title: 'Home Page',
     icon: <HomeIcon fontSize="small" />,
     children: [
@@ -37,7 +42,6 @@ export const adminMenu = [
       { title: 'Statistics Counter', path: '/admin/website/home/statistics' },
       { title: 'Featured Products', path: '/admin/website/home/featured-products-section' },
       { title: 'Export Countries', path: '/admin/website/home/export-countries' },
-      { title: 'Certifications', path: '/admin/website/home/certifications' },
       { title: 'Testimonials', path: '/admin/website/home/testimonials' },
       { title: 'FAQ', path: '/admin/website/home/faq' },
       { title: 'Call To Action', path: '/admin/website/home/cta' },
@@ -55,7 +59,6 @@ export const adminMenu = [
       { title: 'Infrastructure', path: '/admin/website/about/infrastructure' },
       { title: 'Manufacturing Process', path: '/admin/website/about/manufacturing' },
       { title: 'Why Choose Us', path: '/admin/website/about/why-choose-us' },
-      { title: 'Certifications', path: '/admin/website/about/certifications' },
       { title: 'Gallery', path: '/admin/website/about/gallery' },
     ],
   },

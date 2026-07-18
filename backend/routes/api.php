@@ -40,6 +40,12 @@ Route::prefix('admin')->group(function () {
     Route::put('/products/{id}', [App\Http\Controllers\ProductController::class, 'update']);
     Route::delete('/products/{id}', [App\Http\Controllers\ProductController::class, 'destroy']);
 
+    // Certifications
+    Route::get('/certifications', [App\Http\Controllers\CertificationController::class, 'adminIndex']);
+    Route::post('/certifications', [App\Http\Controllers\CertificationController::class, 'store']);
+    Route::post('/certifications/{id}', [App\Http\Controllers\CertificationController::class, 'update']); // Use POST to support multipart/form-data for image uploads
+    Route::delete('/certifications/{id}', [App\Http\Controllers\CertificationController::class, 'destroy']);
+
     // Section Settings
     Route::put('/section-settings/{key}', [App\Http\Controllers\SectionSettingController::class, 'update']);
 });

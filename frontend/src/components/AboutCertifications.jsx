@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { fetchCertifications } from '../services/api';
+import { fetchCertifications, fetchSectionSetting } from '../services/api';
 import VerifiedIcon from '@mui/icons-material/Verified';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import Reveal from './Reveal';
@@ -7,15 +7,52 @@ import Reveal from './Reveal';
 export default function AboutCertifications() {
   const [certs, setCerts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [sectionData, setSectionData] = useState({
+    subtitle: 'TRUST & COMPLIANCE',
+    title: 'Our Certifications',
+    description: 'Our official registrations and certifications demonstrate our commitment to quality, compliance, transparency, and international export standards.'
+  });
 
   useEffect(() => {
     const loadData = async () => {
-      const result = await fetchCertifications();
-      setCerts(result);
-      setIsLoading(false);
+      try {
+        const [certsResult, sectionResult] = await Promise.all([
+          fetchCertifications(),
+          fetchSectionSetting('about_certifications')
+        ]);
+        
+        setCerts(certsResult);
+        
+        if (sectionResult) {
+          setSectionData({
+            subtitle: sectionResult.subtitle || 'TRUST & COMPLIANCE',
+            title: sectionResult.title || 'Our Certifications',
+            description: sectionResult.description || 'Our official registrations and certifications demonstrate our commitment to quality, compliance, transparency, and international export standards.'
+          });
+        }
+      } catch (err) {
+        console.error("Error loading certifications:", err);
+      } finally {
+        setIsLoading(false);
+      }
     };
     loadData();
   }, []);
+
+  const renderTwoColorTitle = (title) => {
+    if (!title) return null;
+    const words = title.trim().split(' ');
+    if (words.length <= 1) return title;
+    
+    const lastWord = words.pop();
+    const firstWords = words.join(' ');
+    
+    return (
+      <>
+        {firstWords} <span className="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-[#0463C3]">{lastWord}</span>
+      </>
+    );
+  };
 
   if (isLoading) {
     return (
@@ -41,15 +78,21 @@ export default function AboutCertifications() {
         
         {/* Section Header */}
         <Reveal delay={0} className="text-center mb-10 md:mb-12">
-          <span className="text-secondary font-semibold tracking-widest uppercase text-[12px] md:text-[14px] mb-3 block">
-            TRUST & COMPLIANCE
-          </span>
-          <h2 className="text-[32px] md:text-[38px] lg:text-[44px] font-bold text-dark leading-tight mb-4 font-rubik">
-            Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-[#0463C3]">Certifications</span>
-          </h2>
-          <p className="text-[15px] md:text-[16px] lg:text-[18px] text-text/90 max-w-2xl mx-auto leading-relaxed">
-            Our official registrations and certifications demonstrate our commitment to quality, compliance, transparency, and international export standards.
-          </p>
+          {sectionData.subtitle && (
+            <span className="text-secondary font-semibold tracking-widest uppercase text-[12px] md:text-[14px] mb-3 block">
+              {sectionData.subtitle}
+            </span>
+          )}
+          {sectionData.title && (
+            <h2 className="text-[32px] md:text-[38px] lg:text-[44px] font-bold text-dark leading-tight mb-4 font-rubik">
+              {renderTwoColorTitle(sectionData.title)}
+            </h2>
+          )}
+          {sectionData.description && (
+            <p className="text-[15px] md:text-[16px] lg:text-[18px] text-text/90 max-w-2xl mx-auto leading-relaxed">
+              {sectionData.description}
+            </p>
+          )}
         </Reveal>
 
         {/* Certifications Grid (4 Desktop/Laptop, 2 Tablet/Mobile) */}
