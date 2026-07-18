@@ -79,7 +79,7 @@ export default function FeaturedProducts() {
             </h2>
           )}
           {sectionData.description && (
-            <p className="text-[16px] text-text max-w-2xl mx-auto leading-relaxed text-left line-clamp-2 md:line-clamp-3">
+            <p className="text-[16px] text-text max-w-2xl mx-auto leading-relaxed">
               {sectionData.description}
             </p>
           )}
