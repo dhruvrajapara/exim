@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { fetchTeamMembers } from '../services/api';
+import { fetchTeamMembers, fetchSectionSetting } from '../services/api';
 import Reveal from './Reveal';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import EmailIcon from '@mui/icons-material/Email';
@@ -9,11 +9,16 @@ import { Helmet } from 'react-helmet-async';
 export default function AboutTeam() {
   const [team, setTeam] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [sectionSetting, setSectionSetting] = useState(null);
 
   useEffect(() => {
     const loadData = async () => {
-      const result = await fetchTeamMembers();
-      setTeam(result);
+      const [teamResult, settingResult] = await Promise.all([
+        fetchTeamMembers(),
+        fetchSectionSetting('about_team')
+      ]);
+      setTeam(teamResult);
+      setSectionSetting(settingResult);
       setIsLoading(false);
     };
     loadData();
@@ -36,6 +41,14 @@ export default function AboutTeam() {
   }
 
   if (!team || team.length === 0) return null;
+
+  const subtitle = sectionSetting?.subtitle || 'OUR TEAM';
+  const titleText = sectionSetting?.title || 'Meet Our Team';
+  const description = sectionSetting?.description || 'Behind BiteExport is a dedicated team committed to delivering quality products, reliable export services, and long-term partnerships with global buyers.';
+
+  const titleWords = titleText.split(' ');
+  const lastWord = titleWords.pop();
+  const restOfTitle = titleWords.join(' ');
 
   return (
     <section className="w-full py-[40px] lg:py-[50px] bg-[#f9fafb] relative overflow-hidden">
@@ -69,13 +82,13 @@ export default function AboutTeam() {
         {/* Section Header */}
         <Reveal delay={0} className="text-center mb-10 lg:mb-16">
           <span className="text-secondary font-semibold tracking-widest uppercase text-[12px] md:text-[14px] mb-3 block">
-            OUR TEAM
+            {subtitle}
           </span>
           <h2 className="text-[32px] md:text-[38px] lg:text-[44px] font-bold text-dark leading-tight mb-4 font-rubik">
-            Meet Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-[#0463C3]">Team</span>
+            {restOfTitle} <span className="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-[#0463C3]">{lastWord}</span>
           </h2>
           <p className="text-[15px] md:text-[16px] lg:text-[18px] text-text/90 max-w-2xl mx-auto leading-relaxed">
-            Behind BiteExport is a dedicated team committed to delivering quality products, reliable export services, and long-term partnerships with global buyers.
+            {description}
           </p>
         </Reveal>
 

@@ -18,6 +18,7 @@ Route::get('/certifications', [App\Http\Controllers\CertificationController::cla
 Route::get('/testimonials', [App\Http\Controllers\TestimonialController::class, 'index']);
 Route::get('/latest-blogs', [App\Http\Controllers\BlogController::class, 'latest']);
 Route::get('/footer', [App\Http\Controllers\FooterSettingController::class, 'index']);
+Route::get('/team-members', [App\Http\Controllers\TeamMemberController::class, 'index']);
 
 // Admin Routes (Currently Unprotected for testing, later wrapped in auth:sanctum middleware)
 Route::prefix('admin')->group(function () {
@@ -52,6 +53,14 @@ Route::prefix('admin')->group(function () {
     Route::post('/testimonials', [App\Http\Controllers\TestimonialController::class, 'store']);
     Route::post('/testimonials/{id}', [App\Http\Controllers\TestimonialController::class, 'update']); // Use POST to support multipart/form-data for image uploads
     Route::delete('/testimonials/{id}', [App\Http\Controllers\TestimonialController::class, 'destroy']);
+
+    // Team Members
+    Route::get('/team-members', [App\Http\Controllers\TeamMemberController::class, 'adminIndex']);
+    Route::post('/team-members', [App\Http\Controllers\TeamMemberController::class, 'store']);
+    Route::post('/team-members/{id}', [App\Http\Controllers\TeamMemberController::class, 'update']); // POST for FormData
+    Route::delete('/team-members/{id}', [App\Http\Controllers\TeamMemberController::class, 'destroy']);
+    Route::patch('/team-members/{id}/status', [App\Http\Controllers\TeamMemberController::class, 'updateStatus']);
+    Route::patch('/team-members/reorder', [App\Http\Controllers\TeamMemberController::class, 'reorder']);
 
     // Section Settings
     Route::put('/section-settings/{key}', [App\Http\Controllers\SectionSettingController::class, 'update']);

@@ -22,6 +22,7 @@ import ProductCategoriesSection from './pages/admin/website/home/ProductCategori
 import FeaturedProductsSection from './pages/admin/website/home/FeaturedProductsSection';
 import Certifications from './pages/admin/website/home/Certifications';
 import TestimonialsAdmin from './pages/admin/website/home/TestimonialsAdmin';
+import TeamMembers from './pages/admin/website/about/TeamMembers';
 import ProductCategories from './pages/admin/website/products/ProductCategories';
 import Products from './pages/admin/website/products/Products';
 import ProductForm from './pages/admin/website/products/ProductForm';
@@ -79,6 +80,7 @@ function App() {
               
               <Route path="certifications" element={<Certifications />} />
               <Route path="testimonials" element={<TestimonialsAdmin />} />
+              <Route path="website/about/team-members" element={<TeamMembers />} />
               
               <Route path="website/products/categories" element={<ProductCategories />} />
               <Route path="website/products/list" element={<Products />} />

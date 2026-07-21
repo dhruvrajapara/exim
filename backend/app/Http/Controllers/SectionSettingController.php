@@ -13,7 +13,7 @@ class SectionSettingController extends Controller
         $setting = SectionSetting::where('section_key', $key)->first();
         
         if (!$setting) {
-            return response()->json(['data' => null], 404);
+            return response()->json(['data' => null]);
         }
 
         return response()->json(['data' => $setting]);

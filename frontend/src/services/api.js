@@ -25,6 +25,25 @@ export const fetchSectionSetting = async (key) => {
   }
 };
 
+export const updateSectionSetting = async (key, data) => {
+  try {
+    const response = await fetch(`/api/admin/section-settings/${key}`, {
+      method: 'PUT',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+    const result = await response.json();
+    if (!response.ok) throw new Error(result.message || 'Failed to update section setting');
+    return result;
+  } catch (error) {
+    console.error('Error updating section setting:', error);
+    throw error;
+  }
+};
+
 export const fetchProductCategories = async (query = '') => {
   try {
     const response = await fetch(`/api/product-categories${query}`);
@@ -701,6 +720,121 @@ export const deleteTestimonial = async (id) => {
     return await response.json();
   } catch (error) {
     console.error('Error deleting testimonial:', error);
+    throw error;
+  }
+};
+
+// Admin Team Members API Methods
+export const fetchAdminTeamMembers = async (filters = {}) => {
+  try {
+    const queryParams = new URLSearchParams(filters).toString();
+    const response = await fetch(`/api/admin/team-members?${queryParams}`);
+    if (!response.ok) throw new Error('Failed to fetch admin team members');
+    const data = await response.json();
+    return data.data;
+  } catch (error) {
+    console.error('Error fetching admin team members:', error);
+    throw error;
+  }
+};
+
+export const createTeamMember = async (formData) => {
+  try {
+    const response = await fetch('/api/admin/team-members', {
+      method: 'POST',
+      headers: { 'Accept': 'application/json' },
+      body: formData,
+    });
+    let data;
+    try {
+      const text = await response.text();
+      try {
+        data = JSON.parse(text);
+      } catch (e) {
+        console.error("Failed to parse JSON. Raw response:", text);
+        throw e; // rethrow to be caught by outer catch
+      }
+    } catch (e) {
+      throw e;
+    }
+    
+    if (!response.ok) throw new Error(data.message || 'Failed to create team member');
+    return data;
+  } catch (error) {
+    console.error('Error creating team member:', error);
+    throw error;
+  }
+};
+
+export const updateTeamMember = async (id, formData) => {
+  try {
+    const response = await fetch(`/api/admin/team-members/${id}`, {
+      method: 'POST', // Using POST to support multipart/form-data for image uploads
+      headers: { 'Accept': 'application/json' },
+      body: formData,
+    });
+    const contentType = response.headers.get("content-type");
+    if (!contentType || !contentType.includes("application/json")) {
+      const text = await response.text();
+      console.error("Non-JSON response received:", text);
+      throw new Error("Server returned an invalid response. Check console for details.");
+    }
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message || 'Failed to update team member');
+    return data;
+  } catch (error) {
+    console.error('Error updating team member:', error);
+    throw error;
+  }
+};
+
+export const deleteTeamMember = async (id) => {
+  try {
+    const response = await fetch(`/api/admin/team-members/${id}`, {
+      method: 'DELETE',
+    });
+    if (!response.ok) throw new Error('Failed to delete team member');
+    return await response.json();
+  } catch (error) {
+    console.error('Error deleting team member:', error);
+    throw error;
+  }
+};
+
+export const updateTeamMemberStatus = async (id, status) => {
+  try {
+    const response = await fetch(`/api/admin/team-members/${id}/status`, {
+      method: 'PATCH',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ status }),
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message || 'Failed to update status');
+    return data;
+  } catch (error) {
+    console.error('Error updating team member status:', error);
+    throw error;
+  }
+};
+
+export const reorderTeamMembers = async (items) => {
+  try {
+    const response = await fetch('/api/admin/team-members/reorder', {
+      method: 'PATCH',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ items }),
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message || 'Failed to reorder team members');
+    return data;
+  } catch (error) {
+    console.error('Error reordering team members:', error);
     throw error;
   }
 };
