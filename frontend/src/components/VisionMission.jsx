@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { fetchVisionMission } from '../services/api';
+import { fetchVisionMission, fetchSectionSetting } from '../services/api';
 import Reveal from './Reveal';
 
 // Dynamic Material UI Icon Resolver
@@ -28,18 +28,25 @@ const getDynamicIcon = (iconString) => {
 
 export default function VisionMission() {
   const [items, setItems] = useState([]);
+  const [sectionSetting, setSectionSetting] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const loadData = async () => {
-      const data = await fetchVisionMission();
+      const [visionMissionData, settingData] = await Promise.all([
+        fetchVisionMission(),
+        fetchSectionSetting('vision_mission')
+      ]);
+      
       // Ensure we only take the first Vision and the first Mission
-      const vision = data.find(item => item.type === 'vision');
-      const mission = data.find(item => item.type === 'mission');
+      const vision = visionMissionData.find(item => item.type === 'vision');
+      const mission = visionMissionData.find(item => item.type === 'mission');
       const filteredItems = [];
       if (vision) filteredItems.push(vision);
       if (mission) filteredItems.push(mission);
+      
       setItems(filteredItems);
+      setSectionSetting(settingData);
       setIsLoading(false);
     };
     loadData();
@@ -78,13 +85,34 @@ export default function VisionMission() {
         {/* Section Header */}
         <Reveal delay={0} className="text-center mb-10 lg:mb-16">
           <span className="text-secondary font-semibold tracking-[0.2em] uppercase text-[12px] md:text-[14px] mb-3 block">
-            OUR PURPOSE
+            {sectionSetting?.subtitle || 'OUR PURPOSE'}
           </span>
           <h2 className="text-[32px] md:text-[38px] lg:text-[44px] font-bold text-dark leading-[1.2] mb-4 font-rubik">
-            Vision <span className="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-[#0463C3]">& Mission</span>
+            {(() => {
+              const titleText = sectionSetting?.title || 'Vision & Mission';
+              const words = titleText.split(' ');
+              if (words.length <= 1) return titleText;
+              
+              // To handle "& Mission" as a single highlighted part, we'll try splitting on ampersand first if it exists
+              if (titleText.includes('&')) {
+                const parts = titleText.split('&');
+                return (
+                  <>
+                    {parts[0]} <span className="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-[#0463C3]">&{parts[1]}</span>
+                  </>
+                );
+              }
+              
+              const lastWord = words.pop();
+              return (
+                <>
+                  {words.join(' ')} <span className="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-[#0463C3]">{lastWord}</span>
+                </>
+              );
+            })()}
           </h2>
           <p className="text-[15px] md:text-[16px] lg:text-[18px] text-text/90 max-w-2xl mx-auto leading-relaxed">
-            Our vision and mission guide every step of our journey as we strive to become a trusted global exporter of premium agricultural products.
+            {sectionSetting?.description || 'Our vision and mission guide every step of our journey as we strive to become a trusted global exporter of premium agricultural products.'}
           </p>
         </Reveal>
 

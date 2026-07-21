@@ -62,9 +62,18 @@ Route::prefix('admin')->group(function () {
     Route::patch('/team-members/{id}/status', [App\Http\Controllers\TeamMemberController::class, 'updateStatus']);
     Route::patch('/team-members/reorder', [App\Http\Controllers\TeamMemberController::class, 'reorder']);
 
+    // Vision Mission
+    Route::get('/vision-mission', [\App\Http\Controllers\VisionMissionController::class, 'adminIndex']);
+    Route::post('/vision-mission', [\App\Http\Controllers\VisionMissionController::class, 'store']);
+    Route::put('/vision-mission/{id}', [\App\Http\Controllers\VisionMissionController::class, 'update']);
+    Route::delete('/vision-mission/{id}', [\App\Http\Controllers\VisionMissionController::class, 'destroy']);
+
     // Section Settings
     Route::put('/section-settings/{key}', [App\Http\Controllers\SectionSettingController::class, 'update']);
 });
+
+// Public Vision Mission Route
+Route::get('/vision-mission', [\App\Http\Controllers\VisionMissionController::class, 'index']);
 
 // Public Section Settings Route
 Route::get('/section-settings/{key}', [App\Http\Controllers\SectionSettingController::class, 'index']);

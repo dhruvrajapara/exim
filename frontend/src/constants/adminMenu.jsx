@@ -58,7 +58,7 @@ export const adminMenu = [
     children: [
       { title: 'Company Information', path: '/admin/website/about/company-info' },
       { title: 'Our Story', path: '/admin/website/about/our-story' },
-      { title: 'Mission & Vision', path: '/admin/website/about/mission-vision' },
+      { title: 'Vision & Mission', path: '/admin/website/about/vision-mission' },
       { title: 'Director Message', path: '/admin/website/about/director-message' },
       { title: 'Team Members', path: '/admin/website/about/team-members' },
       { title: 'Infrastructure', path: '/admin/website/about/infrastructure' },

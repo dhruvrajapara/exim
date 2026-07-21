@@ -305,6 +305,76 @@ export const fetchVisionMission = async () => {
   }
 };
 
+export const fetchAdminVisionMission = async () => {
+  try {
+    const response = await fetch('/api/admin/vision-mission');
+    const contentType = response.headers.get("content-type");
+    if (!response.ok || !contentType || !contentType.includes("application/json")) {
+      throw new Error('API failed to return JSON');
+    }
+    const data = await response.json();
+    return data.data;
+  } catch (error) {
+    console.error('Error fetching admin vision mission:', error);
+    return [];
+  }
+};
+
+export const createVisionMission = async (visionMissionData) => {
+  try {
+    const response = await fetch('/api/admin/vision-mission', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(visionMissionData),
+    });
+    
+    if (!response.ok) {
+      throw new Error(`Failed to create vision/mission. Status: ${response.status}`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.error('Error creating vision/mission:', error);
+    throw error;
+  }
+};
+
+export const updateVisionMission = async (id, visionMissionData) => {
+  try {
+    const response = await fetch(`/api/admin/vision-mission/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(visionMissionData),
+    });
+    
+    if (!response.ok) {
+      throw new Error(`Failed to update vision/mission. Status: ${response.status}`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.error('Error updating vision/mission:', error);
+    throw error;
+  }
+};
+
+export const deleteVisionMission = async (id) => {
+  try {
+    const response = await fetch(`/api/admin/vision-mission/${id}`, {
+      method: 'DELETE',
+    });
+    
+    if (!response.ok) {
+      throw new Error(`Failed to delete vision/mission. Status: ${response.status}`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.error('Error deleting vision/mission:', error);
+    throw error;
+  }
+};
 
 export const fetchTeamMembers = async () => {
   try {
