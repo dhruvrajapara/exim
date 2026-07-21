@@ -272,6 +272,77 @@ export const fetchWhyChooseUs = async () => {
   }
 };
 
+export const fetchAdminWhyChooseUs = async () => {
+  try {
+    const response = await fetch('/api/admin/why-choose-us');
+    const contentType = response.headers.get("content-type");
+    if (!response.ok || !contentType || !contentType.includes("application/json")) {
+      throw new Error('API failed to return JSON');
+    }
+    const data = await response.json();
+    return data.data;
+  } catch (error) {
+    console.error('Error fetching admin why choose us:', error);
+    return [];
+  }
+};
+
+export const createWhyChooseUs = async (whyChooseUsData) => {
+  try {
+    const response = await fetch('/api/admin/why-choose-us', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(whyChooseUsData),
+    });
+    
+    if (!response.ok) {
+      throw new Error(`Failed to create item. Status: ${response.status}`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.error('Error creating why choose us item:', error);
+    throw error;
+  }
+};
+
+export const updateWhyChooseUs = async (id, whyChooseUsData) => {
+  try {
+    const response = await fetch(`/api/admin/why-choose-us/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(whyChooseUsData),
+    });
+    
+    if (!response.ok) {
+      throw new Error(`Failed to update item. Status: ${response.status}`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.error('Error updating why choose us item:', error);
+    throw error;
+  }
+};
+
+export const deleteWhyChooseUs = async (id) => {
+  try {
+    const response = await fetch(`/api/admin/why-choose-us/${id}`, {
+      method: 'DELETE',
+    });
+    
+    if (!response.ok) {
+      throw new Error(`Failed to delete item. Status: ${response.status}`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.error('Error deleting why choose us item:', error);
+    throw error;
+  }
+};
+
 export const fetchVisionMission = async () => {
   try {
     const response = await fetch('/api/vision-mission');

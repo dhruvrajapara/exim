@@ -19,6 +19,7 @@ import ContactMailIcon from '@mui/icons-material/ContactMail';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import BrushIcon from '@mui/icons-material/Brush';
 import AutoGraphIcon from '@mui/icons-material/AutoGraph';
+import AppsIcon from '@mui/icons-material/Apps';
 
 export const adminMenu = [
   {
@@ -35,6 +36,11 @@ export const adminMenu = [
     title: 'Testimonials',
     path: '/admin/testimonials',
     icon: <StarIcon fontSize="small" />,
+  },
+  {
+    title: 'Icon Library',
+    path: '/admin/website/icons',
+    icon: <AppsIcon fontSize="small" />,
   },
   {
     title: 'Home Page',

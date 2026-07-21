@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { 
-  fetchAdminVisionMission, 
-  createVisionMission, 
-  updateVisionMission, 
-  deleteVisionMission,
+  fetchAdminWhyChooseUs, 
+  createWhyChooseUs, 
+  updateWhyChooseUs, 
+  deleteWhyChooseUs,
   fetchSectionSetting,
   updateSectionSetting
 } from '../../../../services/api';
@@ -14,7 +14,7 @@ import CloseIcon from '@mui/icons-material/Close';
 
 import { getIconComponent } from '../../../../components/IconResolver';
 
-const VisionMissionAdmin = () => {
+const WhyChooseUsAdmin = () => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   
@@ -25,11 +25,9 @@ const VisionMissionAdmin = () => {
   
   // Form states
   const [formData, setFormData] = useState({
-    type: 'vision',
-    label: '',
     title: '',
-    description: '',
-    icon: 'Visibility'
+    short_description: '',
+    icon: 'WorkspacePremium'
   });
   const [formLoading, setFormLoading] = useState(false);
   
@@ -38,9 +36,9 @@ const VisionMissionAdmin = () => {
 
   // Section Settings State
   const [sectionSetting, setSectionSetting] = useState({
-    subtitle: 'OUR PURPOSE',
-    title: 'Vision & Mission',
-    description: 'Our vision and mission guide every step of our journey as we strive to become a trusted global exporter of premium agricultural products.'
+    subtitle: 'WHY CHOOSE US',
+    title: 'Why Choose BiteExport',
+    description: 'At BiteExport, we deliver premium-quality agricultural products backed by reliable export services, international standards, and long-term business relationships.'
   });
   const [savingSection, setSavingSection] = useState(false);
   const [isSectionOpen, setIsSectionOpen] = useState(false);
@@ -52,12 +50,12 @@ const VisionMissionAdmin = () => {
 
   const loadSectionSetting = async () => {
     try {
-      const data = await fetchSectionSetting('vision_mission');
+      const data = await fetchSectionSetting('why_choose_us');
       if (data) {
         setSectionSetting({
-          subtitle: data.subtitle || 'OUR PURPOSE',
-          title: data.title || 'Vision & Mission',
-          description: data.description || 'Our vision and mission guide every step of our journey as we strive to become a trusted global exporter of premium agricultural products.'
+          subtitle: data.subtitle || 'WHY CHOOSE US',
+          title: data.title || 'Why Choose BiteExport',
+          description: data.description || 'At BiteExport, we deliver premium-quality agricultural products backed by reliable export services, international standards, and long-term business relationships.'
         });
       }
     } catch (error) {
@@ -69,7 +67,7 @@ const VisionMissionAdmin = () => {
     e.preventDefault();
     setSavingSection(true);
     try {
-      await updateSectionSetting('vision_mission', sectionSetting);
+      await updateSectionSetting('why_choose_us', sectionSetting);
       showToast('Section header updated successfully!');
       setIsSectionOpen(false);
     } catch (error) {
@@ -81,10 +79,10 @@ const VisionMissionAdmin = () => {
   const loadItems = async () => {
     setLoading(true);
     try {
-      const data = await fetchAdminVisionMission();
+      const data = await fetchAdminWhyChooseUs();
       setItems(data || []);
     } catch (error) {
-      showToast('Error loading vision & mission items', 'error');
+      showToast('Error loading items', 'error');
     }
     setLoading(false);
   };
@@ -95,11 +93,9 @@ const VisionMissionAdmin = () => {
 
   const resetForm = () => {
     setFormData({
-      type: 'vision',
-      label: '',
       title: '',
-      description: '',
-      icon: 'Visibility'
+      short_description: '',
+      icon: 'WorkspacePremium'
     });
     setCurrentItem(null);
     setFormLoading(false);
@@ -114,10 +110,8 @@ const VisionMissionAdmin = () => {
   const handleOpenEdit = (item) => {
     setCurrentItem(item);
     setFormData({
-      type: item.type,
-      label: item.label,
       title: item.title,
-      description: item.description,
+      short_description: item.short_description,
       icon: item.icon
     });
     setModalMode('edit');
@@ -135,10 +129,10 @@ const VisionMissionAdmin = () => {
 
     try {
       if (modalMode === 'add') {
-        await createVisionMission(formData);
+        await createWhyChooseUs(formData);
         showToast('Item added successfully!');
       } else {
-        await updateVisionMission(currentItem.id, formData);
+        await updateWhyChooseUs(currentItem.id, formData);
         showToast('Item updated successfully!');
       }
       handleCloseModal();
@@ -155,7 +149,7 @@ const VisionMissionAdmin = () => {
 
   const confirmDelete = async () => {
     try {
-      await deleteVisionMission(deleteId);
+      await deleteWhyChooseUs(deleteId);
       showToast('Item deleted successfully!');
       setDeleteId(null);
       loadItems();
@@ -168,8 +162,8 @@ const VisionMissionAdmin = () => {
     <div className="p-4 md:p-6 min-h-full bg-gray-50/50">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4 flex-shrink-0">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Vision & Mission</h1>
-          <p className="text-sm text-gray-500 mt-1">Manage the Vision and Mission cards displayed on the About page.</p>
+          <h1 className="text-2xl font-bold text-gray-900">Why Choose Us</h1>
+          <p className="text-sm text-gray-500 mt-1">Manage the features displayed on the About page.</p>
         </div>
         <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
           <button 
@@ -184,7 +178,7 @@ const VisionMissionAdmin = () => {
             className="w-full sm:w-auto justify-center bg-[#0B63CE] hover:bg-[#0950A7] text-white px-5 py-2.5 rounded-lg flex items-center font-medium transition-colors shadow-sm"
           >
             <AddIcon className="w-5 h-5 mr-2" />
-            Add Item
+            Add Feature
           </button>
         </div>
       </div>
@@ -202,7 +196,7 @@ const VisionMissionAdmin = () => {
             <form onSubmit={handleSaveSectionSetting} className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Subtitle (e.g. OUR PURPOSE)</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Subtitle (e.g. WHY CHOOSE US)</label>
                   <input type="text" value={sectionSetting.subtitle} onChange={(e) => setSectionSetting({...sectionSetting, subtitle: e.target.value})} className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-[#0B63CE] focus:border-[#0B63CE] sm:text-sm" />
                 </div>
                 <div>
@@ -229,17 +223,16 @@ const VisionMissionAdmin = () => {
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Type</th>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Label</th>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Title</th>
                 <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Icon</th>
+                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Title</th>
+                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Description</th>
                 <th className="px-6 py-4 text-right text-xs font-semibold text-gray-500 uppercase tracking-wider">Actions</th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
               {loading ? (
                 <tr>
-                  <td colSpan="5" className="px-6 py-8 text-center text-gray-500">
+                  <td colSpan="4" className="px-6 py-8 text-center text-gray-500">
                     <div className="flex justify-center items-center">
                       <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#0B63CE]"></div>
                     </div>
@@ -247,28 +240,23 @@ const VisionMissionAdmin = () => {
                 </tr>
               ) : items.length === 0 ? (
                 <tr>
-                  <td colSpan="5" className="px-6 py-8 text-center text-gray-500 bg-gray-50/50">
-                    No vision/mission items found. Click "Add Item" to create one.
+                  <td colSpan="4" className="px-6 py-8 text-center text-gray-500 bg-gray-50/50">
+                    No items found. Click "Add Feature" to create one.
                   </td>
                 </tr>
               ) : (
                 items.map((item) => (
                   <tr key={item.id} className="hover:bg-gray-50/50 transition-colors">
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                        item.type === 'vision' ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800'
-                      }`}>
-                        {item.type.toUpperCase()}
-                      </span>
+                      <div className="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center text-xl">
+                        {getIconComponent(item.icon)}
+                      </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-medium text-gray-900">{item.label}</div>
+                      <div className="text-sm font-medium text-gray-900">{item.title}</div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-900">{item.title}</div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="text-gray-500 text-sm bg-gray-100 px-2 py-1 rounded">{item.icon}</span>
+                    <td className="px-6 py-4">
+                      <div className="text-sm text-gray-500 line-clamp-2">{item.short_description}</div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                       <div className="flex justify-end gap-2">
@@ -305,7 +293,7 @@ const VisionMissionAdmin = () => {
             <div className="relative inline-block w-full max-w-2xl p-6 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl sm:my-8 animate-scale-up">
               <div className="flex items-center justify-between mb-5 border-b border-gray-100 pb-4">
                 <h3 className="text-xl font-bold text-gray-900">
-                  {modalMode === 'add' ? 'Add Item' : 'Edit Item'}
+                  {modalMode === 'add' ? 'Add Feature' : 'Edit Feature'}
                 </h3>
                 <button
                   onClick={handleCloseModal}
@@ -318,16 +306,15 @@ const VisionMissionAdmin = () => {
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Type *</label>
-                    <select
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Title *</label>
+                    <input
+                      type="text"
                       required
-                      value={formData.type}
-                      onChange={(e) => setFormData({...formData, type: e.target.value})}
-                      className="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:ring-[#0B63CE] focus:border-[#0B63CE] bg-white text-sm"
-                    >
-                      <option value="vision">Vision</option>
-                      <option value="mission">Mission</option>
-                    </select>
+                      value={formData.title}
+                      onChange={(e) => setFormData({...formData, title: e.target.value})}
+                      className="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:ring-[#0B63CE] focus:border-[#0B63CE] text-sm"
+                      placeholder="Enter feature title"
+                    />
                   </div>
 
                   <div>
@@ -351,41 +338,15 @@ const VisionMissionAdmin = () => {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Label (e.g. OUR VISION) *</label>
-                    <input
-                      type="text"
-                      required
-                      value={formData.label}
-                      onChange={(e) => setFormData({...formData, label: e.target.value})}
-                      className="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:ring-[#0B63CE] focus:border-[#0B63CE] text-sm"
-                      placeholder="Enter label"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Title *</label>
-                    <input
-                      type="text"
-                      required
-                      value={formData.title}
-                      onChange={(e) => setFormData({...formData, title: e.target.value})}
-                      className="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:ring-[#0B63CE] focus:border-[#0B63CE] text-sm"
-                      placeholder="Enter title"
-                    />
-                  </div>
-                </div>
-
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Description *</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Short Description *</label>
                   <textarea
                     required
-                    rows="4"
-                    value={formData.description}
-                    onChange={(e) => setFormData({...formData, description: e.target.value})}
+                    rows="3"
+                    value={formData.short_description}
+                    onChange={(e) => setFormData({...formData, short_description: e.target.value})}
                     className="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:ring-[#0B63CE] focus:border-[#0B63CE] text-sm resize-none"
-                    placeholder="Enter full description"
+                    placeholder="Enter short description"
                   ></textarea>
                 </div>
 
@@ -408,7 +369,7 @@ const VisionMissionAdmin = () => {
                         Saving...
                       </>
                     ) : (
-                      modalMode === 'add' ? 'Add Item' : 'Save Changes'
+                      modalMode === 'add' ? 'Add Feature' : 'Save Changes'
                     )}
                   </button>
                 </div>
@@ -430,7 +391,7 @@ const VisionMissionAdmin = () => {
                 </div>
                 <h3 className="text-lg font-bold text-gray-900 mb-2">Delete Item</h3>
                 <p className="text-sm text-gray-500 mb-6">
-                  Are you sure you want to delete this vision/mission item? This action cannot be undone.
+                  Are you sure you want to delete this feature? This action cannot be undone.
                 </p>
                 <div className="flex gap-3 w-full">
                   <button
@@ -455,4 +416,4 @@ const VisionMissionAdmin = () => {
   );
 };
 
-export default VisionMissionAdmin;
+export default WhyChooseUsAdmin;

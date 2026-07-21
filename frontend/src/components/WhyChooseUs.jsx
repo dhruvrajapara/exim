@@ -1,43 +1,22 @@
 import { useState, useEffect } from 'react';
-import { fetchWhyChooseUs } from '../services/api';
+import { fetchWhyChooseUs, fetchSectionSetting } from '../services/api';
 import Reveal from './Reveal';
 
-// Dynamic Material UI Icon Resolver
-import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
-import VerifiedIcon from '@mui/icons-material/Verified';
-import PublicIcon from '@mui/icons-material/Public';
-import LocalShippingIcon from '@mui/icons-material/LocalShipping';
-import Inventory2Icon from '@mui/icons-material/Inventory2';
-import HandshakeIcon from '@mui/icons-material/Handshake';
-import SupportAgentIcon from '@mui/icons-material/SupportAgent';
-import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
-import StarIcon from '@mui/icons-material/Star'; // Fallback icon
-
-const getDynamicIcon = (iconString) => {
-  if (!iconString) return <StarIcon fontSize="inherit" />;
-  
-  const iconMap = {
-    'WorkspacePremium': <WorkspacePremiumIcon fontSize="inherit" />,
-    'Verified': <VerifiedIcon fontSize="inherit" />,
-    'Public': <PublicIcon fontSize="inherit" />,
-    'LocalShipping': <LocalShippingIcon fontSize="inherit" />,
-    'Inventory2': <Inventory2Icon fontSize="inherit" />,
-    'Handshake': <HandshakeIcon fontSize="inherit" />,
-    'SupportAgent': <SupportAgentIcon fontSize="inherit" />,
-    'AssignmentTurnedIn': <AssignmentTurnedInIcon fontSize="inherit" />
-  };
-
-  return iconMap[iconString] || <StarIcon fontSize="inherit" />;
-};
+import { getIconComponent } from './IconResolver';
 
 export default function WhyChooseUs() {
   const [features, setFeatures] = useState([]);
+  const [sectionSetting, setSectionSetting] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const loadData = async () => {
-      const data = await fetchWhyChooseUs();
-      setFeatures(data);
+      const [featuresData, settingData] = await Promise.all([
+        fetchWhyChooseUs(),
+        fetchSectionSetting('why_choose_us')
+      ]);
+      setFeatures(featuresData);
+      setSectionSetting(settingData);
       setIsLoading(false);
     };
     loadData();
@@ -69,13 +48,24 @@ export default function WhyChooseUs() {
         {/* Section Header */}
         <Reveal delay={0} className="text-center mb-10 md:mb-12">
           <span className="text-secondary font-semibold tracking-[0.2em] uppercase text-[12px] md:text-[14px] mb-3 block">
-            WHY CHOOSE US
+            {sectionSetting?.subtitle || 'WHY CHOOSE US'}
           </span>
           <h2 className="text-[32px] md:text-[38px] lg:text-[44px] font-bold text-dark leading-[1.2] mb-4 font-rubik">
-            Why Choose <span className="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-[#0463C3]">BiteExport</span>
+            {(() => {
+              const titleText = sectionSetting?.title || 'Why Choose BiteExport';
+              const words = titleText.split(' ');
+              if (words.length <= 1) return titleText;
+              
+              const lastWord = words.pop();
+              return (
+                <>
+                  {words.join(' ')} <span className="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-[#0463C3]">{lastWord}</span>
+                </>
+              );
+            })()}
           </h2>
           <p className="text-[15px] md:text-[16px] lg:text-[18px] text-text/90 max-w-2xl mx-auto leading-relaxed">
-            At BiteExport, we deliver premium-quality agricultural products backed by reliable export services, international standards, and long-term business relationships.
+            {sectionSetting?.description || 'At BiteExport, we deliver premium-quality agricultural products backed by reliable export services, international standards, and long-term business relationships.'}
           </p>
         </Reveal>
 
@@ -93,7 +83,7 @@ export default function WhyChooseUs() {
                 {/* Dynamic Icon Wrapper */}
                 <div className="w-[44px] h-[44px] lg:w-[56px] lg:h-[56px] rounded-full bg-secondary/10 text-secondary flex items-center justify-center mb-4 md:mb-6 group-hover:scale-110 group-hover:bg-secondary group-hover:text-white transition-all duration-300 shadow-sm group-hover:shadow-md">
                   <span className="text-[24px] lg:text-[30px] flex items-center justify-center">
-                    {getDynamicIcon(feature.icon)}
+                    {getIconComponent(feature.icon, { fontSize: 'inherit' })}
                   </span>
                 </div>
 

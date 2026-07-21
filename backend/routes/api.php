@@ -68,12 +68,21 @@ Route::prefix('admin')->group(function () {
     Route::put('/vision-mission/{id}', [\App\Http\Controllers\VisionMissionController::class, 'update']);
     Route::delete('/vision-mission/{id}', [\App\Http\Controllers\VisionMissionController::class, 'destroy']);
 
+    // Why Choose Us
+    Route::get('/why-choose-us', [\App\Http\Controllers\WhyChooseUsController::class, 'adminIndex']);
+    Route::post('/why-choose-us', [\App\Http\Controllers\WhyChooseUsController::class, 'store']);
+    Route::put('/why-choose-us/{id}', [\App\Http\Controllers\WhyChooseUsController::class, 'update']);
+    Route::delete('/why-choose-us/{id}', [\App\Http\Controllers\WhyChooseUsController::class, 'destroy']);
+
     // Section Settings
     Route::put('/section-settings/{key}', [App\Http\Controllers\SectionSettingController::class, 'update']);
 });
 
 // Public Vision Mission Route
 Route::get('/vision-mission', [\App\Http\Controllers\VisionMissionController::class, 'index']);
+
+// Public Why Choose Us Route
+Route::get('/why-choose-us', [\App\Http\Controllers\WhyChooseUsController::class, 'index']);
 
 // Public Section Settings Route
 Route::get('/section-settings/{key}', [App\Http\Controllers\SectionSettingController::class, 'index']);

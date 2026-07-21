@@ -1,30 +1,7 @@
 import { useState, useEffect } from 'react';
 import { fetchVisionMission, fetchSectionSetting } from '../services/api';
 import Reveal from './Reveal';
-
-// Dynamic Material UI Icon Resolver
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import PublicIcon from '@mui/icons-material/Public';
-import TravelExploreIcon from '@mui/icons-material/TravelExplore';
-import FlagIcon from '@mui/icons-material/Flag';
-import TrackChangesIcon from '@mui/icons-material/TrackChanges';
-import MilitaryTechIcon from '@mui/icons-material/MilitaryTech';
-import StarIcon from '@mui/icons-material/Star'; // Fallback icon
-
-const getDynamicIcon = (iconString) => {
-  if (!iconString) return <StarIcon fontSize="inherit" />;
-  
-  const iconMap = {
-    'Visibility': <VisibilityIcon fontSize="inherit" />,
-    'Public': <PublicIcon fontSize="inherit" />,
-    'TravelExplore': <TravelExploreIcon fontSize="inherit" />,
-    'Flag': <FlagIcon fontSize="inherit" />,
-    'TrackChanges': <TrackChangesIcon fontSize="inherit" />,
-    'MilitaryTech': <MilitaryTechIcon fontSize="inherit" />
-  };
-
-  return iconMap[iconString] || <StarIcon fontSize="inherit" />;
-};
+import { getIconComponent } from './IconResolver';
 
 export default function VisionMission() {
   const [items, setItems] = useState([]);
@@ -118,7 +95,9 @@ export default function VisionMission() {
 
         {/* 50/50 Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-10">
-          {items.map((item, index) => (
+          {items.map((item, index) => {
+            const isVision = index === 0;
+            return (
             <Reveal 
               key={item.id || index} 
               delay={index * 200} // Staggered delay (0ms, 200ms)
@@ -129,16 +108,16 @@ export default function VisionMission() {
                 {/* Subtle Decorative Pattern Inside Card */}
                 <div className="absolute -bottom-10 -right-10 text-gray-50 opacity-10 group-hover:scale-125 transition-transform duration-700 pointer-events-none">
                    <span className="text-[200px] flex items-center justify-center">
-                     {getDynamicIcon(item.icon)}
+                     {getIconComponent(item.icon, { fontSize: 'inherit' })}
                    </span>
                 </div>
 
                 <div className="relative z-10 flex flex-col h-full">
                   {/* Dynamic Icon */}
-                  <div className="w-[48px] h-[48px] lg:w-[60px] lg:h-[60px] rounded-[14px] bg-secondary/10 text-secondary flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-secondary group-hover:text-white transition-all duration-300 shadow-sm">
-                    <span className="text-[28px] lg:text-[34px] flex items-center justify-center">
-                      {getDynamicIcon(item.icon)}
-                    </span>
+                  <div className={`w-14 h-14 md:w-16 md:h-16 rounded-[15px] flex items-center justify-center text-[28px] md:text-[32px] shrink-0
+                    ${isVision ? 'bg-[#0B63CE]/10 text-[#0B63CE]' : 'bg-[#18A0FB]/10 text-[#18A0FB]'} 
+                    group-hover:scale-110 group-hover:bg-white group-hover:text-[#0B63CE] transition-all duration-300 shadow-sm mb-6`}>
+                    {getIconComponent(item.icon, { fontSize: 'inherit' })}
                   </div>
 
                   {/* Content */}
@@ -157,7 +136,8 @@ export default function VisionMission() {
 
               </div>
             </Reveal>
-          ))}
+            );
+          })}
         </div>
 
       </div>
