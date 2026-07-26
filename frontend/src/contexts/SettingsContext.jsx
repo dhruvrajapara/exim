@@ -38,7 +38,7 @@ export const SettingsProvider = ({ children }) => {
             settingsData[key] = [];
           }
         });
-        ['footer_quick_links', 'footer_product_links'].forEach(key => {
+        ['footer_quick_links', 'footer_product_links', 'contact_faqs'].forEach(key => {
           if (settingsData[key]) {
             try {
               settingsData[key] = JSON.parse(settingsData[key]);

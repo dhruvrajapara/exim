@@ -3,36 +3,15 @@ import { motion, AnimatePresence } from 'framer-motion';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 
-const FAQ_DATA = [
-  {
-    id: 1,
-    question: "How can I request a quotation?",
-    answer: "You can request a quotation by filling out the inquiry form on this page or emailing our sales team directly at sales@biteexport.com. Please include the product name, required quantity, packaging preferences, and the destination country."
-  },
-  {
-    id: 2,
-    question: "Which countries do you export to?",
-    answer: "We currently export to over 25 countries worldwide, with a strong presence in the United Kingdom, Germany, Australia, the Middle East, and various parts of Africa. We hold the necessary APEDA and FSSAI certifications to ensure global compliance."
-  },
-  {
-    id: 3,
-    question: "What is your minimum order quantity (MOQ)?",
-    answer: "Our Minimum Order Quantity (MOQ) depends on the specific product and packaging requirements. For most dehydrated vegetables, the MOQ starts at 1 Metric Ton (MT). Please contact us with your specific needs for a detailed assessment."
-  },
-  {
-    id: 4,
-    question: "Can you provide private labeling?",
-    answer: "Yes, we offer comprehensive private labeling and OEM packaging solutions for B2B clients. We can pack products in retail-ready packaging customized with your brand's logo and design."
-  },
-  {
-    id: 5,
-    question: "How long does international shipping take?",
-    answer: "Shipping duration varies significantly based on the destination port and the shipping line. Typically, shipments to the Middle East take 7-10 days, Europe takes 25-30 days, and Australia takes 20-25 days from the port of loading in India."
-  }
-];
+import { useSettings } from '../../contexts/SettingsContext';
 
 export default function ContactFAQ() {
+  const { settings } = useSettings();
   const [openId, setOpenId] = useState(null);
+
+  const faqs = settings?.contact_faqs && settings.contact_faqs.length > 0 ? settings.contact_faqs : [];
+
+  if (faqs.length === 0) return null;
 
   const toggleFAQ = (id) => {
     setOpenId(openId === id ? null : id);
@@ -52,15 +31,15 @@ export default function ContactFAQ() {
         </div>
 
         <div className="flex flex-col gap-4">
-          {FAQ_DATA.map((faq) => {
-            const isOpen = openId === faq.id;
+          {faqs.map((faq, index) => {
+            const isOpen = openId === index;
             return (
               <div 
-                key={faq.id} 
+                key={index} 
                 className={`border ${isOpen ? 'border-[#0B63CE]' : 'border-gray-200'} rounded-[16px] overflow-hidden transition-colors duration-300`}
               >
                 <button
-                  onClick={() => toggleFAQ(faq.id)}
+                  onClick={() => toggleFAQ(index)}
                   className={`w-full flex items-center justify-between p-5 md:p-6 text-left ${isOpen ? 'bg-[#EAF4FF]' : 'bg-white hover:bg-gray-50'}`}
                 >
                   <span className={`font-bold text-[16px] md:text-[18px] ${isOpen ? 'text-[#0B63CE]' : 'text-dark'}`}>

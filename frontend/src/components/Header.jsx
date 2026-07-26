@@ -76,7 +76,7 @@ export default function Header() {
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex flex-1 justify-center" aria-label="Main Navigation">
             <ul className="flex items-center space-x-8 xl:space-x-12">
-              {navItems.map((item) => (
+              {navItems.filter(item => item.name !== 'Blog' || settings?.blog_enabled !== false).map((item) => (
                 <li key={item.name}>
                   <NavLink 
                     to={item.path}
@@ -155,7 +155,7 @@ export default function Header() {
 
         <nav className="flex-1 overflow-y-auto py-4" aria-label="Mobile Navigation">
           <ul className="flex flex-col">
-            {navItems.map((item) => (
+            {navItems.filter(item => item.name !== 'Blog' || settings?.blog_enabled !== false).map((item) => (
               <li key={item.name}>
                 <NavLink 
                   to={item.path}

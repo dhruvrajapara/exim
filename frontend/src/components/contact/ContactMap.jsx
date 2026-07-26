@@ -35,7 +35,13 @@ export default function ContactMap() {
           </p>
         </div>
 
-        <div className="w-full max-w-5xl rounded-[24px] overflow-hidden shadow-lg border border-gray-200 mb-8 bg-white h-[400px] md:h-[500px]">
+        <div 
+          className="w-full rounded-[24px] overflow-hidden shadow-lg border border-gray-200 mb-8 bg-white"
+          style={{
+            maxWidth: settings?.contact_map_width || '100%',
+            height: settings?.contact_map_height || '400px'
+          }}
+        >
           <iframe 
             src={mapUrl}
             width="100%" 
