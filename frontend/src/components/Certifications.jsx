@@ -50,7 +50,7 @@ export default function Certifications() {
     // For homepage, we'll use primary for the gradient to match the theme
     return (
       <>
-        {firstWords} <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-[#0463C3]">{lastWord}</span>
+        {firstWords} <span className="text-transparent bg-clip-text" style={{ backgroundImage: 'var(--color-gradient)' }}>{lastWord}</span>
       </>
     );
   };

@@ -85,7 +85,7 @@ export default function AboutTeam() {
             {subtitle}
           </span>
           <h2 className="text-[32px] md:text-[38px] lg:text-[44px] font-bold text-dark leading-tight mb-4 font-rubik">
-            {restOfTitle} <span className="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-[#0463C3]">{lastWord}</span>
+            {restOfTitle} <span className="text-transparent bg-clip-text" style={{ backgroundImage: 'var(--color-gradient)' }}>{lastWord}</span>
           </h2>
           <p className="text-[15px] md:text-[16px] lg:text-[18px] text-text/90 max-w-2xl mx-auto leading-relaxed">
             {description}

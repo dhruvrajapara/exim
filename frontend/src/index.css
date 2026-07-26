@@ -3,9 +3,10 @@
 @theme {
   --font-sans: "Rubik", system-ui, sans-serif;
 
-  --color-primary: #039639;
+  --color-primary: #0B63CE;
   --color-primary-light: #6BC72A;
-  --color-secondary: #3599FF;
+  --color-secondary: #18A0FB;
+  --color-gradient: linear-gradient(to right, var(--color-primary), var(--color-secondary));
   --color-dark: #000821;
   --color-text: #4B5563;
   --color-border: #E5E7EB;
@@ -65,6 +66,7 @@
 
 @layer components {
   .btn-primary {
-    @apply inline-flex items-center justify-center bg-gradient-to-r from-[#3599FF] to-[#0463C3] text-white h-[48px] px-6 rounded-md hover:shadow-md hover:scale-[1.02] transition-all duration-300;
+    @apply inline-flex items-center justify-center text-white h-[48px] px-6 rounded-md hover:shadow-md hover:scale-[1.02] transition-all duration-300;
+    background-image: var(--color-gradient);
   }
 }

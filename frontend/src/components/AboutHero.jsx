@@ -66,7 +66,7 @@ export default function AboutHero() {
                   
                   return (
                     <>
-                      {words.join(' ')} <span className="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-[#0463C3]">{highlightedWords}</span>
+                      {words.join(' ')} <span className="text-transparent bg-clip-text" style={{ backgroundImage: 'var(--color-gradient)' }}>{highlightedWords}</span>
                     </>
                   );
                 })()}

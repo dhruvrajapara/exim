@@ -4,10 +4,14 @@ import { HelmetProvider } from 'react-helmet-async';
 import './index.css';
 import App from './App.jsx';
 
+import { SettingsProvider } from './contexts/SettingsContext.jsx';
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <HelmetProvider>
-      <App />
+      <SettingsProvider>
+        <App />
+      </SettingsProvider>
     </HelmetProvider>
   </StrictMode>,
 );

@@ -1,3 +1,4 @@
+import { useSettings } from '../contexts/SettingsContext';
 import SEO from '../components/SEO';
 import Hero from '../components/Hero';
 import About from '../components/About';
@@ -8,6 +9,8 @@ import Testimonials from '../components/Testimonials';
 import LatestBlogs from '../components/LatestBlogs';
 
 export default function Home() {
+  const { settings } = useSettings();
+
   const schema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
@@ -18,7 +21,7 @@ export default function Home() {
   return (
     <>
       <SEO 
-        title="BiteExport | Premium Food Export Company"
+        title={settings?.seo_home_title || "BiteExport | Premium Food Export Company"}
         exactTitle={true}
         description="Welcome to the AI-First Enterprise Platform built with React and Laravel."
         canonical="https://example.com/"

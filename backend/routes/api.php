@@ -19,6 +19,8 @@ Route::get('/testimonials', [App\Http\Controllers\TestimonialController::class, 
 Route::get('/latest-blogs', [App\Http\Controllers\BlogController::class, 'latest']);
 Route::get('/footer', [App\Http\Controllers\FooterSettingController::class, 'index']);
 Route::get('/team-members', [App\Http\Controllers\TeamMemberController::class, 'index']);
+Route::get('/website/settings', [\App\Http\Controllers\Api\WebsiteSettingController::class, 'getSettings']);
+Route::get('/website/available-pages', [\App\Http\Controllers\Api\WebsiteSettingController::class, 'getAvailablePages']);
 
 // Admin Routes (Currently Unprotected for testing, later wrapped in auth:sanctum middleware)
 Route::prefix('admin')->group(function () {
@@ -76,6 +78,9 @@ Route::prefix('admin')->group(function () {
 
     // Section Settings
     Route::put('/section-settings/{key}', [App\Http\Controllers\SectionSettingController::class, 'update']);
+    
+    // Global Settings
+    Route::put('/website/settings', [\App\Http\Controllers\Api\WebsiteSettingController::class, 'updateSettings']);
 });
 
 // Public Vision Mission Route

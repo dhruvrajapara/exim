@@ -57,7 +57,7 @@ export default function Testimonials() {
     
     return (
       <>
-        {firstWords} <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-green-500">{lastWord}</span>
+        {firstWords} <span className="text-transparent bg-clip-text" style={{ backgroundImage: 'var(--color-gradient)' }}>{lastWord}</span>
       </>
     );
   };

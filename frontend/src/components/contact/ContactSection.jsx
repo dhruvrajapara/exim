@@ -10,8 +10,11 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { useSettings } from '../../contexts/SettingsContext';
 
 export default function ContactSection() {
+  const { settings } = useSettings();
+  
   const [formData, setFormData] = useState({
     name: '',
     company: '',
@@ -22,7 +25,7 @@ export default function ContactSection() {
     message: '',
     agreed: false
   });
-  
+
   const [status, setStatus] = useState('idle'); // idle, loading, success, error
 
   const handleChange = (e) => {
@@ -36,7 +39,7 @@ export default function ContactSection() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setStatus('loading');
-    
+
     // Simulate API call
     setTimeout(() => {
       setStatus('success');
@@ -51,13 +54,13 @@ export default function ContactSection() {
     <section className="py-12 md:py-16 bg-white">
       <div className="container-custom">
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
-          
+
           {/* Left Side: Information Panel (40%) */}
           <div className="w-full lg:w-[40%] flex flex-col gap-6">
             <div className="bg-[#F9FAFB] rounded-[20px] p-8 md:p-10 border border-gray-200 shadow-sm h-full flex flex-col">
-              
+
               <h2 className="font-rubik text-[28px] font-bold text-dark mb-8">Contact Information</h2>
-              
+
               <div className="flex flex-col gap-6 flex-grow">
                 {/* Address */}
                 <div className="flex gap-4">
@@ -66,81 +69,82 @@ export default function ContactSection() {
                   </div>
                   <div>
                     <h4 className="text-[14px] font-bold text-dark mb-1">Office Address</h4>
-                    <p className="text-gray-600 text-[15px]">BiteExport<br/>Surat, Gujarat, India</p>
+                    {settings?.contact_office_addresses && settings.contact_office_addresses.length > 0 ? (
+                      settings.contact_office_addresses.map((address, idx) => (
+                        <p key={idx} className="text-gray-600 text-[15px] whitespace-pre-line mb-2">{address}</p>
+                      ))
+                    ) : (
+                      <p className="text-gray-600 text-[15px] whitespace-pre-line">BiteExport\nSurat, Gujarat, India</p>
+                    )}
                   </div>
                 </div>
 
                 {/* Phone */}
                 <div className="flex gap-4">
-                  <div className="w-[40px] h-[40px] rounded-full bg-[#EAF4FF] text-[#0B63CE] flex items-center justify-center flex-shrink-0">
+                  <div className="w-[40px] h-[40px] rounded-full bg-[#EAF4FF] text-[var(--color-primary)] flex items-center justify-center flex-shrink-0">
                     <PhoneIcon fontSize="small" />
                   </div>
                   <div>
                     <h4 className="text-[14px] font-bold text-dark mb-1">Phone</h4>
-                    <a href="tel:+919876543210" className="text-gray-600 text-[15px] hover:text-[#0B63CE]">+91 98765 43210</a>
+                    {settings?.contact_phones && settings.contact_phones.map((phone, idx) => (
+                      <a key={idx} href={`tel:${phone.replace(/[^0-9+]/g, '')}`} className="block text-gray-600 text-[15px] hover:text-[var(--color-primary)] mb-1">{phone}</a>
+                    ))}
                   </div>
                 </div>
 
                 {/* Email */}
                 <div className="flex gap-4">
-                  <div className="w-[40px] h-[40px] rounded-full bg-[#EAF4FF] text-[#0B63CE] flex items-center justify-center flex-shrink-0">
+                  <div className="w-[40px] h-[40px] rounded-full bg-[#EAF4FF] text-[var(--color-primary)] flex items-center justify-center flex-shrink-0">
                     <EmailIcon fontSize="small" />
                   </div>
                   <div>
                     <h4 className="text-[14px] font-bold text-dark mb-1">Email</h4>
-                    <a href="mailto:info@biteexport.com" className="block text-gray-600 text-[15px] hover:text-[#0B63CE] mb-1">info@biteexport.com</a>
-                    <a href="mailto:sales@biteexport.com" className="block text-gray-600 text-[15px] hover:text-[#0B63CE]">sales@biteexport.com</a>
-                  </div>
-                </div>
-
-                {/* Website */}
-                <div className="flex gap-4">
-                  <div className="w-[40px] h-[40px] rounded-full bg-[#EAF4FF] text-[#0B63CE] flex items-center justify-center flex-shrink-0">
-                    <LanguageIcon fontSize="small" />
-                  </div>
-                  <div>
-                    <h4 className="text-[14px] font-bold text-dark mb-1">Website</h4>
-                    <a href="https://www.biteexport.com" target="_blank" rel="noreferrer" className="text-gray-600 text-[15px] hover:text-[#0B63CE]">www.biteexport.com</a>
+                    {settings?.contact_emails && settings.contact_emails.map((email, idx) => (
+                      <a key={idx} href={`mailto:${email}`} className="block text-gray-600 text-[15px] hover:text-[var(--color-primary)] mb-1">{email}</a>
+                    ))}
                   </div>
                 </div>
 
                 {/* Business Hours */}
                 <div className="flex gap-4">
-                  <div className="w-[40px] h-[40px] rounded-full bg-[#EAF4FF] text-[#0B63CE] flex items-center justify-center flex-shrink-0">
+                  <div className="w-[40px] h-[40px] rounded-full bg-[#EAF4FF] text-[var(--color-primary)] flex items-center justify-center flex-shrink-0">
                     <AccessTimeIcon fontSize="small" />
                   </div>
                   <div>
                     <h4 className="text-[14px] font-bold text-dark mb-1">Business Hours</h4>
-                    <p className="text-gray-600 text-[15px]">Monday – Saturday<br/>9:00 AM – 6:00 PM (IST)</p>
-                  </div>
-                </div>
-
-                {/* Export Markets */}
-                <div className="flex gap-4">
-                  <div className="w-[40px] h-[40px] rounded-full bg-[#EAF4FF] text-[#0B63CE] flex items-center justify-center flex-shrink-0">
-                    <PublicIcon fontSize="small" />
-                  </div>
-                  <div>
-                    <h4 className="text-[14px] font-bold text-dark mb-1">Export Markets</h4>
-                    <p className="text-gray-600 text-[15px]">United Kingdom, Germany, Australia, Middle East, Africa</p>
+                    <p className="text-gray-600 text-[15px] whitespace-pre-line">{settings?.contact_business_hours || 'Monday – Saturday\n9:00 AM – 6:00 PM (IST)'}</p>
                   </div>
                 </div>
               </div>
 
               {/* Social Icons */}
               <div className="mt-10 pt-8 border-t border-gray-200 flex gap-3">
-                <a href="#" className="w-[44px] h-[44px] rounded-full bg-white flex items-center justify-center text-gray-500 hover:bg-[#0A66C2] hover:text-white transition-colors border border-gray-200 shadow-sm">
-                  <LinkedInIcon fontSize="small" />
-                </a>
-                <a href="#" className="w-[44px] h-[44px] rounded-full bg-white flex items-center justify-center text-gray-500 hover:bg-[#1877F2] hover:text-white transition-colors border border-gray-200 shadow-sm">
-                  <FacebookIcon fontSize="small" />
-                </a>
-                <a href="#" className="w-[44px] h-[44px] rounded-full bg-white flex items-center justify-center text-gray-500 hover:bg-[#E4405F] hover:text-white transition-colors border border-gray-200 shadow-sm">
-                  <InstagramIcon fontSize="small" />
-                </a>
-                <a href="#" className="w-[44px] h-[44px] rounded-full bg-white flex items-center justify-center text-gray-500 hover:bg-[#25D366] hover:text-white transition-colors border border-gray-200 shadow-sm">
-                  <WhatsAppIcon fontSize="small" />
-                </a>
+                {settings?.social_linkedin_enabled && settings?.social_linkedin && (
+                  <a href={settings.social_linkedin} target="_blank" rel="noreferrer" className="w-[44px] h-[44px] rounded-full bg-white flex items-center justify-center text-gray-500 hover:bg-[#0A66C2] hover:text-white transition-colors border border-gray-200 shadow-sm">
+                    <LinkedInIcon fontSize="small" />
+                  </a>
+                )}
+                {settings?.social_facebook_enabled && settings?.social_facebook && (
+                  <a href={settings.social_facebook} target="_blank" rel="noreferrer" className="w-[44px] h-[44px] rounded-full bg-white flex items-center justify-center text-gray-500 hover:bg-[#1877F2] hover:text-white transition-colors border border-gray-200 shadow-sm">
+                    <FacebookIcon fontSize="small" />
+                  </a>
+                )}
+                {settings?.social_instagram_enabled && settings?.social_instagram && (
+                  <a href={settings.social_instagram} target="_blank" rel="noreferrer" className="w-[44px] h-[44px] rounded-full bg-white flex items-center justify-center text-gray-500 hover:bg-[#E4405F] hover:text-white transition-colors border border-gray-200 shadow-sm">
+                    <InstagramIcon fontSize="small" />
+                  </a>
+                )}
+                {settings?.social_twitter_enabled && settings?.social_twitter && (
+                  <a href={settings.social_twitter} target="_blank" rel="noreferrer" className="w-[44px] h-[44px] rounded-full bg-white flex items-center justify-center text-gray-500 hover:bg-[#1DA1F2] hover:text-white transition-colors border border-gray-200 shadow-sm">
+                    {/* Add twitter icon if available, or just a placeholder */}
+                    <LanguageIcon fontSize="small" />
+                  </a>
+                )}
+                {settings?.social_youtube_enabled && settings?.social_youtube && (
+                  <a href={settings.social_youtube} target="_blank" rel="noreferrer" className="w-[44px] h-[44px] rounded-full bg-white flex items-center justify-center text-gray-500 hover:bg-[#FF0000] hover:text-white transition-colors border border-gray-200 shadow-sm">
+                    <LanguageIcon fontSize="small" /> {/* Using fallback, update icon as needed */}
+                  </a>
+                )}
               </div>
 
             </div>
@@ -149,7 +153,7 @@ export default function ContactSection() {
           {/* Right Side: Contact Form (60%) */}
           <div className="w-full lg:w-[60%]">
             <div className="bg-white rounded-[20px] p-8 md:p-10 border border-gray-200 shadow-sm h-full">
-              
+
               <div className="mb-8">
                 <h2 className="font-rubik text-[28px] font-bold text-dark mb-2">Send Us an Inquiry</h2>
                 <p className="text-gray-500 text-[15px]">Fill in the details below and our export team will contact you within 24 hours.</p>
@@ -214,8 +218,8 @@ export default function ContactSection() {
                     </label>
                   </div>
 
-                  <button 
-                    type="submit" 
+                  <button
+                    type="submit"
                     disabled={status === 'loading'}
                     className="mt-4 w-full md:w-auto self-start px-8 h-[48px] bg-[#0B63CE] text-white font-bold rounded-[12px] shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 disabled:opacity-70 disabled:transform-none flex items-center justify-center min-w-[160px]"
                   >

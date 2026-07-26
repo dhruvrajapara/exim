@@ -102,7 +102,7 @@ export const adminMenu = [
     title: 'Appearance',
     icon: <BrushIcon fontSize="small" />,
     children: [
-      { title: 'Theme Colors', path: '/admin/settings/appearance/colors' },
+      { title: 'Website Appearance', path: '/admin/settings/appearance' },
       { title: 'Default Banner', path: '/admin/settings/appearance/banner' },
       { title: 'Loader', path: '/admin/settings/appearance/loader' },
     ],

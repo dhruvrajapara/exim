@@ -179,7 +179,7 @@ export default function ProductListing() {
 
                 {/* Load More Button */}
                 <div className="mt-12 flex justify-center">
-                  <button className="btn-primary rounded-full px-8 bg-gradient-to-r from-primary to-green-600 border-none shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                  <button className="btn-primary rounded-full px-8 border-none shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1" style={{ backgroundImage: 'var(--color-gradient)' }}>
                     Load More Products
                   </button>
                 </div>

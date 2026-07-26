@@ -75,7 +75,7 @@ export default function VisionMission() {
                 const parts = titleText.split('&');
                 return (
                   <>
-                    {parts[0]} <span className="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-[#0463C3]">&{parts[1]}</span>
+                    {parts[0]} <span className="text-transparent bg-clip-text" style={{ backgroundImage: 'var(--color-gradient)' }}>&{parts[1]}</span>
                   </>
                 );
               }
@@ -83,7 +83,7 @@ export default function VisionMission() {
               const lastWord = words.pop();
               return (
                 <>
-                  {words.join(' ')} <span className="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-[#0463C3]">{lastWord}</span>
+                  {words.join(' ')} <span className="text-transparent bg-clip-text" style={{ backgroundImage: 'var(--color-gradient)' }}>{lastWord}</span>
                 </>
               );
             })()}

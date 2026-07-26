@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import { useSettings } from '../contexts/SettingsContext';
 
 export default function FloatingActionButtons() {
   const [isVisible, setIsVisible] = useState(false);
+  const { settings } = useSettings();
 
   // Toggle visibility of the "Scroll to Top" button based on scroll position
   useEffect(() => {
@@ -41,19 +43,20 @@ export default function FloatingActionButtons() {
       </button>
 
       {/* WhatsApp Floating Button */}
-      <a
-        href="https://wa.me/" // You can replace this with your actual WhatsApp link later from DB
-        target="_blank"
-        rel="noopener noreferrer"
-        className={`relative flex items-center justify-center w-12 h-12 md:w-14 md:h-14 bg-[#25D366] text-white rounded-full shadow-[0_4px_15px_rgba(37,211,102,0.3)] hover:shadow-[0_8px_25px_rgba(37,211,102,0.5)] transition-all duration-500 group ${
-          isVisible ? 'opacity-100 translate-y-0 scale-100 hover:-translate-y-1' : 'opacity-0 translate-y-8 scale-50 pointer-events-none'
-        }`}
-        aria-label="Chat on WhatsApp"
-      >
-        <WhatsAppIcon className="!w-6 !h-6 md:!w-8 md:!h-8 z-10" />
-        {/* Subtle Ping Animation Ring - Only animate when visible to save CPU */}
-        <span className={`absolute inset-0 rounded-full border-2 border-[#25D366] opacity-60 ${isVisible ? 'animate-ping' : ''}`}></span>
-      </a>
+      {settings?.whatsapp_float_enabled && settings?.whatsapp_float_number && (
+        <a
+          href={`https://wa.me/${settings.whatsapp_float_number.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(settings.whatsapp_float_message || '')}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`relative flex items-center justify-center w-12 h-12 md:w-14 md:h-14 bg-[#25D366] text-white rounded-full shadow-[0_4px_15px_rgba(37,211,102,0.3)] hover:shadow-[0_8px_25px_rgba(37,211,102,0.5)] transition-all duration-500 group ${
+            isVisible ? 'opacity-100 translate-y-0 scale-100 hover:-translate-y-1' : 'opacity-0 translate-y-8 scale-50 pointer-events-none'
+          }`}
+          aria-label="Chat on WhatsApp"
+        >
+          <WhatsAppIcon className="!w-6 !h-6 md:!w-8 md:!h-8 z-10" />
+          <span className={`absolute inset-0 rounded-full border-2 border-[#25D366] opacity-60 ${isVisible ? 'animate-ping' : ''}`}></span>
+        </a>
+      )}
       
     </div>
   );
