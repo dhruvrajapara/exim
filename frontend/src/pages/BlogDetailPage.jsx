@@ -11,7 +11,6 @@ import AuthorBox from '../components/blog/AuthorBox';
 import BlogDetailSidebar from '../components/blog/BlogDetailSidebar';
 import RelatedBlogs from '../components/blog/RelatedBlogs';
 import NewsletterSaaS from '../components/blog/NewsletterSaaS';
-import GlobalGallery from '../components/gallery/GlobalGallery';
 
 import { fetchBlogBySlug, fetchRelatedBlogs } from '../services/api';
 
@@ -142,10 +141,7 @@ export default function BlogDetailPage() {
       {/* 3. Swiper Slider - Related Articles */}
       <RelatedBlogs blogs={relatedBlogs} />
 
-      {/* 4. Global Gallery */}
-      <GlobalGallery />
-
-      {/* 5. Newsletter Subscription (SaaS Style) */}
+      {/* 4. Newsletter Subscription (SaaS Style) */}
       <NewsletterSaaS />
 
     </div>
