@@ -49,23 +49,9 @@ export default function BlogDetailHero({ blog }) {
               {blog.short_description}
             </p>
 
-            {/* Author & Metadata */}
+            {/* Metadata */}
             <div className="flex flex-wrap items-center gap-6 border-t border-gray-200 pt-6">
               
-              <div className="flex items-center gap-3">
-                <img 
-                  src={blog.author_image || 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=100&q=80'} 
-                  alt={blog.author}
-                  className="w-[48px] h-[48px] rounded-full object-cover shadow-sm border-2 border-white"
-                />
-                <div className="flex flex-col">
-                  <span className="text-[14px] font-bold text-dark">{blog.author || 'BiteExport Team'}</span>
-                  <span className="text-[13px] text-gray-500">{blog.author_designation || 'Export Specialist'}</span>
-                </div>
-              </div>
-
-              <div className="hidden sm:block w-[1px] h-[32px] bg-gray-200"></div>
-
               <div className="flex items-center gap-5 text-gray-500 text-[14px] font-medium">
                 <div className="flex items-center gap-1.5">
                   <CalendarMonthIcon fontSize="small" className="text-gray-400" />

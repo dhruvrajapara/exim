@@ -7,7 +7,6 @@ import SEO from '../components/SEO';
 import BlogDetailHero from '../components/blog/BlogDetailHero';
 import BlogContent from '../components/blog/BlogContent';
 import BlogShare from '../components/blog/BlogShare';
-import AuthorBox from '../components/blog/AuthorBox';
 import BlogDetailSidebar from '../components/blog/BlogDetailSidebar';
 import RelatedBlogs from '../components/blog/RelatedBlogs';
 import NewsletterSaaS from '../components/blog/NewsletterSaaS';
@@ -117,13 +116,6 @@ export default function BlogDetailPage() {
             <div className="w-full lg:w-[70%]">
               
               <BlogContent content={blog.content} />
-              
-              <AuthorBox 
-                author={blog.author} 
-                image={blog.author_image} 
-                designation={blog.author_designation} 
-                bio={blog.author_bio} 
-              />
               
               <BlogShare />
               
