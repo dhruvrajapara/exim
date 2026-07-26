@@ -31,6 +31,7 @@ import ProductCategories from './pages/admin/website/products/ProductCategories'
 import Products from './pages/admin/website/products/Products';
 import ProductForm from './pages/admin/website/products/ProductForm';
 import WebsiteAppearance from './pages/admin/settings/WebsiteAppearance';
+import ImageGalleryAdmin from './pages/admin/website/gallery/ImageGalleryAdmin';
 import { useLocation } from 'react-router-dom';
 
 const AdminPlaceholder = () => {
@@ -95,6 +96,8 @@ function App() {
               <Route path="website/products/list" element={<Products />} />
               <Route path="website/products/add" element={<ProductForm />} />
               <Route path="website/products/edit/:id" element={<ProductForm />} />
+              
+              <Route path="website/gallery/images" element={<ImageGalleryAdmin />} />
               
               <Route path="settings/appearance" element={<WebsiteAppearance />} />
               

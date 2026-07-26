@@ -47,7 +47,7 @@ export default function GalleryLightbox({ images, currentIndex, onClose, onNext,
       <div className="w-full max-w-6xl max-h-full flex flex-col items-center justify-center relative">
         <div className="relative w-full max-h-[75vh] flex items-center justify-center mb-6">
           <img 
-            src={currentImage.image} 
+            src={currentImage.image_url} 
             alt={currentImage.title}
             className="max-w-full max-h-[75vh] object-contain rounded-[12px] shadow-2xl"
           />
@@ -62,10 +62,10 @@ export default function GalleryLightbox({ images, currentIndex, onClose, onNext,
             <span className="text-gray-400 text-[14px] font-medium">
               {currentImage.country}
             </span>
-            {currentImage.date && (
+            {currentImage.date_text && (
               <>
                 <span className="text-gray-600">•</span>
-                <span className="text-gray-400 text-[14px] font-medium">{currentImage.date}</span>
+                <span className="text-gray-400 text-[14px] font-medium">{currentImage.date_text}</span>
               </>
             )}
           </div>

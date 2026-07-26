@@ -10,8 +10,9 @@ Route::get('/user', function (Request $request) {
 
 Route::get('/hero-slides', [HeroSlideController::class, 'index']);
 Route::get('/product-categories', [App\Http\Controllers\ProductCategoryController::class, 'index']);
-Route::get('/products', [App\Http\Controllers\ProductController::class, 'index']);
-Route::get('/products/{slug}', [App\Http\Controllers\ProductController::class, 'show']);
+Route::get('/products', [ProductController::class, 'index']);
+Route::get('/products/{slug}', [ProductController::class, 'show']);
+Route::get('/gallery-images', [\App\Http\Controllers\Api\GalleryImageController::class, 'index']);
 Route::get('/about-section', [App\Http\Controllers\AboutSectionController::class, 'index']);
 Route::get('/featured-products', [App\Http\Controllers\ProductController::class, 'featured']);
 Route::get('/certifications', [App\Http\Controllers\CertificationController::class, 'index']);
@@ -41,8 +42,13 @@ Route::prefix('admin')->group(function () {
     // Products
     Route::get('/products', [App\Http\Controllers\ProductController::class, 'adminIndex']);
     Route::post('/products', [App\Http\Controllers\ProductController::class, 'store']);
-    Route::put('/products/{id}', [App\Http\Controllers\ProductController::class, 'update']);
+    Route::post('/products/{id}', [ProductController::class, 'update']);
     Route::delete('/products/{id}', [App\Http\Controllers\ProductController::class, 'destroy']);
+
+    // Gallery Admin
+    Route::post('/gallery-images', [\App\Http\Controllers\Api\GalleryImageController::class, 'store']);
+    Route::post('/gallery-images/{id}', [\App\Http\Controllers\Api\GalleryImageController::class, 'update']);
+    Route::delete('/gallery-images/{id}', [\App\Http\Controllers\Api\GalleryImageController::class, 'destroy']);
 
     // Certifications
     Route::get('/certifications', [App\Http\Controllers\CertificationController::class, 'adminIndex']);
