@@ -1,4 +1,6 @@
 import { Helmet } from 'react-helmet-async';
+import { useState, useEffect } from 'react';
+import { fetchDashboardStats } from '../../services/api';
 import { useAuth } from '../../contexts/AuthContext';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
@@ -12,11 +14,25 @@ import PersonIcon from '@mui/icons-material/Person';
 
 export default function Dashboard() {
   const { user } = useAuth();
+  const [dashboardData, setDashboardData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadData = async () => {
+      setLoading(true);
+      const data = await fetchDashboardStats();
+      if (data) {
+        setDashboardData(data);
+      }
+      setLoading(false);
+    };
+    loadData();
+  }, []);
 
   const stats = [
     { 
       label: 'Total Products', 
-      value: '124', 
+      value: dashboardData?.stats?.total_products || '0', 
       trend: '+12%', 
       isPositive: true, 
       icon: <InventoryIcon className="text-[#0B63CE]" />, 
@@ -24,7 +40,7 @@ export default function Dashboard() {
     },
     { 
       label: 'Active Enquiries', 
-      value: '12', 
+      value: dashboardData?.stats?.active_enquiries || '0', 
       trend: '+4%', 
       isPositive: true, 
       icon: <ChatBubbleIcon className="text-emerald-600" />, 
@@ -32,7 +48,7 @@ export default function Dashboard() {
     },
     { 
       label: 'Published Blogs', 
-      value: '45', 
+      value: dashboardData?.stats?.published_blogs || '0', 
       trend: '-2%', 
       isPositive: false, 
       icon: <ArticleIcon className="text-purple-600" />, 
@@ -40,7 +56,7 @@ export default function Dashboard() {
     },
     { 
       label: 'Total Users', 
-      value: '8', 
+      value: dashboardData?.stats?.total_users || '0', 
       trend: '+1%', 
       isPositive: true, 
       icon: <GroupIcon className="text-amber-600" />, 
@@ -48,21 +64,31 @@ export default function Dashboard() {
     },
   ];
 
-  const recentEnquiries = [
-    { id: 1, name: 'John Doe', email: 'john@example.com', product: 'Dehydrated Onion Flakes', status: 'New', time: '2 hours ago' },
-    { id: 2, name: 'Maria Garcia', email: 'maria@market.es', product: 'Garlic Powder', status: 'Pending', time: '5 hours ago' },
-    { id: 3, name: 'Liam Chen', email: 'liam@traders.sg', product: 'Turmeric Powder', status: 'Completed', time: '1 day ago' },
-    { id: 4, name: 'Sarah Smith', email: 'sarah@organics.uk', product: 'Tomato Powder', status: 'Pending', time: '2 days ago' },
-  ];
+  const recentEnquiries = dashboardData?.recent_enquiries || [];
 
   const getStatusBadge = (status) => {
-    switch (status) {
-      case 'New': return 'bg-blue-100 text-blue-700';
-      case 'Pending': return 'bg-amber-100 text-amber-700';
-      case 'Completed': return 'bg-emerald-100 text-emerald-700';
+    switch (status?.toLowerCase()) {
+      case 'new': return 'bg-blue-100 text-blue-700';
+      case 'pending': return 'bg-amber-100 text-amber-700';
+      case 'completed': return 'bg-emerald-100 text-emerald-700';
       default: return 'bg-gray-100 text-gray-700';
     }
   };
+
+  const formatDate = (dateString) => {
+    if (!dateString) return '';
+    return new Date(dateString).toLocaleDateString('en-US', {
+      month: 'short', day: 'numeric', year: 'numeric'
+    });
+  };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-screen w-full">
+        <div className="w-8 h-8 border-4 border-[#0B63CE] border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="animate-fade-in w-full max-w-[1400px] mx-auto font-sans">
@@ -183,7 +209,7 @@ export default function Dashboard() {
                         <p className="text-[13px] text-gray-600 truncate mb-1">{enquiry.product}</p>
                         <div className="flex flex-wrap items-center justify-between gap-2 mt-2">
                            <p className="text-[12px] text-gray-400 truncate">{enquiry.email}</p>
-                           <p className="text-[11px] font-medium text-gray-400">{enquiry.time}</p>
+                           <p className="text-[11px] font-medium text-gray-400">{formatDate(enquiry.created_at)}</p>
                         </div>
                       </div>
                     </div>
@@ -193,7 +219,7 @@ export default function Dashboard() {
             ) : (
               <div className="p-10 flex flex-col items-center justify-center text-center h-full">
                 <div className="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mb-4">
-                  <ChatBubbleOutlineIcon className="text-gray-400" />
+                  <ChatBubbleIcon className="text-gray-400" />
                 </div>
                 <p className="text-sm font-medium text-gray-900">No recent enquiries</p>
                 <p className="text-xs text-gray-500 mt-1">New requests will appear here.</p>

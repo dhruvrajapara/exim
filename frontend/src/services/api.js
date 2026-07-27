@@ -1,3 +1,17 @@
+export const fetchDashboardStats = async () => {
+  try {
+    const response = await fetch('/api/admin/dashboard');
+    if (!response.ok) {
+      throw new Error('Failed to fetch dashboard stats');
+    }
+    const data = await response.json();
+    return data.data;
+  } catch (error) {
+    console.error('Error fetching dashboard stats:', error);
+    return null;
+  }
+};
+
 export const fetchHeroSlides = async () => {
   try {
     const response = await fetch('/api/hero-slides');
