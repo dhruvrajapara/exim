@@ -63,7 +63,7 @@ export default function AdminLogin() {
           Admin Portal
         </h2>
         <p className="mt-2 text-center text-sm text-gray-600">
-          Sign in to manage the BiteExport platform
+          Sign in to manage the Export Dashboard platform
         </p>
       </div>
 
