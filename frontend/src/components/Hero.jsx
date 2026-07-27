@@ -50,7 +50,7 @@ export default function Hero() {
 
   if (isLoading) {
     return (
-      <section className="relative w-full h-[100vh] bg-dark/90 animate-pulse overflow-hidden flex items-center justify-center">
+      <section className="relative w-full h-[100dvh] bg-dark/90 animate-pulse overflow-hidden flex items-center justify-center">
          <div className="container-custom z-10 flex flex-col items-center w-full">
             <div className="w-32 h-6 bg-gray-600 rounded-full mb-6"></div>
             <div className="w-3/4 max-w-4xl h-16 md:h-24 bg-gray-700 rounded-xl mb-8"></div>
@@ -68,7 +68,7 @@ export default function Hero() {
 
   return (
     <section
-      className="relative w-full h-screen bg-[#000821] text-white overflow-hidden"
+      className="relative w-full h-[100dvh] bg-[#000821] text-white overflow-hidden"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       aria-roledescription="carousel"
@@ -103,7 +103,7 @@ export default function Hero() {
             </div>
 
             {/* Overlay Content */}
-            <div className="container-custom relative z-20 h-full flex items-center pt-[80px]">
+            <div className="container-custom relative z-20 h-full flex items-center pt-[80px] pb-[80px] md:pb-0">
 
               <div className="w-full md:w-[80%] lg:w-[60%] flex flex-col justify-center items-start text-left space-y-4 md:space-y-6">
                 {slide.label && (
@@ -147,27 +147,46 @@ export default function Hero() {
         );
       })}
 
-      {/* Navigation Controls (Bottom Right strictly) */}
+      {/* Navigation Controls */}
       {slides.length > 1 && (
-        <div className="absolute bottom-6 right-6 md:bottom-12 md:right-12 z-30 flex items-center space-x-2 bg-white/5 backdrop-blur-xl px-5 py-3 rounded-full border border-white/10 shadow-lg">
-          <button
-            onClick={handlePrev}
-            className="p-2 text-white/50 hover:text-white transition-colors focus:outline-none rounded-full flex items-center justify-center"
-            aria-label="Previous Slide"
-          >
-            <ArrowBackIosNewIcon fontSize="small" />
-          </button>
-          <span className="text-white/40 text-sm font-medium mx-4 tracking-widest">
-            {currentIndex + 1} <span className="opacity-50">/</span> {slides.length}
-          </span>
-          <button
-            onClick={handleNext}
-            className="p-2 text-white/50 hover:text-white transition-colors focus:outline-none rounded-full flex items-center justify-center"
-            aria-label="Next Slide"
-          >
-            <ArrowForwardIosIcon fontSize="small" />
-          </button>
-        </div>
+        <>
+          {/* Desktop Controls (Arrows) */}
+          <div className="hidden md:flex absolute bottom-12 right-12 z-30 items-center space-x-2 bg-white/5 backdrop-blur-xl px-5 py-3 rounded-full border border-white/10 shadow-lg">
+            <button
+              onClick={handlePrev}
+              className="p-2 text-white/50 hover:text-white transition-colors focus:outline-none rounded-full flex items-center justify-center"
+              aria-label="Previous Slide"
+            >
+              <ArrowBackIosNewIcon fontSize="small" />
+            </button>
+            <span className="text-white/40 text-sm font-medium mx-4 tracking-widest">
+              {currentIndex + 1} <span className="opacity-50">/</span> {slides.length}
+            </span>
+            <button
+              onClick={handleNext}
+              className="p-2 text-white/50 hover:text-white transition-colors focus:outline-none rounded-full flex items-center justify-center"
+              aria-label="Next Slide"
+            >
+              <ArrowForwardIosIcon fontSize="small" />
+            </button>
+          </div>
+
+          {/* Mobile Controls (Dots) */}
+          <div className="flex md:hidden absolute bottom-8 left-1/2 -translate-x-1/2 z-30 items-center space-x-3 bg-white/10 backdrop-blur-md px-4 py-2.5 rounded-full border border-white/20">
+            {slides.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => setCurrentIndex(idx)}
+                className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+                  currentIndex === idx 
+                    ? 'bg-white w-6' 
+                    : 'bg-white/40 hover:bg-white/70'
+                }`}
+                aria-label={`Go to slide ${idx + 1}`}
+              />
+            ))}
+          </div>
+        </>
       )}
     </section>
   );

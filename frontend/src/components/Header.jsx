@@ -69,7 +69,7 @@ export default function Header() {
               src={settings?.header_logo_url || "/logo.png"} 
               alt={settings?.contact_company_name || "Company Logo"} 
               style={{ height: settings?.logo_height ? `${settings.logo_height}px` : '40px', width: 'auto' }}
-              className="object-contain transition-all duration-300" 
+              className="object-contain transition-all duration-300 max-h-[32px] md:max-h-none" 
             />
           </Link>
 
@@ -127,7 +127,7 @@ export default function Header() {
             aria-label="Open menu"
             aria-expanded={isDrawerOpen}
           >
-            <MenuIcon fontSize="large" />
+            <MenuIcon fontSize="medium" />
           </button>
         </div>
       </header>
@@ -141,7 +141,7 @@ export default function Header() {
       >
         <div className="h-[80px] px-4 md:px-6 flex items-center justify-between border-b border-border">
           <Link to="/" className="flex-shrink-0" onClick={() => setIsDrawerOpen(false)}>
-            <img src={settings?.header_logo_url || "/logo.png"} alt={settings?.contact_company_name || "Company Logo"} style={{ height: settings?.logo_height ? `${settings.logo_height}px` : '40px', width: 'auto' }} className="object-contain" />
+            <img src={settings?.header_logo_url || "/logo.png"} alt={settings?.contact_company_name || "Company Logo"} style={{ height: settings?.logo_height ? `${settings.logo_height}px` : '40px', width: 'auto' }} className="object-contain max-h-[32px] md:max-h-none" />
           </Link>
           <button 
             type="button"
@@ -149,7 +149,7 @@ export default function Header() {
             onClick={() => setIsDrawerOpen(false)}
             aria-label="Close menu"
           >
-            <CloseIcon fontSize="large" />
+            <CloseIcon fontSize="medium" />
           </button>
         </div>
 
@@ -160,8 +160,8 @@ export default function Header() {
                 <NavLink 
                   to={item.path}
                   className={({ isActive }) => `
-                    flex items-center px-6 min-h-[56px] text-[16px] transition-colors duration-300
-                    ${isActive ? 'text-primary font-medium bg-primary/5 border-l-4 border-primary pl-[20px]' : 'text-dark hover:bg-light border-l-4 border-transparent'}
+                    flex items-center px-5 min-h-[48px] text-[15px] transition-colors duration-300
+                    ${isActive ? 'text-primary font-medium bg-primary/5 border-l-4 border-primary pl-[16px]' : 'text-dark hover:bg-light border-l-4 border-transparent'}
                   `}
                 >
                   {item.name}
@@ -172,13 +172,13 @@ export default function Header() {
         </nav>
 
         {settings?.header_btn_enabled && (
-          <div className="p-6 border-t border-border">
+          <div className="p-5 border-t border-border mt-auto">
             {settings.header_btn_type === 'pdf' ? (
-              <a href={settings.header_btn_pdf_url} target="_blank" rel="noopener noreferrer" className="btn-primary w-full text-center block" onClick={() => setIsDrawerOpen(false)}>
+              <a href={settings.header_btn_pdf_url} target="_blank" rel="noopener noreferrer" className="btn-primary w-full flex items-center justify-center min-h-[44px] h-auto py-2.5 px-4 text-[14px] leading-tight whitespace-normal break-words text-center" onClick={() => setIsDrawerOpen(false)}>
                 {settings.header_btn_label || 'Download'}
               </a>
             ) : (
-              <Link to={settings.header_btn_link?.url || '/contact'} className="btn-primary w-full text-center block" onClick={() => setIsDrawerOpen(false)}>
+              <Link to={settings.header_btn_link?.url || '/contact'} className="btn-primary w-full flex items-center justify-center min-h-[44px] h-auto py-2.5 px-4 text-[14px] leading-tight whitespace-normal break-words text-center" onClick={() => setIsDrawerOpen(false)}>
                 {settings.header_btn_label || 'Contact'}
               </Link>
             )}
