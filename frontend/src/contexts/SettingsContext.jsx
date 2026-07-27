@@ -5,8 +5,11 @@ const SettingsContext = createContext(null);
 export const useSettings = () => useContext(SettingsContext);
 
 export const SettingsProvider = ({ children }) => {
-  const [settings, setSettings] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [settings, setSettings] = useState(() => {
+    const cached = localStorage.getItem('website_settings_cache');
+    return cached ? JSON.parse(cached) : null;
+  });
+  const [isLoading, setIsLoading] = useState(() => !localStorage.getItem('website_settings_cache'));
 
   const fetchSettings = async () => {
     try {
@@ -57,6 +60,7 @@ export const SettingsProvider = ({ children }) => {
           }
         }
         setSettings(settingsData);
+        localStorage.setItem('website_settings_cache', JSON.stringify(settingsData));
         applyThemeColors(settingsData);
         applyFavicon(settingsData);
       }
