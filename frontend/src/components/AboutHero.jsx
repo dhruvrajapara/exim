@@ -37,7 +37,7 @@ export default function AboutHero() {
       </div>
 
       <div className="container-custom relative z-10 py-[50px] lg:py-0 w-full">
-        
+
         {/* Semantic Breadcrumb (Always on top for both mobile and desktop) */}
         <Reveal delay={0} className="mb-6 md:mb-8 lg:mb-2 lg:-mt-10">
           <nav aria-label="Breadcrumb" className="flex items-center text-[13px] md:text-[14px] font-medium text-gray-400">
@@ -56,14 +56,14 @@ export default function AboutHero() {
             <Reveal delay={200} className="mb-6">
               <h2 className="text-[32px] md:text-[42px] lg:text-[48px] xl:text-[56px] font-bold text-white leading-[1.1] font-rubik">
                 {(() => {
-                  const heading = aboutData?.heading || 'About BiteExport';
+                  const heading = aboutData?.heading || 'About Us';
                   const words = heading.split(' ');
                   if (words.length <= 1) return heading;
-                  
+
                   // Highlight the last 3 words if it's a long heading (e.g., "Innovation & Trust"), else just the last word
                   const highlightCount = words.length >= 5 ? 3 : 1;
                   const highlightedWords = words.splice(-highlightCount).join(' ');
-                  
+
                   return (
                     <>
                       {words.join(' ')} <span className="text-transparent bg-clip-text" style={{ backgroundImage: 'var(--color-gradient)' }}>{highlightedWords}</span>
