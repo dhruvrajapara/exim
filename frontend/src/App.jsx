@@ -36,6 +36,7 @@ import ProductForm from './pages/admin/website/products/ProductForm';
 import WebsiteAppearance from './pages/admin/settings/WebsiteAppearance';
 import ImageGalleryAdmin from './pages/admin/website/gallery/ImageGalleryAdmin';
 import InquiriesList from './pages/admin/inquiries/InquiriesList';
+import Profile from './pages/admin/Profile';
 import { useLocation } from 'react-router-dom';
 
 const AdminPlaceholder = () => {
@@ -108,6 +109,8 @@ function App() {
               <Route path="website/blog/posts/edit/:id" element={<BlogPostForm />} />
               
               <Route path="inquiries" element={<InquiriesList />} />
+              
+              <Route path="profile" element={<Profile />} />
               
               <Route path="settings/appearance" element={<WebsiteAppearance />} />
               

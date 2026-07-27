@@ -96,4 +96,11 @@ export const adminMenu = [
       { title: 'Website Appearance', path: '/admin/settings/appearance' },
     ],
   },
+  {
+    title: 'Account',
+    icon: <ManageAccountsIcon fontSize="small" />,
+    children: [
+      { title: 'Profile Settings', path: '/admin/profile' },
+    ],
+  },
 ];

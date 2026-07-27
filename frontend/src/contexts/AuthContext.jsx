@@ -9,6 +9,11 @@ export const AuthProvider = ({ children }) => {
 
   // Initialize from local storage on mount
   useEffect(() => {
+    // Initialize default admin credentials if not set
+    if (!localStorage.getItem('adminCredentials')) {
+      localStorage.setItem('adminCredentials', JSON.stringify({ email: 'admin@biteexport.com', password: 'admin123' }));
+    }
+
     const storedAuth = localStorage.getItem('adminAuth');
     const storedUser = localStorage.getItem('adminUser');
     
@@ -25,7 +30,9 @@ export const AuthProvider = ({ children }) => {
     // In a real app, this would be an API call to Laravel backend
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        if (email === 'admin@biteexport.com' && password === 'admin123') {
+        const credentials = JSON.parse(localStorage.getItem('adminCredentials') || '{"email":"admin@biteexport.com","password":"admin123"}');
+        
+        if (email === credentials.email && password === credentials.password) {
           const userData = { email, name: 'Admin', role: 'admin' };
           
           setIsAuthenticated(true);
@@ -42,6 +49,32 @@ export const AuthProvider = ({ children }) => {
     });
   };
 
+  const updateProfile = async (newEmail, currentPassword, newPassword) => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        const credentials = JSON.parse(localStorage.getItem('adminCredentials') || '{"email":"admin@biteexport.com","password":"admin123"}');
+        
+        if (currentPassword !== credentials.password) {
+          reject(new Error('Current password is incorrect'));
+          return;
+        }
+
+        const updatedCredentials = {
+          email: newEmail || credentials.email,
+          password: newPassword || credentials.password
+        };
+
+        localStorage.setItem('adminCredentials', JSON.stringify(updatedCredentials));
+
+        const updatedUser = { ...user, email: updatedCredentials.email };
+        setUser(updatedUser);
+        localStorage.setItem('adminUser', JSON.stringify(updatedUser));
+
+        resolve({ success: true });
+      }, 800);
+    });
+  };
+
   const logout = () => {
     setIsAuthenticated(false);
     setUser(null);
@@ -50,7 +83,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, user, login, logout, loading }}>
+    <AuthContext.Provider value={{ isAuthenticated, user, login, logout, updateProfile, loading }}>
       {!loading && children}
     </AuthContext.Provider>
   );

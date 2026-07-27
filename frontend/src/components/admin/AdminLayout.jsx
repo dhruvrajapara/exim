@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useAuth } from '../../contexts/AuthContext';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -48,9 +48,9 @@ export default function AdminLayout() {
             
             <div className="w-px h-6 bg-gray-200 hidden sm:block"></div>
 
-            <button className="w-10 h-10 rounded-full bg-gray-50 text-gray-600 flex items-center justify-center hover:bg-gray-100 hover:text-[#0B63CE] transition-colors border border-gray-100">
+            <Link to="/admin/profile" title="Profile Settings" className="w-10 h-10 rounded-full bg-gray-50 text-gray-600 flex items-center justify-center hover:bg-gray-100 hover:text-[#0B63CE] transition-colors border border-gray-100">
               <PersonIcon fontSize="small" />
-            </button>
+            </Link>
             <button 
               onClick={logout}
               className="flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium text-red-600 hover:bg-red-50 transition-colors"
