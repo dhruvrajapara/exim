@@ -20,35 +20,34 @@ export default function Home() {
 
   return (
     <>
-      <SEO 
-        title={settings?.seo_home_title || "BiteExport | Premium Food Export Company"}
+      <SEO title={settings?.seo_home_title || "Export Import Company"}
         exactTitle={true}
         description="Welcome to the AI-First Enterprise Platform built with React and Laravel."
         canonical="https://example.com/"
         schema={schema}
       />
-      
+
       {/* Full-Screen Hero */}
       <Hero />
-      
+
       {/* Dynamic About Section */}
       <About />
-      
+
       {/* Dynamic Product Categories */}
       <ProductCategories />
-      
+
       {/* Dynamic Featured Products */}
       <FeaturedProducts />
-      
+
       {/* Dynamic Certifications */}
       <Certifications />
-      
+
       {/* Client Testimonials Slider */}
       <Testimonials />
-      
+
       {/* Dynamic Latest Blogs */}
       <LatestBlogs />
-      
+
     </>
   );
 }
