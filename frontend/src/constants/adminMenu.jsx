@@ -72,6 +72,7 @@ export const adminMenu = [
     title: 'Image',
     icon: <PhotoLibraryIcon fontSize="small" />,
     children: [
+      { title: 'Gallery Page Hero', path: '/admin/website/gallery/hero-section' },
       { title: 'Images', path: '/admin/website/gallery/images' },
     ],
   },
