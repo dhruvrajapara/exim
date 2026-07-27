@@ -14,7 +14,7 @@ export default function AdminLogin() {
   const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  
+
   const { login, isAuthenticated } = useAuth();
   const { settings } = useSettings();
   const navigate = useNavigate();
@@ -31,7 +31,7 @@ export default function AdminLogin() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-    
+
     if (!email || !password) {
       setError('Please fill in all fields');
       return;
@@ -150,9 +150,8 @@ export default function AdminLogin() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className={`w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-[#0a55b3] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all duration-200 ${
-                  isSubmitting ? 'opacity-70 cursor-not-allowed' : ''
-                }`}
+                className={`w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-[#0a55b3] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all duration-200 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''
+                  }`}
               >
                 {isSubmitting ? (
                   <div className="flex items-center gap-2">
@@ -163,10 +162,6 @@ export default function AdminLogin() {
                   'Sign in'
                 )}
               </button>
-            </div>
-            
-            <div className="mt-4 text-center text-xs text-gray-400">
-              Demo Credentials: admin@biteexport.com / admin123
             </div>
           </form>
         </div>
