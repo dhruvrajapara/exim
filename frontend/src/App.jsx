@@ -38,6 +38,7 @@ import WebsiteAppearance from './pages/admin/settings/WebsiteAppearance';
 import ImageGalleryAdmin from './pages/admin/website/gallery/ImageGalleryAdmin';
 import GalleryPageHeroSection from './pages/admin/website/gallery/GalleryPageHeroSection';
 import BlogPageHeroSection from './pages/admin/website/blog/BlogPageHeroSection';
+import ContactPageHeroSection from './pages/admin/website/contact/ContactPageHeroSection';
 import InquiriesList from './pages/admin/inquiries/InquiriesList';
 import Profile from './pages/admin/Profile';
 import { useLocation } from 'react-router-dom';
@@ -99,6 +100,8 @@ function App() {
               <Route path="website/about/why-choose-us" element={<WhyChooseUsAdmin />} />
               
               <Route path="website/icons" element={<IconsLibrary />} />
+              
+              <Route path="website/contact/hero-section" element={<ContactPageHeroSection />} />
               
               <Route path="website/products/hero-section" element={<ProductPageHeroSection />} />
               <Route path="website/products/categories" element={<ProductCategories />} />

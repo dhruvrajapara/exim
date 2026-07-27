@@ -96,15 +96,15 @@ export default function AboutCertifications() {
         </Reveal>
 
         {/* Certifications Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-10 lg:mb-12">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-10 lg:mb-12">
           {certs.map((cert, index) => (
             <Reveal
               key={cert.id || index}
               delay={index * 100}
               className="group bg-white rounded-[20px] border border-gray-100 hover:border-secondary shadow-sm hover:shadow-[0_15px_35px_rgba(53,153,255,0.1)] transition-all duration-300 transform hover:-translate-y-2 flex flex-col items-center text-center p-5 md:p-6 lg:p-8 overflow-hidden h-full relative"
             >
-              {/* Official Logo */}
-              <div className="w-full h-16 md:h-20 lg:h-24 mb-5 flex items-center justify-center">
+              {/* Official Logo Area */}
+              <div className="relative w-full h-16 md:h-20 lg:h-24 mb-6 flex items-center justify-center">
                 <img
                   src={cert.logo_path}
                   alt={`${cert.name} Logo`}
@@ -115,12 +115,15 @@ export default function AboutCertifications() {
                     e.target.src = "https://cdn-icons-png.flaticon.com/512/814/814513.png"; // Fallback globe icon
                   }}
                 />
-              </div>
-
-              {/* Verified Badge Pill */}
-              <div className="bg-[#039639] text-white px-3 py-1.5 md:px-4 md:py-2 rounded-[12px] md:rounded-full text-[11px] md:text-[12px] font-medium flex flex-col md:flex-row items-center justify-center mb-5 whitespace-normal break-words text-center shadow-sm w-full md:w-auto">
-                <VerifiedIcon fontSize="small" className="mb-1 md:mb-0 md:mr-1.5 opacity-90" />
-                {cert.verification_badge_text || 'Government Registered'}
+                
+                {/* Verified Badge Pill (Absolute) */}
+                <div 
+                  className="absolute bottom-0 right-0 translate-x-2 translate-y-2 bg-[#039639] text-white p-1 md:px-3 md:py-1 rounded-full text-[10px] md:text-[11px] font-medium flex items-center justify-center shadow-md border-2 border-white"
+                  title={cert.verification_badge_text || 'Government Registered'}
+                >
+                  <VerifiedIcon fontSize="small" className="md:mr-1 opacity-100" />
+                  <span className="hidden md:inline">{cert.verification_badge_text || 'Government Registered'}</span>
+                </div>
               </div>
 
               {/* Secure Info */}

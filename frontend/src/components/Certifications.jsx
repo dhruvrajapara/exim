@@ -111,20 +111,23 @@ export default function Certifications() {
               delay={index * 100}
               className="group bg-white rounded-[12px] md:rounded-[16px] border border-border hover:border-primary shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-2 flex flex-col items-center text-center p-3 md:p-6 overflow-hidden"
             >
-              {/* Logo */}
-              <div className="w-full h-16 md:h-24 mb-4 md:mb-6 flex items-center justify-center">
+              {/* Logo Area */}
+              <div className="relative w-full h-16 md:h-24 mb-6 md:mb-8 flex items-center justify-center">
                 <img 
                   src={cert.logo_path} 
                   alt={`${cert.name} Logo`} 
                   loading="lazy"
                   className="max-h-full max-w-full object-contain transition-transform duration-300 group-hover:scale-105"
                 />
-              </div>
-
-              {/* Verified Badge */}
-              <div className="bg-primary/10 text-primary px-2 py-1 md:px-3 md:py-1.5 rounded-[10px] md:rounded-full text-[10px] md:text-[12px] font-semibold flex flex-col md:flex-row items-center text-center justify-center mb-3 md:mb-4 whitespace-normal break-words w-full md:w-auto">
-                <VerifiedIcon fontSize="inherit" className="mb-0.5 md:mb-0 md:mr-1.5" />
-                {cert.verification_badge_text}
+                
+                {/* Verified Badge (Absolute) */}
+                <div 
+                  className="absolute bottom-0 right-0 translate-x-1 translate-y-2 bg-primary/10 text-primary p-1 md:px-2 md:py-0.5 rounded-full text-[10px] md:text-[11px] font-bold flex items-center justify-center border-2 border-white"
+                  title={cert.verification_badge_text}
+                >
+                  <VerifiedIcon fontSize="inherit" className="md:mr-1" />
+                  <span className="hidden md:inline">{cert.verification_badge_text}</span>
+                </div>
               </div>
 
               {/* Names */}

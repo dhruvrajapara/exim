@@ -70,6 +70,13 @@ export const adminMenu = [
     ],
   },
   {
+    title: 'Contact Page',
+    icon: <ContactMailIcon fontSize="small" />,
+    children: [
+      { title: 'Contact Page Hero', path: '/admin/website/contact/hero-section' },
+    ],
+  },
+  {
     title: 'Image',
     icon: <PhotoLibraryIcon fontSize="small" />,
     children: [
