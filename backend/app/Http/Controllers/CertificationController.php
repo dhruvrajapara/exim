@@ -32,6 +32,10 @@ class CertificationController extends Controller
         $data = $request->except('logo');
         $data['is_active'] = $request->boolean('is_active', true);
         
+        if (empty($data['verification_badge_text'])) {
+            $data['verification_badge_text'] = 'Verified Registration';
+        }
+        
         if ($request->hasFile('logo')) {
             $path = $request->file('logo')->store('certifications', 'public');
             $data['logo_path'] = '/storage/' . $path;
@@ -57,6 +61,10 @@ class CertificationController extends Controller
 
         $data = $request->except('logo');
         $data['is_active'] = $request->boolean('is_active', true);
+        
+        if (empty($data['verification_badge_text'])) {
+            $data['verification_badge_text'] = 'Verified Registration';
+        }
         
         if ($request->hasFile('logo')) {
             $path = $request->file('logo')->store('certifications', 'public');
