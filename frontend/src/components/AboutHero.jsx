@@ -75,7 +75,7 @@ export default function AboutHero() {
 
             <Reveal delay={300} className="mb-8">
               <p className="text-[15px] md:text-[16px] lg:text-[18px] text-gray-300 max-w-xl leading-[1.7] opacity-90 font-light">
-                {aboutData?.description || 'BiteExport is a trusted Indian merchant exporter delivering premium dehydrated vegetables, spices, and agricultural products to global markets with quality, consistency, and reliable export services.'}
+                {aboutData?.description || 'ABC Export is a trusted Indian merchant exporter delivering premium dehydrated vegetables, spices, and agricultural products to global markets with quality, consistency, and reliable export services.'}
               </p>
             </Reveal>
 
