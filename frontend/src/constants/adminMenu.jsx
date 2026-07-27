@@ -36,6 +36,7 @@ export const adminMenu = [
     title: 'Product',
     icon: <InventoryIcon fontSize="small" />,
     children: [
+      { title: 'Product Page Hero', path: '/admin/website/products/hero-section' },
       { title: 'Manage Categories', path: '/admin/website/products/categories' },
       { title: 'Manage Products', path: '/admin/website/products/list' },
     ],

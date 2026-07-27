@@ -25,8 +25,27 @@ class SectionSettingController extends Controller
             'subtitle' => 'nullable|string|max:255',
             'title' => 'nullable|string|max:255',
             'description' => 'nullable|string',
-            'extra_data' => 'nullable|array',
+            'image' => 'nullable|image|max:5120',
         ]);
+
+        $extraData = [];
+        if ($request->has('extra_data')) {
+            $extraDataInput = $request->input('extra_data');
+            if (is_string($extraDataInput)) {
+                $extraData = json_decode($extraDataInput, true) ?? [];
+            } else if (is_array($extraDataInput)) {
+                $extraData = $extraDataInput;
+            }
+        }
+
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('section_settings', 'public');
+            $extraData['backgroundImage'] = '/storage/' . $imagePath;
+        } else if ($request->has('remove_image') && $request->boolean('remove_image')) {
+            $extraData['backgroundImage'] = null;
+        }
+
+        $validated['extra_data'] = empty($extraData) ? null : $extraData;
 
         $setting = SectionSetting::updateOrCreate(
             ['section_key' => $key],

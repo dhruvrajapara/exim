@@ -33,6 +33,7 @@ import IconsLibrary from './pages/admin/website/IconsLibrary';
 import ProductCategories from './pages/admin/website/products/ProductCategories';
 import Products from './pages/admin/website/products/Products';
 import ProductForm from './pages/admin/website/products/ProductForm';
+import ProductPageHeroSection from './pages/admin/website/products/ProductPageHeroSection';
 import WebsiteAppearance from './pages/admin/settings/WebsiteAppearance';
 import ImageGalleryAdmin from './pages/admin/website/gallery/ImageGalleryAdmin';
 import InquiriesList from './pages/admin/inquiries/InquiriesList';
@@ -97,6 +98,7 @@ function App() {
               
               <Route path="website/icons" element={<IconsLibrary />} />
               
+              <Route path="website/products/hero-section" element={<ProductPageHeroSection />} />
               <Route path="website/products/categories" element={<ProductCategories />} />
               <Route path="website/products/list" element={<Products />} />
               <Route path="website/products/add" element={<ProductForm />} />
