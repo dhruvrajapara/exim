@@ -977,21 +977,4 @@ export const updateTeamMemberStatus = async (id, status) => {
   }
 };
 
-export const reorderTeamMembers = async (items) => {
-  try {
-    const response = await fetch('/api/admin/team-members/reorder', {
-      method: 'PATCH',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ items }),
-    });
-    const data = await response.json();
-    if (!response.ok) throw new Error(data.message || 'Failed to reorder team members');
-    return data;
-  } catch (error) {
-    console.error('Error reordering team members:', error);
-    throw error;
-  }
-};
+

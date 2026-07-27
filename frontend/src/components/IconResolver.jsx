@@ -66,7 +66,7 @@ import TaskAlt from '@mui/icons-material/TaskAlt';
 import Speed from '@mui/icons-material/Speed';
 import Diamond from '@mui/icons-material/Diamond';
 
-export const iconMap = {
+const iconMap = {
   Business, Storefront, Domain, Apartment, CorporateFare, MeetingRoom, Work, WorkHistory, Handshake, Campaign,
   Public, Language, TravelExplore, Flight, FlightTakeoff, LocalShipping, Commute, Factory, Warehouse, Inventory, Inventory2,
   WorkspacePremium, Verified, VerifiedUser, Star, StarBorder, EmojiEvents, MilitaryTech, Recommend, ThumbUp, GppGood, Shield,
