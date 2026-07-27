@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { adminMenu } from '../../constants/adminMenu';
 import { useAuth } from '../../contexts/AuthContext';
+import { useSettings } from '../../contexts/SettingsContext';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import CircleIcon from '@mui/icons-material/Circle';
@@ -86,6 +87,7 @@ const MenuItem = ({ item, level = 0, location }) => {
 
 export default function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
   const { user } = useAuth();
+  const { settings } = useSettings();
   const location = useLocation();
 
   return (
@@ -106,7 +108,7 @@ export default function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
       >
         <div className="h-20 flex flex-shrink-0 items-center justify-center border-b border-gray-100 px-6">
           <Link to="/" className="w-full flex justify-center hover:opacity-90 transition-opacity">
-             <img src="/logo.png" alt="Company Logo" className="h-8 w-auto object-contain" />
+             <img src={settings?.header_logo_url || '/logo.png'} alt="Company Logo" className="h-8 w-auto object-contain" />
           </Link>
         </div>
 

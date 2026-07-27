@@ -28,19 +28,25 @@ export const adminMenu = [
     icon: <DashboardIcon fontSize="small" />,
   },
   {
-    title: 'Certifications',
-    path: '/admin/certifications',
-    icon: <VerifiedIcon fontSize="small" />,
+    title: 'Inquiries',
+    path: '/admin/inquiries',
+    icon: <ContactMailIcon fontSize="small" />,
   },
   {
-    title: 'Testimonials',
-    path: '/admin/testimonials',
-    icon: <StarIcon fontSize="small" />,
+    title: 'Product',
+    icon: <InventoryIcon fontSize="small" />,
+    children: [
+      { title: 'Manage Categories', path: '/admin/website/products/categories' },
+      { title: 'Manage Products', path: '/admin/website/products/list' },
+    ],
   },
   {
-    title: 'Icon Library',
-    path: '/admin/website/icons',
-    icon: <AppsIcon fontSize="small" />,
+    title: 'Blog',
+    icon: <ArticleIcon fontSize="small" />,
+    children: [
+      { title: 'Manage Categories', path: '/admin/website/blog/categories' },
+      { title: 'Manage Blogs', path: '/admin/website/blog/posts' },
+    ],
   },
   {
     title: 'Home Page',
@@ -62,22 +68,6 @@ export const adminMenu = [
     ],
   },
   {
-    title: 'Product',
-    icon: <InventoryIcon fontSize="small" />,
-    children: [
-      { title: 'Manage Categories', path: '/admin/website/products/categories' },
-      { title: 'Manage Products', path: '/admin/website/products/list' },
-    ],
-  },
-  {
-    title: 'Blog',
-    icon: <ArticleIcon fontSize="small" />,
-    children: [
-      { title: 'Manage Categories', path: '/admin/website/blog/categories' },
-      { title: 'Manage Blogs', path: '/admin/website/blog/posts' },
-    ],
-  },
-  {
     title: 'Image',
     icon: <PhotoLibraryIcon fontSize="small" />,
     children: [
@@ -85,9 +75,19 @@ export const adminMenu = [
     ],
   },
   {
-    title: 'Inquiries',
-    path: '/admin/inquiries',
-    icon: <ContactMailIcon fontSize="small" />,
+    title: 'Certifications',
+    path: '/admin/certifications',
+    icon: <VerifiedIcon fontSize="small" />,
+  },
+  {
+    title: 'Testimonials',
+    path: '/admin/testimonials',
+    icon: <StarIcon fontSize="small" />,
+  },
+  {
+    title: 'Icon Library',
+    path: '/admin/website/icons',
+    icon: <AppsIcon fontSize="small" />,
   },
   {
     title: 'Appearance',

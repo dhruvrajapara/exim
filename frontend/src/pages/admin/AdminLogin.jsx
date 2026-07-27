@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useAuth } from '../../contexts/AuthContext';
+import { useSettings } from '../../contexts/SettingsContext';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import EmailIcon from '@mui/icons-material/Email';
@@ -15,6 +16,7 @@ export default function AdminLogin() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   
   const { login, isAuthenticated } = useAuth();
+  const { settings } = useSettings();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -55,7 +57,7 @@ export default function AdminLogin() {
 
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <div className="flex justify-center mb-6">
-          <img src="/logo.png" alt="Company Logo" className="h-12 w-auto object-contain" />
+          <img src={settings?.header_logo_url || '/logo.png'} alt="Company Logo" className="h-12 w-auto object-contain" />
         </div>
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
           Admin Portal

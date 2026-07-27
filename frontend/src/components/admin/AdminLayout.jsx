@@ -4,6 +4,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import LogoutIcon from '@mui/icons-material/Logout';
 import PersonIcon from '@mui/icons-material/Person';
 import MenuIcon from '@mui/icons-material/Menu';
+import PublicIcon from '@mui/icons-material/Public';
 import { useState } from 'react';
 import AdminSidebar from './AdminSidebar';
 
@@ -33,13 +34,26 @@ export default function AdminLayout() {
           
           <div className="flex-1 lg:flex-none"></div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3 sm:gap-4">
+            <a 
+              href="/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-3 py-2 bg-blue-50 text-[#0B63CE] rounded-md text-sm font-semibold hover:bg-[#0B63CE] hover:text-white transition-colors"
+              title="View Website"
+            >
+              <PublicIcon fontSize="small" />
+              <span className="hidden sm:inline">View Website</span>
+            </a>
+            
+            <div className="w-px h-6 bg-gray-200 hidden sm:block"></div>
+
             <button className="w-10 h-10 rounded-full bg-gray-50 text-gray-600 flex items-center justify-center hover:bg-gray-100 hover:text-[#0B63CE] transition-colors border border-gray-100">
               <PersonIcon fontSize="small" />
             </button>
             <button 
               onClick={logout}
-              className="flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium text-red-600 hover:bg-red-50 transition-colors"
+              className="flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium text-red-600 hover:bg-red-50 transition-colors"
             >
               <LogoutIcon fontSize="small" />
               <span className="hidden sm:inline">Logout</span>
