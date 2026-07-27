@@ -99,6 +99,11 @@ export const adminMenu = [
     ],
   },
   {
+    title: 'Inquiries',
+    path: '/admin/inquiries',
+    icon: <ContactMailIcon fontSize="small" />,
+  },
+  {
     title: 'Appearance',
     icon: <BrushIcon fontSize="small" />,
     children: [

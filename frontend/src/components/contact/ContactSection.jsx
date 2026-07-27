@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import PhoneIcon from '@mui/icons-material/Phone';
 import EmailIcon from '@mui/icons-material/Email';
@@ -11,7 +11,6 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { useSettings } from '../../contexts/SettingsContext';
-
 export default function ContactSection() {
   const { settings } = useSettings();
   
@@ -25,7 +24,22 @@ export default function ContactSection() {
     message: '',
     agreed: false
   });
+  const [products, setProducts] = useState([]);
 
+  useEffect(() => {
+    const loadProducts = async () => {
+      try {
+        const response = await fetch('/api/admin/products');
+        if (response.ok) {
+          const data = await response.json();
+          setProducts(data.data || []);
+        }
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
+    };
+    loadProducts();
+  }, []);
   const [status, setStatus] = useState('idle'); // idle, loading, success, error
 
   const handleChange = (e) => {
@@ -36,18 +50,34 @@ export default function ContactSection() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus('loading');
 
-    // Simulate API call
-    setTimeout(() => {
+    try {
+      const response = await fetch('/api/inquiries', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to submit inquiry');
+      }
+
       setStatus('success');
       setFormData({
         name: '', company: '', email: '', phone: '', country: '', product: '', message: '', agreed: false
       });
       setTimeout(() => setStatus('idle'), 5000);
-    }, 1500);
+    } catch (error) {
+      console.error('Submission error:', error);
+      setStatus('idle'); // Or set to an 'error' state if you have one
+      alert('Failed to submit inquiry. Please try again.');
+    }
   };
 
   return (
@@ -198,9 +228,9 @@ export default function ContactSection() {
                       <label className="text-[14px] font-bold text-dark">Product Interested In *</label>
                       <select name="product" required value={formData.product} onChange={handleChange} className="w-full h-[48px] px-4 rounded-[12px] border border-gray-200 bg-[#F9FAFB] focus:bg-white focus:outline-none focus:border-[#0B63CE] focus:ring-1 focus:ring-[#0B63CE] transition-all text-gray-700">
                         <option value="">Select a product...</option>
-                        <option value="Dehydrated Onion">Dehydrated Onion</option>
-                        <option value="Dehydrated Garlic">Dehydrated Garlic</option>
-                        <option value="Indian Spices">Indian Spices</option>
+                        {products.map((p) => (
+                          <option key={p.id} value={p.name}>{p.name}</option>
+                        ))}
                         <option value="Other">Other / General Inquiry</option>
                       </select>
                     </div>
