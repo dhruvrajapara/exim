@@ -578,7 +578,6 @@ export const fetchRelatedProducts = async (categorySlug) => {
 
 export const fetchBlogCategories = async () => {
   try {
-    throw new Error('Bypass fetch for instant load during dev');
     const response = await fetch('/api/blog-categories');
     const contentType = response.headers.get("content-type");
     if (!response.ok || !contentType || !contentType.includes("application/json")) {
@@ -673,6 +672,13 @@ export const fetchBlogBySlug = async (slug) => {
   } catch (error) {
     const blogTitle = slug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
     
+    const storedViews = localStorage.getItem(`blog_views_${slug}`);
+    let viewsCount = storedViews ? parseInt(storedViews, 10) : 12450;
+    
+    // Simulate analytics increment
+    viewsCount += 1;
+    localStorage.setItem(`blog_views_${slug}`, viewsCount);
+    
     return {
       id: 100,
       title: blogTitle || 'The Ultimate Guide to Exporting Dehydrated Vegetables in 2026',
@@ -683,7 +689,7 @@ export const fetchBlogBySlug = async (slug) => {
       short_description: 'Discover the latest regulations, packaging standards, and global demand trends for exporting high-quality dehydrated vegetables to Europe and North America.',
       published_date: '2026-06-15',
       reading_time: '8 min read',
-      views: '12,450',
+      views: viewsCount.toLocaleString(),
       author: 'Dhruv Rajapara',
       author_image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&q=80',
       author_designation: 'Head of Export Operations',

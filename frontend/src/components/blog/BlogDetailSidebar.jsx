@@ -6,11 +6,23 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import LinkIcon from '@mui/icons-material/Link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { fetchBlogCategories } from '../../services/api';
 
 export default function BlogDetailSidebar({ relatedBlogs }) {
   const [copied, setCopied] = useState(false);
+  const [categories, setCategories] = useState([]);
   const currentUrl = typeof window !== 'undefined' ? window.location.href : '';
+
+  useEffect(() => {
+    const getCategories = async () => {
+      const data = await fetchBlogCategories();
+      if (data) {
+        setCategories(data);
+      }
+    };
+    getCategories();
+  }, []);
 
   const handleCopyLink = () => {
     navigator.clipboard.writeText(currentUrl);
@@ -45,13 +57,13 @@ export default function BlogDetailSidebar({ relatedBlogs }) {
       <div className="bg-white rounded-[20px] p-8 border border-gray-200 shadow-sm">
         <h3 className="font-rubik text-[20px] font-bold text-dark mb-6">Categories</h3>
         <ul className="flex flex-col gap-3">
-          {['Export Guides', 'Market Trends', 'Product Insights', 'Company News'].map((cat, idx) => (
-            <li key={idx}>
+          {categories.map((cat, idx) => (
+            <li key={cat.id || idx}>
               <Link 
-                to={`/blog?category=${cat.toLowerCase().replace(' ', '-')}`}
+                to={`/blog?category=${cat.slug}`}
                 className="flex items-center justify-between text-[15px] font-medium text-gray-600 hover:text-[#0B63CE] transition-colors group p-2 hover:bg-[#EAF4FF] rounded-[10px]"
               >
-                <span>{cat}</span>
+                <span>{cat.name}</span>
                 <KeyboardArrowRightIcon fontSize="small" className="text-gray-300 group-hover:text-[#0B63CE] transition-colors" />
               </Link>
             </li>

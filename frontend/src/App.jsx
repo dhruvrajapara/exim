@@ -22,6 +22,7 @@ import ProductCategoriesSection from './pages/admin/website/home/ProductCategori
 import FeaturedProductsSection from './pages/admin/website/home/FeaturedProductsSection';
 import Certifications from './pages/admin/website/home/Certifications';
 import TestimonialsAdmin from './pages/admin/website/home/TestimonialsAdmin';
+import BlogCategoryAdmin from './pages/admin/website/blog/BlogCategoryAdmin';
 import TeamMembers from './pages/admin/website/about/TeamMembers';
 import VisionMissionAdmin from './pages/admin/website/about/VisionMissionAdmin';
 import WhyChooseUsAdmin from './pages/admin/website/about/WhyChooseUsAdmin';
@@ -98,6 +99,7 @@ function App() {
               <Route path="website/products/edit/:id" element={<ProductForm />} />
               
               <Route path="website/gallery/images" element={<ImageGalleryAdmin />} />
+              <Route path="website/blog/categories" element={<BlogCategoryAdmin />} />
               
               <Route path="settings/appearance" element={<WebsiteAppearance />} />
               

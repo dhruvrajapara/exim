@@ -18,6 +18,8 @@ Route::get('/featured-products', [App\Http\Controllers\ProductController::class,
 Route::get('/certifications', [App\Http\Controllers\CertificationController::class, 'index']);
 Route::get('/testimonials', [App\Http\Controllers\TestimonialController::class, 'index']);
 Route::get('/latest-blogs', [App\Http\Controllers\BlogController::class, 'latest']);
+Route::get('/blogs/{slug}', [App\Http\Controllers\BlogController::class, 'show']);
+Route::get('/blog-categories', [App\Http\Controllers\BlogCategoryController::class, 'index']);
 Route::get('/footer', [App\Http\Controllers\FooterSettingController::class, 'index']);
 Route::get('/team-members', [App\Http\Controllers\TeamMemberController::class, 'index']);
 Route::get('/website/settings', [\App\Http\Controllers\Api\WebsiteSettingController::class, 'getSettings']);
@@ -25,6 +27,11 @@ Route::get('/website/available-pages', [\App\Http\Controllers\Api\WebsiteSetting
 
 // Admin Routes (Currently Unprotected for testing, later wrapped in auth:sanctum middleware)
 Route::prefix('admin')->group(function () {
+    // Admin Blog Categories
+    Route::post('/blog-categories', [App\Http\Controllers\BlogCategoryController::class, 'store']);
+    Route::put('/blog-categories/{id}', [App\Http\Controllers\BlogCategoryController::class, 'update']);
+    Route::delete('/blog-categories/{id}', [App\Http\Controllers\BlogCategoryController::class, 'destroy']);
+
     Route::get('/hero-slides', [HeroSlideController::class, 'adminIndex']);
     Route::post('/hero-slides', [HeroSlideController::class, 'store']);
     Route::put('/hero-slides/{id}', [HeroSlideController::class, 'update']); // Use POST with _method=PUT to support multipart/form-data

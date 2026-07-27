@@ -18,12 +18,14 @@ class Blog extends Model
         'published_date',
         'is_active',
         'is_featured',
+        'views',
     ];
 
     protected $casts = [
         'is_active' => 'boolean',
         'is_featured' => 'boolean',
         'published_date' => 'datetime',
+        'views' => 'integer',
     ];
 
     public function scopeActive($query)
