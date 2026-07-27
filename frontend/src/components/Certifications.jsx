@@ -122,8 +122,8 @@ export default function Certifications() {
               </div>
 
               {/* Verified Badge */}
-              <div className="bg-primary/10 text-primary px-2 py-1 md:px-3 md:py-1.5 rounded-full text-[10px] md:text-[12px] font-semibold flex items-center mb-3 md:mb-4 whitespace-nowrap">
-                <VerifiedIcon fontSize="inherit" className="mr-1 md:mr-1.5" />
+              <div className="bg-primary/10 text-primary px-2 py-1 md:px-3 md:py-1.5 rounded-[10px] md:rounded-full text-[10px] md:text-[12px] font-semibold flex flex-col md:flex-row items-center text-center justify-center mb-3 md:mb-4 whitespace-normal break-words w-full md:w-auto">
+                <VerifiedIcon fontSize="inherit" className="mb-0.5 md:mb-0 md:mr-1.5" />
                 {cert.verification_badge_text}
               </div>
 
