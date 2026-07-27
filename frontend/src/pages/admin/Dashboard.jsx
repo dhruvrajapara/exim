@@ -9,7 +9,6 @@ import GroupIcon from '@mui/icons-material/Group';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import TrendingDownIcon from '@mui/icons-material/TrendingDown';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import DownloadIcon from '@mui/icons-material/Download';
 import PersonIcon from '@mui/icons-material/Person';
 
 export default function Dashboard() {
@@ -105,15 +104,6 @@ export default function Dashboard() {
           <p className="text-[15px] text-gray-500">
             Welcome back, <span className="font-medium text-gray-700">{user?.name}</span>. Here's your business overview.
           </p>
-        </div>
-        <div className="flex items-center gap-3">
-          <button className="px-4 py-2.5 bg-white border border-gray-200 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-50 hover:text-gray-900 transition-colors shadow-sm flex items-center gap-2">
-            <DownloadIcon fontSize="small" />
-            Export Data
-          </button>
-          <button className="px-4 py-2.5 bg-[#0B63CE] text-white rounded-lg text-sm font-medium hover:bg-[#0a55b3] transition-colors shadow-sm shadow-[#0B63CE]/20">
-            Generate Report
-          </button>
         </div>
       </div>
 
