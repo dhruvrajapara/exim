@@ -45,6 +45,7 @@ export const adminMenu = [
     title: 'Blog',
     icon: <ArticleIcon fontSize="small" />,
     children: [
+      { title: 'Blog Page Hero', path: '/admin/website/blog/hero-section' },
       { title: 'Manage Categories', path: '/admin/website/blog/categories' },
       { title: 'Manage Blogs', path: '/admin/website/blog/posts' },
     ],

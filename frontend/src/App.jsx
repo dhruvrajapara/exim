@@ -37,6 +37,7 @@ import ProductPageHeroSection from './pages/admin/website/products/ProductPageHe
 import WebsiteAppearance from './pages/admin/settings/WebsiteAppearance';
 import ImageGalleryAdmin from './pages/admin/website/gallery/ImageGalleryAdmin';
 import GalleryPageHeroSection from './pages/admin/website/gallery/GalleryPageHeroSection';
+import BlogPageHeroSection from './pages/admin/website/blog/BlogPageHeroSection';
 import InquiriesList from './pages/admin/inquiries/InquiriesList';
 import Profile from './pages/admin/Profile';
 import { useLocation } from 'react-router-dom';
@@ -107,6 +108,7 @@ function App() {
               
               <Route path="website/gallery/images" element={<ImageGalleryAdmin />} />
               <Route path="website/gallery/hero-section" element={<GalleryPageHeroSection />} />
+              <Route path="website/blog/hero-section" element={<BlogPageHeroSection />} />
               <Route path="website/blog/categories" element={<BlogCategoryAdmin />} />
               <Route path="website/blog/posts" element={<BlogPostsAdmin />} />
               <Route path="website/blog/posts/create" element={<BlogPostForm />} />
