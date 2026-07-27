@@ -26,7 +26,7 @@ class CertificationController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'authority_name' => 'required|string|max:255',
-            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5120',
+            'logo' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5120',
         ]);
 
         $data = $request->except('logo');
