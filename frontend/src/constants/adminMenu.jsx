@@ -49,28 +49,16 @@ export const adminMenu = [
       { title: 'Hero Slider', path: '/admin/website/home/hero-slider' },
       { title: 'About Section', path: '/admin/website/home/about-section' },
       { title: 'Product Categories', path: '/admin/website/home/product-categories-section' },
-      { title: 'Why Choose Us', path: '/admin/website/home/why-choose-us' },
-      { title: 'Statistics Counter', path: '/admin/website/home/statistics' },
       { title: 'Featured Products', path: '/admin/website/home/featured-products-section' },
-      { title: 'Export Countries', path: '/admin/website/home/export-countries' },
-      { title: 'Testimonials', path: '/admin/website/home/testimonials' },
-      { title: 'FAQ', path: '/admin/website/home/faq' },
-      { title: 'Call To Action', path: '/admin/website/home/cta' },
     ],
   },
   {
     title: 'About Page',
     icon: <InfoIcon fontSize="small" />,
     children: [
-      { title: 'Company Information', path: '/admin/website/about/company-info' },
-      { title: 'Our Story', path: '/admin/website/about/our-story' },
       { title: 'Vision & Mission', path: '/admin/website/about/vision-mission' },
-      { title: 'Director Message', path: '/admin/website/about/director-message' },
       { title: 'Team Members', path: '/admin/website/about/team-members' },
-      { title: 'Infrastructure', path: '/admin/website/about/infrastructure' },
-      { title: 'Manufacturing Process', path: '/admin/website/about/manufacturing' },
       { title: 'Why Choose Us', path: '/admin/website/about/why-choose-us' },
-      { title: 'Gallery', path: '/admin/website/about/gallery' },
     ],
   },
   {
@@ -79,7 +67,6 @@ export const adminMenu = [
     children: [
       { title: 'Manage Categories', path: '/admin/website/products/categories' },
       { title: 'Manage Products', path: '/admin/website/products/list' },
-      { title: 'Inquiry List', path: '/admin/website/products/inquiries' },
     ],
   },
   {
@@ -95,7 +82,6 @@ export const adminMenu = [
     icon: <PhotoLibraryIcon fontSize="small" />,
     children: [
       { title: 'Images', path: '/admin/website/gallery/images' },
-      { title: 'Videos', path: '/admin/website/gallery/videos' },
     ],
   },
   {
@@ -108,8 +94,6 @@ export const adminMenu = [
     icon: <BrushIcon fontSize="small" />,
     children: [
       { title: 'Website Appearance', path: '/admin/settings/appearance' },
-      { title: 'Default Banner', path: '/admin/settings/appearance/banner' },
-      { title: 'Loader', path: '/admin/settings/appearance/loader' },
     ],
   },
 ];
