@@ -597,7 +597,6 @@ export const fetchBlogCategories = async () => {
 
 export const fetchFeaturedBlog = async () => {
   try {
-    throw new Error('Bypass fetch for instant load during dev');
     const response = await fetch('/api/blogs/featured');
     const contentType = response.headers.get("content-type");
     if (!response.ok || !contentType || !contentType.includes("application/json")) {
@@ -622,7 +621,6 @@ export const fetchFeaturedBlog = async () => {
 
 export const fetchBlogs = async (filters = {}) => {
   try {
-    throw new Error('Bypass fetch for instant load during dev');
     const queryParams = new URLSearchParams(filters).toString();
     const response = await fetch(`/api/blogs?${queryParams}`);
     const contentType = response.headers.get("content-type");
@@ -661,7 +659,6 @@ export const fetchBlogs = async (filters = {}) => {
 
 export const fetchBlogBySlug = async (slug) => {
   try {
-    throw new Error('Bypass fetch for instant load during dev');
     const response = await fetch(`/api/blogs/${slug}`);
     const contentType = response.headers.get("content-type");
     if (!response.ok || !contentType || !contentType.includes("application/json")) {
@@ -725,7 +722,6 @@ export const fetchBlogBySlug = async (slug) => {
 
 export const fetchRelatedBlogs = async (categorySlug) => {
   try {
-    throw new Error('Bypass fetch for instant load during dev');
     const response = await fetch(`/api/blogs/related/${categorySlug}`);
     const contentType = response.headers.get("content-type");
     if (!response.ok || !contentType || !contentType.includes("application/json")) {

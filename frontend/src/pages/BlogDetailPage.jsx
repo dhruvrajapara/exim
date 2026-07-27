@@ -27,7 +27,7 @@ export default function BlogDetailPage() {
       setBlog(data);
       
       if (data) {
-        const related = await fetchRelatedBlogs(data.category_slug);
+        const related = await fetchRelatedBlogs(data.category?.slug || '');
         setRelatedBlogs(related);
       }
       
@@ -69,7 +69,7 @@ export default function BlogDetailPage() {
     "itemListElement": [
       { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://example.com/" },
       { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://example.com/blog" },
-      { "@type": "ListItem", "position": 3, "name": blog.category, "item": `https://example.com/blog?category=${blog.category_slug}` },
+      { "@type": "ListItem", "position": 3, "name": blog.category?.name || 'Uncategorized', "item": `https://example.com/blog?category=${blog.category?.slug || ''}` },
       { "@type": "ListItem", "position": 4, "name": blog.title, "item": `https://example.com/blog/${blog.slug}` }
     ]
   };

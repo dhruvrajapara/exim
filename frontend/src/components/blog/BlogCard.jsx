@@ -17,11 +17,11 @@ export default function BlogCard({ blog }) {
           src={blog.featured_image} 
           alt={blog.title} 
           loading="lazy"
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+          className="w-full h-full object-contain bg-gray-50 group-hover:scale-105 transition-transform duration-700 ease-out"
         />
         <div className="absolute top-4 left-4 z-10">
           <span className="bg-white/90 backdrop-blur-sm text-dark px-3 py-1 rounded-md text-[11px] font-bold tracking-wider uppercase shadow-sm">
-            {blog.category}
+            {blog.category?.name || 'Uncategorized'}
           </span>
         </div>
       </div>

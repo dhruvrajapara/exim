@@ -18,6 +18,9 @@ Route::get('/featured-products', [App\Http\Controllers\ProductController::class,
 Route::get('/certifications', [App\Http\Controllers\CertificationController::class, 'index']);
 Route::get('/testimonials', [App\Http\Controllers\TestimonialController::class, 'index']);
 Route::get('/latest-blogs', [App\Http\Controllers\BlogController::class, 'latest']);
+Route::get('/blogs', [App\Http\Controllers\BlogController::class, 'index']);
+Route::get('/blogs/featured', [App\Http\Controllers\BlogController::class, 'featured']);
+Route::get('/blogs/related/{categorySlug}', [App\Http\Controllers\BlogController::class, 'related']);
 Route::get('/blogs/{slug}', [App\Http\Controllers\BlogController::class, 'show']);
 Route::get('/blog-categories', [App\Http\Controllers\BlogCategoryController::class, 'index']);
 Route::get('/footer', [App\Http\Controllers\FooterSettingController::class, 'index']);
@@ -31,6 +34,12 @@ Route::prefix('admin')->group(function () {
     Route::post('/blog-categories', [App\Http\Controllers\BlogCategoryController::class, 'store']);
     Route::put('/blog-categories/{id}', [App\Http\Controllers\BlogCategoryController::class, 'update']);
     Route::delete('/blog-categories/{id}', [App\Http\Controllers\BlogCategoryController::class, 'destroy']);
+
+    // Admin Blogs
+    Route::get('/blogs', [App\Http\Controllers\BlogController::class, 'adminIndex']);
+    Route::post('/blogs', [App\Http\Controllers\BlogController::class, 'store']);
+    Route::put('/blogs/{id}', [App\Http\Controllers\BlogController::class, 'update']);
+    Route::delete('/blogs/{id}', [App\Http\Controllers\BlogController::class, 'destroy']);
 
     Route::get('/hero-slides', [HeroSlideController::class, 'adminIndex']);
     Route::post('/hero-slides', [HeroSlideController::class, 'store']);

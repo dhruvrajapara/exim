@@ -21,7 +21,7 @@ export default function FeaturedBlog({ blog }) {
           <img 
             src={blog.featured_image} 
             alt={blog.title} 
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            className="w-full h-full object-contain bg-gray-50 group-hover:scale-105 transition-transform duration-700 ease-out"
           />
           {/* Overlay gradient for premium feel */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -31,8 +31,8 @@ export default function FeaturedBlog({ blog }) {
         <div className="w-full lg:w-1/2 p-8 md:p-12 flex flex-col justify-center">
           
           <div className="flex items-center gap-4 mb-4">
-            <span className="bg-[#3599FF]/10 text-[#3599FF] px-3 py-1 rounded-md text-[13px] font-semibold tracking-wider uppercase">
-              {blog.category}
+            <span className="bg-[#0B63CE] text-white px-3 py-1 rounded-full text-[12px] font-bold uppercase tracking-wider shadow-sm">
+              {blog.category?.name || 'Uncategorized'}
             </span>
             <span className="flex items-center gap-1 text-gray-500 text-[13px] font-medium">
               <CalendarMonthIcon sx={{ fontSize: 16 }} />

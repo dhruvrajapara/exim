@@ -29,11 +29,11 @@ export default function FeaturedAndTrending({ featuredBlog, trendingBlogs }) {
                   <img 
                     src={featuredBlog.featured_image} 
                     alt={featuredBlog.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out"
+                    className="w-full h-full object-contain bg-gray-50 group-hover:scale-105 transition-transform duration-700 ease-in-out"
                   />
                   <div className="absolute top-6 left-6">
                     <span className="bg-white/90 backdrop-blur-sm text-[#0B63CE] px-4 py-2 rounded-full text-[13px] font-bold tracking-wide uppercase shadow-sm">
-                      {featuredBlog.category}
+                      {featuredBlog.category?.name || 'Uncategorized'}
                     </span>
                   </div>
                 </div>
@@ -93,12 +93,12 @@ export default function FeaturedAndTrending({ featuredBlog, trendingBlogs }) {
                     <img 
                       src={blog.featured_image} 
                       alt={blog.title}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      className="w-full h-full object-contain bg-gray-50 group-hover:scale-110 transition-transform duration-500"
                     />
                   </div>
                   <div className="flex flex-col justify-center">
                     <span className="text-[#0B63CE] text-[12px] font-bold uppercase tracking-wider mb-1">
-                      {blog.category}
+                      {blog.category?.name || 'Uncategorized'}
                     </span>
                     <h4 className="font-bold text-[16px] text-dark leading-snug line-clamp-2 mb-2 group-hover:text-[#0B63CE] transition-colors">
                       {blog.title}

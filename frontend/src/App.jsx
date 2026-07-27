@@ -23,6 +23,8 @@ import FeaturedProductsSection from './pages/admin/website/home/FeaturedProducts
 import Certifications from './pages/admin/website/home/Certifications';
 import TestimonialsAdmin from './pages/admin/website/home/TestimonialsAdmin';
 import BlogCategoryAdmin from './pages/admin/website/blog/BlogCategoryAdmin';
+import BlogPostsAdmin from './pages/admin/website/blog/BlogPostsAdmin';
+import BlogPostForm from './pages/admin/website/blog/BlogPostForm';
 import TeamMembers from './pages/admin/website/about/TeamMembers';
 import VisionMissionAdmin from './pages/admin/website/about/VisionMissionAdmin';
 import WhyChooseUsAdmin from './pages/admin/website/about/WhyChooseUsAdmin';
@@ -100,6 +102,9 @@ function App() {
               
               <Route path="website/gallery/images" element={<ImageGalleryAdmin />} />
               <Route path="website/blog/categories" element={<BlogCategoryAdmin />} />
+              <Route path="website/blog/posts" element={<BlogPostsAdmin />} />
+              <Route path="website/blog/posts/create" element={<BlogPostForm />} />
+              <Route path="website/blog/posts/edit/:id" element={<BlogPostForm />} />
               
               <Route path="settings/appearance" element={<WebsiteAppearance />} />
               

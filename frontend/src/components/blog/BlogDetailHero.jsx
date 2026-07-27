@@ -30,15 +30,15 @@ export default function BlogDetailHero({ blog }) {
               <KeyboardArrowRightIcon fontSize="small" className="mx-1 opacity-50" />
               <Link to="/blog" className="hover:text-[#0B63CE] transition-colors">Blog</Link>
               <KeyboardArrowRightIcon fontSize="small" className="mx-1 opacity-50" />
-              <Link to={`/blog?category=${blog.category_slug}`} className="hover:text-[#0B63CE] transition-colors">
-                {blog.category}
+              <Link to={`/blog?category=${blog.category?.slug || ''}`} className="hover:text-[#0B63CE] transition-colors">
+                {blog.category?.name || 'Uncategorized'}
               </Link>
               <KeyboardArrowRightIcon fontSize="small" className="mx-1 opacity-50" />
               <span className="text-[#0B63CE] truncate max-w-[200px]">{blog.title}</span>
             </nav>
 
             <span className="inline-block bg-[#EAF4FF] text-[#0B63CE] px-4 py-1.5 rounded-full text-[13px] font-bold uppercase tracking-wide mb-6">
-              {blog.category}
+              {blog.category?.name || 'Uncategorized'}
             </span>
 
             <h1 className="font-rubik text-[36px] md:text-[48px] font-bold text-dark leading-[1.2] mb-6">
@@ -82,7 +82,7 @@ export default function BlogDetailHero({ blog }) {
                 <img 
                   src={blog.featured_image} 
                   alt={blog.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                  className="w-full h-full object-contain bg-gray-50 group-hover:scale-105 transition-transform duration-700 ease-out"
                 />
               </div>
             </div>

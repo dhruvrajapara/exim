@@ -19,6 +19,8 @@ class Blog extends Model
         'is_active',
         'is_featured',
         'views',
+        'category_id',
+        'reading_time',
     ];
 
     protected $casts = [
@@ -31,5 +33,10 @@ class Blog extends Model
     public function scopeActive($query)
     {
         return $query->where('is_active', true);
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(BlogCategory::class, 'category_id');
     }
 }

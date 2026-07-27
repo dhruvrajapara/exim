@@ -67,14 +67,14 @@ export default function RelatedBlogs({ blogs }) {
                     <img 
                       src={blog.featured_image} 
                       alt={blog.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                      className="w-full h-full object-contain bg-gray-50 group-hover:scale-105 transition-transform duration-700 ease-out"
                     />
                   </div>
 
                   <div className="p-6 md:p-8 flex flex-col flex-grow">
                     <div className="flex items-center justify-between mb-4">
                       <span className="text-[#0B63CE] text-[12px] font-bold uppercase tracking-wide">
-                        {blog.category}
+                        {blog.category?.name || 'Uncategorized'}
                       </span>
                       <span className="text-gray-400 text-[12px] font-medium">
                         {blog.reading_time || '5 min read'}
