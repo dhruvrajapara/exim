@@ -28,7 +28,7 @@ class WhyChooseUsController extends Controller
             'title' => 'required|string|max:255',
             'short_description' => 'required|string',
             'icon' => 'nullable|string|max:500',
-            'icon_image' => 'nullable|file|mimes:jpeg,png,jpg,gif,webp,svg,ico|max:20480'
+            'icon_image' => 'nullable|file|max:20480'
         ]);
 
         if ($request->hasFile('icon_image')) {
@@ -68,7 +68,7 @@ class WhyChooseUsController extends Controller
             'title' => 'required|string|max:255',
             'short_description' => 'required|string',
             'icon' => 'nullable|string|max:500',
-            'icon_image' => 'nullable|file|mimes:jpeg,png,jpg,gif,webp,svg,ico|max:20480'
+            'icon_image' => 'nullable|file|max:20480'
         ]);
 
         if ($request->hasFile('icon_image')) {
