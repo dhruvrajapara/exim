@@ -8,6 +8,7 @@ import ProductGallery from '../components/product/ProductGallery';
 import ProductInfo from '../components/product/ProductInfo';
 import ProductSpecifications from '../components/product/ProductSpecifications';
 import ProductFeatures from '../components/product/ProductFeatures';
+import ProductFAQ from '../components/product/ProductFAQ';
 import RelatedProducts from '../components/product/RelatedProducts';
 import { fetchProductBySlug } from '../services/api';
 
@@ -102,12 +103,52 @@ export default function ProductDetailPage() {
     }
   };
 
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": `What is the shelf life of ${product.name}?`,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": `When stored properly in a cool, dry place away from direct sunlight, ${product.name} has a shelf life of up to 12-24 months. For maximum freshness, we recommend keeping it in an airtight container.`
+        }
+      },
+      {
+        "@type": "Question",
+        "name": `Are there any quality certifications for ${product.name}?`,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": `Yes, we adhere to strict international food safety standards. Our products are processed in ISO and HACCP certified facilities, ensuring premium export quality and safety.`
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What are the packaging options available?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "We offer versatile packaging solutions including bulk PP bags, paper bags, and customized retail packaging depending on your order quantity and requirements. Private labeling is also available upon request."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do you provide samples before bulk orders?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Absolutely! We understand the importance of quality verification. We can arrange for product samples to be shipped internationally via DHL or FedEx so you can test our quality firsthand."
+        }
+      }
+    ]
+  };
+
   return (
     <div className="w-full bg-white min-h-screen">
       <SEO
         title={product.name}
         description={stripHtml(product.short_description)}
         canonical={`https://example.com/product/${product.slug}`}
+        image={product.main_image || (product.gallery && product.gallery.length > 0 ? product.gallery[0] : '/icon.png')}
       />
 
       <Helmet>
@@ -116,6 +157,9 @@ export default function ProductDetailPage() {
         </script>
         <script type="application/ld+json">
           {JSON.stringify(productSchema)}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify(faqSchema)}
         </script>
       </Helmet>
 
@@ -131,20 +175,35 @@ export default function ProductDetailPage() {
         </nav>
 
         {/* Hero Product Section (Gallery + Info) */}
-        <div className="flex flex-col lg:flex-row gap-10 lg:gap-16 mb-16">
-          <div className="w-full lg:w-1/2">
-            <ProductGallery images={product.gallery} mainImage={product.image_path || product.main_image} />
-          </div>
-          <div className="w-full lg:w-1/2">
+        <div className="flex flex-col lg:flex-row gap-10 lg:gap-16 mb-16 md:mb-20">
+          {(product.main_image || (product.gallery && product.gallery.length > 0)) && (
+            <div className="w-full lg:w-1/2">
+              <ProductGallery images={product.gallery} mainImage={product.image_path || product.main_image} />
+            </div>
+          )}
+          <div className={`w-full ${(product.main_image || (product.gallery && product.gallery.length > 0)) ? 'lg:w-1/2' : 'lg:max-w-4xl mx-auto'}`}>
             <ProductInfo product={product} />
           </div>
         </div>
+
+        {/* Full Product Description (Rich Text) */}
+        {product.full_description && (
+          <div className="w-full mb-16 md:mb-24 bg-white rounded-[20px] p-6 md:p-10 lg:p-12 shadow-sm border border-gray-100">
+            <div 
+              className="prose prose-sm md:prose-base lg:prose-lg max-w-none prose-headings:text-dark prose-p:text-gray-600 prose-a:text-primary hover:prose-a:text-secondary prose-img:rounded-xl"
+              dangerouslySetInnerHTML={{ __html: product.full_description }}
+            />
+          </div>
+        )}
 
         {/* Specifications Table */}
         <ProductSpecifications specifications={product.specifications} />
 
         {/* Features Grid */}
         <ProductFeatures features={product.features} />
+
+        {/* Product FAQ */}
+        <ProductFAQ productName={product.name} />
 
         {/* Related Products Slider */}
         <RelatedProducts categorySlug={product.category_slug} />

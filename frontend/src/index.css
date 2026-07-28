@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 @theme {
   --font-sans: "Rubik", system-ui, sans-serif;
@@ -30,37 +31,51 @@
     @apply font-sans text-text bg-white;
   }
 
+  /* Responsive Typography Scale using clamp */
   h1 {
-    @apply text-[56px] font-bold leading-[1.2] text-dark;
+    font-size: clamp(26px, 3vw + 16px, 36px);
+    @apply font-bold leading-[1.2] text-dark;
   }
 
   h2 {
-    @apply text-[42px] font-bold text-dark;
+    font-size: clamp(22px, 2.5vw + 14px, 28px);
+    @apply font-bold text-dark;
   }
 
   h3 {
-    @apply text-[32px] font-semibold text-dark;
+    font-size: clamp(18px, 2vw + 12px, 22px);
+    @apply font-semibold text-dark;
   }
 
   h4 {
-    @apply text-[24px] font-semibold text-dark;
-  }
-
-  h5 {
-    @apply text-[20px] font-medium text-dark;
-  }
-
-  h6 {
-    @apply text-[18px] font-medium text-dark;
+    font-size: clamp(16px, 1.5vw + 12px, 20px);
+    @apply font-semibold text-dark;
   }
 
   p {
-    @apply text-[16px] leading-[1.7];
+    font-size: clamp(14px, 1vw + 11px, 16px);
+    @apply leading-[1.8];
   }
 
   /* Utilities for the container */
   .container-custom {
     @apply w-full max-w-[1320px] mx-auto px-4 md:px-6 lg:px-8;
+  }
+
+  /* Responsive fixes for WYSIWYG content */
+  .prose {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+  }
+  .prose a {
+    word-break: break-all;
+  }
+  .prose img {
+    @apply max-w-full h-auto object-contain rounded-lg;
+  }
+  .prose table {
+    @apply w-full border-collapse block overflow-x-auto whitespace-nowrap md:whitespace-normal md:table;
   }
 }
 

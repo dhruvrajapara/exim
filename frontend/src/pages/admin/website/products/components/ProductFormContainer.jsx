@@ -183,7 +183,6 @@ export default function ProductFormContainer() {
       let url = '/api/admin/products';
       if (isEditing) {
         url = `/api/admin/products/${id}`;
-        data.append('_method', 'PUT');
       }
 
       const response = await fetch(url, {
