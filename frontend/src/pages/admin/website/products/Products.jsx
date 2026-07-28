@@ -73,7 +73,7 @@ export default function Products() {
               <TableRow key={product.id}>
                 <TableCell>
                   {product.image_path ? (
-                    <img src={`http://localhost:8000${product.image_path}`} alt={product.name} style={{ width: 50, height: 50, objectFit: 'cover' }} />
+                    <img src={product.image_path} alt={product.name} style={{ width: 50, height: 50, objectFit: 'cover' }} />
                   ) : 'No Image'}
                 </TableCell>
                 <TableCell>{product.name}</TableCell>

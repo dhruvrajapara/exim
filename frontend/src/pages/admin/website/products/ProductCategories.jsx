@@ -182,7 +182,7 @@ export default function ProductCategories() {
               <TableRow key={category.id}>
                 <TableCell>
                   {category.image_path ? (
-                    <img src={`http://localhost:8000${category.image_path}`} alt={category.name} style={{ width: 50, height: 50, objectFit: 'cover' }} />
+                    <img src={category.image_path} alt={category.name} style={{ width: 50, height: 50, objectFit: 'cover' }} />
                   ) : 'No Image'}
                 </TableCell>
                 <TableCell>{category.name}</TableCell>
@@ -223,7 +223,7 @@ export default function ProductCategories() {
                 </label>
                 {previewImage && (
                     <Box mt={2}>
-                        <img src={previewImage.startsWith('blob:') ? previewImage : `http://localhost:8000${previewImage}`} alt="Preview" style={{ width: 100, height: 100, objectFit: 'cover' }} />
+                        <img src={previewImage.startsWith('blob:') ? previewImage : previewImage} alt="Preview" style={{ width: 100, height: 100, objectFit: 'cover' }} />
                     </Box>
                 )}
             </Box>

@@ -346,25 +346,6 @@ const WhyChooseUsAdmin = () => {
                         Find Icons
                       </a>
                     </p>
-                    
-                    <div className="my-4 flex items-center">
-                      <div className="flex-grow border-t border-gray-200"></div>
-                      <span className="flex-shrink-0 mx-4 text-gray-400 text-sm font-medium">OR UPLOAD IMAGE</span>
-                      <div className="flex-grow border-t border-gray-200"></div>
-                    </div>
-
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Upload Manual Image</label>
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={(e) => {
-                        if (e.target.files && e.target.files[0]) {
-                          setIconImageFile(e.target.files[0]);
-                          setFormData({...formData, icon: ''}); // Clear icon string when file selected
-                        }
-                      }}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-[#0B63CE] focus:border-[#0B63CE] text-sm"
-                    />
                   </div>
                 </div>
 
