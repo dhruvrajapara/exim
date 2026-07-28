@@ -8,8 +8,10 @@ import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import LinkIcon from '@mui/icons-material/Link';
 import { useState, useEffect } from 'react';
 import { fetchBlogCategories } from '../../services/api';
+import { useSettings } from '../../contexts/SettingsContext';
 
 export default function BlogDetailSidebar({ relatedBlogs }) {
+  const { settings } = useSettings();
   const [copied, setCopied] = useState(false);
   const [categories, setCategories] = useState([]);
   const currentUrl = typeof window !== 'undefined' ? window.location.href : '';
@@ -34,20 +36,20 @@ export default function BlogDetailSidebar({ relatedBlogs }) {
     <div className="w-full flex flex-col gap-8 sticky top-24">
       
       {/* 1. Export Inquiry CTA Widget */}
-      <div className="bg-gradient-to-br from-[#00143A] to-[#0B63CE] rounded-[20px] p-8 text-white shadow-xl relative overflow-hidden">
+      <div className="bg-[var(--color-cta-bg,#0B63CE)] rounded-[20px] p-8 text-white shadow-xl relative overflow-hidden">
         <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl -mr-10 -mt-10"></div>
         <div className="w-[48px] h-[48px] bg-white/10 rounded-[12px] flex items-center justify-center mb-6 backdrop-blur-sm border border-white/20">
           <LocalShippingIcon />
         </div>
-        <h3 className="font-rubik text-[24px] font-bold mb-3 leading-tight">Need Bulk Quantity?</h3>
+        <h3 className="font-rubik text-[24px] font-bold mb-3 leading-tight">{settings?.sidebar_cta_title || 'Need Bulk Quantity?'}</h3>
         <p className="text-gray-300 text-[15px] mb-8 leading-relaxed">
-          Partner with BiteExport for premium dehydrated agriculture products delivered globally.
+          {settings?.sidebar_cta_description || 'Partner with BiteExport for premium dehydrated agriculture products delivered globally.'}
         </p>
         <div className="flex flex-col gap-3">
           <Link to="/contact" className="w-full h-[48px] bg-white text-[#0B63CE] font-bold rounded-[12px] flex items-center justify-center hover:bg-gray-50 transition-colors shadow-sm">
             Request a Quote
           </Link>
-          <a href="/catalogue.pdf" target="_blank" className="w-full h-[48px] bg-transparent border border-white/30 text-white font-medium rounded-[12px] flex items-center justify-center gap-2 hover:bg-white/10 transition-colors">
+          <a href={settings?.sidebar_catalogue_pdf_url || "/catalogue.pdf"} target="_blank" rel="noreferrer" className="w-full h-[48px] bg-transparent border border-white/30 text-white font-medium rounded-[12px] flex items-center justify-center gap-2 hover:bg-white/10 transition-colors">
             <DownloadIcon fontSize="small" /> Download Catalogue
           </a>
         </div>

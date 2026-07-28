@@ -33,6 +33,11 @@ export const adminMenu = [
     icon: <ContactMailIcon fontSize="small" />,
   },
   {
+    title: 'Subscribers',
+    path: '/admin/subscribers',
+    icon: <ContactMailIcon fontSize="small" />,
+  },
+  {
     title: 'Product',
     icon: <InventoryIcon fontSize="small" />,
     children: [

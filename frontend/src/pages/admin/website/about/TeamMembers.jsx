@@ -150,7 +150,7 @@ const TeamMembers = () => {
       status: member.status,
     });
     if (member.image) {
-      setImagePreview(`http://localhost:8000${member.image}`); // Adjust domain if needed based on setup
+      setImagePreview(member.image); 
     }
     setModalMode('edit');
     setIsModalOpen(true);
@@ -382,7 +382,7 @@ const TeamMembers = () => {
                         <div className="flex-shrink-0 h-10 w-10">
                           <img 
                             className="h-10 w-10 rounded-full object-cover border border-gray-100" 
-                            src={member.image ? `http://localhost:8000${member.image}` : `https://ui-avatars.com/api/?name=${encodeURIComponent(member.name)}&background=random`} 
+                            src={member.image ? member.image : `https://ui-avatars.com/api/?name=${encodeURIComponent(member.name)}&background=random`} 
                             alt={member.name} 
                           />
                         </div>

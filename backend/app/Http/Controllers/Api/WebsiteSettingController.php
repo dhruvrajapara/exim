@@ -35,6 +35,9 @@ class WebsiteSettingController extends Controller
         if (isset($settings['header_btn_pdf']) && $settings['header_btn_pdf']) {
             $settings['header_btn_pdf_url'] = '/storage/' . $settings['header_btn_pdf'];
         }
+        if (isset($settings['sidebar_catalogue_pdf']) && $settings['sidebar_catalogue_pdf']) {
+            $settings['sidebar_catalogue_pdf_url'] = '/storage/' . $settings['sidebar_catalogue_pdf'];
+        }
 
         return response()->json([
             'success' => true,
@@ -47,7 +50,7 @@ class WebsiteSettingController extends Controller
      */
     public function updateSettings(Request $request)
     {
-        $allInputs = $request->except(['_method', 'header_logo', 'footer_logo', 'favicon', 'header_btn_pdf']);
+        $allInputs = $request->except(['_method', 'header_logo', 'footer_logo', 'favicon', 'header_btn_pdf', 'sidebar_catalogue_pdf']);
 
         // 1. Save all standard text/json fields
         foreach ($allInputs as $key => $value) {
@@ -96,6 +99,15 @@ class WebsiteSettingController extends Controller
             ]);
 
             $this->handleImageUpload($request->file('header_btn_pdf'), 'header_btn_pdf');
+        }
+
+        // 6. Handle Sidebar Catalogue PDF Upload
+        if ($request->hasFile('sidebar_catalogue_pdf')) {
+            $request->validate([
+                'sidebar_catalogue_pdf' => 'mimes:pdf|max:10240'
+            ]);
+
+            $this->handleImageUpload($request->file('sidebar_catalogue_pdf'), 'sidebar_catalogue_pdf');
         }
 
         return response()->json([

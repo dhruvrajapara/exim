@@ -42,7 +42,7 @@ export default function Footer() {
 
   if (isLoading) {
     return (
-      <footer className="w-full bg-[#000821] py-[40px] md:py-[50px] animate-pulse">
+      <footer className="w-full bg-[var(--color-footer-bg,#000821)] py-[40px] md:py-[50px] animate-pulse">
         <div className="container-custom">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
              {[1,2,3,4].map(i => (
@@ -110,7 +110,7 @@ export default function Footer() {
   }
 
   return (
-    <footer className="w-full bg-[#000821] text-gray-300 pt-[40px] lg:pt-[50px] pb-[25px] lg:pb-[30px] border-t border-white/5">
+    <footer className="w-full bg-[var(--color-footer-bg,#000821)] text-gray-300 pt-[40px] lg:pt-[50px] pb-[25px] lg:pb-[30px] border-t border-white/5">
       <div className="container-custom">
         {/* Top 4-Column Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 text-left mb-12">

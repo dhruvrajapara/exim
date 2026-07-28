@@ -1,6 +1,35 @@
+import { useState } from 'react';
 import MarkEmailReadIcon from '@mui/icons-material/MarkEmailRead';
+import { useSettings } from '../../contexts/SettingsContext';
+import { subscribeNewsletter } from '../../services/api';
 
 export default function NewsletterSaaS() {
+  const { settings } = useSettings();
+  const [email, setEmail] = useState('');
+  const [status, setStatus] = useState('idle');
+  const [message, setMessage] = useState('');
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!email) return;
+    
+    setStatus('loading');
+    try {
+      const res = await subscribeNewsletter(email);
+      setStatus('success');
+      setMessage(res.message || 'Successfully subscribed!');
+      setEmail('');
+    } catch (err) {
+      setStatus('error');
+      setMessage(err.message || 'Failed to subscribe. Please try again.');
+    }
+    
+    setTimeout(() => {
+      setStatus('idle');
+      setMessage('');
+    }, 5000);
+  };
+
   return (
     <section className="py-12 md:py-16 bg-[#F9FAFB]">
       <div className="container-custom">
@@ -23,32 +52,43 @@ export default function NewsletterSaaS() {
                 <MarkEmailReadIcon fontSize="medium" />
               </div>
               <h2 className="font-rubik text-[32px] md:text-[40px] font-bold text-white leading-tight mb-4 tracking-tight">
-                Stay Updated with Export Market Insights
+                {settings?.newsletter_title || 'Stay Updated with Export Market Insights'}
               </h2>
               <p className="text-gray-300 text-[16px] md:text-[18px] max-w-md mx-auto lg:mx-0">
-                Get export tips, buyer trends and global food industry updates delivered straight to your inbox.
+                {settings?.newsletter_description || 'Get export tips, buyer trends and global food industry updates delivered straight to your inbox.'}
               </p>
             </div>
 
             {/* Right: Form */}
             <div className="w-full lg:w-1/2 flex items-center justify-center lg:justify-end">
-              <form 
-                className="w-full max-w-md bg-white/5 backdrop-blur-md p-2 rounded-[16px] border border-white/10 flex flex-col sm:flex-row gap-2 shadow-lg"
-                onSubmit={(e) => e.preventDefault()}
-              >
-                <input 
-                  type="email" 
-                  placeholder="Enter your email address"
-                  required
-                  className="flex-grow h-[54px] px-5 rounded-[12px] bg-transparent text-white placeholder-gray-400 focus:outline-none focus:bg-white/10 transition-colors border-none text-[16px]"
-                />
-                <button 
-                  type="submit" 
-                  className="h-[54px] px-8 rounded-[12px] bg-[#0B63CE] text-white font-semibold hover:bg-[#084b9e] transition-colors duration-300 shadow-md whitespace-nowrap"
+              <div className="w-full flex flex-col gap-2">
+                <form 
+                  className="w-full max-w-md bg-white/5 backdrop-blur-md p-2 rounded-[16px] border border-white/10 flex flex-col sm:flex-row gap-2 shadow-lg relative"
+                  onSubmit={handleSubmit}
                 >
-                  Subscribe
-                </button>
-              </form>
+                  <input 
+                    type="email" 
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Enter your email address"
+                    required
+                    disabled={status === 'loading'}
+                    className="flex-grow h-[54px] px-5 rounded-[12px] bg-transparent text-white placeholder-gray-400 focus:outline-none focus:bg-white/10 transition-colors border-none text-[16px] disabled:opacity-50"
+                  />
+                  <button 
+                    type="submit" 
+                    disabled={status === 'loading'}
+                    className="h-[54px] px-8 rounded-[12px] bg-[#0B63CE] text-white font-semibold hover:bg-[#084b9e] transition-colors duration-300 shadow-md whitespace-nowrap disabled:opacity-70 flex items-center justify-center min-w-[140px]"
+                  >
+                    {status === 'loading' ? 'Subscribing...' : 'Subscribe'}
+                  </button>
+                </form>
+                {message && (
+                  <div className={`text-sm mt-2 font-medium ${status === 'success' ? 'text-green-400' : 'text-red-400'}`}>
+                    {message}
+                  </div>
+                )}
+              </div>
             </div>
 
           </div>

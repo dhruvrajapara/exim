@@ -20,6 +20,11 @@ export default defineConfig({
         changeOrigin: true,
         secure: false,
       },
+      '/uploads': {
+        target: 'http://exim.test/backend/public',
+        changeOrigin: true,
+        secure: false,
+      },
     },
   },
 })

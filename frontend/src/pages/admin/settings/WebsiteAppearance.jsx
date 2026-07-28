@@ -28,6 +28,8 @@ export default function WebsiteAppearance() {
     theme_accent_color: '#F59E0B',
     theme_bg_color: '#ffffff',
     theme_text_color: '#4B5563',
+    theme_footer_bg_color: '#000821',
+    theme_cta_bg_color: '#0B63CE',
     contact_company_name: 'BiteExport',
     contact_office_addresses: [''],
     contact_google_map_url: '',
@@ -57,6 +59,10 @@ export default function WebsiteAppearance() {
     header_btn_type: 'link', // 'link' or 'pdf'
     header_btn_link: {label: '', url: ''},
     blog_enabled: true,
+    sidebar_cta_title: 'Need Bulk Quantity?',
+    sidebar_cta_description: 'Partner with BiteExport for premium dehydrated agriculture products delivered globally.',
+    newsletter_title: 'Stay Updated with Export Market Insights',
+    newsletter_description: 'Get export tips, buyer trends and global food industry updates delivered straight to your inbox.',
   });
 
   const [headerLogoFile, setHeaderLogoFile] = useState(null);
@@ -66,6 +72,7 @@ export default function WebsiteAppearance() {
   const [faviconFile, setFaviconFile] = useState(null);
   const [faviconPreview, setFaviconPreview] = useState(null);
   const [headerBtnPdfFile, setHeaderBtnPdfFile] = useState(null);
+  const [sidebarCataloguePdfFile, setSidebarCataloguePdfFile] = useState(null);
 
   useEffect(() => {
     fetchSettings();
@@ -202,7 +209,7 @@ export default function WebsiteAppearance() {
     }
   };
 
-  const handlePdfChange = (e) => {
+  const handlePdfChange = (e, type = 'header') => {
     const file = e.target.files[0];
     if (file) {
       if (file.type !== 'application/pdf') {
@@ -215,7 +222,11 @@ export default function WebsiteAppearance() {
         e.target.value = '';
         return;
       }
-      setHeaderBtnPdfFile(file);
+      if (type === 'sidebar') {
+        setSidebarCataloguePdfFile(file);
+      } else {
+        setHeaderBtnPdfFile(file);
+      }
     }
   };
 
@@ -245,6 +256,7 @@ export default function WebsiteAppearance() {
     if (footerLogoFile) submitData.append('footer_logo', footerLogoFile);
     if (faviconFile) submitData.append('favicon', faviconFile);
     if (headerBtnPdfFile) submitData.append('header_btn_pdf', headerBtnPdfFile);
+    if (sidebarCataloguePdfFile) submitData.append('sidebar_catalogue_pdf', sidebarCataloguePdfFile);
     
     submitData.append('_method', 'PUT');
 
@@ -480,6 +492,8 @@ export default function WebsiteAppearance() {
                         theme_accent_color: '#F59E0B',
                         theme_bg_color: '#ffffff',
                         theme_text_color: '#4B5563',
+                        theme_footer_bg_color: '#000821',
+                        theme_cta_bg_color: '#0B63CE',
                       }));
                     }}
                     className="px-4 py-2 text-sm font-medium text-[#0B63CE] bg-[#EAF4FF] rounded-lg hover:bg-[#D5E8FA] transition-colors"
@@ -489,7 +503,7 @@ export default function WebsiteAppearance() {
                 </div>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {['theme_primary_color', 'theme_secondary_color', 'theme_accent_color', 'theme_bg_color', 'theme_text_color'].map(colorKey => (
+                  {['theme_primary_color', 'theme_secondary_color', 'theme_accent_color', 'theme_bg_color', 'theme_text_color', 'theme_footer_bg_color', 'theme_cta_bg_color'].map(colorKey => (
                     <div key={colorKey}>
                       <label className="block text-sm font-medium text-gray-700 mb-2 capitalize">{colorKey.replace(/_/g, ' ')}</label>
                       <div className="flex items-center gap-3">
@@ -741,6 +755,48 @@ export default function WebsiteAppearance() {
                     </div>
                   ))}
                   <button type="button" onClick={() => addObjectArrayItem('footer_product_links')} className="text-[#0B63CE] text-sm font-medium hover:underline">+ Add Product Link</button>
+                </div>
+
+                <div className="mt-8 border-t pt-8">
+                  <h3 className="text-md font-semibold text-gray-800 mb-4">Sidebar Assets</h3>
+                  <div className="mb-6">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Upload Sidebar Catalogue PDF</label>
+                    <div className="flex items-center gap-4">
+                      <input 
+                        type="file" 
+                        accept="application/pdf"
+                        onChange={(e) => handlePdfChange(e, 'sidebar')}
+                        className="block w-full text-sm text-gray-500
+                          file:mr-4 file:py-2 file:px-4
+                          file:rounded-full file:border-0
+                          file:text-sm file:font-semibold
+                          file:bg-[#0B63CE]/10 file:text-[#0B63CE]
+                          hover:file:bg-[#0B63CE]/20 transition-all cursor-pointer"
+                      />
+                      {sidebarCataloguePdfFile && <span className="text-sm text-green-600 font-medium whitespace-nowrap">Ready to upload</span>}
+                    </div>
+                    <p className="text-xs text-gray-500 mt-2">Max file size: 10MB. Used in the Blog Sidebar CTA.</p>
+                  </div>
+                  <div className="mb-6">
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Sidebar CTA Title</label>
+                    <input type="text" name="sidebar_cta_title" value={formData.sidebar_cta_title} onChange={handleChange} className="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:border-[#0B63CE] outline-none" placeholder="Need Bulk Quantity?" />
+                  </div>
+                  <div className="mb-6">
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Sidebar CTA Description</label>
+                    <textarea name="sidebar_cta_description" value={formData.sidebar_cta_description} onChange={handleChange} rows="3" className="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:border-[#0B63CE] outline-none" placeholder="Partner with BiteExport for premium dehydrated agriculture products delivered globally."></textarea>
+                  </div>
+                </div>
+
+                <div className="mt-8 border-t pt-8">
+                  <h3 className="text-md font-semibold text-gray-800 mb-4">Newsletter Settings</h3>
+                  <div className="mb-6">
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Newsletter Title</label>
+                    <input type="text" name="newsletter_title" value={formData.newsletter_title} onChange={handleChange} className="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:border-[#0B63CE] outline-none" placeholder="Stay Updated with Export Market Insights" />
+                  </div>
+                  <div className="mb-6">
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Newsletter Description</label>
+                    <textarea name="newsletter_description" value={formData.newsletter_description} onChange={handleChange} rows="2" className="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:border-[#0B63CE] outline-none" placeholder="Get export tips, buyer trends and global food industry updates delivered straight to your inbox."></textarea>
+                  </div>
                 </div>
 
               </div>

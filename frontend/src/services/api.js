@@ -977,4 +977,47 @@ export const updateTeamMemberStatus = async (id, status) => {
   }
 };
 
+// Subscribers API
+export const subscribeNewsletter = async (email) => {
+  try {
+    const response = await fetch('/api/subscribers', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email }),
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message || 'Failed to subscribe');
+    return data;
+  } catch (error) {
+    console.error('Error subscribing:', error);
+    throw error;
+  }
+};
 
+export const getAdminSubscribers = async () => {
+  try {
+    const response = await fetch('/api/admin/subscribers');
+    if (!response.ok) throw new Error('Failed to fetch subscribers');
+    const data = await response.json();
+    return data.data;
+  } catch (error) {
+    console.error('Error fetching admin subscribers:', error);
+    throw error;
+  }
+};
+
+export const deleteSubscriber = async (id) => {
+  try {
+    const response = await fetch(`/api/admin/subscribers/${id}`, {
+      method: 'DELETE',
+    });
+    if (!response.ok) throw new Error('Failed to delete subscriber');
+    return await response.json();
+  } catch (error) {
+    console.error('Error deleting subscriber:', error);
+    throw error;
+  }
+};

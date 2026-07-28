@@ -40,6 +40,7 @@ import GalleryPageHeroSection from './pages/admin/website/gallery/GalleryPageHer
 import BlogPageHeroSection from './pages/admin/website/blog/BlogPageHeroSection';
 import ContactPageHeroSection from './pages/admin/website/contact/ContactPageHeroSection';
 import InquiriesList from './pages/admin/inquiries/InquiriesList';
+import Subscribers from './pages/admin/Subscribers';
 import Profile from './pages/admin/Profile';
 import { useLocation } from 'react-router-dom';
 
@@ -118,6 +119,7 @@ function App() {
               <Route path="website/blog/posts/edit/:id" element={<BlogPostForm />} />
               
               <Route path="inquiries" element={<InquiriesList />} />
+              <Route path="subscribers" element={<Subscribers />} />
               
               <Route path="profile" element={<Profile />} />
               

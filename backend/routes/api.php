@@ -28,6 +28,7 @@ Route::get('/team-members', [App\Http\Controllers\TeamMemberController::class, '
 Route::get('/website/settings', [\App\Http\Controllers\Api\WebsiteSettingController::class, 'getSettings']);
 Route::get('/website/available-pages', [\App\Http\Controllers\Api\WebsiteSettingController::class, 'getAvailablePages']);
 Route::post('/inquiries', [\App\Http\Controllers\Api\InquiryController::class, 'store']);
+Route::post('/subscribers', [\App\Http\Controllers\Api\SubscriberController::class, 'store']);
 
 // Admin Routes (Currently Unprotected for testing, later wrapped in auth:sanctum middleware)
 Route::prefix('admin')->group(function () {
@@ -113,6 +114,10 @@ Route::prefix('admin')->group(function () {
     Route::get('/inquiries/{id}', [\App\Http\Controllers\Api\InquiryController::class, 'show']);
     Route::put('/inquiries/{id}/status', [\App\Http\Controllers\Api\InquiryController::class, 'updateStatus']);
     Route::delete('/inquiries/{id}', [\App\Http\Controllers\Api\InquiryController::class, 'destroy']);
+
+    // Subscribers
+    Route::get('/subscribers', [\App\Http\Controllers\Api\SubscriberController::class, 'index']);
+    Route::delete('/subscribers/{id}', [\App\Http\Controllers\Api\SubscriberController::class, 'destroy']);
 });
 
 // Public Vision Mission Route

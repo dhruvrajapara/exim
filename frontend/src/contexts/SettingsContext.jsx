@@ -88,6 +88,12 @@ export const SettingsProvider = ({ children }) => {
     if (data.theme_text_color) {
       root.style.setProperty('--color-text-custom', data.theme_text_color); // Custom
     }
+    if (data.theme_footer_bg_color) {
+      root.style.setProperty('--color-footer-bg', data.theme_footer_bg_color);
+    }
+    if (data.theme_cta_bg_color) {
+      root.style.setProperty('--color-cta-bg', data.theme_cta_bg_color);
+    }
     
     // Inject Gradient Color Combining Primary and Secondary
     if (data.theme_primary_color && data.theme_secondary_color) {
