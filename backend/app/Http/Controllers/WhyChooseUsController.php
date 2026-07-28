@@ -28,15 +28,23 @@ class WhyChooseUsController extends Controller
             'title' => 'required|string|max:255',
             'short_description' => 'required|string',
             'icon' => 'nullable|string|max:500',
-            'icon_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp,svg|max:20480'
+            'icon_image' => 'nullable|file|mimes:jpeg,png,jpg,gif,webp,svg,ico|max:20480'
         ]);
 
         if ($request->hasFile('icon_image')) {
-            $manager = new ImageManager(new Driver());
-            $image = $manager->read($request->file('icon_image'));
-            $encoded = $image->toWebp(75);
-            $filename = 'icons/why_choose_us_' . uniqid() . '.webp';
-            Storage::disk('public')->put($filename, (string) $encoded);
+            $file = $request->file('icon_image');
+            $ext = strtolower($file->getClientOriginalExtension());
+            if (in_array($ext, ['svg', 'ico', 'pdf'])) {
+                $name = 'why_choose_us_' . uniqid() . '.' . $ext;
+                $file->storeAs('icons', $name, 'public');
+                $filename = 'icons/' . $name;
+            } else {
+                $manager = new ImageManager(new Driver());
+                $image = $manager->read($file);
+                $encoded = $image->toWebp(75);
+                $filename = 'icons/why_choose_us_' . uniqid() . '.webp';
+                Storage::disk('public')->put($filename, (string) $encoded);
+            }
             $validated['icon'] = '/storage/' . $filename;
         } elseif (empty($validated['icon'])) {
             $validated['icon'] = 'fa-solid fa-star';
@@ -60,7 +68,7 @@ class WhyChooseUsController extends Controller
             'title' => 'required|string|max:255',
             'short_description' => 'required|string',
             'icon' => 'nullable|string|max:500',
-            'icon_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp,svg|max:20480'
+            'icon_image' => 'nullable|file|mimes:jpeg,png,jpg,gif,webp,svg,ico|max:20480'
         ]);
 
         if ($request->hasFile('icon_image')) {
@@ -72,11 +80,20 @@ class WhyChooseUsController extends Controller
                 }
             }
 
-            $manager = new ImageManager(new Driver());
-            $image = $manager->read($request->file('icon_image'));
-            $encoded = $image->toWebp(75);
-            $filename = 'icons/why_choose_us_' . uniqid() . '.webp';
-            Storage::disk('public')->put($filename, (string) $encoded);
+            $file = $request->file('icon_image');
+            $ext = strtolower($file->getClientOriginalExtension());
+            if (in_array($ext, ['svg', 'ico', 'pdf'])) {
+                $name = 'why_choose_us_' . uniqid() . '.' . $ext;
+                $file->storeAs('icons', $name, 'public');
+                $filename = 'icons/' . $name;
+            } else {
+                $manager = new ImageManager(new Driver());
+                $image = $manager->read($file);
+                $encoded = $image->toWebp(75);
+                $filename = 'icons/why_choose_us_' . uniqid() . '.webp';
+                Storage::disk('public')->put($filename, (string) $encoded);
+            }
+            
             $validated['icon'] = '/storage/' . $filename;
         }
 

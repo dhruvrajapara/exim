@@ -50,6 +50,13 @@ export default function AboutTeam() {
   const lastWord = titleWords.pop();
   const restOfTitle = titleWords.join(' ');
 
+  const getGridClasses = (count) => {
+    if (count === 1) return "w-full md:w-[400px]";
+    if (count === 2) return "w-full md:w-[calc(50%-12px)] lg:w-[400px]";
+    if (count === 3) return "w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-22px)]";
+    return "w-full md:w-[calc(50%-12px)] lg:w-[calc(25%-24px)]";
+  };
+
   return (
     <section className="w-full py-[40px] lg:py-[50px] bg-[#f9fafb] relative overflow-hidden">
       
@@ -98,7 +105,7 @@ export default function AboutTeam() {
             <Reveal 
               key={member.id || index}
               delay={index * 150}
-              className="w-full md:w-[calc(50%-12px)] lg:w-[calc(25%-24px)] group bg-white rounded-[20px] p-6 lg:p-8 border border-gray-100 shadow-sm hover:shadow-[0_20px_40px_rgba(53,153,255,0.1)] hover:border-secondary/50 transition-all duration-300 transform hover:-translate-y-2 flex flex-col items-center text-center h-full overflow-hidden relative"
+              className={`${getGridClasses(team.length)} group bg-white rounded-[20px] p-6 lg:p-8 border border-gray-100 shadow-sm hover:shadow-[0_20px_40px_rgba(53,153,255,0.1)] hover:border-secondary/50 transition-all duration-300 transform hover:-translate-y-2 flex flex-col items-center text-center h-full overflow-hidden relative`}
             >
               
               {/* Decorative background shape on hover */}
@@ -110,6 +117,8 @@ export default function AboutTeam() {
                   src={member.profile_image} 
                   alt={member.full_name} 
                   loading="lazy"
+                  width="200"
+                  height="200"
                   className="w-full h-full rounded-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
                   onError={(e) => { e.target.src = "https://i.pravatar.cc/300?img=8"; }}
                 />

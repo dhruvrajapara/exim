@@ -15,7 +15,7 @@
     <!-- FontAwesome 6 CDN for manual icon integration (Deferred) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" media="print" onload="this.media='all'" />
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" /></noscript>
-    <script type="module" crossorigin src="/assets/index-DAEBva0J.js"></script>
+    <script type="module" crossorigin src="/assets/index-DHnthYeZ.js"></script>
     <link rel="modulepreload" crossorigin href="/assets/jsx-runtime-D8nDyRPw.js">
     <link rel="modulepreload" crossorigin href="/assets/react-dom-CrK8yE57.js">
     <link rel="modulepreload" crossorigin href="/assets/index.esm-DMCDXRBc.js">
@@ -30,9 +30,40 @@
     <link rel="modulepreload" crossorigin href="/assets/SEO-BElzlPJW.js">
     <link rel="modulepreload" crossorigin href="/assets/Inventory-D9rw3Ji8.js">
     <link rel="modulepreload" crossorigin href="/assets/ContactMail-D1sEL6k8.js">
-    <link rel="stylesheet" crossorigin href="/assets/index-CpHjzdz6.css">
+    <link rel="stylesheet" crossorigin href="/assets/index-j7Xn_Sp1.css">
   </head>
   <body>
-    <div id="root"></div>
+    <style>
+      /* Pre-render FCP Skeleton Loader */
+      #fcp-loader-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        width: 100vw;
+        background-color: #000821; /* Matches Hero background */
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 99999;
+        font-family: sans-serif;
+      }
+      .fcp-spinner {
+        width: 60px;
+        height: 60px;
+        border: 4px solid rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        border-top-color: #6BC72A; /* Green accent color */
+        animation: fcp-spin 1s ease-in-out infinite;
+      }
+      @keyframes fcp-spin {
+        to { transform: rotate(360deg); }
+      }
+    </style>
+    <div id="root">
+      <div id="fcp-loader-wrapper">
+        <div class="fcp-spinner"></div>
+      </div>
+    </div>
   </body>
 </html>

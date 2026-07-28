@@ -49,9 +49,11 @@ export default function BlogDetailSidebar({ relatedBlogs }) {
           <Link to="/contact" className="w-full h-[48px] bg-white text-[#0B63CE] font-bold rounded-[12px] flex items-center justify-center hover:bg-gray-50 transition-colors shadow-sm">
             Request a Quote
           </Link>
-          <a href={settings?.sidebar_catalogue_pdf_url || "/catalogue.pdf"} target="_blank" rel="noreferrer" className="w-full h-[48px] bg-transparent border border-white/30 text-white font-medium rounded-[12px] flex items-center justify-center gap-2 hover:bg-white/10 transition-colors">
-            <DownloadIcon fontSize="small" /> Download Catalogue
-          </a>
+          {settings?.sidebar_catalogue_pdf_url && (
+            <a href={settings.sidebar_catalogue_pdf_url} target="_blank" rel="noreferrer" className="w-full h-[48px] bg-transparent border border-white/30 text-white font-medium rounded-[12px] flex items-center justify-center gap-2 hover:bg-white/10 transition-colors">
+              <DownloadIcon fontSize="small" /> Download Catalogue
+            </a>
+          )}
         </div>
       </div>
 

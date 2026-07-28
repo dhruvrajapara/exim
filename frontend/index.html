@@ -17,7 +17,38 @@
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" /></noscript>
   </head>
   <body>
-    <div id="root"></div>
+    <style>
+      /* Pre-render FCP Skeleton Loader */
+      #fcp-loader-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        width: 100vw;
+        background-color: #000821; /* Matches Hero background */
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 99999;
+        font-family: sans-serif;
+      }
+      .fcp-spinner {
+        width: 60px;
+        height: 60px;
+        border: 4px solid rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        border-top-color: #6BC72A; /* Green accent color */
+        animation: fcp-spin 1s ease-in-out infinite;
+      }
+      @keyframes fcp-spin {
+        to { transform: rotate(360deg); }
+      }
+    </style>
+    <div id="root">
+      <div id="fcp-loader-wrapper">
+        <div class="fcp-spinner"></div>
+      </div>
+    </div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

@@ -42,7 +42,7 @@ export default function Footer() {
 
   if (isLoading) {
     return (
-      <footer className="w-full bg-[var(--color-footer-bg,#000821)] py-[40px] md:py-[50px] animate-pulse">
+      <footer className="w-full py-[40px] md:py-[50px] animate-pulse" style={{ backgroundColor: settings?.theme_footer_bg_color || '#000821' }}>
         <div className="container-custom">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
              {[1,2,3,4].map(i => (
@@ -110,7 +110,7 @@ export default function Footer() {
   }
 
   return (
-    <footer className="w-full bg-[var(--color-footer-bg,#000821)] text-gray-300 pt-[40px] lg:pt-[50px] pb-[25px] lg:pb-[30px] border-t border-white/5">
+    <footer className="w-full text-gray-300 pt-[40px] lg:pt-[50px] pb-[25px] lg:pb-[30px] border-t border-white/5" style={{ backgroundColor: settings?.theme_footer_bg_color || '#000821' }}>
       <div className="container-custom">
         {/* Top 4-Column Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 text-left mb-12">
@@ -181,40 +181,41 @@ export default function Footer() {
           </div>
 
           {/* Column 4: Contact Information */}
-          <div className="flex flex-col items-start">
-            <h3 className="text-white font-rubik font-semibold text-[18px] mb-6">Contact Us</h3>
-            <div className="flex flex-col gap-4 w-full max-w-[280px]">
-              
-              {/* Addresses */}
-              {displayAddresses?.map((address, index) => (
-                <div key={`addr-${index}`} className="flex items-start gap-3">
-                  <LocationOnIcon fontSize="small" className="text-primary mt-1 shrink-0" />
-                  <span className="text-[14px] text-gray-400 leading-relaxed text-left">{address}</span>
-                </div>
-              ))}
+          {(displayAddresses?.length > 0 || finalPhones?.length > 0 || finalEmails?.length > 0) && (
+            <div className="flex flex-col items-start">
+              <h3 className="text-white font-rubik font-semibold text-[18px] mb-6">Contact Us</h3>
+              <div className="flex flex-col gap-4 w-full max-w-[280px]">
+                
+                {/* Addresses */}
+                {displayAddresses?.map((address, index) => (
+                  <div key={`addr-${index}`} className="flex items-start gap-3">
+                    <LocationOnIcon fontSize="small" className="text-primary mt-1 shrink-0" />
+                    <span className="text-[14px] text-gray-400 leading-relaxed text-left">{address}</span>
+                  </div>
+                ))}
 
-              {/* Phones */}
-              {finalPhones?.map((phone, index) => (
-                <div key={`phone-${index}`} className="flex items-center gap-3">
-                  <CallIcon fontSize="small" className="text-primary shrink-0" />
-                  <a href={`tel:${phone.replace(/[^0-9+]/g, '')}`} className="text-[14px] text-gray-400 hover:text-primary transition-colors">
-                    {phone}
-                  </a>
-                </div>
-              ))}
+                {/* Phones */}
+                {finalPhones?.map((phone, index) => (
+                  <div key={`phone-${index}`} className="flex items-center gap-3">
+                    <CallIcon fontSize="small" className="text-primary shrink-0" />
+                    <a href={`tel:${phone.replace(/[^0-9+]/g, '')}`} className="text-[14px] text-gray-400 hover:text-primary transition-colors">
+                      {phone}
+                    </a>
+                  </div>
+                ))}
 
-              {/* Emails */}
-              {finalEmails?.map((email, index) => (
-                <div key={`email-${index}`} className="flex items-center gap-3">
-                  <EmailIcon fontSize="small" className="text-primary shrink-0" />
-                  <a href={`mailto:${email}`} className="text-[14px] text-gray-400 hover:text-primary transition-colors">
-                    {email}
-                  </a>
-                </div>
-              ))}
-
+                {/* Emails */}
+                {finalEmails?.map((email, index) => (
+                  <div key={`email-${index}`} className="flex items-center gap-3">
+                    <EmailIcon fontSize="small" className="text-primary shrink-0" />
+                    <a href={`mailto:${email}`} className="text-[14px] text-gray-400 hover:text-primary transition-colors">
+                      {email}
+                    </a>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
 
         </div>
 
