@@ -105,10 +105,11 @@ export const adminMenu = [
     icon: <AppsIcon fontSize="small" />,
   },
   {
-    title: 'Appearance',
-    icon: <BrushIcon fontSize="small" />,
+    title: 'Settings',
+    icon: <SettingsIcon fontSize="small" />,
     children: [
       { title: 'Website Appearance', path: '/admin/settings/appearance' },
+      { title: 'Integrations', path: '/admin/settings/integrations' },
     ],
   },
   {

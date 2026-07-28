@@ -35,6 +35,7 @@ import Products from './pages/admin/website/products/Products';
 import ProductForm from './pages/admin/website/products/ProductForm';
 import ProductPageHeroSection from './pages/admin/website/products/ProductPageHeroSection';
 import WebsiteAppearance from './pages/admin/settings/WebsiteAppearance';
+import Integrations from './pages/admin/settings/Integrations';
 import ImageGalleryAdmin from './pages/admin/website/gallery/ImageGalleryAdmin';
 import GalleryPageHeroSection from './pages/admin/website/gallery/GalleryPageHeroSection';
 import BlogPageHeroSection from './pages/admin/website/blog/BlogPageHeroSection';
@@ -124,6 +125,7 @@ function App() {
               <Route path="profile" element={<Profile />} />
               
               <Route path="settings/appearance" element={<WebsiteAppearance />} />
+              <Route path="settings/integrations" element={<Integrations />} />
               
               <Route path="*" element={<AdminPlaceholder />} />
             </Route>

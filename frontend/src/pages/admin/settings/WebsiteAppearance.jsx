@@ -3,6 +3,8 @@ import { Helmet } from 'react-helmet-async';
 import ImageIcon from '@mui/icons-material/Image';
 import SaveIcon from '@mui/icons-material/Save';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import ExtensionIcon from '@mui/icons-material/Extension';
+import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import PaletteIcon from '@mui/icons-material/Palette';
 import ContactPhoneIcon from '@mui/icons-material/ContactPhone';
 import ShareIcon from '@mui/icons-material/Share';
@@ -63,6 +65,8 @@ export default function WebsiteAppearance() {
     sidebar_cta_description: 'Partner with BiteExport for premium dehydrated agriculture products delivered globally.',
     newsletter_title: 'Stay Updated with Export Market Insights',
     newsletter_description: 'Get export tips, buyer trends and global food industry updates delivered straight to your inbox.',
+    microsoft_clarity_enabled: false,
+    microsoft_clarity_project_id: '',
   });
 
   const [headerLogoFile, setHeaderLogoFile] = useState(null);
