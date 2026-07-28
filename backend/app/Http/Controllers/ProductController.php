@@ -45,6 +45,19 @@ class ProductController extends Controller
         return response()->json(['data' => $products]);
     }
 
+    public function related($categorySlug)
+    {
+        $products = Product::with('category')->active()
+            ->whereHas('category', function ($q) use ($categorySlug) {
+                $q->where('slug', $categorySlug);
+            })
+            ->orderBy('display_order', 'asc')
+            ->limit(4)
+            ->get();
+
+        return response()->json(['data' => $products]);
+    }
+
     public function show($slug)
     {
         $product = Product::with('category')->where('slug', $slug)->active()->firstOrFail();

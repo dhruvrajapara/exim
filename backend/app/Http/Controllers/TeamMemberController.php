@@ -120,8 +120,14 @@ class TeamMemberController extends Controller
             $imagePath = null;
             if ($request->hasFile('image')) {
                 $file = $request->file('image');
-                $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
-                $file->move(public_path('uploads/team'), $filename);
+                $manager = new \Intervention\Image\ImageManager(new \Intervention\Image\Drivers\Gd\Driver());
+                $img = $manager->read($file);
+                $encoded = $img->toWebp(75);
+                $filename = time() . '_' . uniqid() . '.webp';
+                if (!file_exists(public_path('uploads/team'))) {
+                    mkdir(public_path('uploads/team'), 0755, true);
+                }
+                file_put_contents(public_path('uploads/team/' . $filename), (string) $encoded);
                 $imagePath = '/uploads/team/' . $filename;
             }
 
@@ -182,7 +188,7 @@ class TeamMemberController extends Controller
                 'display_order' => 'nullable|integer',
                 'featured' => 'nullable|boolean',
                 'status' => 'nullable|boolean',
-                'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+                'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:20480',
             ]);
 
             if ($request->hasFile('image')) {
@@ -192,8 +198,14 @@ class TeamMemberController extends Controller
                 }
 
                 $file = $request->file('image');
-                $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
-                $file->move(public_path('uploads/team'), $filename);
+                $manager = new \Intervention\Image\ImageManager(new \Intervention\Image\Drivers\Gd\Driver());
+                $img = $manager->read($file);
+                $encoded = $img->toWebp(75);
+                $filename = time() . '_' . uniqid() . '.webp';
+                if (!file_exists(public_path('uploads/team'))) {
+                    mkdir(public_path('uploads/team'), 0755, true);
+                }
+                file_put_contents(public_path('uploads/team/' . $filename), (string) $encoded);
                 $teamMember->image = '/uploads/team/' . $filename;
             }
 

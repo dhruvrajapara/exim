@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Certification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
 
 class CertificationController extends Controller
 {
@@ -37,8 +40,19 @@ class CertificationController extends Controller
         }
         
         if ($request->hasFile('logo')) {
-            $path = $request->file('logo')->store('certifications', 'public');
-            $data['logo_path'] = '/storage/' . $path;
+            $image = $request->file('logo');
+            $ext = strtolower($image->getClientOriginalExtension());
+            if ($ext === 'svg') {
+                $path = $image->store('certifications', 'public');
+                $data['logo_path'] = '/storage/' . $path;
+            } else {
+                $manager = new ImageManager(new Driver());
+                $img = $manager->read($image);
+                $encoded = $img->toWebp(75);
+                $filename = 'certifications/' . uniqid() . '.webp';
+                Storage::disk('public')->put($filename, (string) $encoded);
+                $data['logo_path'] = '/storage/' . $filename;
+            }
         }
 
         $certification = Certification::create($data);
@@ -67,8 +81,19 @@ class CertificationController extends Controller
         }
         
         if ($request->hasFile('logo')) {
-            $path = $request->file('logo')->store('certifications', 'public');
-            $data['logo_path'] = '/storage/' . $path;
+            $image = $request->file('logo');
+            $ext = strtolower($image->getClientOriginalExtension());
+            if ($ext === 'svg') {
+                $path = $image->store('certifications', 'public');
+                $data['logo_path'] = '/storage/' . $path;
+            } else {
+                $manager = new ImageManager(new Driver());
+                $img = $manager->read($image);
+                $encoded = $img->toWebp(75);
+                $filename = 'certifications/' . uniqid() . '.webp';
+                Storage::disk('public')->put($filename, (string) $encoded);
+                $data['logo_path'] = '/storage/' . $filename;
+            }
         }
 
         $certification->update($data);

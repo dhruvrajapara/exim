@@ -6,6 +6,8 @@ use App\Models\Blog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
 
 class BlogController extends Controller
 {
@@ -96,8 +98,12 @@ class BlogController extends Controller
 
         $imagePath = '';
         if ($request->hasFile('featured_image')) {
-            $path = $request->file('featured_image')->store('blogs', 'public');
-            $imagePath = '/storage/' . $path;
+            $manager = new ImageManager(new Driver());
+            $img = $manager->read($request->file('featured_image'));
+            $encoded = $img->toWebp(75);
+            $filename = 'blogs/' . uniqid() . '.webp';
+            Storage::disk('public')->put($filename, (string) $encoded);
+            $imagePath = '/storage/' . $filename;
         }
 
         $blog = Blog::create([
@@ -141,8 +147,12 @@ class BlogController extends Controller
                 Storage::disk('public')->delete(str_replace('/storage/', '', $imagePath));
             }
             // Store new
-            $path = $request->file('featured_image')->store('blogs', 'public');
-            $imagePath = '/storage/' . $path;
+            $manager = new ImageManager(new Driver());
+            $img = $manager->read($request->file('featured_image'));
+            $encoded = $img->toWebp(75);
+            $filename = 'blogs/' . uniqid() . '.webp';
+            Storage::disk('public')->put($filename, (string) $encoded);
+            $imagePath = '/storage/' . $filename;
         }
 
         // Only update slug if title changed significantly, or keep it. We will just update it for now

@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\SectionSetting;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
 
 class SectionSettingController extends Controller
 {
@@ -39,8 +42,12 @@ class SectionSettingController extends Controller
         }
 
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('section_settings', 'public');
-            $extraData['backgroundImage'] = '/storage/' . $imagePath;
+            $manager = new ImageManager(new Driver());
+            $image = $manager->read($request->file('image'));
+            $encoded = $image->toWebp(75);
+            $filename = 'section_settings/bg_' . time() . '_' . uniqid() . '.webp';
+            Storage::disk('public')->put($filename, (string) $encoded);
+            $extraData['backgroundImage'] = '/storage/' . $filename;
         } else if ($request->has('remove_image') && $request->boolean('remove_image')) {
             $extraData['backgroundImage'] = null;
         }

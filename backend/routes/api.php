@@ -11,6 +11,7 @@ Route::get('/user', function (Request $request) {
 Route::get('/hero-slides', [HeroSlideController::class, 'index']);
 Route::get('/product-categories', [App\Http\Controllers\ProductCategoryController::class, 'index']);
 Route::get('/products', [App\Http\Controllers\ProductController::class, 'index']);
+Route::get('/products/related/{categorySlug}', [App\Http\Controllers\ProductController::class, 'related']);
 Route::get('/products/{slug}', [App\Http\Controllers\ProductController::class, 'show']);
 Route::get('/gallery-images', [\App\Http\Controllers\Api\GalleryImageController::class, 'index']);
 Route::get('/about-section', [App\Http\Controllers\AboutSectionController::class, 'index']);

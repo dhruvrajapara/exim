@@ -7,6 +7,8 @@ use App\Models\GalleryImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
 
 class GalleryImageController extends Controller
 {
@@ -58,8 +60,12 @@ class GalleryImageController extends Controller
         $data = $validator->validated();
         
         if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('gallery', 'public');
-            $data['image_path'] = $path;
+            $manager = new ImageManager(new Driver());
+            $img = $manager->read($request->file('image'));
+            $encoded = $img->toWebp(75);
+            $filename = 'gallery/' . uniqid() . '.webp';
+            Storage::disk('public')->put($filename, (string) $encoded);
+            $data['image_path'] = $filename;
         }
 
         // Default active if not passed
@@ -109,8 +115,12 @@ class GalleryImageController extends Controller
             if ($galleryImage->image_path && Storage::disk('public')->exists($galleryImage->image_path)) {
                 Storage::disk('public')->delete($galleryImage->image_path);
             }
-            $path = $request->file('image')->store('gallery', 'public');
-            $data['image_path'] = $path;
+            $manager = new ImageManager(new Driver());
+            $img = $manager->read($request->file('image'));
+            $encoded = $img->toWebp(75);
+            $filename = 'gallery/' . uniqid() . '.webp';
+            Storage::disk('public')->put($filename, (string) $encoded);
+            $data['image_path'] = $filename;
         }
 
         $galleryImage->update($data);

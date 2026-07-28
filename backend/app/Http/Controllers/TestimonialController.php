@@ -6,6 +6,8 @@ use App\Models\Testimonial;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
 
 class TestimonialController extends Controller
 {
@@ -65,7 +67,7 @@ class TestimonialController extends Controller
             'review_text' => 'required|string',
             'display_order' => 'nullable|integer',
             'is_active' => 'nullable|boolean',
-            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:20480',
         ]);
 
         $data = $request->except(['avatar']);
@@ -76,9 +78,19 @@ class TestimonialController extends Controller
 
         if ($request->hasFile('avatar')) {
             $image = $request->file('avatar');
-            $fileName = time() . '_' . Str::slug($request->client_name) . '.' . $image->getClientOriginalExtension();
-            $path = $image->storeAs('testimonials', $fileName, 'public');
-            $data['avatar_path'] = $path;
+            $ext = strtolower($image->getClientOriginalExtension());
+            if ($ext === 'svg') {
+                $fileName = time() . '_' . Str::slug($request->client_name) . '.svg';
+                $path = $image->storeAs('testimonials', $fileName, 'public');
+                $data['avatar_path'] = $path;
+            } else {
+                $manager = new ImageManager(new Driver());
+                $img = $manager->read($image);
+                $encoded = $img->toWebp(75);
+                $fileName = time() . '_' . Str::slug($request->client_name) . '.webp';
+                Storage::disk('public')->put('testimonials/' . $fileName, (string) $encoded);
+                $data['avatar_path'] = 'testimonials/' . $fileName;
+            }
         }
 
         $testimonial = Testimonial::create($data);
@@ -106,7 +118,7 @@ class TestimonialController extends Controller
             'review_text' => 'required|string',
             'display_order' => 'nullable|integer',
             'is_active' => 'nullable|boolean',
-            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:20480',
         ]);
 
         $data = $request->except(['avatar']);
@@ -122,9 +134,19 @@ class TestimonialController extends Controller
             }
 
             $image = $request->file('avatar');
-            $fileName = time() . '_' . Str::slug($request->client_name) . '.' . $image->getClientOriginalExtension();
-            $path = $image->storeAs('testimonials', $fileName, 'public');
-            $data['avatar_path'] = $path;
+            $ext = strtolower($image->getClientOriginalExtension());
+            if ($ext === 'svg') {
+                $fileName = time() . '_' . Str::slug($request->client_name) . '.svg';
+                $path = $image->storeAs('testimonials', $fileName, 'public');
+                $data['avatar_path'] = $path;
+            } else {
+                $manager = new ImageManager(new Driver());
+                $img = $manager->read($image);
+                $encoded = $img->toWebp(75);
+                $fileName = time() . '_' . Str::slug($request->client_name) . '.webp';
+                Storage::disk('public')->put('testimonials/' . $fileName, (string) $encoded);
+                $data['avatar_path'] = 'testimonials/' . $fileName;
+            }
         }
 
         $testimonial->update($data);

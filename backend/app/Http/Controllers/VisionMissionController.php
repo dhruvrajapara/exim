@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\VisionMission;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
 
 class VisionMissionController extends Controller
 {
@@ -27,12 +30,16 @@ class VisionMissionController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'icon' => 'nullable|string|max:500',
-            'icon_image' => 'nullable|image|max:2048'
+            'icon_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp,svg|max:20480'
         ]);
 
         if ($request->hasFile('icon_image')) {
-            $path = $request->file('icon_image')->store('icons', 'public');
-            $validated['icon'] = '/storage/' . $path;
+            $manager = new ImageManager(new Driver());
+            $image = $manager->read($request->file('icon_image'));
+            $encoded = $image->toWebp(75);
+            $filename = 'icons/vision_mission_' . uniqid() . '.webp';
+            Storage::disk('public')->put($filename, (string) $encoded);
+            $validated['icon'] = '/storage/' . $filename;
         } elseif (empty($validated['icon'])) {
             $validated['icon'] = 'fa-solid fa-eye';
         }
@@ -57,12 +64,24 @@ class VisionMissionController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'icon' => 'nullable|string|max:500',
-            'icon_image' => 'nullable|image|max:2048'
+            'icon_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp,svg|max:20480'
         ]);
 
         if ($request->hasFile('icon_image')) {
-            $path = $request->file('icon_image')->store('icons', 'public');
-            $validated['icon'] = '/storage/' . $path;
+            // Delete old icon if it's a webp image in the storage
+            if (!empty($item->icon) && str_contains($item->icon, '/storage/icons/')) {
+                $oldPath = str_replace('/storage/', '', $item->icon);
+                if (Storage::disk('public')->exists($oldPath)) {
+                    Storage::disk('public')->delete($oldPath);
+                }
+            }
+
+            $manager = new ImageManager(new Driver());
+            $image = $manager->read($request->file('icon_image'));
+            $encoded = $image->toWebp(75);
+            $filename = 'icons/vision_mission_' . uniqid() . '.webp';
+            Storage::disk('public')->put($filename, (string) $encoded);
+            $validated['icon'] = '/storage/' . $filename;
         }
 
         unset($validated['icon_image']);

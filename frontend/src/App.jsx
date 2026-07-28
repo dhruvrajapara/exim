@@ -1,47 +1,51 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import MainLayout from './components/MainLayout';
-import Home from './pages/Home';
-import AboutPage from './pages/AboutPage';
-import ProductPage from './pages/ProductPage';
-import ProductDetailPage from './pages/ProductDetailPage';
-import BlogPage from './pages/BlogPage';
-import BlogDetailPage from './pages/BlogDetailPage';
-import ImageGalleryPage from './pages/ImageGalleryPage';
-import ContactPage from './pages/ContactPage';
+import React, { Suspense, lazy } from 'react';
 import SEO from './components/SEO';
-
-// Admin Imports
 import { AuthProvider } from './contexts/AuthContext';
 import AuthGuard from './components/admin/AuthGuard';
 import AdminLayout from './components/admin/AdminLayout';
-import AdminLogin from './pages/admin/AdminLogin';
-import Dashboard from './pages/admin/Dashboard';
-import HeroSlider from './pages/admin/website/home/HeroSlider';
-import AboutSection from './pages/admin/website/home/AboutSection';
-import ProductCategoriesSection from './pages/admin/website/home/ProductCategoriesSection';
-import FeaturedProductsSection from './pages/admin/website/home/FeaturedProductsSection';
-import Certifications from './pages/admin/website/home/Certifications';
-import TestimonialsAdmin from './pages/admin/website/home/TestimonialsAdmin';
-import BlogCategoryAdmin from './pages/admin/website/blog/BlogCategoryAdmin';
-import BlogPostsAdmin from './pages/admin/website/blog/BlogPostsAdmin';
-import BlogPostForm from './pages/admin/website/blog/BlogPostForm';
-import TeamMembers from './pages/admin/website/about/TeamMembers';
-import VisionMissionAdmin from './pages/admin/website/about/VisionMissionAdmin';
-import WhyChooseUsAdmin from './pages/admin/website/about/WhyChooseUsAdmin';
+import ScrollToTop from './components/ScrollToTop';
 
-import ProductCategories from './pages/admin/website/products/ProductCategories';
-import Products from './pages/admin/website/products/Products';
-import ProductForm from './pages/admin/website/products/ProductForm';
-import ProductPageHeroSection from './pages/admin/website/products/ProductPageHeroSection';
-import WebsiteAppearance from './pages/admin/settings/WebsiteAppearance';
-import Integrations from './pages/admin/settings/Integrations';
-import ImageGalleryAdmin from './pages/admin/website/gallery/ImageGalleryAdmin';
-import GalleryPageHeroSection from './pages/admin/website/gallery/GalleryPageHeroSection';
-import BlogPageHeroSection from './pages/admin/website/blog/BlogPageHeroSection';
-import ContactPageHeroSection from './pages/admin/website/contact/ContactPageHeroSection';
-import InquiriesList from './pages/admin/inquiries/InquiriesList';
-import Subscribers from './pages/admin/Subscribers';
-import Profile from './pages/admin/Profile';
+// Lazy load Public Components
+const Home = lazy(() => import('./pages/Home'));
+const AboutPage = lazy(() => import('./pages/AboutPage'));
+const ProductPage = lazy(() => import('./pages/ProductPage'));
+const ProductDetailPage = lazy(() => import('./pages/ProductDetailPage'));
+const BlogPage = lazy(() => import('./pages/BlogPage'));
+const BlogDetailPage = lazy(() => import('./pages/BlogDetailPage'));
+const ImageGalleryPage = lazy(() => import('./pages/ImageGalleryPage'));
+const ContactPage = lazy(() => import('./pages/ContactPage'));
+
+// Lazy load Admin Components
+const AdminLogin = lazy(() => import('./pages/admin/AdminLogin'));
+const Dashboard = lazy(() => import('./pages/admin/Dashboard'));
+const HeroSlider = lazy(() => import('./pages/admin/website/home/HeroSlider'));
+const AboutSection = lazy(() => import('./pages/admin/website/home/AboutSection'));
+const ProductCategoriesSection = lazy(() => import('./pages/admin/website/home/ProductCategoriesSection'));
+const FeaturedProductsSection = lazy(() => import('./pages/admin/website/home/FeaturedProductsSection'));
+const Certifications = lazy(() => import('./pages/admin/website/home/Certifications'));
+const TestimonialsAdmin = lazy(() => import('./pages/admin/website/home/TestimonialsAdmin'));
+const BlogCategoryAdmin = lazy(() => import('./pages/admin/website/blog/BlogCategoryAdmin'));
+const BlogPostsAdmin = lazy(() => import('./pages/admin/website/blog/BlogPostsAdmin'));
+const BlogPostForm = lazy(() => import('./pages/admin/website/blog/BlogPostForm'));
+const TeamMembers = lazy(() => import('./pages/admin/website/about/TeamMembers'));
+const VisionMissionAdmin = lazy(() => import('./pages/admin/website/about/VisionMissionAdmin'));
+const WhyChooseUsAdmin = lazy(() => import('./pages/admin/website/about/WhyChooseUsAdmin'));
+
+const ProductCategories = lazy(() => import('./pages/admin/website/products/ProductCategories'));
+const Products = lazy(() => import('./pages/admin/website/products/Products'));
+const ProductForm = lazy(() => import('./pages/admin/website/products/ProductForm'));
+const ProductPageHeroSection = lazy(() => import('./pages/admin/website/products/ProductPageHeroSection'));
+const WebsiteAppearance = lazy(() => import('./pages/admin/settings/WebsiteAppearance'));
+const Integrations = lazy(() => import('./pages/admin/settings/Integrations'));
+const ImageGalleryAdmin = lazy(() => import('./pages/admin/website/gallery/ImageGalleryAdmin'));
+const GalleryPageHeroSection = lazy(() => import('./pages/admin/website/gallery/GalleryPageHeroSection'));
+const BlogPageHeroSection = lazy(() => import('./pages/admin/website/blog/BlogPageHeroSection'));
+const ContactPageHeroSection = lazy(() => import('./pages/admin/website/contact/ContactPageHeroSection'));
+const InquiriesList = lazy(() => import('./pages/admin/inquiries/InquiriesList'));
+const Subscribers = lazy(() => import('./pages/admin/Subscribers'));
+const Profile = lazy(() => import('./pages/admin/Profile'));
 import { useLocation } from 'react-router-dom';
 
 const AdminPlaceholder = () => {
@@ -60,13 +64,12 @@ const AdminPlaceholder = () => {
   );
 };
 
-import ScrollToTop from './components/ScrollToTop';
-
 function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
         <ScrollToTop />
+        <Suspense fallback={<div className="flex items-center justify-center h-screen bg-gray-50"><div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin"></div></div>}>
         <Routes>
           {/* Public Website Routes */}
           <Route path="/" element={<MainLayout />}>
@@ -130,6 +133,7 @@ function App() {
           </Route>
 
         </Routes>
+        </Suspense>
       </BrowserRouter>
     </AuthProvider>
   );

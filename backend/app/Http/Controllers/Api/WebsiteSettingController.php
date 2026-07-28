@@ -130,10 +130,19 @@ class WebsiteSettingController extends Controller
             }
         }
 
-        // Store new image
-        $name = Str::uuid() . '.' . $file->getClientOriginalExtension();
-        $file->storeAs('branding', $name, 'public');
-        $filename = 'branding/' . $name;
+        $ext = strtolower($file->getClientOriginalExtension());
+        if (in_array($ext, ['svg', 'ico', 'pdf'])) {
+            $name = \Illuminate\Support\Str::uuid() . '.' . $ext;
+            $file->storeAs('branding', $name, 'public');
+            $filename = 'branding/' . $name;
+        } else {
+            $manager = new \Intervention\Image\ImageManager(new \Intervention\Image\Drivers\Gd\Driver());
+            $img = $manager->read($file);
+            $encoded = $img->toWebp(75);
+            $name = \Illuminate\Support\Str::uuid() . '.webp';
+            Storage::disk('public')->put('branding/' . $name, (string) $encoded);
+            $filename = 'branding/' . $name;
+        }
 
         // Update setting
         WebsiteSetting::updateOrCreate(
