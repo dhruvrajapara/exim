@@ -13,6 +13,8 @@ export default function ProductCard({ product }) {
         <img 
           src={product.image_path || product.image} 
           alt={product.name} 
+          width="400"
+          height="300"
           loading="lazy"
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
           onError={(e) => {
