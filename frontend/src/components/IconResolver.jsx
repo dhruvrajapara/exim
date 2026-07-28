@@ -77,11 +77,56 @@ const iconMap = {
 
 export const AVAILABLE_ICONS = Object.keys(iconMap);
 
-export const getIconComponent = (iconName, props = {}) => {
-  const Icon = iconMap[iconName];
-  if (!Icon) {
-    const FallbackIcon = iconMap['Star'];
-    return <FallbackIcon {...props} />;
+export const getIconComponent = (iconString, props = {}) => {
+  if (!iconString) return null;
+
+  let trimmedIcon = iconString.trim();
+
+  // Handle case where user pasted full HTML tag like <i class="fa-solid fa-leaf"></i>
+  if (trimmedIcon.startsWith('<') && trimmedIcon.includes('class=')) {
+    const match = trimmedIcon.match(/class(?:Name)?=["']([^"']+)["']/i);
+    if (match) {
+      trimmedIcon = match[1].trim();
+    }
   }
-  return <Icon {...props} />;
+
+  // 1. Check if it's an image URL
+  if (
+    trimmedIcon.startsWith('http') || 
+    trimmedIcon.startsWith('/') || 
+    trimmedIcon.match(/\.(png|jpe?g|svg|gif|webp)$/i)
+  ) {
+    return (
+      <img 
+        src={trimmedIcon} 
+        alt="Icon" 
+        className={props.className || 'w-10 h-10 object-contain'} 
+        style={props.style} 
+      />
+    );
+  }
+
+  // 2. Check if it's a FontAwesome class or similar icon font
+  if (trimmedIcon.includes('fa-') || trimmedIcon.startsWith('fa ')) {
+    return (
+      <i 
+        className={`${trimmedIcon} ${props.className || ''}`.trim()} 
+        style={props.style}
+      ></i>
+    );
+  }
+
+  // 3. Legacy Fallback: Check if it's an existing MUI Icon from the database
+  const Icon = iconMap[trimmedIcon];
+  if (Icon) {
+    return <Icon {...props} />;
+  }
+
+  // 4. Default generic fallback if none matched (assume it's a class string)
+  return (
+    <i 
+      className={`${trimmedIcon} ${props.className || ''}`.trim()} 
+      style={props.style}
+    ></i>
+  );
 };

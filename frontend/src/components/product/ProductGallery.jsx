@@ -3,7 +3,9 @@ import { useState } from 'react';
 export default function ProductGallery({ images = [], mainImage }) {
   const [activeImage, setActiveImage] = useState(mainImage || images[0]);
 
-  if (!images || images.length === 0) return null;
+  const displayImages = images && images.length > 0 ? images : (mainImage ? [mainImage] : []);
+  
+  if (displayImages.length === 0) return null;
 
   return (
     <div className="flex flex-col gap-4 w-full">
@@ -19,7 +21,7 @@ export default function ProductGallery({ images = [], mainImage }) {
 
       {/* Thumbnails Gallery */}
       <div className="grid grid-cols-4 gap-3">
-        {images.map((img, index) => (
+        {displayImages.map((img, index) => (
           <button
             key={index}
             onClick={() => setActiveImage(img)}

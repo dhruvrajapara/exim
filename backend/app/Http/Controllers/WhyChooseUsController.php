@@ -24,9 +24,18 @@ class WhyChooseUsController extends Controller
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'short_description' => 'required|string',
-            'icon' => 'required|string|max:100',
+            'icon' => 'nullable|string|max:500',
+            'icon_image' => 'nullable|image|max:2048'
         ]);
 
+        if ($request->hasFile('icon_image')) {
+            $path = $request->file('icon_image')->store('icons', 'public');
+            $validated['icon'] = '/storage/' . $path;
+        } elseif (empty($validated['icon'])) {
+            $validated['icon'] = 'fa-solid fa-star';
+        }
+
+        unset($validated['icon_image']);
         $item = WhyChooseUs::create($validated);
 
         return response()->json([
@@ -43,9 +52,16 @@ class WhyChooseUsController extends Controller
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'short_description' => 'required|string',
-            'icon' => 'required|string|max:100',
+            'icon' => 'nullable|string|max:500',
+            'icon_image' => 'nullable|image|max:2048'
         ]);
 
+        if ($request->hasFile('icon_image')) {
+            $path = $request->file('icon_image')->store('icons', 'public');
+            $validated['icon'] = '/storage/' . $path;
+        }
+
+        unset($validated['icon_image']);
         $item->update($validated);
 
         return response()->json([

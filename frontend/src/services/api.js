@@ -301,14 +301,14 @@ export const fetchAdminWhyChooseUs = async () => {
   }
 };
 
-export const createWhyChooseUs = async (whyChooseUsData) => {
+export const createWhyChooseUs = async (formData) => {
   try {
     const response = await fetch('/api/admin/why-choose-us', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        'Accept': 'application/json',
       },
-      body: JSON.stringify(whyChooseUsData),
+      body: formData,
     });
     
     if (!response.ok) {
@@ -321,14 +321,15 @@ export const createWhyChooseUs = async (whyChooseUsData) => {
   }
 };
 
-export const updateWhyChooseUs = async (id, whyChooseUsData) => {
+export const updateWhyChooseUs = async (id, formData) => {
   try {
+    formData.append('_method', 'PUT');
     const response = await fetch(`/api/admin/why-choose-us/${id}`, {
-      method: 'PUT',
+      method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        'Accept': 'application/json',
       },
-      body: JSON.stringify(whyChooseUsData),
+      body: formData,
     });
     
     if (!response.ok) {
@@ -405,14 +406,14 @@ export const fetchAdminVisionMission = async () => {
   }
 };
 
-export const createVisionMission = async (visionMissionData) => {
+export const createVisionMission = async (formData) => {
   try {
     const response = await fetch('/api/admin/vision-mission', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        'Accept': 'application/json',
       },
-      body: JSON.stringify(visionMissionData),
+      body: formData,
     });
     
     if (!response.ok) {
@@ -425,14 +426,15 @@ export const createVisionMission = async (visionMissionData) => {
   }
 };
 
-export const updateVisionMission = async (id, visionMissionData) => {
+export const updateVisionMission = async (id, formData) => {
   try {
+    formData.append('_method', 'PUT');
     const response = await fetch(`/api/admin/vision-mission/${id}`, {
-      method: 'PUT',
+      method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        'Accept': 'application/json',
       },
-      body: JSON.stringify(visionMissionData),
+      body: formData,
     });
     
     if (!response.ok) {

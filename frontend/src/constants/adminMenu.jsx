@@ -99,11 +99,7 @@ export const adminMenu = [
     path: '/admin/testimonials',
     icon: <StarIcon fontSize="small" />,
   },
-  {
-    title: 'Icon Library',
-    path: '/admin/website/icons',
-    icon: <AppsIcon fontSize="small" />,
-  },
+
   {
     title: 'Settings',
     icon: <SettingsIcon fontSize="small" />,

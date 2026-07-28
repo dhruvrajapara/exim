@@ -28,7 +28,6 @@ import BlogPostForm from './pages/admin/website/blog/BlogPostForm';
 import TeamMembers from './pages/admin/website/about/TeamMembers';
 import VisionMissionAdmin from './pages/admin/website/about/VisionMissionAdmin';
 import WhyChooseUsAdmin from './pages/admin/website/about/WhyChooseUsAdmin';
-import IconsLibrary from './pages/admin/website/IconsLibrary';
 
 import ProductCategories from './pages/admin/website/products/ProductCategories';
 import Products from './pages/admin/website/products/Products';
@@ -101,7 +100,6 @@ function App() {
               <Route path="website/about/vision-mission" element={<VisionMissionAdmin />} />
               <Route path="website/about/why-choose-us" element={<WhyChooseUsAdmin />} />
               
-              <Route path="website/icons" element={<IconsLibrary />} />
               
               <Route path="website/contact/hero-section" element={<ContactPageHeroSection />} />
               

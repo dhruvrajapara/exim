@@ -29,8 +29,9 @@ const VisionMissionAdmin = () => {
     label: '',
     title: '',
     description: '',
-    icon: 'Visibility'
+    icon: 'fa-solid fa-eye'
   });
+  const [iconImageFile, setIconImageFile] = useState(null);
   const [formLoading, setFormLoading] = useState(false);
   
   // Delete confirm state
@@ -99,8 +100,9 @@ const VisionMissionAdmin = () => {
       label: '',
       title: '',
       description: '',
-      icon: 'Visibility'
+      icon: 'fa-solid fa-eye'
     });
+    setIconImageFile(null);
     setCurrentItem(null);
     setFormLoading(false);
   };
@@ -120,6 +122,7 @@ const VisionMissionAdmin = () => {
       description: item.description,
       icon: item.icon
     });
+    setIconImageFile(null);
     setModalMode('edit');
     setIsModalOpen(true);
   };
@@ -134,11 +137,19 @@ const VisionMissionAdmin = () => {
     setFormLoading(true);
 
     try {
+      const dataToSubmit = new FormData();
+      dataToSubmit.append('type', formData.type);
+      dataToSubmit.append('label', formData.label);
+      dataToSubmit.append('title', formData.title);
+      dataToSubmit.append('description', formData.description);
+      if (formData.icon) dataToSubmit.append('icon', formData.icon);
+      if (iconImageFile) dataToSubmit.append('icon_image', iconImageFile);
+
       if (modalMode === 'add') {
-        await createVisionMission(formData);
+        await createVisionMission(dataToSubmit);
         showToast('Item added successfully!');
       } else {
-        await updateVisionMission(currentItem.id, formData);
+        await updateVisionMission(currentItem.id, dataToSubmit);
         showToast('Item updated successfully!');
       }
       handleCloseModal();
@@ -331,23 +342,44 @@ const VisionMissionAdmin = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Icon Name *</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Icon Link / Class</label>
                     <div className="relative">
                       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-blue-600">
-                        {getIconComponent(formData.icon, { fontSize: 'small' })}
+                        {getIconComponent(formData.icon, { fontSize: 'small', className: 'w-5 h-5' })}
                       </div>
                       <input
                         type="text"
-                        required
                         value={formData.icon}
                         onChange={(e) => setFormData({...formData, icon: e.target.value})}
                         className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-xl focus:ring-[#0B63CE] focus:border-[#0B63CE] text-sm"
-                        placeholder="Paste icon name (e.g. LocalShipping)"
+                        placeholder="e.g. fa-solid fa-eye or https://link/icon.png"
                       />
                     </div>
                     <p className="mt-1 text-xs text-gray-500">
-                      Copy the icon name from the Icon Library tab.
+                      Paste a FontAwesome class or an image URL. 
+                      <a href="https://fontawesome.com/search?ic=free-collection" target="_blank" rel="noopener noreferrer" className="text-[#0B63CE] hover:underline ml-1">
+                        Find Icons
+                      </a>
                     </p>
+                    
+                    <div className="my-4 flex items-center">
+                      <div className="flex-grow border-t border-gray-200"></div>
+                      <span className="flex-shrink-0 mx-4 text-gray-400 text-sm font-medium">OR UPLOAD IMAGE</span>
+                      <div className="flex-grow border-t border-gray-200"></div>
+                    </div>
+
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Upload Manual Image</label>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => {
+                        if (e.target.files && e.target.files[0]) {
+                          setIconImageFile(e.target.files[0]);
+                          setFormData({...formData, icon: ''}); // Clear icon string when file selected
+                        }
+                      }}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-[#0B63CE] focus:border-[#0B63CE] text-sm"
+                    />
                   </div>
                 </div>
 
