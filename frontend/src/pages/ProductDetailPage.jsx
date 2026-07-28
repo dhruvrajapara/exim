@@ -93,7 +93,7 @@ export default function ProductDetailPage() {
     "@context": "https://schema.org",
     "@type": "Product",
     "name": product.name,
-    "image": product.gallery,
+    "image": product.gallery && product.gallery.length > 0 ? product.gallery : (product.main_image ? [product.main_image] : ['https://example.com/default-product-image.jpg']),
     "description": stripHtml(product.short_description),
     "sku": product.slug,
     "brand": {

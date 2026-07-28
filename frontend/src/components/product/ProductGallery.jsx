@@ -1,11 +1,9 @@
 import { useState } from 'react';
 
 export default function ProductGallery({ images = [], mainImage }) {
-  const [activeImage, setActiveImage] = useState(mainImage || images[0]);
-
-  const displayImages = images && images.length > 0 ? images : (mainImage ? [mainImage] : []);
-  
-  if (displayImages.length === 0) return null;
+  const fallbackImage = 'https://placehold.co/600x400/eeeeee/999999?text=Product+Image';
+  const displayImages = images && images.length > 0 ? images : (mainImage ? [mainImage] : [fallbackImage]);
+  const [activeImage, setActiveImage] = useState(mainImage || (images && images.length > 0 ? images[0] : fallbackImage));
 
   return (
     <div className="flex flex-col gap-4 w-full">
@@ -13,8 +11,9 @@ export default function ProductGallery({ images = [], mainImage }) {
       {/* Main Image View */}
       <div className="w-full aspect-[4/3] rounded-[20px] bg-gray-50 border border-gray-100 shadow-sm overflow-hidden group cursor-crosshair">
         <img 
-          src={activeImage} 
+          src={activeImage || fallbackImage} 
           alt="Product Main" 
+          onError={(e) => { e.target.onerror = null; e.target.src = fallbackImage; }}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
         />
       </div>
@@ -30,8 +29,9 @@ export default function ProductGallery({ images = [], mainImage }) {
             }`}
           >
             <img 
-              src={img} 
+              src={img || fallbackImage} 
               alt={`Thumbnail ${index + 1}`} 
+              onError={(e) => { e.target.onerror = null; e.target.src = fallbackImage; }}
               className="w-full h-full object-cover"
             />
           </button>
