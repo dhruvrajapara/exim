@@ -32,6 +32,7 @@ Route::post('/inquiries', [\App\Http\Controllers\Api\InquiryController::class, '
 // Admin Routes (Currently Unprotected for testing, later wrapped in auth:sanctum middleware)
 Route::prefix('admin')->group(function () {
     Route::get('/dashboard', [\App\Http\Controllers\Api\DashboardController::class, 'index']);
+    Route::put('/profile', [\App\Http\Controllers\Api\ProfileController::class, 'update']);
     
     // Admin Blog Categories
     Route::post('/blog-categories', [App\Http\Controllers\BlogCategoryController::class, 'store']);

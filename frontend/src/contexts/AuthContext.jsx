@@ -50,29 +50,41 @@ export const AuthProvider = ({ children }) => {
   };
 
   const updateProfile = async (newEmail, currentPassword, newPassword) => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        const credentials = JSON.parse(localStorage.getItem('adminCredentials') || '{"email":"admin@biteexport.com","password":"admin123"}');
-        
-        if (currentPassword !== credentials.password) {
-          reject(new Error('Current password is incorrect'));
-          return;
-        }
+    try {
+      const response = await fetch('/api/admin/profile', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+          email: newEmail,
+          current_password: currentPassword,
+          new_password: newPassword
+        })
+      });
 
-        const updatedCredentials = {
-          email: newEmail || credentials.email,
-          password: newPassword || credentials.password
-        };
+      const data = await response.json();
 
-        localStorage.setItem('adminCredentials', JSON.stringify(updatedCredentials));
+      if (!response.ok) {
+        throw new Error(data.message || 'Failed to update profile');
+      }
 
-        const updatedUser = { ...user, email: updatedCredentials.email };
-        setUser(updatedUser);
-        localStorage.setItem('adminUser', JSON.stringify(updatedUser));
+      // Update local credentials to maintain the mock login for now, but also we updated db
+      const updatedCredentials = {
+        email: data.user.email,
+        password: newPassword || currentPassword
+      };
+      localStorage.setItem('adminCredentials', JSON.stringify(updatedCredentials));
 
-        resolve({ success: true });
-      }, 800);
-    });
+      const updatedUser = { ...user, email: data.user.email };
+      setUser(updatedUser);
+      localStorage.setItem('adminUser', JSON.stringify(updatedUser));
+
+      return { success: true };
+    } catch (error) {
+      throw error;
+    }
   };
 
   const logout = () => {

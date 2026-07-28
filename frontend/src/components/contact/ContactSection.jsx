@@ -93,58 +93,62 @@ export default function ContactSection() {
 
               <div className="flex flex-col gap-6 flex-grow">
                 {/* Address */}
-                <div className="flex gap-4">
-                  <div className="w-[40px] h-[40px] rounded-full bg-[#EAF4FF] text-[#0B63CE] flex items-center justify-center flex-shrink-0">
-                    <LocationOnIcon fontSize="small" />
-                  </div>
-                  <div>
-                    <h4 className="text-[14px] font-bold text-dark mb-1">Office Address</h4>
-                    {settings?.contact_office_addresses && settings.contact_office_addresses.length > 0 ? (
-                      settings.contact_office_addresses.map((address, idx) => (
+                {settings?.contact_office_addresses && settings.contact_office_addresses.length > 0 && (
+                  <div className="flex gap-4">
+                    <div className="w-[40px] h-[40px] rounded-full bg-[#EAF4FF] text-[#0B63CE] flex items-center justify-center flex-shrink-0">
+                      <LocationOnIcon fontSize="small" />
+                    </div>
+                    <div>
+                      <h4 className="text-[14px] font-bold text-dark mb-1">Office Address</h4>
+                      {settings.contact_office_addresses.map((address, idx) => (
                         <p key={idx} className="text-gray-600 text-[15px] whitespace-pre-line mb-2">{address}</p>
-                      ))
-                    ) : (
-                      <p className="text-gray-600 text-[15px] whitespace-pre-line">BiteExport\nSurat, Gujarat, India</p>
-                    )}
+                      ))}
+                    </div>
                   </div>
-                </div>
+                )}
 
                 {/* Phone */}
-                <div className="flex gap-4">
-                  <div className="w-[40px] h-[40px] rounded-full bg-[#EAF4FF] text-[var(--color-primary)] flex items-center justify-center flex-shrink-0">
-                    <PhoneIcon fontSize="small" />
+                {settings?.contact_phones && settings.contact_phones.length > 0 && (
+                  <div className="flex gap-4">
+                    <div className="w-[40px] h-[40px] rounded-full bg-[#EAF4FF] text-[var(--color-primary)] flex items-center justify-center flex-shrink-0">
+                      <PhoneIcon fontSize="small" />
+                    </div>
+                    <div>
+                      <h4 className="text-[14px] font-bold text-dark mb-1">Phone</h4>
+                      {settings.contact_phones.map((phone, idx) => (
+                        <a key={idx} href={`tel:${phone.replace(/[^0-9+]/g, '')}`} className="block text-gray-600 text-[15px] hover:text-[var(--color-primary)] mb-1">{phone}</a>
+                      ))}
+                    </div>
                   </div>
-                  <div>
-                    <h4 className="text-[14px] font-bold text-dark mb-1">Phone</h4>
-                    {settings?.contact_phones && settings.contact_phones.map((phone, idx) => (
-                      <a key={idx} href={`tel:${phone.replace(/[^0-9+]/g, '')}`} className="block text-gray-600 text-[15px] hover:text-[var(--color-primary)] mb-1">{phone}</a>
-                    ))}
-                  </div>
-                </div>
+                )}
 
                 {/* Email */}
-                <div className="flex gap-4">
-                  <div className="w-[40px] h-[40px] rounded-full bg-[#EAF4FF] text-[var(--color-primary)] flex items-center justify-center flex-shrink-0">
-                    <EmailIcon fontSize="small" />
+                {settings?.contact_emails && settings.contact_emails.length > 0 && (
+                  <div className="flex gap-4">
+                    <div className="w-[40px] h-[40px] rounded-full bg-[#EAF4FF] text-[var(--color-primary)] flex items-center justify-center flex-shrink-0">
+                      <EmailIcon fontSize="small" />
+                    </div>
+                    <div>
+                      <h4 className="text-[14px] font-bold text-dark mb-1">Email</h4>
+                      {settings.contact_emails.map((email, idx) => (
+                        <a key={idx} href={`mailto:${email}`} className="block text-gray-600 text-[15px] hover:text-[var(--color-primary)] mb-1">{email}</a>
+                      ))}
+                    </div>
                   </div>
-                  <div>
-                    <h4 className="text-[14px] font-bold text-dark mb-1">Email</h4>
-                    {settings?.contact_emails && settings.contact_emails.map((email, idx) => (
-                      <a key={idx} href={`mailto:${email}`} className="block text-gray-600 text-[15px] hover:text-[var(--color-primary)] mb-1">{email}</a>
-                    ))}
-                  </div>
-                </div>
+                )}
 
                 {/* Business Hours */}
-                <div className="flex gap-4">
-                  <div className="w-[40px] h-[40px] rounded-full bg-[#EAF4FF] text-[var(--color-primary)] flex items-center justify-center flex-shrink-0">
-                    <AccessTimeIcon fontSize="small" />
+                {settings?.contact_business_hours && (
+                  <div className="flex gap-4">
+                    <div className="w-[40px] h-[40px] rounded-full bg-[#EAF4FF] text-[var(--color-primary)] flex items-center justify-center flex-shrink-0">
+                      <AccessTimeIcon fontSize="small" />
+                    </div>
+                    <div>
+                      <h4 className="text-[14px] font-bold text-dark mb-1">Business Hours</h4>
+                      <p className="text-gray-600 text-[15px] whitespace-pre-line">{settings.contact_business_hours}</p>
+                    </div>
                   </div>
-                  <div>
-                    <h4 className="text-[14px] font-bold text-dark mb-1">Business Hours</h4>
-                    <p className="text-gray-600 text-[15px] whitespace-pre-line">{settings?.contact_business_hours || 'Monday – Saturday\n9:00 AM – 6:00 PM (IST)'}</p>
-                  </div>
-                </div>
+                )}
               </div>
 
               {/* Social Icons */}
@@ -244,7 +248,7 @@ export default function ContactSection() {
                   <div className="flex items-start gap-3 mt-2">
                     <input type="checkbox" name="agreed" id="agreed" required checked={formData.agreed} onChange={handleChange} className="mt-1 w-4 h-4 rounded border-gray-300 text-[#0B63CE] focus:ring-[#0B63CE]" />
                     <label htmlFor="agreed" className="text-[14px] text-gray-500 leading-relaxed cursor-pointer">
-                      I agree to the Privacy Policy and consent to BiteExport processing my personal data for the purpose of handling my inquiry.
+                      I agree to the Privacy Policy and consent to {settings?.contact_company_name || 'BiteExport'} processing my personal data for the purpose of handling my inquiry.
                     </label>
                   </div>
 

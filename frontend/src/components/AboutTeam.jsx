@@ -30,9 +30,9 @@ export default function AboutTeam() {
         <div className="container-custom">
           <div className="w-40 h-4 bg-gray-200 rounded mx-auto mb-2"></div>
           <div className="w-80 h-10 bg-gray-200 rounded mx-auto mb-12"></div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="flex flex-wrap justify-center gap-6 lg:gap-8">
             {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="bg-gray-100 h-[380px] rounded-[20px] w-full"></div>
+              <div key={i} className="bg-gray-100 h-[380px] rounded-[20px] w-full md:w-[calc(50%-12px)] lg:w-[calc(25%-24px)]"></div>
             ))}
           </div>
         </div>
@@ -93,12 +93,12 @@ export default function AboutTeam() {
         </Reveal>
 
         {/* Team Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+        <div className="flex flex-wrap justify-center gap-6 lg:gap-8">
           {team.map((member, index) => (
             <Reveal 
               key={member.id || index}
               delay={index * 150}
-              className="group bg-white rounded-[20px] p-6 lg:p-8 border border-gray-100 shadow-sm hover:shadow-[0_20px_40px_rgba(53,153,255,0.1)] hover:border-secondary/50 transition-all duration-300 transform hover:-translate-y-2 flex flex-col items-center text-center h-full overflow-hidden relative"
+              className="w-full md:w-[calc(50%-12px)] lg:w-[calc(25%-24px)] group bg-white rounded-[20px] p-6 lg:p-8 border border-gray-100 shadow-sm hover:shadow-[0_20px_40px_rgba(53,153,255,0.1)] hover:border-secondary/50 transition-all duration-300 transform hover:-translate-y-2 flex flex-col items-center text-center h-full overflow-hidden relative"
             >
               
               {/* Decorative background shape on hover */}
