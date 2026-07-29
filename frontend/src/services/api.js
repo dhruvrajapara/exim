@@ -543,7 +543,7 @@ export const fetchProductBySlug = async (slug) => {
       main_image: product.image_path ? product.image_path : '',
       seo_image: product.seo_image ? product.seo_image : '',
       gallery: product.gallery ? product.gallery : [],
-      specifications: product.specifications ? product.specifications.map(s => ({ name: s.key, value: s.value })) : [],
+      specifications: product.specifications ? product.specifications : [],
       features: product.features ? product.features.map(f => ({ title: f })) : [],
       faqs: product.faqs ? product.faqs : []
     };

@@ -35,7 +35,9 @@ export default function ProductFormContainer() {
 
   // Dynamic Array States
   const [features, setFeatures] = useState(['']);
-  const [specifications, setSpecifications] = useState([{ key: '', value: '' }]);
+  const [specificationTables, setSpecificationTables] = useState([
+    { title: 'Product Specifications', items: [{ label: '', value: '' }] }
+  ]);
   const [faqs, setFaqs] = useState([{ question: '', answer: '' }]);
   
   // Media States
@@ -71,9 +73,41 @@ export default function ProductFormContainer() {
               status: product.is_active ? 'Published' : 'Draft',
               new_until: product.new_until || ''
             });
-            if (product.features?.length) setFeatures(product.features);
-            if (product.specifications?.length) setSpecifications(product.specifications);
-            if (product.faqs?.length) setFaqs(product.faqs);
+            if (product.features?.length) {
+              try {
+                const parsedFeatures = typeof product.features === 'string' ? JSON.parse(product.features) : product.features;
+                setFeatures(parsedFeatures);
+              } catch (e) {
+                setFeatures(product.features);
+              }
+            }
+            if (product.specifications?.length) {
+              try {
+                const specs = typeof product.specifications === 'string' ? JSON.parse(product.specifications) : product.specifications;
+              const isLegacy = specs[0] && !specs[0].items;
+              if (isLegacy) {
+                setSpecificationTables([{
+                  title: 'Product Specifications',
+                  items: specs.map(s => ({
+                    label: s.key || s.name || s.label || '',
+                    value: s.value || ''
+                  }))
+                }]);
+              } else {
+                setSpecificationTables(specs);
+              }
+            } catch (e) {
+              console.error("Failed to parse specifications", e);
+            }
+          }
+          if (product.faqs?.length) {
+            try {
+              const parsedFaqs = typeof product.faqs === 'string' ? JSON.parse(product.faqs) : product.faqs;
+              setFaqs(parsedFaqs);
+            } catch (e) {
+              setFaqs(product.faqs);
+            }
+          }
             if (product.seo_image) setSeoImagePreview(product.seo_image);
             if (product.image_path) setMainImagePreview(product.image_path);
             if (product.gallery?.length) {
@@ -122,15 +156,35 @@ export default function ProductFormContainer() {
     setFeatures(newFeatures);
   };
 
-  const addSpecification = () => setSpecifications([...specifications, { key: '', value: '' }]);
-  const removeSpecification = (index) => {
-    const newSpecs = specifications.filter((_, i) => i !== index);
-    setSpecifications(newSpecs.length ? newSpecs : [{ key: '', value: '' }]);
+  const addSpecTable = () => {
+    setSpecificationTables([...specificationTables, { title: '', items: [{ label: '', value: '' }] }]);
   };
-  const updateSpecification = (index, field, value) => {
-    const newSpecs = [...specifications];
-    newSpecs[index][field] = value;
-    setSpecifications(newSpecs);
+  const updateSpecTableTitle = (tableIndex, title) => {
+    const newTables = [...specificationTables];
+    newTables[tableIndex].title = title;
+    setSpecificationTables(newTables);
+  };
+  const removeSpecTable = (tableIndex) => {
+    const newTables = specificationTables.filter((_, i) => i !== tableIndex);
+    setSpecificationTables(newTables.length ? newTables : [{ title: 'Product Specifications', items: [{ label: '', value: '' }] }]);
+  };
+  const addSpecRow = (tableIndex) => {
+    const newTables = [...specificationTables];
+    newTables[tableIndex].items.push({ label: '', value: '' });
+    setSpecificationTables(newTables);
+  };
+  const updateSpecRow = (tableIndex, rowIndex, field, value) => {
+    const newTables = [...specificationTables];
+    newTables[tableIndex].items[rowIndex][field] = value;
+    setSpecificationTables(newTables);
+  };
+  const removeSpecRow = (tableIndex, rowIndex) => {
+    const newTables = [...specificationTables];
+    newTables[tableIndex].items = newTables[tableIndex].items.filter((_, i) => i !== rowIndex);
+    if (newTables[tableIndex].items.length === 0) {
+      newTables[tableIndex].items = [{ label: '', value: '' }];
+    }
+    setSpecificationTables(newTables);
   };
 
   const addFaq = () => setFaqs([...faqs, { question: '', answer: '' }]);
@@ -216,8 +270,14 @@ export default function ProductFormContainer() {
       }
     });
 
-    const validSpecs = Array.isArray(specifications) ? specifications.filter(s => s && s.key && s.value) : [];
-    if (validSpecs.length > 0) data.append('specifications', JSON.stringify(validSpecs));
+    const validSpecTables = specificationTables
+      .map(table => ({
+        title: table.title,
+        items: table.items.filter(item => item.label && item.value)
+      }))
+      .filter(table => table.title && table.items.length > 0);
+    
+    if (validSpecTables.length > 0) data.append('specifications', JSON.stringify(validSpecTables));
     
     const validFeatures = Array.isArray(features) ? features.filter(f => typeof f === 'string' && f.trim() !== '') : [];
     if (validFeatures.length > 0) data.append('features', JSON.stringify(validFeatures));
@@ -472,35 +532,72 @@ export default function ProductFormContainer() {
               </button>
             </div>
 
-            {/* Specifications Card */}
+            {/* Dynamic Specification Tables */}
             <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-6">
-              <h3 className="text-lg font-semibold text-gray-800 mb-4">Specifications</h3>
-              <div className="space-y-3">
-                {specifications.map((spec, idx) => (
-                  <div key={idx} className="flex gap-2 items-center">
-                    <input
-                      type="text"
-                      value={spec.key}
-                      onChange={(e) => updateSpecification(idx, 'key', e.target.value)}
-                      placeholder="e.g. Weight"
-                      className="w-1/3 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50"
-                    />
-                    <input
-                      type="text"
-                      value={spec.value}
-                      onChange={(e) => updateSpecification(idx, 'value', e.target.value)}
-                      placeholder="e.g. 500g"
-                      className="flex-1 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                    <button type="button" onClick={() => removeSpecification(idx)} className="text-gray-400 hover:text-red-500 p-2">
-                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-                    </button>
+              <h3 className="text-lg font-semibold text-gray-800 mb-4">Specification Tables</h3>
+              
+              <div className="space-y-8">
+                {specificationTables.map((table, tableIdx) => (
+                  <div key={tableIdx} className="border border-gray-200 rounded-lg overflow-hidden">
+                    {/* Table Header / Title */}
+                    <div className="bg-gray-50 border-b border-gray-200 p-4 flex justify-between items-center gap-4">
+                      <input
+                        type="text"
+                        value={table.title}
+                        onChange={(e) => updateSpecTableTitle(tableIdx, e.target.value)}
+                        placeholder="Table Title (e.g. Product Specifications, Chemical Analysis)"
+                        className="flex-1 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary font-medium"
+                      />
+                      <button 
+                        type="button" 
+                        onClick={() => removeSpecTable(tableIdx)} 
+                        className="text-red-500 hover:text-red-700 font-medium text-sm px-3 py-2 border border-red-200 rounded hover:bg-red-50 transition-colors shrink-0"
+                      >
+                        Delete Table
+                      </button>
+                    </div>
+
+                    {/* Table Rows */}
+                    <div className="p-4 bg-white">
+                      <div className="space-y-3 mb-4">
+                        {table.items.map((row, rowIdx) => (
+                          <div key={rowIdx} className="flex gap-2 items-center">
+                            <input
+                              type="text"
+                              value={row.label}
+                              onChange={(e) => updateSpecRow(tableIdx, rowIdx, 'label', e.target.value)}
+                              placeholder="Property (e.g. Color)"
+                              className="w-1/3 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary bg-gray-50"
+                            />
+                            <input
+                              type="text"
+                              value={row.value}
+                              onChange={(e) => updateSpecRow(tableIdx, rowIdx, 'value', e.target.value)}
+                              placeholder="Value (e.g. White)"
+                              className="flex-1 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                            />
+                            <button type="button" onClick={() => removeSpecRow(tableIdx, rowIdx)} className="text-gray-400 hover:text-red-500 p-2">
+                               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                      <button type="button" onClick={() => addSpecRow(tableIdx)} className="text-primary font-medium text-sm flex items-center hover:underline">
+                        <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4"></path></svg>
+                        Add Row
+                      </button>
+                    </div>
                   </div>
                 ))}
               </div>
-              <button type="button" onClick={addSpecification} className="mt-4 text-blue-600 font-medium text-sm flex items-center hover:underline">
-                <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4"></path></svg>
-                Add Specification
+              
+              <button 
+                type="button" 
+                onClick={addSpecTable} 
+                className="mt-6 w-full py-3 border-2 border-dashed border-gray-300 text-gray-600 rounded-lg font-medium hover:bg-gray-50 hover:text-primary hover:border-primary transition-colors flex items-center justify-center gap-2"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4"></path></svg>
+                Add New Specification Table
               </button>
             </div>
 

@@ -118,6 +118,24 @@ export default function ProductDetailPage() {
     }
   }
 
+  let parsedSpecs = product.specifications;
+  if (typeof product.specifications === 'string') {
+    try {
+      parsedSpecs = JSON.parse(product.specifications);
+    } catch (e) {
+      parsedSpecs = [];
+    }
+  }
+
+  let parsedFeatures = product.features;
+  if (typeof product.features === 'string') {
+    try {
+      parsedFeatures = JSON.parse(product.features);
+    } catch (e) {
+      parsedFeatures = [];
+    }
+  }
+
   const faqSchema = parsedFaqs && Array.isArray(parsedFaqs) && parsedFaqs.length > 0 ? {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -186,10 +204,10 @@ export default function ProductDetailPage() {
         )}
 
         {/* Specifications Table */}
-        <ProductSpecifications specifications={product.specifications} />
+        <ProductSpecifications specifications={parsedSpecs} />
 
         {/* Features Grid */}
-        <ProductFeatures features={product.features} />
+        <ProductFeatures features={parsedFeatures} />
 
         {/* Product FAQ */}
         <ProductFAQ productName={product.name} faqs={parsedFaqs} />
