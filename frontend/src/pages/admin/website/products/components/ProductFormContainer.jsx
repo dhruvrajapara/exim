@@ -173,8 +173,13 @@ export default function ProductFormContainer() {
     const files = Array.from(e.target.files);
     setGalleryFiles(prev => [...prev, ...files.map(f => ({ file: f, preview: URL.createObjectURL(f) }))]);
   };
-  const removeGalleryFile = (index) => {
-    setGalleryFiles(prev => prev.filter((_, i) => i !== index));
+  const removeGalleryFile = (idx) => {
+    setGalleryFiles(prev => prev.filter((_, i) => i !== idx));
+  };
+
+  const stripHtml = (html) => {
+    if (!html) return '';
+    return html.replace(/<[^>]*>?/gm, '');
   };
 
   const handleSave = async (exit = false) => {
