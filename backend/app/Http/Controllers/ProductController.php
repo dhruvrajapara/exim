@@ -201,8 +201,14 @@ class ProductController extends Controller
         $validated['faqs'] = $request->has('faqs') ? json_decode($request->input('faqs'), true) : [];
 
         // Handle Gallery images
+        \Log::info("[Gallery Deletion Debug] ========================================");
+        if (!$request->has('retained_gallery')) {
+            \Log::info("[Gallery Deletion Debug] Request has NO retained_gallery key. This indicates ALL existing images should be deleted.");
+        }
+        
         $retainedGallery = $request->input('retained_gallery', []);
-        \Log::info("Retained gallery incoming: ", $retainedGallery);
+        \Log::info("[Gallery Deletion Debug] Retained gallery incoming array size: " . count($retainedGallery));
+        \Log::info("[Gallery Deletion Debug] Retained gallery incoming: ", $retainedGallery);
 
         $cleanedRetained = [];
         foreach ($retainedGallery as $url) {
@@ -215,25 +221,34 @@ class ProductController extends Controller
                 $cleanedRetained[] = $url;
             }
         }
-        \Log::info("Cleaned retained: ", $cleanedRetained);
+        \Log::info("[Gallery Deletion Debug] Cleaned retained paths: ", $cleanedRetained);
 
         $oldGallery = is_array($product->gallery) ? $product->gallery : [];
-        \Log::info("Old gallery in DB: ", $oldGallery);
+        \Log::info("[Gallery Deletion Debug] Old gallery in DB: ", $oldGallery);
         
         // Delete files that are no longer in the retained gallery
         foreach ($oldGallery as $oldImage) {
             if (!in_array($oldImage, $cleanedRetained)) {
-                \Log::info("Deleting old image: " . $oldImage);
+                \Log::info("[Gallery Deletion Debug] Image marked for deletion: " . $oldImage);
                 // Use Storage facade which is more robust in production environments
                 $storagePath = preg_replace('/^\/storage\//', '', $oldImage);
-                if (\Illuminate\Support\Facades\Storage::disk('public')->exists($storagePath)) {
-                    \Illuminate\Support\Facades\Storage::disk('public')->delete($storagePath);
+                \Log::info("[Gallery Deletion Debug] Normalized storage path: " . $storagePath);
+                
+                $exists = \Illuminate\Support\Facades\Storage::disk('public')->exists($storagePath);
+                \Log::info("[Gallery Deletion Debug] Storage::disk('public')->exists() result: " . ($exists ? 'true' : 'false'));
+                
+                if ($exists) {
+                    $deleted = \Illuminate\Support\Facades\Storage::disk('public')->delete($storagePath);
+                    \Log::info("[Gallery Deletion Debug] Storage::disk('public')->delete() result: " . ($deleted ? 'true' : 'false'));
                 } else if (file_exists(public_path($oldImage))) {
-                    // Fallback just in case
-                    @unlink(public_path($oldImage));
+                    \Log::info("[Gallery Deletion Debug] Found via public_path fallback. Using unlink().");
+                    $deleted = @unlink(public_path($oldImage));
+                    \Log::info("[Gallery Deletion Debug] unlink() result: " . ($deleted ? 'true' : 'false'));
+                } else {
+                    \Log::info("[Gallery Deletion Debug] File does not exist in storage or public_path. Skipping deletion.");
                 }
             } else {
-                \Log::info("Retaining old image: " . $oldImage);
+                \Log::info("[Gallery Deletion Debug] Retaining old image: " . $oldImage);
             }
         }
         
@@ -250,8 +265,13 @@ class ProductController extends Controller
             }
         }
         $validated['gallery'] = $galleryPaths;
+        
+        \Log::info("[Gallery Deletion Debug] Final gallery paths assigned to validated data: ", $validated['gallery']);
 
         $product->update($validated);
+        
+        \Log::info("[Gallery Deletion Debug] Final product gallery from DB after update: ", is_array($product->gallery) ? $product->gallery : json_decode($product->gallery, true) ?? []);
+
         return response()->json(['data' => $product, 'message' => 'Product updated successfully']);
     }
 
