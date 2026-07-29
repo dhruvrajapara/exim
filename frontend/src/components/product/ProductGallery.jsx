@@ -12,7 +12,6 @@ export default function ProductGallery({ images = [], mainImage }) {
   const displayImages = images && images.length > 0 ? (mainImage ? [mainImage, ...images] : images) : (mainImage ? [mainImage] : ['/placeholder.png']);
   const uniqueDisplayImages = [...new Set(displayImages)];
   const [activeImage, setActiveImage] = useState(uniqueDisplayImages[0]);
-  const [isMainImageLoaded, setIsMainImageLoaded] = useState(false);
   const swiperRef = useRef(null);
   
   const [lightboxOpen, setLightboxOpen] = useState(false);
@@ -46,10 +45,7 @@ export default function ProductGallery({ images = [], mainImage }) {
     return () => window.removeEventListener('keydown', handleGalleryKeyDown);
   }, [activeImage, uniqueDisplayImages, lightboxOpen]);
 
-  // Reset loaded state when active image changes
-  useEffect(() => {
-    setIsMainImageLoaded(false);
-  }, [activeImage]);
+
 
   if (uniqueDisplayImages.length === 0) return null;
 
@@ -76,16 +72,13 @@ export default function ProductGallery({ images = [], mainImage }) {
         className="relative w-full aspect-[4/3] rounded-[20px] bg-gray-50 border border-gray-100 shadow-sm overflow-hidden group cursor-pointer"
         onClick={() => handleOpenLightbox(activeImage)}
       >
-        {!isMainImageLoaded && (
-          <div className="absolute inset-0 bg-gray-200 animate-pulse" />
-        )}
+        <div className="absolute inset-0 bg-gray-200 animate-pulse" />
         <img 
           key={activeImage} // Force remount for animation
           src={activeImage} 
           alt="Product Main" 
-          onLoad={() => setIsMainImageLoaded(true)}
           onError={(e) => { e.target.style.display = 'none'; }}
-          className={`w-full h-full object-contain p-4 transition-transform duration-500 group-hover:scale-105 animate-in fade-in duration-300 ${!isMainImageLoaded ? 'opacity-0' : 'opacity-100'}`}
+          className="w-full h-full object-contain p-4 transition-transform duration-500 group-hover:scale-105 animate-in fade-in duration-300 relative z-10"
         />
         {/* Zoom Badge */}
         <div className="absolute top-4 right-4 bg-white/80 backdrop-blur-sm p-2 rounded-full shadow-sm text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
