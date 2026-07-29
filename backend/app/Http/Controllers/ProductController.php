@@ -166,8 +166,13 @@ class ProductController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            if ($product->image_path && file_exists(public_path($product->image_path))) {
-                @unlink(public_path($product->image_path));
+            if ($product->image_path) {
+                $storagePath = preg_replace('/^\/storage\//', '', $product->image_path);
+                if (\Illuminate\Support\Facades\Storage::disk('public')->exists($storagePath)) {
+                    \Illuminate\Support\Facades\Storage::disk('public')->delete($storagePath);
+                } elseif (file_exists(public_path($product->image_path))) {
+                    @unlink(public_path($product->image_path));
+                }
             }
             
             $manager = new ImageManager(new Driver());
@@ -179,8 +184,13 @@ class ProductController extends Controller
         }
 
         if ($request->hasFile('seo_image')) {
-            if ($product->seo_image && file_exists(public_path($product->seo_image))) {
-                @unlink(public_path($product->seo_image));
+            if ($product->seo_image) {
+                $storagePath = preg_replace('/^\/storage\//', '', $product->seo_image);
+                if (\Illuminate\Support\Facades\Storage::disk('public')->exists($storagePath)) {
+                    \Illuminate\Support\Facades\Storage::disk('public')->delete($storagePath);
+                } elseif (file_exists(public_path($product->seo_image))) {
+                    @unlink(public_path($product->seo_image));
+                }
             }
             
             $manager = new ImageManager(new Driver());
@@ -226,7 +236,12 @@ class ProductController extends Controller
         foreach ($oldGallery as $oldImage) {
             if (!in_array($oldImage, $cleanedRetained)) {
                 \Log::info("Deleting old image: " . $oldImage);
-                if (file_exists(public_path($oldImage))) {
+                // Use Storage facade which is more robust in production environments
+                $storagePath = preg_replace('/^\/storage\//', '', $oldImage);
+                if (\Illuminate\Support\Facades\Storage::disk('public')->exists($storagePath)) {
+                    \Illuminate\Support\Facades\Storage::disk('public')->delete($storagePath);
+                } else if (file_exists(public_path($oldImage))) {
+                    // Fallback just in case
                     @unlink(public_path($oldImage));
                 }
             } else {
@@ -256,8 +271,22 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
         
-        if ($product->image_path && file_exists(public_path($product->image_path))) {
-            @unlink(public_path($product->image_path));
+        $filesToDelete = [];
+        if ($product->image_path) $filesToDelete[] = $product->image_path;
+        if ($product->seo_image) $filesToDelete[] = $product->seo_image;
+        if (is_array($product->gallery)) {
+            foreach ($product->gallery as $img) {
+                $filesToDelete[] = $img;
+            }
+        }
+        
+        foreach ($filesToDelete as $fileUrl) {
+            $storagePath = preg_replace('/^\/storage\//', '', $fileUrl);
+            if (\Illuminate\Support\Facades\Storage::disk('public')->exists($storagePath)) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($storagePath);
+            } elseif (file_exists(public_path($fileUrl))) {
+                @unlink(public_path($fileUrl));
+            }
         }
         
         $product->delete();
