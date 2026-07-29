@@ -225,9 +225,7 @@ export default function ProductFormContainer() {
     const validFaqs = Array.isArray(faqs) ? faqs.filter(f => f && f.question && f.answer) : [];
     if (validFaqs.length > 0) data.append('faqs', JSON.stringify(validFaqs));
 
-    galleryFiles.forEach((fileObj, index) => {
-      data.append(`gallery[${index}]`, fileObj.file);
-    });
+
 
     try {
       let url = '/api/admin/products';
