@@ -202,8 +202,19 @@ class ProductController extends Controller
             $validated['faqs'] = json_decode($validated['faqs'], true);
         }
 
-        // Handle Gallery images (Append new ones)
-        $galleryPaths = is_array($product->gallery) ? $product->gallery : [];
+        // Handle Gallery images
+        $retainedGallery = $request->input('retained_gallery', []);
+        $oldGallery = is_array($product->gallery) ? $product->gallery : [];
+        
+        // Delete files that are no longer in the retained gallery
+        foreach ($oldGallery as $oldImage) {
+            if (!in_array($oldImage, $retainedGallery) && file_exists(public_path($oldImage))) {
+                @unlink(public_path($oldImage));
+            }
+        }
+        
+        $galleryPaths = $retainedGallery;
+        
         if ($request->hasFile('gallery')) {
             $manager = new ImageManager(new Driver());
             foreach ($request->file('gallery') as $galleryImage) {

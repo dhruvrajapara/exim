@@ -75,6 +75,10 @@ export default function ProductFormContainer() {
             if (product.specifications?.length) setSpecifications(product.specifications);
             if (product.faqs?.length) setFaqs(product.faqs);
             if (product.seo_image) setSeoImagePreview(product.seo_image);
+            if (product.image_path) setMainImagePreview(product.image_path);
+            if (product.gallery?.length) {
+              setGalleryFiles(product.gallery.map(url => ({ file: null, preview: url })));
+            }
           }
         }
       }
@@ -199,6 +203,13 @@ export default function ProductFormContainer() {
     if (seoImage) {
       data.append('seo_image', seoImage);
     }
+    galleryFiles.forEach(f => {
+      if (f.file) {
+        data.append('gallery[]', f.file);
+      } else if (f.preview) {
+        data.append('retained_gallery[]', f.preview);
+      }
+    });
 
     const validSpecs = Array.isArray(specifications) ? specifications.filter(s => s && s.key && s.value) : [];
     if (validSpecs.length > 0) data.append('specifications', JSON.stringify(validSpecs));

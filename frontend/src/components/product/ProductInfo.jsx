@@ -17,7 +17,7 @@ export default function ProductInfo({ product }) {
       </span>
 
       {/* Title */}
-      <h1 className="font-rubik text-[32px] md:text-[42px] font-bold text-dark leading-tight mb-4">
+      <h1 className="font-rubik text-[24px] sm:text-[28px] md:text-[42px] font-bold text-dark leading-tight mb-3 md:mb-4">
         {product.name}
       </h1>
 

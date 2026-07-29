@@ -8,8 +8,8 @@ export default function ProductSpecifications({ specifications = [] }) {
   }
 
   return (
-    <div className="bg-white rounded-[20px] border border-gray-100 shadow-sm p-6 md:p-8 lg:p-10 mb-16 md:mb-20">
-      <h3 className="font-rubik text-[24px] font-bold text-dark mb-6 border-b border-gray-100 pb-4">
+    <div className="bg-white rounded-[20px] border border-gray-100 shadow-sm p-4 md:p-8 lg:p-10 mb-10 md:mb-20">
+      <h3 className="font-rubik text-[20px] md:text-[24px] font-bold text-dark mb-4 pb-3 md:mb-6 md:pb-4 border-b border-gray-100">
         Product Specifications
       </h3>
       
@@ -22,10 +22,10 @@ export default function ProductSpecifications({ specifications = [] }) {
                 key={index} 
                 className={`border-b border-gray-100 last:border-0 ${index % 2 === 0 ? 'bg-gray-50/50' : 'bg-white'}`}
               >
-                <th className="py-3 px-4 text-dark font-semibold w-1/3 border-r border-gray-100">
+                <th className="py-2 px-3 text-[14px] md:text-[15px] text-dark font-semibold w-[40%] border-r border-gray-100">
                   {spec.name}
                 </th>
-                <td className="py-3 px-4 text-gray-600 font-medium">
+                <td className="py-2 px-3 text-[13px] md:text-[15px] text-gray-600 font-medium">
                   {spec.value}
                 </td>
               </tr>
