@@ -204,21 +204,33 @@ class ProductController extends Controller
 
         // Handle Gallery images
         $retainedGallery = $request->input('retained_gallery', []);
+        \Log::info("Retained gallery incoming: ", $retainedGallery);
+
         $cleanedRetained = [];
         foreach ($retainedGallery as $url) {
-            if (preg_match('/(\/storage\/.*)$/', $url, $matches)) {
-                $cleanedRetained[] = $matches[1];
+            // Robustly extract the path without domain or query strings
+            $parsed = parse_url($url, PHP_URL_PATH);
+            if ($parsed) {
+                // Ensure it has a leading slash
+                $cleanedRetained[] = '/' . ltrim($parsed, '/');
             } else {
                 $cleanedRetained[] = $url;
             }
         }
+        \Log::info("Cleaned retained: ", $cleanedRetained);
 
         $oldGallery = is_array($product->gallery) ? $product->gallery : [];
+        \Log::info("Old gallery in DB: ", $oldGallery);
         
         // Delete files that are no longer in the retained gallery
         foreach ($oldGallery as $oldImage) {
-            if (!in_array($oldImage, $cleanedRetained) && file_exists(public_path($oldImage))) {
-                @unlink(public_path($oldImage));
+            if (!in_array($oldImage, $cleanedRetained)) {
+                \Log::info("Deleting old image: " . $oldImage);
+                if (file_exists(public_path($oldImage))) {
+                    @unlink(public_path($oldImage));
+                }
+            } else {
+                \Log::info("Retaining old image: " . $oldImage);
             }
         }
         
