@@ -9,8 +9,9 @@ import 'swiper/css/pagination';
 import Lightbox from './Lightbox';
 
 export default function ProductGallery({ images = [], mainImage }) {
-  const displayImages = images && images.length > 0 ? images : (mainImage ? [mainImage] : []);
-  const [activeImage, setActiveImage] = useState(mainImage || (displayImages.length > 0 ? displayImages[0] : null));
+  const displayImages = images && images.length > 0 ? (mainImage ? [mainImage, ...images] : images) : (mainImage ? [mainImage] : ['/placeholder.png']);
+  const uniqueDisplayImages = [...new Set(displayImages)];
+  const [activeImage, setActiveImage] = useState(uniqueDisplayImages[0]);
   const [isMainImageLoaded, setIsMainImageLoaded] = useState(false);
   const swiperRef = useRef(null);
   
@@ -20,52 +21,52 @@ export default function ProductGallery({ images = [], mainImage }) {
   // Sync swiper when active image changes externally
   useEffect(() => {
     if (swiperRef.current && swiperRef.current.swiper) {
-      const index = displayImages.indexOf(activeImage);
+      const index = uniqueDisplayImages.indexOf(activeImage);
       if (index !== -1) {
         swiperRef.current.swiper.slideTo(index);
       }
     }
-  }, [activeImage, displayImages]);
+  }, [activeImage, uniqueDisplayImages]);
 
   // Keyboard navigation for gallery
   useEffect(() => {
     const handleGalleryKeyDown = (e) => {
       if (lightboxOpen) return; // Let lightbox handle its own keys
-      const currentIndex = displayImages.indexOf(activeImage);
+      const currentIndex = uniqueDisplayImages.indexOf(activeImage);
       if (currentIndex === -1) return;
       if (e.key === 'ArrowRight') {
-        const nextIdx = (currentIndex + 1) % displayImages.length;
-        setActiveImage(displayImages[nextIdx]);
+        const nextIdx = (currentIndex + 1) % uniqueDisplayImages.length;
+        setActiveImage(uniqueDisplayImages[nextIdx]);
       } else if (e.key === 'ArrowLeft') {
-        const prevIdx = (currentIndex - 1 + displayImages.length) % displayImages.length;
-        setActiveImage(displayImages[prevIdx]);
+        const prevIdx = (currentIndex - 1 + uniqueDisplayImages.length) % uniqueDisplayImages.length;
+        setActiveImage(uniqueDisplayImages[prevIdx]);
       }
     };
     window.addEventListener('keydown', handleGalleryKeyDown);
     return () => window.removeEventListener('keydown', handleGalleryKeyDown);
-  }, [activeImage, displayImages, lightboxOpen]);
+  }, [activeImage, uniqueDisplayImages, lightboxOpen]);
 
   // Reset loaded state when active image changes
   useEffect(() => {
     setIsMainImageLoaded(false);
   }, [activeImage]);
 
-  if (displayImages.length === 0) return null;
+  if (uniqueDisplayImages.length === 0) return null;
 
   const handleOpenLightbox = (imgUrl) => {
-    const idx = displayImages.indexOf(imgUrl);
+    const idx = uniqueDisplayImages.indexOf(imgUrl);
     setLightboxIndex(idx !== -1 ? idx : 0);
     setLightboxOpen(true);
   };
 
   const handleNavigateLightbox = (direction) => {
     let newIndex = lightboxIndex + direction;
-    if (newIndex < 0) newIndex = displayImages.length - 1;
-    if (newIndex >= displayImages.length) newIndex = 0;
+    if (newIndex < 0) newIndex = uniqueDisplayImages.length - 1;
+    if (newIndex >= uniqueDisplayImages.length) newIndex = 0;
     setLightboxIndex(newIndex);
   };
 
-  const isCarousel = displayImages.length > 4;
+  const isCarousel = uniqueDisplayImages.length > 4;
 
   return (
     <div className="flex flex-col gap-4 w-full select-none">
@@ -93,9 +94,9 @@ export default function ProductGallery({ images = [], mainImage }) {
       </div>
 
       {/* Thumbnails Gallery */}
-      {displayImages.length > 1 && !isCarousel && (
+      {uniqueDisplayImages.length > 1 && !isCarousel && (
         <div className="grid grid-cols-4 gap-3">
-          {displayImages.map((img, index) => (
+          {uniqueDisplayImages.map((img, index) => (
             <button
               key={index}
               onClick={() => setActiveImage(img)}
@@ -133,7 +134,7 @@ export default function ProductGallery({ images = [], mainImage }) {
             }}
             className="thumbnail-swiper"
           >
-            {displayImages.map((img, index) => (
+            {uniqueDisplayImages.map((img, index) => (
               <SwiperSlide key={index} className="py-2">
                 <button
                   onClick={() => setActiveImage(img)}
@@ -157,7 +158,7 @@ export default function ProductGallery({ images = [], mainImage }) {
       )}
 
       <Lightbox 
-        images={displayImages} 
+        images={uniqueDisplayImages} 
         activeIndex={lightboxIndex} 
         isOpen={lightboxOpen} 
         onClose={() => setLightboxOpen(false)}

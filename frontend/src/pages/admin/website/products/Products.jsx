@@ -72,9 +72,12 @@ export default function Products() {
             {products.map((product) => (
               <TableRow key={product.id}>
                 <TableCell>
-                  {product.image_path ? (
-                    <img src={product.image_path} alt={product.name} style={{ width: 50, height: 50, objectFit: 'cover' }} />
-                  ) : 'No Image'}
+                  <img 
+                    src={product.image_path || product.main_image || (product.gallery && product.gallery.length > 0 ? product.gallery[0] : '/placeholder.png')} 
+                    alt={product.name} 
+                    style={{ width: 50, height: 50, objectFit: 'cover', borderRadius: 4 }} 
+                    onError={(e) => { e.target.onerror = null; e.target.src = '/placeholder.png'; }}
+                  />
                 </TableCell>
                 <TableCell>{product.name}</TableCell>
                 <TableCell>{product.category ? product.category.name : 'Uncategorized'}</TableCell>

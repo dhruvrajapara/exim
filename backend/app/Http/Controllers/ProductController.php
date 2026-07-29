@@ -111,16 +111,10 @@ class ProductController extends Controller
         $validated['image_alt'] = $validated['image_alt'] ?? $validated['name'];
         $validated['image_title'] = $validated['image_title'] ?? '';
 
-        // Handle JSON fields
-        if (isset($validated['specifications'])) {
-            $validated['specifications'] = json_decode($validated['specifications'], true);
-        }
-        if (isset($validated['features'])) {
-            $validated['features'] = json_decode($validated['features'], true);
-        }
-        if (isset($validated['faqs'])) {
-            $validated['faqs'] = json_decode($validated['faqs'], true);
-        }
+        // Handle JSON fields - enforce empty arrays if not present
+        $validated['specifications'] = $request->has('specifications') ? json_decode($request->input('specifications'), true) : [];
+        $validated['features'] = $request->has('features') ? json_decode($request->input('features'), true) : [];
+        $validated['faqs'] = $request->has('faqs') ? json_decode($request->input('faqs'), true) : [];
 
         // Handle Gallery images
         $galleryPaths = [];
@@ -201,16 +195,10 @@ class ProductController extends Controller
             $validated['seo_image'] = '/storage/' . $filename;
         }
 
-        // Handle JSON fields
-        if (isset($validated['specifications'])) {
-            $validated['specifications'] = json_decode($validated['specifications'], true);
-        }
-        if (isset($validated['features'])) {
-            $validated['features'] = json_decode($validated['features'], true);
-        }
-        if (isset($validated['faqs'])) {
-            $validated['faqs'] = json_decode($validated['faqs'], true);
-        }
+        // Handle JSON fields - enforce empty arrays if not present
+        $validated['specifications'] = $request->has('specifications') ? json_decode($request->input('specifications'), true) : [];
+        $validated['features'] = $request->has('features') ? json_decode($request->input('features'), true) : [];
+        $validated['faqs'] = $request->has('faqs') ? json_decode($request->input('faqs'), true) : [];
 
         // Handle Gallery images
         $retainedGallery = $request->input('retained_gallery', []);

@@ -94,7 +94,7 @@ export default function ProductDetailPage() {
     "@context": "https://schema.org",
     "@type": "Product",
     "name": product.name,
-    "image": product.gallery && product.gallery.length > 0 ? product.gallery : (product.main_image ? [product.main_image] : ['https://example.com/default-product-image.jpg']),
+    "image": product.image_path || product.main_image || (product.gallery && product.gallery.length > 0 ? product.gallery[0] : 'https://example.com/placeholder.png'),
     "description": stripHtml(product.short_description),
     "sku": product.slug,
     "brand": {
@@ -137,7 +137,7 @@ export default function ProductDetailPage() {
         title={product.name}
         description={stripHtml(product.short_description)}
         canonical={`https://example.com/product/${product.slug}`}
-        image={product.seo_image || product.image_path || (product.gallery && product.gallery.length > 0 ? product.gallery[0] : '/icon.png')}
+        image={product.seo_image || product.image_path || (product.gallery && product.gallery.length > 0 ? product.gallery[0] : '/placeholder.png')}
       />
 
       <Helmet>
@@ -167,12 +167,10 @@ export default function ProductDetailPage() {
 
         {/* Hero Product Section (Gallery + Info) */}
         <div className="flex flex-col lg:flex-row gap-10 lg:gap-16 mb-16 md:mb-20">
-          {(product.main_image || (product.gallery && product.gallery.length > 0)) && (
-            <div className="w-full lg:w-1/2 min-w-0">
-              <ProductGallery images={product.gallery} mainImage={product.image_path || product.main_image} />
-            </div>
-          )}
-          <div className={`w-full min-w-0 ${(product.main_image || (product.gallery && product.gallery.length > 0)) ? 'lg:w-1/2' : 'lg:max-w-4xl mx-auto'}`}>
+          <div className="w-full lg:w-1/2 min-w-0">
+            <ProductGallery images={product.gallery} mainImage={product.image_path || product.main_image} />
+          </div>
+          <div className="w-full lg:w-1/2 min-w-0">
             <ProductInfo product={product} />
           </div>
         </div>

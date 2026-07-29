@@ -11,7 +11,7 @@ export default function ProductCard({ product }) {
       {/* Product Image Wrapper */}
       <div className="w-full aspect-[4/3] bg-gray-50 relative overflow-hidden">
         <img 
-          src={product.image_path || product.image} 
+          src={product.image_path || product.main_image || (product.gallery && product.gallery.length > 0 ? product.gallery[0] : '/placeholder.png')} 
           alt={product.name} 
           width="400"
           height="300"
@@ -19,7 +19,7 @@ export default function ProductCard({ product }) {
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
           onError={(e) => {
             e.target.onerror = null;
-            e.target.src = 'https://placehold.co/600x400/eeeeee/999999?text=Product+Image';
+            e.target.src = '/placeholder.png';
           }}
         />
         {/* Hover Overlay */}
