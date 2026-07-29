@@ -59,7 +59,7 @@ export default function ProductFormContainer() {
       }
 
       if (isEditing) {
-        const prodRes = await fetch('/api/admin/products');
+        const prodRes = await fetch(`/api/admin/products?t=${new Date().getTime()}`);
         if (prodRes.ok) {
           const prodData = await prodRes.json();
           const product = prodData.data.find(p => p.id === parseInt(id));
