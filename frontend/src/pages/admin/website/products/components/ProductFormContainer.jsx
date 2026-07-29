@@ -316,6 +316,13 @@ export default function ProductFormContainer() {
 
       if (response.ok) {
         const result = await parseResponse(response);
+        
+        if (result?.debug && Array.isArray(result.debug)) {
+            console.group('🛠 Backend Gallery Deletion Logs');
+            result.debug.forEach(log => console.log(log));
+            console.groupEnd();
+        }
+
         toast.success('Product saved successfully!');
         if (exit) {
           navigate('/admin/website/products/list');

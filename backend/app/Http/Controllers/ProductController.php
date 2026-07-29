@@ -72,6 +72,7 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
+        \Log::info("[Gallery Deletion Debug] Store method hit for product creation.");
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'slug' => 'required|string|max:255|unique:products',
@@ -136,6 +137,15 @@ class ProductController extends Controller
 
     public function update(Request $request, $id)
     {
+        $debugLogs = [];
+        $logAndDebug = function($msg, $context = null) use (&$debugLogs) {
+            $contextStr = $context !== null ? json_encode($context) : '';
+            $fullMsg = $msg . ' ' . $contextStr;
+            \Log::info($msg, $context !== null ? (is_array($context) ? $context : [$context]) : []);
+            $debugLogs[] = $fullMsg;
+        };
+
+        $logAndDebug("[Gallery Deletion Debug] Update method hit for product ID: " . $id);
         $product = Product::findOrFail($id);
 
         $validated = $request->validate([
@@ -201,14 +211,14 @@ class ProductController extends Controller
         $validated['faqs'] = $request->has('faqs') ? json_decode($request->input('faqs'), true) : [];
 
         // Handle Gallery images
-        \Log::info("[Gallery Deletion Debug] ========================================");
+        $logAndDebug("[Gallery Deletion Debug] ========================================");
         if (!$request->has('retained_gallery')) {
-            \Log::info("[Gallery Deletion Debug] Request has NO retained_gallery key. This indicates ALL existing images should be deleted.");
+            $logAndDebug("[Gallery Deletion Debug] Request has NO retained_gallery key. This indicates ALL existing images should be deleted.");
         }
         
         $retainedGallery = $request->input('retained_gallery', []);
-        \Log::info("[Gallery Deletion Debug] Retained gallery incoming array size: " . count($retainedGallery));
-        \Log::info("[Gallery Deletion Debug] Retained gallery incoming: ", $retainedGallery);
+        $logAndDebug("[Gallery Deletion Debug] Retained gallery incoming array size: " . count($retainedGallery));
+        $logAndDebug("[Gallery Deletion Debug] Retained gallery incoming: ", $retainedGallery);
 
         $cleanedRetained = [];
         foreach ($retainedGallery as $url) {
@@ -221,34 +231,38 @@ class ProductController extends Controller
                 $cleanedRetained[] = $url;
             }
         }
-        \Log::info("[Gallery Deletion Debug] Cleaned retained paths: ", $cleanedRetained);
+        $logAndDebug("[Gallery Deletion Debug] Cleaned retained paths: ", $cleanedRetained);
 
         $oldGallery = is_array($product->gallery) ? $product->gallery : [];
-        \Log::info("[Gallery Deletion Debug] Old gallery in DB: ", $oldGallery);
+        $logAndDebug("[Gallery Deletion Debug] Old gallery in DB: ", $oldGallery);
         
         // Delete files that are no longer in the retained gallery
         foreach ($oldGallery as $oldImage) {
             if (!in_array($oldImage, $cleanedRetained)) {
-                \Log::info("[Gallery Deletion Debug] Image marked for deletion: " . $oldImage);
+                $logAndDebug("[Gallery Deletion Debug] Image marked for deletion: " . $oldImage);
                 // Use Storage facade which is more robust in production environments
                 $storagePath = preg_replace('/^\/storage\//', '', $oldImage);
-                \Log::info("[Gallery Deletion Debug] Normalized storage path: " . $storagePath);
+                $logAndDebug("[Gallery Deletion Debug] Normalized storage path: " . $storagePath);
                 
                 $exists = \Illuminate\Support\Facades\Storage::disk('public')->exists($storagePath);
-                \Log::info("[Gallery Deletion Debug] Storage::disk('public')->exists() result: " . ($exists ? 'true' : 'false'));
+                $logAndDebug("[Gallery Deletion Debug] Storage::disk('public')->exists() result: " . ($exists ? 'true' : 'false'));
                 
                 if ($exists) {
                     $deleted = \Illuminate\Support\Facades\Storage::disk('public')->delete($storagePath);
-                    \Log::info("[Gallery Deletion Debug] Storage::disk('public')->delete() result: " . ($deleted ? 'true' : 'false'));
+                    $logAndDebug("[Gallery Deletion Debug] Storage::disk('public')->delete() result: " . ($deleted ? 'true' : 'false'));
                 } else if (file_exists(public_path($oldImage))) {
-                    \Log::info("[Gallery Deletion Debug] Found via public_path fallback. Using unlink().");
+                    $logAndDebug("[Gallery Deletion Debug] Found via public_path fallback. Using unlink().");
                     $deleted = @unlink(public_path($oldImage));
-                    \Log::info("[Gallery Deletion Debug] unlink() result: " . ($deleted ? 'true' : 'false'));
+                    $logAndDebug("[Gallery Deletion Debug] unlink() result: " . ($deleted ? 'true' : 'false'));
+                } else if (file_exists(base_path('public_html' . $oldImage))) {
+                    $logAndDebug("[Gallery Deletion Debug] Found via public_html fallback. Using unlink().");
+                    $deleted = @unlink(base_path('public_html' . $oldImage));
+                    $logAndDebug("[Gallery Deletion Debug] unlink() result: " . ($deleted ? 'true' : 'false'));
                 } else {
-                    \Log::info("[Gallery Deletion Debug] File does not exist in storage or public_path. Skipping deletion.");
+                    $logAndDebug("[Gallery Deletion Debug] File does not exist in storage, public_path, or public_html. Skipping deletion. Paths checked: " . $storagePath . ", " . public_path($oldImage) . ", " . base_path('public_html' . $oldImage));
                 }
             } else {
-                \Log::info("[Gallery Deletion Debug] Retaining old image: " . $oldImage);
+                $logAndDebug("[Gallery Deletion Debug] Retaining old image: " . $oldImage);
             }
         }
         
@@ -266,13 +280,17 @@ class ProductController extends Controller
         }
         $validated['gallery'] = $galleryPaths;
         
-        \Log::info("[Gallery Deletion Debug] Final gallery paths assigned to validated data: ", $validated['gallery']);
+        $logAndDebug("[Gallery Deletion Debug] Final gallery paths assigned to validated data: ", $validated['gallery']);
 
         $product->update($validated);
         
-        \Log::info("[Gallery Deletion Debug] Final product gallery from DB after update: ", is_array($product->gallery) ? $product->gallery : json_decode($product->gallery, true) ?? []);
+        $logAndDebug("[Gallery Deletion Debug] Final product gallery from DB after update: ", is_array($product->gallery) ? $product->gallery : json_decode($product->gallery, true) ?? []);
 
-        return response()->json(['data' => $product, 'message' => 'Product updated successfully']);
+        return response()->json([
+            'data' => $product, 
+            'message' => 'Product updated successfully',
+            'debug' => $debugLogs
+        ]);
     }
 
     public function destroy($id)
