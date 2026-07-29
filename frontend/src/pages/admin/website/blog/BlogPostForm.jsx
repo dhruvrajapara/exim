@@ -67,7 +67,7 @@ export default function BlogPostForm() {
             is_featured: blog.is_featured,
             featured_image: null
           });
-          setPreviewImage(blog.featured_image ? `http://localhost:8000${blog.featured_image}` : '');
+          setPreviewImage(blog.featured_image ? blog.featured_image : '');
         }
       }
     } catch (error) {

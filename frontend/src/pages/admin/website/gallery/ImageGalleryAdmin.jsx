@@ -32,7 +32,7 @@ export default function ImageGalleryAdmin() {
     try {
       setIsLoading(true);
       const token = localStorage.getItem('admin_token');
-      const response = await fetch('http://localhost:8000/api/gallery-images', {
+      const response = await fetch('/api/gallery-images', {
         headers: { 
           'Authorization': `Bearer ${token}`,
           'Accept': 'application/json'
@@ -124,8 +124,8 @@ export default function ImageGalleryAdmin() {
 
       const token = localStorage.getItem('admin_token');
       const url = editingImage 
-        ? `http://localhost:8000/api/admin/gallery-images/${editingImage.id}`
-        : 'http://localhost:8000/api/admin/gallery-images';
+        ? `/api/admin/gallery-images/${editingImage.id}`
+        : '/api/admin/gallery-images';
 
       const response = await fetch(url, {
         method: 'POST',
@@ -159,7 +159,7 @@ export default function ImageGalleryAdmin() {
     if (window.confirm('Are you sure you want to delete this image?')) {
       try {
         const token = localStorage.getItem('admin_token');
-        const response = await fetch(`http://localhost:8000/api/admin/gallery-images/${id}`, {
+        const response = await fetch(`/api/admin/gallery-images/${id}`, {
           method: 'DELETE',
           headers: { 
             'Authorization': `Bearer ${token}`,

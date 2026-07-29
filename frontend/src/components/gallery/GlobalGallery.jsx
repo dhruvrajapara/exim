@@ -11,7 +11,7 @@ export default function GlobalGallery() {
   useEffect(() => {
     const fetchImages = async () => {
       try {
-        const response = await fetch('http://localhost:8000/api/gallery-images?active_only=1');
+        const response = await fetch('/api/gallery-images?active_only=1');
         const data = await response.json();
         if (data.status === 'success') {
           setImages(data.data);

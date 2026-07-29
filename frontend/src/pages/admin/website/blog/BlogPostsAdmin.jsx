@@ -79,7 +79,7 @@ export default function BlogPostsAdmin() {
                 <TableRow key={blog.id}>
                     <TableCell>
                     {blog.featured_image ? (
-                        <img src={`http://localhost:8000${blog.featured_image}`} alt={blog.title} style={{ width: 60, height: 40, objectFit: 'cover', borderRadius: 4 }} />
+                        <img src={blog.featured_image} alt={blog.title} style={{ width: 60, height: 40, objectFit: 'cover', borderRadius: 4 }} />
                     ) : 'No Image'}
                     </TableCell>
                     <TableCell sx={{ fontWeight: 500 }}>{blog.title}</TableCell>

@@ -63,7 +63,7 @@ export default function HeroSlider() {
         secondary_btn_url: slide.secondary_btn_url || '',
         is_active: !!slide.is_active,
       });
-      setImagePreview(slide.image_path ? `http://localhost:8000${slide.image_path}` : null); // Fallback host if proxy isn't rewriting image paths perfectly, or just use slide.image_path if they are absolute/proxied correctly. We'll try relative first.
+      setImagePreview(slide.image_path ? slide.image_path : null);
       setImagePreview(slide.image_path);
     } else {
       setCurrentSlide(null);
@@ -283,7 +283,7 @@ export default function HeroSlider() {
                       <div className="w-24 h-14 rounded-md bg-gray-100 overflow-hidden relative border border-gray-200">
                         {slide.image_path ? (
                           // In local dev, image paths might need the backend domain if running separate ports. Usually proxy handles it.
-                          <img src={slide.image_path.startsWith('http') ? slide.image_path : `http://localhost:8000${slide.image_path}`} alt={slide.heading} className="w-full h-full object-cover" onError={(e) => { e.target.onerror = null; e.target.src = slide.image_path }} />
+                          <img src={slide.image_path.startsWith('http') ? slide.image_path : slide.image_path} alt={slide.heading} className="w-full h-full object-cover" onError={(e) => { e.target.onerror = null; e.target.src = slide.image_path }} />
                         ) : (
                           <div className="flex items-center justify-center w-full h-full text-gray-400">
                             <ImageIcon fontSize="small" />
@@ -366,7 +366,7 @@ export default function HeroSlider() {
                            </span>
                          </div>
                          <img 
-                           src={imagePreview.startsWith('http') ? imagePreview : `http://localhost:8000${imagePreview}`} 
+                           src={imagePreview.startsWith('http') ? imagePreview : imagePreview} 
                            alt="Preview" 
                            className="max-h-32 object-contain rounded" 
                            onError={(e) => { e.target.onerror = null; e.target.src = imagePreview }}
