@@ -1,28 +1,27 @@
 import { useState } from 'react';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
-export default function ProductFAQ({ productName }) {
+export default function ProductFAQ({ productName, faqs }) {
   const [openIndex, setOpenIndex] = useState(0);
 
-  // Generate some dynamic dummy FAQs based on the product name for SEO
-  const faqs = [
-    {
-      question: `What is the shelf life of ${productName || 'this product'}?`,
-      answer: `When stored properly in a cool, dry place away from direct sunlight, ${productName || 'this product'} has a shelf life of up to 12-24 months. For maximum freshness, we recommend keeping it in an airtight container.`
-    },
-    {
-      question: `Are there any quality certifications for ${productName || 'this product'}?`,
-      answer: `Yes, we adhere to strict international food safety standards. Our products are processed in ISO and HACCP certified facilities, ensuring premium export quality and safety.`
-    },
-    {
-      question: `What are the packaging options available?`,
-      answer: `We offer versatile packaging solutions including bulk PP bags, paper bags, and customized retail packaging depending on your order quantity and requirements. Private labeling is also available upon request.`
-    },
-    {
-      question: `Do you provide samples before bulk orders?`,
-      answer: `Absolutely! We understand the importance of quality verification. We can arrange for product samples to be shipped internationally via DHL or FedEx so you can test our quality firsthand.`
+  console.log("ProductFAQ received faqs:", faqs);
+
+  let parsedFaqs = faqs;
+  if (typeof faqs === 'string') {
+    try {
+      parsedFaqs = JSON.parse(faqs);
+    } catch (e) {
+      console.error("Failed to parse faqs string:", e);
+      parsedFaqs = [];
     }
-  ];
+  }
+
+  console.log("ProductFAQ parsedFaqs:", parsedFaqs);
+
+  if (!parsedFaqs || !Array.isArray(parsedFaqs) || parsedFaqs.length === 0) {
+    console.log("ProductFAQ returning null because faqs is empty or invalid.");
+    return null;
+  }
 
   return (
     <div className="w-full bg-white rounded-[20px] border border-gray-100 shadow-sm p-6 md:p-8 lg:p-10 mb-16 md:mb-20">
@@ -32,7 +31,7 @@ export default function ProductFAQ({ productName }) {
       <p className="text-gray-500 mb-8 text-[15px]">Common questions about {productName}</p>
       
       <div className="flex flex-col gap-3">
-        {faqs.map((faq, index) => {
+        {parsedFaqs.map((faq, index) => {
           const isOpen = openIndex === index;
           return (
             <div 

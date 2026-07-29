@@ -3,6 +3,11 @@ import RequestQuoteIcon from '@mui/icons-material/RequestQuote';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 
 export default function ProductInfo({ product }) {
+  const cleanHtml = (html) => {
+    if (!html) return '';
+    return html.replace(/&nbsp;/g, ' ');
+  };
+
   return (
     <div className="flex flex-col h-full justify-start w-full">
       
@@ -16,12 +21,11 @@ export default function ProductInfo({ product }) {
         {product.name}
       </h1>
 
-      {/* Short Description */}
-      <div className="text-gray-600 text-[15px] md:text-[16px] leading-relaxed mb-10 flex flex-col gap-4">
+      <div className="text-gray-600 text-[15px] md:text-[16px] leading-relaxed mb-10 flex flex-col gap-4 min-w-0 flex-1">
         {product.short_description && (
           <div 
             className="font-medium text-dark/80 prose prose-sm md:prose-base max-w-none [&>p]:mb-0" 
-            dangerouslySetInnerHTML={{ __html: product.short_description }} 
+            dangerouslySetInnerHTML={{ __html: cleanHtml(product.short_description) }} 
           />
         )}
       </div>

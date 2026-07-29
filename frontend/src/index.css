@@ -29,6 +29,7 @@
 @layer base {
   body {
     @apply font-sans text-text bg-white;
+    hyphens: none;
   }
 
   /* Responsive Typography Scale using clamp */
@@ -64,12 +65,11 @@
 
   /* Responsive fixes for WYSIWYG content */
   .prose {
+    word-break: keep-all;
     overflow-wrap: break-word;
-    word-wrap: break-word;
-    word-break: break-word;
-  }
-  .prose a {
-    word-break: break-all;
+    white-space: normal;
+    max-width: 100%;
+    min-width: 0;
   }
   .prose img {
     @apply max-w-full h-auto object-contain rounded-lg;
@@ -83,5 +83,26 @@
   .btn-primary {
     @apply inline-flex items-center justify-center text-white h-[48px] px-6 rounded-md hover:shadow-md hover:scale-[1.02] transition-all duration-300;
     background-image: var(--color-gradient);
+  }
+
+  /* Professional Swiper Arrows */
+  .swiper-button-next,
+  .swiper-button-prev {
+    --swiper-navigation-size: 14px;
+    --swiper-theme-color: #6B7280; /* text-gray-500 */
+    @apply w-8 h-8 md:w-10 md:h-10 bg-white rounded-full shadow-md flex items-center justify-center transition-all duration-300 border border-gray-100;
+  }
+  .swiper-button-next:after,
+  .swiper-button-prev:after {
+    /* Swiper uses :after for the icon, the size is controlled by the variable above */
+    font-weight: 800 !important;
+  }
+  .swiper-button-next:hover,
+  .swiper-button-prev:hover {
+    --swiper-theme-color: #ffffff;
+    @apply bg-primary border-primary shadow-[0_0_15px_rgba(11,99,206,0.3)] scale-105;
+  }
+  .swiper-button-disabled {
+    @apply opacity-0 pointer-events-none;
   }
 }

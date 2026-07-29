@@ -36,10 +36,13 @@ export default function ProductFormContainer() {
   // Dynamic Array States
   const [features, setFeatures] = useState(['']);
   const [specifications, setSpecifications] = useState([{ key: '', value: '' }]);
+  const [faqs, setFaqs] = useState([{ question: '', answer: '' }]);
   
   // Media States
   const [mainImage, setMainImage] = useState(null);
   const [mainImagePreview, setMainImagePreview] = useState('');
+  const [seoImage, setSeoImage] = useState(null);
+  const [seoImagePreview, setSeoImagePreview] = useState('');
   const [galleryFiles, setGalleryFiles] = useState([]);
 
   useEffect(() => {
@@ -70,6 +73,8 @@ export default function ProductFormContainer() {
             });
             if (product.features?.length) setFeatures(product.features);
             if (product.specifications?.length) setSpecifications(product.specifications);
+            if (product.faqs?.length) setFaqs(product.faqs);
+            if (product.seo_image) setSeoImagePreview(product.seo_image);
           }
         }
       }
@@ -124,6 +129,17 @@ export default function ProductFormContainer() {
     setSpecifications(newSpecs);
   };
 
+  const addFaq = () => setFaqs([...faqs, { question: '', answer: '' }]);
+  const removeFaq = (index) => {
+    const newFaqs = faqs.filter((_, i) => i !== index);
+    setFaqs(newFaqs.length ? newFaqs : [{ question: '', answer: '' }]);
+  };
+  const updateFaq = (index, field, value) => {
+    const newFaqs = [...faqs];
+    newFaqs[index][field] = value;
+    setFaqs(newFaqs);
+  };
+
   // File Handlers
   const handleMainImageChange = (e) => {
     const file = e.target.files[0];
@@ -135,6 +151,18 @@ export default function ProductFormContainer() {
   const removeMainImage = () => {
     setMainImage(null);
     setMainImagePreview('');
+  };
+
+  const handleSeoImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setSeoImage(file);
+      setSeoImagePreview(URL.createObjectURL(file));
+    }
+  };
+  const removeSeoImage = () => {
+    setSeoImage(null);
+    setSeoImagePreview('');
   };
 
   const handleGalleryChange = (e) => {
@@ -168,12 +196,18 @@ export default function ProductFormContainer() {
     if (mainImage) {
       data.append('image', mainImage);
     }
+    if (seoImage) {
+      data.append('seo_image', seoImage);
+    }
 
     const validSpecs = Array.isArray(specifications) ? specifications.filter(s => s && s.key && s.value) : [];
     if (validSpecs.length > 0) data.append('specifications', JSON.stringify(validSpecs));
     
     const validFeatures = Array.isArray(features) ? features.filter(f => typeof f === 'string' && f.trim() !== '') : [];
     if (validFeatures.length > 0) data.append('features', JSON.stringify(validFeatures));
+
+    const validFaqs = Array.isArray(faqs) ? faqs.filter(f => f && f.question && f.answer) : [];
+    if (validFaqs.length > 0) data.append('faqs', JSON.stringify(validFaqs));
 
     galleryFiles.forEach((fileObj, index) => {
       data.append(`gallery[${index}]`, fileObj.file);
@@ -246,6 +280,7 @@ export default function ProductFormContainer() {
 
   const modules = {
     toolbar: [
+      [{ 'header': [2, 3, false] }], // H2 for Heading, H3 for Sub-heading, false for normal text
       ['bold', 'italic', 'underline', 'link', 'strike'],
       [{ 'list': 'bullet' }, { 'list': 'ordered' }],
       [{ 'align': [] }],
@@ -455,10 +490,70 @@ export default function ProductFormContainer() {
               </button>
             </div>
 
+            {/* FAQs Card */}
+            <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-6">
+              <h3 className="text-lg font-semibold text-gray-800 mb-4">Frequently Asked Questions</h3>
+              <div className="space-y-4">
+                {faqs.map((faq, idx) => (
+                  <div key={idx} className="flex gap-2 items-start border border-gray-100 p-4 rounded-lg bg-gray-50 relative">
+                    <div className="flex-1 space-y-3">
+                      <div>
+                        <input
+                          type="text"
+                          value={faq.question}
+                          onChange={(e) => updateFaq(idx, 'question', e.target.value)}
+                          placeholder="Question (e.g. Is this product organic?)"
+                          className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white font-medium"
+                        />
+                      </div>
+                      <div>
+                        <textarea
+                          value={faq.answer}
+                          onChange={(e) => updateFaq(idx, 'answer', e.target.value)}
+                          placeholder="Answer"
+                          rows="2"
+                          className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+                        ></textarea>
+                      </div>
+                    </div>
+                    <button type="button" onClick={() => removeFaq(idx)} className="text-gray-400 hover:text-red-500 p-2 mt-1">
+                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                    </button>
+                  </div>
+                ))}
+              </div>
+              <button type="button" onClick={addFaq} className="mt-4 text-blue-600 font-medium text-sm flex items-center hover:underline">
+                <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4"></path></svg>
+                Add FAQ
+              </button>
+            </div>
+
             {/* SEO Card */}
             <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-6">
               <h3 className="text-lg font-semibold text-gray-800 mb-4">Search Engine Optimization</h3>
               
+              {/* Live Google Preview */}
+              <div className="mb-6 p-4 border border-gray-200 rounded-lg bg-[#f8f9fa]">
+                <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">Live Google Preview</h4>
+                <div className="font-sans">
+                  <div className="flex items-center gap-2 mb-1">
+                    {seoImagePreview && (
+                       <img src={seoImagePreview} alt="SEO" className="w-7 h-7 rounded-full object-cover" />
+                    )}
+                    <div className="flex flex-col">
+                       <span className="text-[#202124] text-[14px] leading-[1.3] truncate max-w-[300px]">{window.location.host}</span>
+                       <span className="text-[#4d5156] text-[12px] leading-[1.3] truncate max-w-[300px]">https://{window.location.host}/product/{formData.slug || 'product-slug'}</span>
+                    </div>
+                  </div>
+                  <h3 className="text-[#1a0dab] text-[20px] font-normal leading-[1.3] mb-[3px] hover:underline cursor-pointer truncate">
+                    {formData.meta_title || formData.name || 'SEO Title Example'}
+                  </h3>
+                  <p className="text-[#4d5156] text-[14px] leading-[1.58] line-clamp-2 max-w-[600px]">
+                    {formData.meta_description || stripHtml(formData.short_description) || 'Provide a compelling meta description to encourage users to click your link on search engines.'}
+                  </p>
+                </div>
+              </div>
+
               <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-700 mb-1">Meta Title</label>
                 <input
@@ -483,7 +578,7 @@ export default function ProductFormContainer() {
                 ></textarea>
               </div>
 
-              <div>
+              <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-700 mb-1">Meta Keywords</label>
                 <input
                   type="text"
@@ -493,6 +588,37 @@ export default function ProductFormContainer() {
                   placeholder="keyword1, keyword2, keyword3"
                   className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">SEO Image (Social Share Preview)</label>
+                {seoImagePreview ? (
+                  <div className="relative inline-block mt-2 border rounded-lg overflow-hidden group">
+                    <img src={seoImagePreview} alt="SEO Preview" className="h-40 w-auto object-contain" />
+                    <button
+                      type="button"
+                      onClick={removeSeoImage}
+                      className="absolute top-2 right-2 bg-white rounded-full p-1 shadow-md hover:bg-gray-100 opacity-0 group-hover:opacity-100 transition-opacity"
+                    >
+                      <svg className="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                    </button>
+                  </div>
+                ) : (
+                  <div className="mt-2 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md bg-gray-50 hover:bg-gray-100 transition-colors">
+                    <div className="space-y-1 text-center">
+                      <svg className="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                        <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                      <div className="flex text-sm text-gray-600 justify-center">
+                        <label className="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500 px-1">
+                          <span>Upload SEO Image</span>
+                          <input type="file" className="sr-only" onChange={handleSeoImageChange} accept="image/*" />
+                        </label>
+                      </div>
+                      <p className="text-xs text-gray-500">1200x630 PNG, JPG up to 5MB</p>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
 

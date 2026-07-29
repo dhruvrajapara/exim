@@ -541,9 +541,11 @@ export const fetchProductBySlug = async (slug) => {
       short_description: product.short_description,
       full_description: product.full_description,
       main_image: product.image_path ? product.image_path : '',
+      seo_image: product.seo_image ? product.seo_image : '',
       gallery: product.gallery ? product.gallery : [],
       specifications: product.specifications ? product.specifications.map(s => ({ name: s.key, value: s.value })) : [],
-      features: product.features ? product.features.map(f => ({ title: f })) : []
+      features: product.features ? product.features.map(f => ({ title: f })) : [],
+      faqs: product.faqs ? product.faqs : []
     };
   } catch (error) {
     // Rich fallback data for any requested product if backend fails

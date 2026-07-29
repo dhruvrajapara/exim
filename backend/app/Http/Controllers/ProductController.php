@@ -84,6 +84,8 @@ class ProductController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:20480',
             'specifications' => 'nullable|string', // JSON string from frontend
             'features' => 'nullable|string', // JSON string from frontend
+            'faqs' => 'nullable|string', // JSON string from frontend
+            'seo_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:20480',
             'gallery.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:20480'
         ]);
 
@@ -96,6 +98,15 @@ class ProductController extends Controller
             $validated['image_path'] = '/storage/' . $filename;
         }
 
+        if ($request->hasFile('seo_image')) {
+            $manager = new ImageManager(new Driver());
+            $image = $manager->read($request->file('seo_image'));
+            $encoded = $image->toWebp(75);
+            $filename = 'products/seo/' . uniqid() . '.webp';
+            Storage::disk('public')->put($filename, (string) $encoded);
+            $validated['seo_image'] = '/storage/' . $filename;
+        }
+
         $validated['image_path'] = $validated['image_path'] ?? '';
         $validated['image_alt'] = $validated['image_alt'] ?? $validated['name'];
         $validated['image_title'] = $validated['image_title'] ?? '';
@@ -106,6 +117,9 @@ class ProductController extends Controller
         }
         if (isset($validated['features'])) {
             $validated['features'] = json_decode($validated['features'], true);
+        }
+        if (isset($validated['faqs'])) {
+            $validated['faqs'] = json_decode($validated['faqs'], true);
         }
 
         // Handle Gallery images
@@ -142,6 +156,8 @@ class ProductController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:20480',
             'specifications' => 'nullable|string',
             'features' => 'nullable|string',
+            'faqs' => 'nullable|string',
+            'seo_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:20480',
             'gallery.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:20480',
             'meta_title' => 'nullable|string|max:255',
             'meta_description' => 'nullable|string',
@@ -162,12 +178,28 @@ class ProductController extends Controller
             $validated['image_path'] = '/storage/' . $filename;
         }
 
+        if ($request->hasFile('seo_image')) {
+            if ($product->seo_image && file_exists(public_path($product->seo_image))) {
+                @unlink(public_path($product->seo_image));
+            }
+            
+            $manager = new ImageManager(new Driver());
+            $image = $manager->read($request->file('seo_image'));
+            $encoded = $image->toWebp(75);
+            $filename = 'products/seo/' . uniqid() . '.webp';
+            Storage::disk('public')->put($filename, (string) $encoded);
+            $validated['seo_image'] = '/storage/' . $filename;
+        }
+
         // Handle JSON fields
         if (isset($validated['specifications'])) {
             $validated['specifications'] = json_decode($validated['specifications'], true);
         }
         if (isset($validated['features'])) {
             $validated['features'] = json_decode($validated['features'], true);
+        }
+        if (isset($validated['faqs'])) {
+            $validated['faqs'] = json_decode($validated['faqs'], true);
         }
 
         // Handle Gallery images (Append new ones)

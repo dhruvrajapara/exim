@@ -28,6 +28,8 @@ class Product extends Model
         'meta_description',
         'meta_keywords',
         'canonical_url',
+        'faqs',
+        'seo_image',
     ];
 
     protected $casts = [
@@ -37,6 +39,7 @@ class Product extends Model
         'specifications' => 'array',
         'features' => 'array',
         'gallery' => 'array',
+        'faqs' => 'array',
     ];
 
     public function category()

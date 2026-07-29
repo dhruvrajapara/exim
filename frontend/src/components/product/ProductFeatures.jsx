@@ -9,11 +9,11 @@ export default function ProductFeatures({ features = [] }) {
         Key Features
       </h3>
       
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {features.map((feature, index) => (
           <div 
             key={index}
-            className="bg-white border border-gray-100 shadow-sm rounded-[16px] p-5 flex items-center gap-3 hover:border-primary/50 hover:shadow-md transition-all duration-300 group"
+            className="bg-white border border-gray-100 shadow-sm rounded-[16px] p-5 flex items-center gap-3 hover:border-primary/50 hover:shadow-md transition-all duration-300 group min-w-0"
           >
             <CheckCircleIcon className="text-primary group-hover:scale-110 transition-transform" />
             <span className="font-semibold text-dark text-[14px] md:text-[16px] leading-tight group-hover:text-primary transition-colors">

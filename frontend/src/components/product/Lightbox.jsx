@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function Lightbox({ images, activeIndex, isOpen, onClose, onNavigate }) {
   useEffect(() => {
@@ -22,7 +22,39 @@ export default function Lightbox({ images, activeIndex, isOpen, onClose, onNavig
     };
   }, [isOpen, onClose, onNavigate]);
 
+  // Touch handlers for swipe
+  const [touchStart, setTouchStart] = useState(null);
+  const [touchEnd, setTouchEnd] = useState(null);
+  const minSwipeDistance = 50;
+
+  const handleTouchStart = (e) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+    
+    if (isLeftSwipe) {
+      onNavigate(1);
+    }
+    if (isRightSwipe) {
+      onNavigate(-1);
+    }
+  };
+
   if (!isOpen || !images || images.length === 0) return null;
+
+  // Preload indexes
+  const prevIndex = (activeIndex - 1 + images.length) % images.length;
+  const nextIndex = (activeIndex + 1) % images.length;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-sm transition-opacity duration-300">
@@ -54,12 +86,19 @@ export default function Lightbox({ images, activeIndex, isOpen, onClose, onNavig
           </button>
         )}
 
-        {/* Image wrapper to prevent clicks from closing */}
-        <div className="relative max-h-full max-w-full flex items-center justify-center" onClick={(e) => e.stopPropagation()}>
+        {/* Image wrapper to prevent clicks from closing, with swipe listeners */}
+        <div 
+          className="relative max-h-full max-w-full flex items-center justify-center w-full" 
+          onClick={(e) => e.stopPropagation()}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
           <img 
+            key={activeIndex} // Key forces re-render for animation on change
             src={images[activeIndex]} 
             alt="Fullscreen View" 
-            className="max-h-[85vh] max-w-full object-contain select-none animate-in fade-in zoom-in-95 duration-200"
+            className="max-h-[85vh] max-w-full object-contain select-none animate-in fade-in zoom-in-[0.98] duration-300"
             draggable="false"
           />
         </div>
@@ -87,6 +126,16 @@ export default function Lightbox({ images, activeIndex, isOpen, onClose, onNavig
 
       {/* Background click handler */}
       <div className="absolute inset-0 z-40" onClick={onClose} />
+
+      {/* Preload adjacent images */}
+      <div className="hidden">
+        {images.length > 1 && (
+          <>
+            <img src={images[prevIndex]} alt="preload prev" />
+            <img src={images[nextIndex]} alt="preload next" />
+          </>
+        )}
+      </div>
     </div>
   );
 }

@@ -13,8 +13,28 @@ export default function ProductSpecifications({ specifications = [] }) {
         Product Specifications
       </h3>
       
-      <div className="overflow-x-auto overflow-y-hidden rounded-[12px] border border-gray-100">
-        <table className="w-full text-left border-collapse min-w-[700px]">
+      <div className="rounded-[12px] border border-gray-100 overflow-hidden">
+        {/* Mobile View: 2 columns (1 Title, 1 Value) */}
+        <table className="w-full text-left border-collapse md:hidden">
+          <tbody>
+            {specifications.map((spec, index) => (
+              <tr 
+                key={index} 
+                className={`border-b border-gray-100 last:border-0 ${index % 2 === 0 ? 'bg-gray-50/50' : 'bg-white'}`}
+              >
+                <th className="py-3 px-4 text-dark font-semibold w-1/3 border-r border-gray-100">
+                  {spec.name}
+                </th>
+                <td className="py-3 px-4 text-gray-600 font-medium">
+                  {spec.value}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
+        {/* Desktop View: 4 columns (2 Titles, 2 Values) */}
+        <table className="w-full text-left border-collapse hidden md:table">
           <tbody>
             {chunkedSpecs.map((row, index) => (
               <tr 
@@ -22,18 +42,18 @@ export default function ProductSpecifications({ specifications = [] }) {
                 className={`border-b border-gray-100 last:border-0 ${index % 2 === 0 ? 'bg-gray-50/50' : 'bg-white'}`}
               >
                 {/* Specification 1 */}
-                <th className="py-4 px-4 md:px-6 text-dark font-semibold w-1/4 border-r border-gray-100">
+                <th className="py-4 px-6 text-dark font-semibold w-1/4 border-r border-gray-100">
                   {row[0].name}
                 </th>
-                <td className="py-4 px-4 md:px-6 text-gray-600 font-medium w-1/4 border-r border-gray-100">
+                <td className="py-4 px-6 text-gray-600 font-medium w-1/4 border-r border-gray-100">
                   {row[0].value}
                 </td>
 
                 {/* Specification 2 */}
-                <th className="py-4 px-4 md:px-6 text-dark font-semibold w-1/4 border-r border-gray-100">
+                <th className="py-4 px-6 text-dark font-semibold w-1/4 border-r border-gray-100">
                   {row[1] ? row[1].name : ''}
                 </th>
-                <td className="py-4 px-4 md:px-6 text-gray-600 font-medium w-1/4">
+                <td className="py-4 px-6 text-gray-600 font-medium w-1/4">
                   {row[1] ? row[1].value : ''}
                 </td>
               </tr>
