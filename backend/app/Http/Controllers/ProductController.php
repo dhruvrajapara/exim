@@ -204,16 +204,25 @@ class ProductController extends Controller
 
         // Handle Gallery images
         $retainedGallery = $request->input('retained_gallery', []);
+        $cleanedRetained = [];
+        foreach ($retainedGallery as $url) {
+            if (preg_match('/(\/storage\/.*)$/', $url, $matches)) {
+                $cleanedRetained[] = $matches[1];
+            } else {
+                $cleanedRetained[] = $url;
+            }
+        }
+
         $oldGallery = is_array($product->gallery) ? $product->gallery : [];
         
         // Delete files that are no longer in the retained gallery
         foreach ($oldGallery as $oldImage) {
-            if (!in_array($oldImage, $retainedGallery) && file_exists(public_path($oldImage))) {
+            if (!in_array($oldImage, $cleanedRetained) && file_exists(public_path($oldImage))) {
                 @unlink(public_path($oldImage));
             }
         }
         
-        $galleryPaths = $retainedGallery;
+        $galleryPaths = $cleanedRetained;
         
         if ($request->hasFile('gallery')) {
             $manager = new ImageManager(new Driver());
