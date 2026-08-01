@@ -1,0 +1,1 @@
+import{t as e}from"./jsx-runtime-D8nDyRPw.js";import{t}from"./createSvgIcon-BlFwNsFb.js";var n=e(),r=t((0,n.jsx)(`path`,{d:`M17.77 3.77 16 2 6 12l10 10 1.77-1.77L9.54 12z`}),`ArrowBackIosNew`),i=t((0,n.jsx)(`path`,{d:`M6.23 20.23 8 22l10-10L8 2 6.23 3.77 14.46 12z`}),`ArrowForwardIos`);export{r as n,i as t};
