@@ -7,6 +7,7 @@ import ProductCategories from '../components/ProductCategories';
 import Certifications from '../components/Certifications';
 import Testimonials from '../components/Testimonials';
 import LatestBlogs from '../components/LatestBlogs';
+import ExportMap from '../components/ExportMap';
 
 export default function Home() {
   const { settings } = useSettings();
@@ -18,6 +19,33 @@ export default function Home() {
     "url": "https://example.com"
   };
 
+  const componentsMap = {
+    Hero,
+    About,
+    ProductCategories,
+    FeaturedProducts,
+    Certifications,
+    Testimonials,
+    LatestBlogs,
+    ExportMap,
+  };
+
+  const defaultOrder = ['Hero', 'About', 'ProductCategories', 'ExportMap', 'FeaturedProducts', 'Certifications', 'Testimonials', 'LatestBlogs'];
+  let order = defaultOrder;
+
+  if (settings?.homepage_section_order) {
+    try {
+      const parsedOrder = JSON.parse(settings.homepage_section_order);
+      if (Array.isArray(parsedOrder) && parsedOrder.length > 0) {
+        // Keep the saved order but append any new default components that are missing
+        const missingComponents = defaultOrder.filter(item => !parsedOrder.includes(item));
+        order = [...parsedOrder, ...missingComponents];
+      }
+    } catch (e) {
+      console.error('Failed to parse homepage_section_order', e);
+    }
+  }
+
   return (
     <>
       <SEO title={settings?.seo_home_title || "Export Import Company"}
@@ -27,27 +55,11 @@ export default function Home() {
         schema={schema}
       />
 
-      {/* Full-Screen Hero */}
-      <Hero />
-
-      {/* Dynamic About Section */}
-      <About />
-
-      {/* Dynamic Product Categories */}
-      <ProductCategories />
-
-      {/* Dynamic Featured Products */}
-      <FeaturedProducts />
-
-      {/* Dynamic Certifications */}
-      <Certifications />
-
-      {/* Client Testimonials Slider */}
-      <Testimonials />
-
-      {/* Dynamic Latest Blogs */}
-      <LatestBlogs />
-
+      {/* Dynamic Homepage Sections */}
+      {order.map(sectionId => {
+        const Component = componentsMap[sectionId];
+        return Component ? <Component key={sectionId} /> : null;
+      })}
     </>
   );
 }

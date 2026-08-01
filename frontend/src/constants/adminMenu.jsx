@@ -105,6 +105,8 @@ export const adminMenu = [
     icon: <SettingsIcon fontSize="small" />,
     children: [
       { title: 'Website Appearance', path: '/admin/settings/appearance' },
+      { title: 'Export Countries', path: '/admin/settings/export-countries' },
+      { title: 'Website Setting', path: '/admin/settings/website' },
       { title: 'Integrations', path: '/admin/settings/integrations' },
     ],
   },

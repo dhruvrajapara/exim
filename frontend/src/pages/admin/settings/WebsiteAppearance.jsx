@@ -42,6 +42,7 @@ export default function WebsiteAppearance() {
     contact_map_width: '100%',
     contact_map_height: '400px',
     contact_faqs: [{question: '', answer: ''}],
+    origin_country: 'India',
     social_facebook: '',
     social_facebook: '',
     social_instagram: '',
@@ -550,9 +551,13 @@ export default function WebsiteAppearance() {
               <div className="space-y-6 animate-fade-in">
                 <h2 className="text-lg font-semibold text-gray-800 border-b pb-3">Contact Information</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="md:col-span-2">
+                  <div className="md:col-span-1">
                     <label className="block text-sm font-medium text-gray-700 mb-1">Company Name</label>
                     <input type="text" name="contact_company_name" value={formData.contact_company_name} onChange={handleChange} className="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:border-[#0B63CE] outline-none" />
+                  </div>
+                  <div className="md:col-span-1">
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Origin Country</label>
+                    <input type="text" name="origin_country" value={formData.origin_country || ''} onChange={handleChange} placeholder="e.g. India" className="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:border-[#0B63CE] outline-none" />
                   </div>
                   {/* Emails */}
                   <div className="md:col-span-2">

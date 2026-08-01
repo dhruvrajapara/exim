@@ -24,6 +24,7 @@ const HeroSlider = lazy(() => import('./pages/admin/website/home/HeroSlider'));
 const AboutSection = lazy(() => import('./pages/admin/website/home/AboutSection'));
 const ProductCategoriesSection = lazy(() => import('./pages/admin/website/home/ProductCategoriesSection'));
 const FeaturedProductsSection = lazy(() => import('./pages/admin/website/home/FeaturedProductsSection'));
+const HomepageLayout = lazy(() => import('./pages/admin/website/home/HomepageLayout'));
 const Certifications = lazy(() => import('./pages/admin/website/home/Certifications'));
 const TestimonialsAdmin = lazy(() => import('./pages/admin/website/home/TestimonialsAdmin'));
 const BlogCategoryAdmin = lazy(() => import('./pages/admin/website/blog/BlogCategoryAdmin'));
@@ -32,12 +33,15 @@ const BlogPostForm = lazy(() => import('./pages/admin/website/blog/BlogPostForm'
 const TeamMembers = lazy(() => import('./pages/admin/website/about/TeamMembers'));
 const VisionMissionAdmin = lazy(() => import('./pages/admin/website/about/VisionMissionAdmin'));
 const WhyChooseUsAdmin = lazy(() => import('./pages/admin/website/about/WhyChooseUsAdmin'));
+const AboutPageLayout = lazy(() => import('./pages/admin/website/about/AboutPageLayout'));
 
 const ProductCategories = lazy(() => import('./pages/admin/website/products/ProductCategories'));
 const Products = lazy(() => import('./pages/admin/website/products/Products'));
 const ProductForm = lazy(() => import('./pages/admin/website/products/ProductForm'));
 const ProductPageHeroSection = lazy(() => import('./pages/admin/website/products/ProductPageHeroSection'));
 const WebsiteAppearance = lazy(() => import('./pages/admin/settings/WebsiteAppearance'));
+const WebsiteSetting = lazy(() => import('./pages/admin/settings/WebsiteSetting'));
+const ExportCountries = lazy(() => import('./pages/admin/website/ExportCountries'));
 const Integrations = lazy(() => import('./pages/admin/settings/Integrations'));
 const ImageGalleryAdmin = lazy(() => import('./pages/admin/website/gallery/ImageGalleryAdmin'));
 const GalleryPageHeroSection = lazy(() => import('./pages/admin/website/gallery/GalleryPageHeroSection'));
@@ -96,12 +100,14 @@ function App() {
               <Route path="website/home/about-section" element={<AboutSection />} />
               <Route path="website/home/product-categories-section" element={<ProductCategoriesSection />} />
               <Route path="website/home/featured-products-section" element={<FeaturedProductsSection />} />
+              <Route path="website/home/layout" element={<HomepageLayout />} />
               
               <Route path="certifications" element={<Certifications />} />
               <Route path="testimonials" element={<TestimonialsAdmin />} />
               <Route path="website/about/team-members" element={<TeamMembers />} />
               <Route path="website/about/vision-mission" element={<VisionMissionAdmin />} />
               <Route path="website/about/why-choose-us" element={<WhyChooseUsAdmin />} />
+              <Route path="website/about/layout" element={<AboutPageLayout />} />
               
               
               <Route path="website/contact/hero-section" element={<ContactPageHeroSection />} />
@@ -126,6 +132,8 @@ function App() {
               <Route path="profile" element={<Profile />} />
               
               <Route path="settings/appearance" element={<WebsiteAppearance />} />
+              <Route path="settings/website" element={<WebsiteSetting />} />
+              <Route path="settings/export-countries" element={<ExportCountries />} />
               <Route path="settings/integrations" element={<Integrations />} />
               
               <Route path="*" element={<AdminPlaceholder />} />
