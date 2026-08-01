@@ -134,7 +134,7 @@ export default function FeaturedProducts() {
         {/* View All Products Button */}
         <div className="flex justify-center">
           <Link 
-            to="/products"
+            to="/product"
             className="btn-primary h-[48px] px-8 rounded-[12px] shadow-sm hover:shadow-lg transition-all duration-300 hover:scale-[1.02] flex items-center text-[16px]"
           >
             View All Products

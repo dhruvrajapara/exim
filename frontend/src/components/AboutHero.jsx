@@ -105,7 +105,7 @@ export default function AboutHero() {
                   {aboutData?.btn_text || 'Contact Us'}
                 </Link>
                 <Link
-                  to="/products"
+                  to="/product"
                   className="w-full sm:w-auto h-[48px] px-8 rounded-[12px] bg-white/10 hover:bg-white/20 text-white border border-white/20 backdrop-blur-md transition-all duration-300 hover:scale-[1.02] flex items-center justify-center font-medium"
                 >
                   Explore Products
