@@ -5,8 +5,10 @@ import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import SEO from '../components/SEO';
 import ProductListing from '../components/ProductListing';
 import { fetchSectionSetting } from '../services/api';
+import { useSettings } from '../contexts/SettingsContext';
 
 export default function ProductPage() {
+  const { settings } = useSettings();
   const [heroSetting, setHeroSetting] = useState(null);
 
   useEffect(() => {
@@ -67,7 +69,7 @@ export default function ProductPage() {
             className="max-w-3xl"
           >
             {/* Breadcrumb */}
-            <nav aria-label="Breadcrumb" className="flex items-center text-[14px] font-medium text-gray-500 mb-4">
+            <nav aria-label="Breadcrumb" className="flex items-center text-[14px] font-medium mb-4" style={{ color: settings?.theme_breadcrumb_color || '#6B7280' }}>
               <Link to="/" className="hover:text-[#0B63CE] transition-colors">Home</Link>
               <KeyboardArrowRightIcon fontSize="small" className="mx-1 opacity-60" />
               <span className="text-[#0B63CE]">Products</span>

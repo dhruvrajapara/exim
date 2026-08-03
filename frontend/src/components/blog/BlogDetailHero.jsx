@@ -4,8 +4,10 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { motion } from 'framer-motion';
+import { useSettings } from '../../contexts/SettingsContext';
 
 export default function BlogDetailHero({ blog }) {
+  const { settings } = useSettings();
   if (!blog) return null;
 
   const formatDate = (dateString) => {
@@ -25,7 +27,7 @@ export default function BlogDetailHero({ blog }) {
             className="w-full lg:w-[60%]"
           >
             {/* Breadcrumb */}
-            <nav aria-label="Breadcrumb" className="flex flex-wrap items-center text-[13px] md:text-[14px] font-medium text-gray-500 mb-6 gap-y-2">
+            <nav aria-label="Breadcrumb" className="flex flex-wrap items-center text-[13px] md:text-[14px] font-medium mb-6 gap-y-2" style={{ color: settings?.theme_breadcrumb_color || '#6B7280' }}>
               <Link to="/" className="hover:text-[#0B63CE] transition-colors">Home</Link>
               <KeyboardArrowRightIcon fontSize="small" className="mx-1 opacity-50" />
               <Link to="/blog" className="hover:text-[#0B63CE] transition-colors">Blog</Link>

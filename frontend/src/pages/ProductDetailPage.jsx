@@ -10,10 +10,13 @@ import ProductSpecifications from '../components/product/ProductSpecifications';
 import ProductFeatures from '../components/product/ProductFeatures';
 import ProductFAQ from '../components/product/ProductFAQ';
 import RelatedProducts from '../components/product/RelatedProducts';
+import NewsletterSaaS from '../components/blog/NewsletterSaaS';
+import { useSettings } from '../contexts/SettingsContext';
 import { fetchProductBySlug } from '../services/api';
 
 export default function ProductDetailPage() {
   const { slug } = useParams();
+  const { settings } = useSettings();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -175,7 +178,7 @@ export default function ProductDetailPage() {
       <div className="container-custom">
 
         {/* Breadcrumb Navigation */}
-        <nav aria-label="Breadcrumb" className="flex items-center text-[13px] md:text-[14px] font-medium text-gray-500 mb-8 md:mb-12 pt-5">
+        <nav aria-label="Breadcrumb" className="flex items-center text-[13px] md:text-[14px] font-medium mb-8 md:mb-12 pt-5" style={{ color: settings?.theme_breadcrumb_color || '#6B7280' }}>
           <Link to="/" className="hover:text-primary transition-colors">Home</Link>
           <KeyboardArrowRightIcon fontSize="small" className="mx-1" />
           <Link to="/product" className="hover:text-primary transition-colors">Products</Link>

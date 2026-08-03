@@ -3,8 +3,10 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { fetchSectionSetting } from '../../services/api';
+import { useSettings } from '../../contexts/SettingsContext';
 
 export default function ContactHero() {
+  const { settings } = useSettings();
   const [sectionData, setSectionData] = useState({
     title: "Let's Connect Globally",
     description: "Have questions about our products or export services? Our team is ready to help you with quotations, product information, export documentation, and international business inquiries.",
@@ -84,7 +86,7 @@ export default function ContactHero() {
           className="max-w-3xl"
         >
           {/* Breadcrumb */}
-          <nav aria-label="Breadcrumb" className="flex items-center text-[14px] font-medium mb-4" style={{ color: hasBgImage ? '#ffffff99' : '#6B7280' }}>
+          <nav aria-label="Breadcrumb" className="flex items-center text-[14px] font-medium mb-4" style={{ color: hasBgImage ? '#ffffff99' : (settings?.theme_breadcrumb_color || '#6B7280') }}>
             <Link to="/" className="hover:opacity-80 transition-colors">Home</Link>
             <KeyboardArrowRightIcon fontSize="small" className="mx-1 opacity-60" />
             <span style={{ color: hasBgImage ? '#ffffff' : (extra.textColor || '#0B63CE') }}>Contact</span>

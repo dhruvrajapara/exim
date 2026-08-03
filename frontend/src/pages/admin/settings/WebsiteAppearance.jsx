@@ -30,6 +30,7 @@ export default function WebsiteAppearance() {
     theme_accent_color: '#F59E0B',
     theme_bg_color: '#ffffff',
     theme_text_color: '#4B5563',
+    theme_breadcrumb_color: '#6B7280',
     theme_footer_bg_color: '#000821',
     theme_cta_bg_color: '#0B63CE',
     contact_company_name: 'BiteExport',
@@ -497,6 +498,7 @@ export default function WebsiteAppearance() {
                         theme_accent_color: '#F59E0B',
                         theme_bg_color: '#ffffff',
                         theme_text_color: '#4B5563',
+                        theme_breadcrumb_color: '#6B7280',
                         theme_footer_bg_color: '#000821',
                         theme_cta_bg_color: '#0B63CE',
                       }));
@@ -508,7 +510,7 @@ export default function WebsiteAppearance() {
                 </div>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {['theme_primary_color', 'theme_secondary_color', 'theme_accent_color', 'theme_bg_color', 'theme_text_color', 'theme_footer_bg_color', 'theme_cta_bg_color'].map(colorKey => (
+                  {['theme_primary_color', 'theme_secondary_color', 'theme_accent_color', 'theme_bg_color', 'theme_text_color', 'theme_breadcrumb_color', 'theme_footer_bg_color', 'theme_cta_bg_color'].map(colorKey => (
                     <div key={colorKey}>
                       <label className="block text-sm font-medium text-gray-700 mb-2 capitalize">{colorKey.replace(/_/g, ' ')}</label>
                       <div className="flex items-center gap-3">

@@ -4,8 +4,10 @@ import { fetchAboutSection } from '../services/api';
 import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import Reveal from './Reveal';
+import { useSettings } from '../contexts/SettingsContext';
 
 export default function AboutHero() {
+  const { settings } = useSettings();
   const [aboutData, setAboutData] = useState(null);
   const [stats, setStats] = useState([]);
 
@@ -40,7 +42,7 @@ export default function AboutHero() {
 
         {/* Semantic Breadcrumb (Always on top for both mobile and desktop) */}
         <Reveal delay={0} className="mb-6 md:mb-8 lg:mb-2 lg:-mt-10">
-          <nav aria-label="Breadcrumb" className="flex items-center text-[13px] md:text-[14px] font-medium text-gray-400">
+          <nav aria-label="Breadcrumb" className="flex items-center text-[13px] md:text-[14px] font-medium" style={{ color: settings?.theme_breadcrumb_color || '#9CA3AF' }}>
             <Link to="/" className="hover:text-secondary transition-colors" aria-label="Go to Home">Home</Link>
             <KeyboardArrowRightIcon fontSize="small" className="mx-1 opacity-70" />
             <span className="text-white" aria-current="page">About Us</span>
