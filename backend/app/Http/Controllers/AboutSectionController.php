@@ -25,6 +25,7 @@ class AboutSectionController extends Controller
             $aboutSection = AboutSection::create([
                 'heading' => 'About Us',
                 'description' => 'Welcome to our company.',
+                'image_path' => '',
                 'is_active' => true,
             ]);
         }
