@@ -19,12 +19,13 @@ export default function GalleryLightbox({ images, currentIndex, onClose, onNext,
   const currentImage = images[currentIndex];
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-dark/95 backdrop-blur-md p-4 md:p-8">
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-dark/95 backdrop-blur-md">
+      <div className="min-h-full w-full flex flex-col items-center justify-start p-4 md:p-8 pt-20 md:pt-12 relative">
       
       {/* Close Button */}
       <button 
         onClick={onClose}
-        className="absolute top-6 right-6 md:top-8 md:right-8 w-[48px] h-[48px] rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors z-10"
+        className="fixed top-4 right-4 md:top-8 md:right-8 w-[40px] h-[40px] md:w-[48px] md:h-[48px] rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors z-[60]"
       >
         <CloseIcon />
       </button>
@@ -32,19 +33,19 @@ export default function GalleryLightbox({ images, currentIndex, onClose, onNext,
       {/* Navigation Arrows */}
       <button 
         onClick={onPrev}
-        className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 w-[48px] h-[48px] rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors z-10"
+        className="fixed left-2 md:left-8 top-1/2 -translate-y-1/2 w-[40px] h-[40px] md:w-[48px] md:h-[48px] rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors z-[60]"
       >
         <ArrowBackIosNewIcon />
       </button>
       <button 
         onClick={onNext}
-        className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 w-[48px] h-[48px] rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors z-10"
+        className="fixed right-2 md:right-8 top-1/2 -translate-y-1/2 w-[40px] h-[40px] md:w-[48px] md:h-[48px] rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors z-[60]"
       >
         <ArrowForwardIosIcon />
       </button>
 
       {/* Main Content Area */}
-      <div className="w-full max-w-6xl max-h-full flex flex-col items-center justify-center relative">
+      <div className="w-full max-w-6xl m-auto flex flex-col items-center justify-center relative z-50">
         <div className="relative w-full max-h-[75vh] flex items-center justify-center mb-6">
           <img 
             src={currentImage.image_url} 
@@ -78,6 +79,7 @@ export default function GalleryLightbox({ images, currentIndex, onClose, onNext,
         </div>
       </div>
 
+    </div>
     </div>
   );
 }
