@@ -21,6 +21,14 @@ class AboutSectionController extends Controller
             $query->orderBy('display_order', 'asc');
         }])->first();
         
+        if (!$aboutSection) {
+            $aboutSection = AboutSection::create([
+                'heading' => 'About Us',
+                'description' => 'Welcome to our company.',
+                'is_active' => true,
+            ]);
+        }
+        
         return response()->json(['data' => $aboutSection]);
     }
 
