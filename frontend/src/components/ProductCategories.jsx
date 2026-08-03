@@ -69,7 +69,7 @@ export default function ProductCategories() {
           {categories.map((category, index) => (
             <Reveal key={category.id} delay={index * 100}>
               <Link 
-                to={`/products/${category.slug}`}
+                to={`/product/${category.slug}`}
                 className="group relative flex flex-col h-full bg-white rounded-[16px] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2 border border-gray-100"
               >
                 {/* Image Container with Zoom Effect */}
