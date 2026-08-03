@@ -147,11 +147,11 @@ export default function BlogPostForm() {
       </Box>
 
       <form onSubmit={handleSubmit}>
-        <Grid container spacing={3}>
+        <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: 3 }}>
             
           {/* Left Column - 70% */}
-          <Grid item xs={12} md={8}>
-            <Paper sx={{ p: 3, display: 'flex', flexDirection: 'column', gap: 3 }}>
+          <Box sx={{ flex: { xs: '1 1 100%', md: '0 0 calc(66.666% - 12px)' }, maxWidth: { xs: '100%', md: 'calc(66.666% - 12px)' } }}>
+            <Paper sx={{ p: 3, display: 'flex', flexDirection: 'column', gap: 3, height: '100%' }}>
               <TextField 
                 label="Post Title" 
                 name="title" 
@@ -171,21 +171,27 @@ export default function BlogPostForm() {
                 required 
               />
               
-              <Box>
+              <Box sx={{ 
+                display: 'flex', 
+                flexDirection: 'column',
+                flexGrow: 1,
+                '& .quill': { display: 'flex', flexDirection: 'column' },
+                '& .ql-container': { flexGrow: 1, minHeight: '400px', borderBottomLeftRadius: 4, borderBottomRightRadius: 4, fontSize: '16px' },
+                '& .ql-toolbar': { borderTopLeftRadius: 4, borderTopRightRadius: 4 }
+              }}>
                 <Typography variant="subtitle2" sx={{ mb: 1, color: 'text.secondary' }}>Content</Typography>
                 <ReactQuill 
                   theme="snow" 
                   value={formData.content} 
                   onChange={handleQuillChange} 
-                  style={{ height: '300px', marginBottom: '50px' }}
                 />
               </Box>
             </Paper>
-          </Grid>
+          </Box>
 
           {/* Right Column - 30% */}
-          <Grid item xs={12} md={4}>
-            <Paper sx={{ p: 3, display: 'flex', flexDirection: 'column', gap: 3 }}>
+          <Box sx={{ flex: { xs: '1 1 100%', md: '0 0 calc(33.333% - 12px)' }, maxWidth: { xs: '100%', md: 'calc(33.333% - 12px)' } }}>
+            <Paper sx={{ p: 3, display: 'flex', flexDirection: 'column', gap: 3, height: '100%' }}>
               
               {/* Featured Image */}
               <Box sx={{ textAlign: 'center', border: '1px dashed #ccc', borderRadius: 2, p: 2, bgcolor: '#f9f9f9' }}>
@@ -260,9 +266,9 @@ export default function BlogPostForm() {
                   {isEditing ? 'Update Post' : 'Publish Post'}
               </Button>
             </Paper>
-          </Grid>
+          </Box>
 
-        </Grid>
+        </Box>
       </form>
     </Box>
   );

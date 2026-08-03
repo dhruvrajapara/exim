@@ -3,8 +3,10 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { fetchHeroSlides } from '../services/api';
 import Reveal from './Reveal';
+import { useSettings } from '../contexts/SettingsContext';
 
 export default function Hero() {
+  const { settings } = useSettings();
   const [slides, setSlides] = useState(() => {
     const cached = localStorage.getItem('heroSlides_cache');
     return cached ? JSON.parse(cached) : [];
@@ -14,6 +16,9 @@ export default function Hero() {
   const [isLoading, setIsLoading] = useState(() => {
     return !localStorage.getItem('heroSlides_cache');
   });
+
+  const heroHeightClass = settings?.header_transparent === false ? 'h-[calc(100dvh-80px)]' : 'h-[100dvh]';
+
 
   useEffect(() => {
     const loadSlides = async () => {
@@ -50,7 +55,7 @@ export default function Hero() {
 
   if (isLoading) {
     return (
-      <section className="relative w-full h-[100dvh] bg-dark/90 animate-pulse overflow-hidden flex items-center justify-center">
+      <section className={`relative w-full ${heroHeightClass} bg-dark/90 animate-pulse overflow-hidden flex items-center justify-center`}>
          <div className="container-custom z-10 flex flex-col items-center w-full">
             <div className="w-32 h-6 bg-gray-600 rounded-full mb-6"></div>
             <div className="w-3/4 max-w-4xl h-16 md:h-24 bg-gray-700 rounded-xl mb-8"></div>
@@ -68,7 +73,7 @@ export default function Hero() {
 
   return (
     <section
-      className="relative w-full h-[100dvh] bg-[#000821] text-white overflow-hidden"
+      className={`relative w-full ${heroHeightClass} bg-[#000821] text-white overflow-hidden`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       aria-roledescription="carousel"
