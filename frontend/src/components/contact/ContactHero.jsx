@@ -7,6 +7,7 @@ import { useSettings } from '../../contexts/SettingsContext';
 
 export default function ContactHero() {
   const { settings } = useSettings();
+  const [isLoading, setIsLoading] = useState(true);
   const [sectionData, setSectionData] = useState({
     title: "Let's Connect Globally",
     description: "Have questions about our products or export services? Our team is ready to help you with quotations, product information, export documentation, and international business inquiries.",
@@ -40,6 +41,8 @@ export default function ContactHero() {
         }
       } catch (err) {
         console.error("Error loading contact hero setting:", err);
+      } finally {
+        setIsLoading(false);
       }
     };
     loadData();
@@ -48,6 +51,10 @@ export default function ContactHero() {
   const extra = sectionData.extra_data || {};
   const hasBgImage = !!extra.backgroundImage;
   const overlayOpacityValue = extra.overlayOpacity !== undefined ? extra.overlayOpacity / 100 : 0.4;
+
+  if (isLoading) {
+    return <section className="h-[250px] w-full bg-gray-100 animate-pulse"></section>;
+  }
 
   return (
     <section 

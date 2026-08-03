@@ -8,10 +8,18 @@ import { useSettings } from '../../contexts/SettingsContext';
 export default function BlogHeroRedesign() {
   const { settings } = useSettings();
   const [heroSetting, setHeroSetting] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetchSectionSetting('blog_page_hero').then(setHeroSetting).catch(console.error);
+    fetchSectionSetting('blog_page_hero')
+      .then(setHeroSetting)
+      .catch(console.error)
+      .finally(() => setIsLoading(false));
   }, []);
+
+  if (isLoading) {
+    return <section className="h-[250px] w-full bg-gray-100 animate-pulse"></section>;
+  }
 
   return (
     <section 

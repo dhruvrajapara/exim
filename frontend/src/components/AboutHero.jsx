@@ -10,6 +10,7 @@ export default function AboutHero() {
   const { settings } = useSettings();
   const [aboutData, setAboutData] = useState(null);
   const [stats, setStats] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const loadData = async () => {
@@ -21,8 +22,12 @@ export default function AboutHero() {
         }
       }
     };
-    loadData();
+    loadData().finally(() => setIsLoading(false));
   }, []);
+
+  if (isLoading) {
+    return <section className="w-full min-h-[70vh] md:min-h-[80vh] lg:h-[calc(100vh-80px)] bg-[#000821] animate-pulse"></section>;
+  }
 
   return (
     <section className="relative w-full min-h-[70vh] md:min-h-[80vh] lg:h-[calc(100vh-80px)] flex items-center bg-[#000821] overflow-hidden">

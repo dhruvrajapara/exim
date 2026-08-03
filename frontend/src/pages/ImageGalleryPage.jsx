@@ -11,10 +11,22 @@ import { useSettings } from '../contexts/SettingsContext';
 export default function ImageGalleryPage() {
   const { settings } = useSettings();
   const [heroSetting, setHeroSetting] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetchSectionSetting('gallery_page_hero').then(setHeroSetting).catch(console.error);
+    fetchSectionSetting('gallery_page_hero')
+      .then(setHeroSetting)
+      .catch(console.error)
+      .finally(() => setIsLoading(false));
   }, []);
+
+  if (isLoading) {
+    return (
+      <div className="w-full bg-[#F9FAFB] min-h-screen">
+        <section className="h-[250px] w-full bg-gray-200 animate-pulse"></section>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full bg-[#F9FAFB] min-h-screen">

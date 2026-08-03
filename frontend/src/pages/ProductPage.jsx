@@ -10,9 +10,13 @@ import { useSettings } from '../contexts/SettingsContext';
 export default function ProductPage() {
   const { settings } = useSettings();
   const [heroSetting, setHeroSetting] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetchSectionSetting('product_page_hero').then(setHeroSetting).catch(console.error);
+    fetchSectionSetting('product_page_hero')
+      .then(setHeroSetting)
+      .catch(console.error)
+      .finally(() => setIsLoading(false));
   }, []);
 
   const schema = {
@@ -22,6 +26,14 @@ export default function ProductPage() {
     "url": "https://example.com/product",
     "description": "BiteExport provides premium dehydrated vegetables, spices, and agricultural products with international export quality standards."
   };
+
+  if (isLoading) {
+    return (
+      <div className="w-full bg-[#F9FAFB] min-h-screen">
+        <section className="h-[250px] w-full bg-gray-200 animate-pulse"></section>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full bg-[#F9FAFB] min-h-screen">
