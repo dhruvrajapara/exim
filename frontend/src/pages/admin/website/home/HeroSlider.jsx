@@ -16,7 +16,6 @@ export default function HeroSlider() {
   
   const fileInputRef = useRef(null);
 
-  // Form State mapped to backend schema
   const [formData, setFormData] = useState({
     label: '',
     heading: '',
@@ -25,6 +24,7 @@ export default function HeroSlider() {
     primary_btn_url: '',
     secondary_btn_text: '',
     secondary_btn_url: '',
+    display_order: '',
     is_active: true,
   });
   
@@ -61,6 +61,7 @@ export default function HeroSlider() {
         primary_btn_url: slide.primary_btn_url || '',
         secondary_btn_text: slide.secondary_btn_text || '',
         secondary_btn_url: slide.secondary_btn_url || '',
+        display_order: slide.display_order || '',
         is_active: !!slide.is_active,
       });
       setImagePreview(slide.image_path ? slide.image_path : null);
@@ -75,6 +76,7 @@ export default function HeroSlider() {
         primary_btn_url: '',
         secondary_btn_text: '',
         secondary_btn_url: '',
+        display_order: '',
         is_active: true,
       });
       setImagePreview(null);
@@ -126,6 +128,9 @@ export default function HeroSlider() {
     submitData.append('primary_btn_url', formData.primary_btn_url);
     submitData.append('secondary_btn_text', formData.secondary_btn_text);
     submitData.append('secondary_btn_url', formData.secondary_btn_url);
+    if (formData.display_order) {
+      submitData.append('display_order', formData.display_order);
+    }
     submitData.append('is_active', formData.is_active ? '1' : '0');
     
     if (imageFile) {
@@ -254,6 +259,7 @@ export default function HeroSlider() {
               <tr className="bg-gray-50 text-gray-500 text-xs uppercase tracking-wider">
                 <th className="px-6 py-4 font-semibold border-b border-gray-100">Image</th>
                 <th className="px-6 py-4 font-semibold border-b border-gray-100">Content</th>
+                <th className="px-6 py-4 font-semibold border-b border-gray-100">Order</th>
                 <th className="px-6 py-4 font-semibold border-b border-gray-100">Button</th>
                 <th className="px-6 py-4 font-semibold border-b border-gray-100">Status</th>
                 <th className="px-6 py-4 font-semibold border-b border-gray-100 text-right">Actions</th>
@@ -294,6 +300,9 @@ export default function HeroSlider() {
                     <td className="px-6 py-4">
                       <div className="font-semibold text-gray-900 text-sm mb-0.5">{slide.heading}</div>
                       <div className="text-xs text-gray-500 line-clamp-1 max-w-xs">{slide.description}</div>
+                    </td>
+                    <td className="px-6 py-4 text-sm font-medium text-gray-700">
+                      {slide.display_order || '-'}
                     </td>
                     <td className="px-6 py-4">
                       <div className="text-sm text-gray-700">{slide.primary_btn_text || '-'}</div>
@@ -473,6 +482,18 @@ export default function HeroSlider() {
                       onChange={handleChange}
                       className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0B63CE]/20 focus:border-[#0B63CE] transition-all"
                       placeholder="e.g. /about"
+                    />
+                  </div>
+                  
+                  <div className="md:col-span-2">
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Display Order (e.g. 1, 2, 3)</label>
+                    <input 
+                      type="number" 
+                      name="display_order" 
+                      value={formData.display_order} 
+                      onChange={handleChange}
+                      className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0B63CE]/20 focus:border-[#0B63CE] transition-all"
+                      placeholder="Order number (lower shows first)"
                     />
                   </div>
                 </div>
