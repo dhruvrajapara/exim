@@ -15,7 +15,7 @@ class FooterSettingSeeder extends Seeder
     {
         FooterSetting::create([
             'company_logo' => '/hero.png', // Temporary placeholder for the white logo
-            'company_description' => 'BiteExport is a trusted merchant exporter specializing in premium dehydrated vegetables, spices, and agricultural products, serving buyers across international markets.',
+            'company_description' => 'Nebulix Exim is a trusted merchant exporter specializing in premium dehydrated vegetables, spices, and agricultural products, serving buyers across international markets.',
             'social_links' => [
                 ['platform' => 'facebook', 'url' => 'https://facebook.com'],
                 ['platform' => 'instagram', 'url' => 'https://instagram.com'],
@@ -41,10 +41,10 @@ class FooterSettingSeeder extends Seeder
                 '+971 50 123 4567'
             ],
             'email_addresses' => [
-                'info@biteexport.com',
-                'sales@biteexport.com'
+                'info@nebulixexim.com',
+                'sales@nebulixexim.com'
             ],
-            'copyright_text' => '© ' . date('Y') . ' BiteExport. All Rights Reserved.',
+            'copyright_text' => '© ' . date('Y') . ' Nebulix Exim. All Rights Reserved.',
             'bottom_links' => []
         ]);
     }

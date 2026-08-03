@@ -218,7 +218,7 @@ export const fetchFooter = async () => {
     return {
       footer: {
         company_logo: '/hero.png',
-        company_description: 'BiteExport is a trusted merchant exporter specializing in premium dehydrated vegetables, spices, and agricultural products, serving buyers across international markets.',
+        company_description: 'Nebulix Exim is a trusted merchant exporter specializing in premium dehydrated vegetables, spices, and agricultural products, serving buyers across international markets.',
         social_links: [
           { platform: 'facebook', url: 'https://facebook.com' },
           { platform: 'instagram', url: 'https://instagram.com' },
@@ -244,10 +244,10 @@ export const fetchFooter = async () => {
           '+971 50 123 4567'
         ],
         email_addresses: [
-          'info@biteexport.com',
-          'sales@biteexport.com'
+          'info@nebulixexim.com',
+          'sales@nebulixexim.com'
         ],
-        copyright_text: `© ${new Date().getFullYear()} BiteExport. All Rights Reserved.`,
+        copyright_text: `© ${new Date().getFullYear()} Nebulix Exim. All Rights Reserved.`,
         bottom_links: []
       },
       categories: [
