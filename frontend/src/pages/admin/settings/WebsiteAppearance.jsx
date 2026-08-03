@@ -69,6 +69,7 @@ export default function WebsiteAppearance() {
     newsletter_description: 'Get export tips, buyer trends and global food industry updates delivered straight to your inbox.',
     microsoft_clarity_enabled: false,
     microsoft_clarity_project_id: '',
+    disable_copy_protection: false,
   });
 
   const [headerLogoFile, setHeaderLogoFile] = useState(null);
@@ -351,6 +352,9 @@ export default function WebsiteAppearance() {
               </button>
               <button onClick={() => setActiveTab('footer')} className={`w-full flex items-center px-5 py-4 text-sm font-medium border-l-4 transition-colors ${activeTab === 'footer' ? 'border-[#0B63CE] bg-[#0B63CE]/5 text-[#0B63CE]' : 'border-transparent text-gray-600 hover:bg-gray-50'}`}>
                 <SearchIcon fontSize="small" className="mr-3" /> Footer & Features
+              </button>
+              <button onClick={() => setActiveTab('security')} className={`w-full flex items-center px-5 py-4 text-sm font-medium border-l-4 transition-colors ${activeTab === 'security' ? 'border-[#0B63CE] bg-[#0B63CE]/5 text-[#0B63CE]' : 'border-transparent text-gray-600 hover:bg-gray-50'}`}>
+                <ExtensionIcon fontSize="small" className="mr-3" /> Website Security
               </button>
             </div>
           </div>
@@ -821,6 +825,46 @@ export default function WebsiteAppearance() {
                   <label className="block text-sm font-medium text-gray-700 mb-1">Home Page Title</label>
                   <p className="text-xs text-gray-500 mb-2">This is the title that will appear in search engines and browser tabs for the home page.</p>
                   <input type="text" name="seo_home_title" value={formData.seo_home_title || ''} onChange={handleChange} placeholder="e.g., Exim - Global Export & Import" className="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:border-[#0B63CE] outline-none" />
+                </div>
+              </div>
+            )}
+
+            {/* Security Settings Tab */}
+            {activeTab === 'security' && (
+              <div className="space-y-6 animate-fade-in">
+                <h2 className="text-lg font-semibold text-gray-800 border-b pb-3">Website Security</h2>
+                
+                <div className="bg-gray-50 p-6 rounded-xl border border-gray-100">
+                  <div className="flex items-start gap-4">
+                    <div className="pt-1">
+                      <input 
+                        type="checkbox" 
+                        name="disable_copy_protection" 
+                        id="disable_copy_protection" 
+                        checked={formData.disable_copy_protection} 
+                        onChange={handleChange} 
+                        className="w-5 h-5 text-[#0B63CE] rounded cursor-pointer" 
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="disable_copy_protection" className="text-base font-semibold text-gray-900 cursor-pointer block mb-1">
+                        Disable Copy & Inspect
+                      </label>
+                      <p className="text-sm text-gray-600 mb-3">
+                        Prevent visitors from copying website content and disable common browser shortcuts. This is a basic deterrent and is not guaranteed security.
+                      </p>
+                      <ul className="text-sm text-gray-500 space-y-1 mt-2 list-disc pl-4">
+                        <li>Disables Right Click (Context Menu)</li>
+                        <li>Disables Copy, Cut, Paste, Text Selection</li>
+                        <li>Disables Image Dragging</li>
+                        <li>Blocks Developer Tools shortcuts (F12, Ctrl+Shift+I, etc.)</li>
+                        <li>Shows overlay if Developer Tools are opened</li>
+                      </ul>
+                      <div className="mt-4 inline-flex items-center px-3 py-1 rounded-full bg-blue-100 text-blue-800 text-xs font-medium">
+                        Only active on public pages
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             )}
