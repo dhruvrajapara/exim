@@ -3,7 +3,7 @@ export default function BlogContent({ content }) {
 
   return (
     <article 
-      className="text-gray-600 text-[18px] leading-[1.9] max-w-none 
+      className="text-gray-600 text-[18px] leading-[1.9] max-w-none overflow-hidden break-words
                  [&>h2]:text-[32px] [&>h2]:font-bold [&>h2]:text-dark [&>h2]:mb-6 [&>h2]:mt-12 [&>h2]:font-rubik
                  [&>h3]:text-[24px] [&>h3]:font-bold [&>h3]:text-dark [&>h3]:mb-4 [&>h3]:mt-8 [&>h3]:font-rubik
                  [&>p]:mb-6
