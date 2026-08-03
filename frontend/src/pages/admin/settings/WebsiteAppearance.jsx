@@ -69,6 +69,7 @@ export default function WebsiteAppearance() {
     newsletter_description: 'Get export tips, buyer trends and global food industry updates delivered straight to your inbox.',
     microsoft_clarity_enabled: false,
     microsoft_clarity_project_id: '',
+    header_transparent: true,
     disable_copy_protection: false,
   });
 
@@ -428,7 +429,17 @@ export default function WebsiteAppearance() {
             {/* Header Settings Tab */}
             {activeTab === 'header' && (
               <div className="space-y-8 animate-fade-in">
-                <h2 className="text-lg font-semibold text-gray-800 border-b pb-3">Header Action Button</h2>
+                <h2 className="text-lg font-semibold text-gray-800 border-b pb-3">Header Appearance</h2>
+                
+                <div className="flex flex-col gap-2">
+                  <div className="flex items-center gap-3">
+                    <input type="checkbox" name="header_transparent" id="header_transparent" checked={formData.header_transparent} onChange={handleChange} className="w-5 h-5 text-[#0B63CE] rounded" />
+                    <label htmlFor="header_transparent" className="text-sm font-medium text-gray-700 cursor-pointer">Enable Transparent Header on Home Page (Overlap Top 0)</label>
+                  </div>
+                  <p className="text-xs text-gray-500 ml-8">If disabled, the header will have a solid background and will not overlap the banner.</p>
+                </div>
+
+                <h2 className="text-lg font-semibold text-gray-800 border-b pb-3 mt-8">Header Action Button</h2>
                 
                 <div className="flex items-center gap-3">
                   <input type="checkbox" name="header_btn_enabled" id="header_btn_enabled" checked={formData.header_btn_enabled} onChange={handleChange} className="w-5 h-5 text-[#0B63CE] rounded" />

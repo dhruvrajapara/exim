@@ -19,7 +19,7 @@ export default function Header() {
   const location = useLocation();
 
   const isHomePage = location.pathname === '/';
-  const isTransparent = isHomePage && !isScrolled;
+  const isTransparent = settings?.header_transparent !== false && isHomePage && !isScrolled;
 
   useEffect(() => {
     const handleScroll = () => {
