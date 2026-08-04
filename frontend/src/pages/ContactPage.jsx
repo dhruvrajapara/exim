@@ -20,11 +20,11 @@ export default function ContactPage() {
   const localBusinessSchema = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    "name": "BiteExport",
+    "name": "ABC Export",
     "image": "https://example.com/logo.png",
     "url": "https://example.com",
     "telephone": "+919876543210",
-    "email": "info@biteexport.com",
+    "email": "info@abcexport.com",
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "Corporate Office",
@@ -51,7 +51,7 @@ export default function ContactPage() {
     <div className="w-full bg-[#F9FAFB] min-h-screen">
       <SEO 
         title="Contact Us"
-        description="Get in touch with BiteExport for premium dehydrated vegetables and spices. Request quotations and explore international trade opportunities."
+        description="Get in touch with ABC Export for premium dehydrated vegetables and spices. Request quotations and explore international trade opportunities."
         canonical="https://example.com/contact"
       />
 

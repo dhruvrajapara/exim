@@ -51,7 +51,7 @@ export default function AdminLogin() {
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8 font-sans">
       <Helmet>
-        <title>Admin Login | BiteExport</title>
+        <title>Admin Login | ABC Export</title>
         <meta name="robots" content="noindex, nofollow" />
       </Helmet>
 

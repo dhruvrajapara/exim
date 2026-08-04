@@ -15,7 +15,7 @@ export default function AdminLayout() {
   return (
     <div className="flex h-screen bg-gray-50 font-sans">
       <Helmet>
-        <title>Admin Dashboard | BiteExport</title>
+        <title>Admin Dashboard | ABC Export</title>
         <meta name="robots" content="noindex, nofollow" />
       </Helmet>
 

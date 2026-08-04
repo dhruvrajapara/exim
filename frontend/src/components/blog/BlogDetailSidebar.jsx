@@ -43,7 +43,7 @@ export default function BlogDetailSidebar({ relatedBlogs }) {
         </div>
         <h3 className="font-rubik text-[24px] font-bold mb-3 leading-tight">{settings?.sidebar_cta_title || 'Need Bulk Quantity?'}</h3>
         <p className="text-gray-300 text-[15px] mb-8 leading-relaxed">
-          {settings?.sidebar_cta_description || 'Partner with BiteExport for premium dehydrated agriculture products delivered globally.'}
+          {settings?.sidebar_cta_description || 'Partner with ABC Export for premium dehydrated agriculture products delivered globally.'}
         </p>
         <div className="flex flex-col gap-3">
           <Link to="/contact" className="w-full h-[48px] bg-white text-[#0B63CE] font-bold rounded-[12px] flex items-center justify-center hover:bg-gray-50 transition-colors shadow-sm">

@@ -11,7 +11,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     // Initialize default admin credentials if not set
     if (!localStorage.getItem('adminCredentials')) {
-      localStorage.setItem('adminCredentials', JSON.stringify({ email: 'admin@biteexport.com', password: 'admin123' }));
+      localStorage.setItem('adminCredentials', JSON.stringify({ email: 'admin@abcexport.com', password: 'admin123' }));
     }
 
     const storedAuth = localStorage.getItem('adminAuth');
@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }) => {
     // In a real app, this would be an API call to Laravel backend
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        const credentials = JSON.parse(localStorage.getItem('adminCredentials') || '{"email":"admin@biteexport.com","password":"admin123"}');
+        const credentials = JSON.parse(localStorage.getItem('adminCredentials') || '{"email":"admin@abcexport.com","password":"admin123"}');
         
         if (email === credentials.email && password === credentials.password) {
           const userData = { email, name: 'Admin', role: 'admin' };

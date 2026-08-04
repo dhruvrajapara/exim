@@ -23,7 +23,7 @@ class ProfileController extends Controller
             // Create a default user if none exists
             $user = User::create([
                 'name' => 'Admin',
-                'email' => 'admin@biteexport.com',
+                'email' => 'admin@abcexport.com',
                 'password' => Hash::make('admin123')
             ]);
         }

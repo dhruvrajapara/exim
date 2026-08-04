@@ -52,7 +52,7 @@ export default function WhyChooseUs() {
           </span>
           <h2 className="text-[32px] md:text-[38px] lg:text-[44px] font-bold text-dark leading-[1.2] mb-4 font-rubik">
             {(() => {
-              const titleText = sectionSetting?.title || 'Why Choose BiteExport';
+              const titleText = sectionSetting?.title || 'Why Choose ABC Export';
               const words = titleText.split(' ');
               if (words.length <= 1) return titleText;
               
@@ -65,7 +65,7 @@ export default function WhyChooseUs() {
             })()}
           </h2>
           <p className="text-[15px] md:text-[16px] lg:text-[18px] text-text/90 max-w-2xl mx-auto leading-relaxed">
-            {sectionSetting?.description || 'At BiteExport, we deliver premium-quality agricultural products backed by reliable export services, international standards, and long-term business relationships.'}
+            {sectionSetting?.description || 'At ABC Export, we deliver premium-quality agricultural products backed by reliable export services, international standards, and long-term business relationships.'}
           </p>
         </Reveal>
 

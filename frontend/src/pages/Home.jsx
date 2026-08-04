@@ -48,10 +48,10 @@ export default function Home() {
 
   return (
     <>
-      <SEO title={settings?.seo_home_title || "Export Import Company"}
+      <SEO title={settings?.seo_home_title || "ABC Export - Premium Food Export Company"}
         exactTitle={true}
-        description="Welcome to the AI-First Enterprise Platform built with React and Laravel."
-        canonical="https://example.com/"
+        description={settings?.seo_home_description || "ABC Export is a leading global supplier of premium quality agricultural products, food ingredients, and raw materials. Discover our wide range of export items."}
+        canonical={window.location.href}
         schema={schema}
       />
 

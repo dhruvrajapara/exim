@@ -102,7 +102,7 @@ export default function ProductDetailPage() {
     "sku": product.slug,
     "brand": {
       "@type": "Brand",
-      "name": "BiteExport"
+      "name": "ABC Export"
     }
   };
 

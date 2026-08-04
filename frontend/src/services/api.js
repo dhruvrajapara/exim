@@ -528,10 +528,10 @@ export const fetchTeamMembers = async () => {
         full_name: 'Dhruv Rajapara',
         role: 'Founder & CEO',
         profile_image: 'https://i.pravatar.cc/300?img=11',
-        short_description: 'Leading BiteExport with a vision to deliver premium Indian agricultural products to global markets.',
+        short_description: 'Leading ABC Export with a vision to deliver premium Indian agricultural products to global markets.',
         social_links: {
           linkedin: 'https://linkedin.com',
-          email: 'founder@biteexport.com'
+          email: 'founder@abcexport.com'
         }
       },
       {
@@ -542,7 +542,7 @@ export const fetchTeamMembers = async () => {
         short_description: 'Ensuring every export shipment strictly adheres to international food safety standards.',
         social_links: {
           linkedin: 'https://linkedin.com',
-          email: 'qa@biteexport.com'
+          email: 'qa@abcexport.com'
         }
       },
       {
@@ -563,7 +563,7 @@ export const fetchTeamMembers = async () => {
         short_description: 'Building strong, trustworthy, and long-lasting partnerships with our buyers worldwide.',
         social_links: {
           linkedin: 'https://linkedin.com',
-          email: 'relations@biteexport.com',
+          email: 'relations@abcexport.com',
           whatsapp: '1234567890'
         }
       }
@@ -606,7 +606,7 @@ export const fetchProductBySlug = async (slug) => {
       category: 'Dehydrated Products',
       category_slug: 'dehydrated-products',
       short_description: 'High-quality agricultural product processed under strict international food safety standards.',
-      full_description: 'At BiteExport, we ensure that our agricultural products are naturally grown, carefully harvested, and hygienically processed to retain their authentic aroma, taste, and nutritional value. This product is ideal for industrial food processing, catering, and retail packaging globally.',
+      full_description: 'At ABC Export, we ensure that our agricultural products are naturally grown, carefully harvested, and hygienically processed to retain their authentic aroma, taste, and nutritional value. This product is ideal for industrial food processing, catering, and retail packaging globally.',
       main_image: 'https://images.unsplash.com/photo-1615485925600-97237c4fc1ec?w=1000&q=80',
       gallery: [
         'https://images.unsplash.com/photo-1615485925600-97237c4fc1ec?w=1000&q=80',
@@ -702,13 +702,13 @@ export const fetchBlogs = async (filters = {}) => {
       { id: 2, title: 'How We Maintain Food Safety Standards', slug: 'food-safety-standards', category: 'Company News', category_slug: 'company-news', featured_image: 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=600&q=80', short_description: 'A deep dive into our quality control processes and certifications.', published_date: '2026-06-28', reading_time: '6 min read', trending: true, author: 'Aisha Sharma' },
       { id: 3, title: 'Benefits of Dehydrated Garlic', slug: 'benefits-dehydrated-garlic', category: 'Product Insights', category_slug: 'product-insights', featured_image: 'https://images.unsplash.com/photo-1596647901016-1f6b1587d46c?w=600&q=80', short_description: 'Why more food manufacturers are switching to dehydrated garlic powder.', published_date: '2026-06-20', reading_time: '3 min read', trending: false, author: 'Rohan Mehta' },
       { id: 4, title: 'Navigating European Import Laws', slug: 'european-import-laws', category: 'Export Guides', category_slug: 'export-guides', featured_image: 'https://images.unsplash.com/photo-1518568740560-333181a1796a?w=600&q=80', short_description: 'Everything you need to know about exporting agriculture products to the EU.', published_date: '2026-06-10', reading_time: '8 min read', trending: true, author: 'Dhruv Rajapara' },
-      { id: 5, title: 'Sustainable Farming Practices', slug: 'sustainable-farming', category: 'Company News', category_slug: 'company-news', featured_image: 'https://images.unsplash.com/photo-1599940778173-e276d4acb2bf?w=600&q=80', short_description: 'How BiteExport partners with local farmers for sustainable agriculture.', published_date: '2026-06-05', reading_time: '5 min read', trending: false, author: 'Priya Patel' },
+      { id: 5, title: 'Sustainable Farming Practices', slug: 'sustainable-farming', category: 'Company News', category_slug: 'company-news', featured_image: 'https://images.unsplash.com/photo-1599940778173-e276d4acb2bf?w=600&q=80', short_description: 'How ABC Export partners with local farmers for sustainable agriculture.', published_date: '2026-06-05', reading_time: '5 min read', trending: false, author: 'Priya Patel' },
       { id: 6, title: 'The Rise of Ready-to-Eat Meals', slug: 'ready-to-eat-meals', category: 'Market Trends', category_slug: 'market-trends', featured_image: 'https://images.unsplash.com/photo-1615485925761-4be66a01b7a2?w=600&q=80', short_description: 'How the global shift towards convenience is driving dehydrated ingredient sales.', published_date: '2026-05-28', reading_time: '4 min read', trending: true, author: 'Dhruv Rajapara' },
       { id: 7, title: 'Choosing the Right Packaging for Exports', slug: 'choosing-packaging-exports', category: 'Export Guides', category_slug: 'export-guides', featured_image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=600&q=80', short_description: 'A comprehensive guide to moisture-proof packaging for dehydrated vegetables.', published_date: '2026-05-15', reading_time: '7 min read', trending: false, author: 'Rohan Mehta' },
       { id: 8, title: 'Understanding Phytosanitary Certificates', slug: 'understanding-phytosanitary', category: 'Export Guides', category_slug: 'export-guides', featured_image: 'https://images.unsplash.com/photo-1589829085413-56de8ae18c73?w=600&q=80', short_description: 'Why you need a phytosanitary certificate and how to obtain one.', published_date: '2026-05-10', reading_time: '5 min read', trending: false, author: 'Dhruv Rajapara' },
       { id: 9, title: 'Top Importers of Dehydrated Onion', slug: 'top-importers-onion', category: 'Market Trends', category_slug: 'market-trends', featured_image: 'https://images.unsplash.com/photo-1518568740560-333181a1796a?w=600&q=80', short_description: 'A look at the countries importing the most dehydrated onion in 2026.', published_date: '2026-05-02', reading_time: '4 min read', trending: false, author: 'Aisha Sharma' },
       { id: 10, title: 'How Climate Change Affects Crop Yields', slug: 'climate-change-crops', category: 'Product Insights', category_slug: 'product-insights', featured_image: 'https://images.unsplash.com/photo-1599940778173-e276d4acb2bf?w=600&q=80', short_description: 'Analyzing the impact of changing weather patterns on global spice production.', published_date: '2026-04-20', reading_time: '6 min read', trending: true, author: 'Priya Patel' },
-      { id: 11, title: 'Our New Facility in Gujarat', slug: 'new-facility-gujarat', category: 'Company News', category_slug: 'company-news', featured_image: 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=600&q=80', short_description: 'BiteExport expands operations with a state-of-the-art processing facility.', published_date: '2026-04-15', reading_time: '3 min read', trending: false, author: 'Rohan Mehta' },
+      { id: 11, title: 'Our New Facility in Gujarat', slug: 'new-facility-gujarat', category: 'Company News', category_slug: 'company-news', featured_image: 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=600&q=80', short_description: 'ABC Export expands operations with a state-of-the-art processing facility.', published_date: '2026-04-15', reading_time: '3 min read', trending: false, author: 'Rohan Mehta' },
       { id: 12, title: 'Why Buy Dehydrated vs Fresh?', slug: 'dehydrated-vs-fresh', category: 'Product Insights', category_slug: 'product-insights', featured_image: 'https://images.unsplash.com/photo-1596647901016-1f6b1587d46c?w=600&q=80', short_description: 'A cost-benefit analysis of dehydrated vegetables for restaurant chains.', published_date: '2026-04-05', reading_time: '5 min read', trending: false, author: 'Dhruv Rajapara' },
     ];
 
@@ -781,7 +781,7 @@ export const fetchBlogBySlug = async (slug) => {
         <p>Documentation is the backbone of international trade. Ensure that you have your Bill of Lading, Commercial Invoice, Packing List, Certificate of Origin, and Phytosanitary Certificate perfectly aligned. A single typo can result in customs delays costing thousands of dollars.</p>
         
         <h2>Conclusion</h2>
-        <p>Exporting dehydrated vegetables in 2026 offers massive potential for those who prioritize food safety, premium packaging, and robust supply chain management. By partnering with a trusted merchant exporter like BiteExport, you can navigate these complexities with ease.</p>
+        <p>Exporting dehydrated vegetables in 2026 offers massive potential for those who prioritize food safety, premium packaging, and robust supply chain management. By partnering with a trusted merchant exporter like ABC Export, you can navigate these complexities with ease.</p>
       `
     };
   }
