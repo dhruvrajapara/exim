@@ -8,8 +8,15 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import Reveal from './Reveal';
 
 export default function LatestBlogs() {
-  const [blogs, setBlogs] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [blogs, setBlogs] = useState(() => {
+    try {
+      const cached = localStorage.getItem('api_cache_/api/latest-blogs');
+      return cached ? JSON.parse(cached).data : [];
+    } catch { return []; }
+  });
+  const [isLoading, setIsLoading] = useState(() => {
+    return !localStorage.getItem('api_cache_/api/latest-blogs');
+  });
   const sliderRef = useRef(null);
 
   useEffect(() => {

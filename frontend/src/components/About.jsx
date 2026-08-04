@@ -19,8 +19,15 @@ const getIcon = (title) => {
 };
 
 export default function About() {
-  const [data, setData] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [data, setData] = useState(() => {
+    try {
+      const cached = localStorage.getItem('api_cache_/api/about-section');
+      return cached ? JSON.parse(cached).data : null;
+    } catch { return null; }
+  });
+  const [isLoading, setIsLoading] = useState(() => {
+    return !localStorage.getItem('api_cache_/api/about-section');
+  });
 
   useEffect(() => {
     const loadData = async () => {

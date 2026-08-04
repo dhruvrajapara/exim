@@ -5,13 +5,35 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import Reveal from './Reveal';
 
 export default function FeaturedProducts() {
-  const [products, setProducts] = useState([]);
-  const [sectionData, setSectionData] = useState({
-    subtitle: 'TOP EXPORTS',
-    title: 'Featured Products',
-    description: 'Discover our highest demanded export products, carefully processed and packaged to meet stringent global quality parameters.'
+  const [products, setProducts] = useState(() => {
+    try {
+      const cached = localStorage.getItem('api_cache_/api/featured-products');
+      return cached ? JSON.parse(cached).data : [];
+    } catch { return []; }
   });
-  const [isLoading, setIsLoading] = useState(true);
+  const [sectionData, setSectionData] = useState(() => {
+    try {
+      const cached = localStorage.getItem('api_cache_/api/section-settings/home_featured_products');
+      if (cached) {
+        const parsed = JSON.parse(cached).data;
+        if (parsed) {
+          return {
+            subtitle: parsed.subtitle || 'TOP EXPORTS',
+            title: parsed.title || 'Featured Products',
+            description: parsed.description || 'Discover our highest demanded export products, carefully processed and packaged to meet stringent global quality parameters.'
+          };
+        }
+      }
+    } catch {}
+    return {
+      subtitle: 'TOP EXPORTS',
+      title: 'Featured Products',
+      description: 'Discover our highest demanded export products, carefully processed and packaged to meet stringent global quality parameters.'
+    };
+  });
+  const [isLoading, setIsLoading] = useState(() => {
+    return !localStorage.getItem('api_cache_/api/featured-products');
+  });
 
   useEffect(() => {
     const loadData = async () => {

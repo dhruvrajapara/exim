@@ -5,9 +5,21 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import Reveal from './Reveal';
 
 export default function ProductCategories() {
-  const [categories, setCategories] = useState([]);
-  const [sectionSetting, setSectionSetting] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [categories, setCategories] = useState(() => {
+    try {
+      const cached = localStorage.getItem('api_cache_/api/product-categories?home=1');
+      return cached ? JSON.parse(cached).data : [];
+    } catch { return []; }
+  });
+  const [sectionSetting, setSectionSetting] = useState(() => {
+    try {
+      const cached = localStorage.getItem('api_cache_/api/section-settings/home_categories');
+      return cached ? JSON.parse(cached).data : null;
+    } catch { return null; }
+  });
+  const [isLoading, setIsLoading] = useState(() => {
+    return !localStorage.getItem('api_cache_/api/product-categories?home=1');
+  });
 
   useEffect(() => {
     const loadData = async () => {

@@ -13,13 +13,35 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
 export default function Testimonials() {
-  const [testimonials, setTestimonials] = useState([]);
-  const [sectionData, setSectionData] = useState({
-    subtitle: 'CLIENT TESTIMONIALS',
-    title: 'What Our Clients Say',
-    description: 'Discover why international buyers trust us for their global agricultural export needs.'
+  const [testimonials, setTestimonials] = useState(() => {
+    try {
+      const cached = localStorage.getItem('api_cache_/api/testimonials');
+      return cached ? JSON.parse(cached).data : [];
+    } catch { return []; }
   });
-  const [isLoading, setIsLoading] = useState(true);
+  const [sectionData, setSectionData] = useState(() => {
+    try {
+      const cached = localStorage.getItem('api_cache_/api/section-settings/home_testimonials');
+      if (cached) {
+        const parsed = JSON.parse(cached).data;
+        if (parsed) {
+          return {
+            subtitle: parsed.subtitle || 'CLIENT TESTIMONIALS',
+            title: parsed.title || 'What Our Clients Say',
+            description: parsed.description || 'Discover why international buyers trust us for their global agricultural export needs.'
+          };
+        }
+      }
+    } catch {}
+    return {
+      subtitle: 'CLIENT TESTIMONIALS',
+      title: 'What Our Clients Say',
+      description: 'Discover why international buyers trust us for their global agricultural export needs.'
+    };
+  });
+  const [isLoading, setIsLoading] = useState(() => {
+    return !localStorage.getItem('api_cache_/api/testimonials');
+  });
 
   useEffect(() => {
     const loadData = async () => {

@@ -50,6 +50,48 @@ Route::get('/sitemap.xml', function () {
         ->header('Content-Type', 'application/xml');
 });
 
+Route::get('/llms.txt', function () {
+    $baseUrl = request()->getSchemeAndHttpHost();
+    
+    // Dynamic Products
+    $products = Product::where('status', 'active')->get();
+    $productLinks = "";
+    foreach ($products as $product) {
+        $productLinks .= "- [{$product->name}]({$baseUrl}/product/{$product->slug})\n";
+    }
+
+    $content = "# ABC Export\n\n";
+    $content .= "ABC Export is a leading global supplier of premium quality agricultural products, food ingredients, and raw materials. We specialize in providing dehydrated vegetables, spices, and agricultural goods tailored to the high standards of multinational food distributors and regional wholesalers worldwide.\n\n";
+    
+    $content .= "## About\n\n";
+    $content .= "ABC Export bridges the gap between local farmers and international buyers, maintaining the highest standards of quality control, sustainability, and supply chain efficiency.\n\n";
+    $content .= "- [About Us]({$baseUrl}/about)\n\n";
+
+    $content .= "## Main Pages\n\n";
+    $content .= "- [Home]({$baseUrl})\n";
+    $content .= "- [About Us]({$baseUrl}/about)\n";
+    $content .= "- [Products]({$baseUrl}/product)\n";
+    $content .= "- [Gallery]({$baseUrl}/gallery)\n\n";
+
+    $content .= "## Product Categories\n\n";
+    $content .= "- [Dehydrated Onion]({$baseUrl}/product?category=dehydrated-onion)\n";
+    $content .= "- [Dehydrated Garlic]({$baseUrl}/product?category=dehydrated-garlic)\n";
+    $content .= "- [Spice Powder]({$baseUrl}/product?category=spice-powder)\n";
+    $content .= "- [Vegetable Powder]({$baseUrl}/product?category=vegetable-powder)\n";
+    $content .= "- [Herbs]({$baseUrl}/product?category=herbs)\n\n";
+
+    $content .= "## Specific Products\n\n";
+    $content .= $productLinks . "\n";
+
+    $content .= "## Resources\n\n";
+    $content .= "- [Blog]({$baseUrl}/blog)\n\n";
+
+    $content .= "## Contact\n\n";
+    $content .= "- [Contact Us]({$baseUrl}/contact)\n";
+
+    return response($content, 200)
+        ->header('Content-Type', 'text/plain; charset=UTF-8');
+});
 Route::get('/{any}', function () {
     $path = public_path('index.html');
     if (file_exists($path)) {
