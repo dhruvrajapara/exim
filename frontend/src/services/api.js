@@ -1,3 +1,52 @@
+const fetchWithTimeout = async (resource, options = {}) => {
+  const { timeout = 8000 } = options;
+  
+  // Generate a safe cache key
+  const cacheKey = `api_cache_${resource}`;
+  const isGetRequest = !options.method || options.method === 'GET';
+
+  // 1. Check for existing cache (Only for GET requests)
+  const cachedData = isGetRequest ? localStorage.getItem(cacheKey) : null;
+
+  // 2. Define the network fetch logic
+  const fetchFromServer = async () => {
+    const controller = new AbortController();
+    const id = setTimeout(() => controller.abort(), timeout);
+    try {
+      const response = await fetch(resource, { ...options, signal: controller.signal });
+      clearTimeout(id);
+      
+      // If successful and is JSON, save to cache for the NEXT visit
+      if (response.ok && isGetRequest) {
+        const contentType = response.headers.get("content-type");
+        if (contentType && contentType.includes("application/json")) {
+          const clone = response.clone();
+          const textData = await clone.text();
+          localStorage.setItem(cacheKey, textData);
+        }
+      }
+      return response;
+    } catch (error) {
+      clearTimeout(id);
+      throw error;
+    }
+  };
+
+  // 3. If we have cache, return it instantly and fetch in background
+  if (cachedData) {
+    // Quietly update cache in background (Stale-while-revalidate)
+    fetchFromServer().catch(e => console.warn('Background fetch failed:', e.message));
+    
+    // Instantly return the cached response
+    return new Response(cachedData, {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' }
+    });
+  }
+
+  // 4. If no cache, wait for the network request (with 8s timeout)
+  return await fetchFromServer();
+};
 export const fetchDashboardStats = async () => {
   try {
     const response = await fetch('/api/admin/dashboard');
@@ -14,7 +63,7 @@ export const fetchDashboardStats = async () => {
 
 export const fetchHeroSlides = async () => {
   try {
-    const response = await fetch('/api/hero-slides');
+    const response = await fetchWithTimeout('/api/hero-slides');
     if (!response.ok) {
       throw new Error('Failed to fetch hero slides');
     }
@@ -28,7 +77,7 @@ export const fetchHeroSlides = async () => {
 
 export const fetchSectionSetting = async (key) => {
   try {
-    const response = await fetch(`/api/section-settings/${key}`);
+    const response = await fetchWithTimeout(`/api/section-settings/${key}`);
     if (response.ok) {
       const data = await response.json();
       return data.data;
@@ -60,7 +109,7 @@ export const updateSectionSetting = async (key, data) => {
 
 export const fetchProductCategories = async (query = '') => {
   try {
-    const response = await fetch(`/api/product-categories${query}`);
+    const response = await fetchWithTimeout(`/api/product-categories${query}`);
     const contentType = response.headers.get("content-type");
     if (!response.ok || !contentType || !contentType.includes("application/json")) {
       throw new Error('Fallback triggered');
@@ -81,7 +130,7 @@ export const fetchProductCategories = async (query = '') => {
 export const fetchProducts = async (filters = {}) => {
   try {
     const queryParams = new URLSearchParams(filters).toString();
-    const response = await fetch(`/api/products?${queryParams}`);
+    const response = await fetchWithTimeout(`/api/products?${queryParams}`);
     const contentType = response.headers.get("content-type");
     if (!response.ok || !contentType || !contentType.includes("application/json")) {
       throw new Error('Fallback triggered');
@@ -117,7 +166,7 @@ export const fetchProducts = async (filters = {}) => {
 
 export const fetchAboutSection = async () => {
   try {
-    const response = await fetch('/api/about-section');
+    const response = await fetchWithTimeout('/api/about-section');
     if (!response.ok) {
       throw new Error('Failed to fetch about section');
     }
@@ -131,7 +180,7 @@ export const fetchAboutSection = async () => {
 
 export const fetchFeaturedProducts = async () => {
   try {
-    const response = await fetch('/api/featured-products');
+    const response = await fetchWithTimeout('/api/featured-products');
     if (!response.ok) {
       throw new Error('Failed to fetch featured products');
     }
@@ -145,7 +194,7 @@ export const fetchFeaturedProducts = async () => {
 
 export const fetchCertifications = async () => {
   try {
-    const response = await fetch('/api/certifications');
+    const response = await fetchWithTimeout('/api/certifications');
     const contentType = response.headers.get("content-type");
     if (!response.ok || !contentType || !contentType.includes("application/json")) {
       throw new Error('Fallback triggered');
@@ -193,7 +242,7 @@ export const fetchCertifications = async () => {
 
 export const fetchLatestBlogs = async () => {
   try {
-    const response = await fetch('/api/latest-blogs');
+    const response = await fetchWithTimeout('/api/latest-blogs');
     if (!response.ok) {
       throw new Error('Failed to fetch latest blogs');
     }
@@ -207,7 +256,7 @@ export const fetchLatestBlogs = async () => {
 
 export const fetchFooter = async () => {
   try {
-    const response = await fetch('/api/footer');
+    const response = await fetchWithTimeout('/api/footer');
     const contentType = response.headers.get("content-type");
     if (!response.ok || !contentType || !contentType.includes("application/json")) {
       throw new Error('Fallback triggered');
@@ -263,7 +312,7 @@ export const fetchFooter = async () => {
 
 export const fetchWhyChooseUs = async () => {
   try {
-    const response = await fetch('/api/why-choose-us');
+    const response = await fetchWithTimeout('/api/why-choose-us');
     const contentType = response.headers.get("content-type");
     if (!response.ok || !contentType || !contentType.includes("application/json")) {
       throw new Error('Fallback triggered');
@@ -360,7 +409,7 @@ export const deleteWhyChooseUs = async (id) => {
 
 export const fetchVisionMission = async () => {
   try {
-    const response = await fetch('/api/vision-mission');
+    const response = await fetchWithTimeout('/api/vision-mission');
     const contentType = response.headers.get("content-type");
     if (!response.ok || !contentType || !contentType.includes("application/json")) {
       throw new Error('Fallback triggered');
@@ -465,7 +514,7 @@ export const deleteVisionMission = async (id) => {
 
 export const fetchTeamMembers = async () => {
   try {
-    const response = await fetch('/api/team-members');
+    const response = await fetchWithTimeout('/api/team-members');
     const contentType = response.headers.get("content-type");
     if (!response.ok || !contentType || !contentType.includes("application/json")) {
       throw new Error('Fallback triggered');
@@ -523,7 +572,7 @@ export const fetchTeamMembers = async () => {
 };
 export const fetchProductBySlug = async (slug) => {
   try {
-    const response = await fetch(`/api/products/${slug}`);
+    const response = await fetchWithTimeout(`/api/products/${slug}`);
     const contentType = response.headers.get("content-type");
     if (!response.ok || !contentType || !contentType.includes("application/json")) {
       throw new Error('Fallback triggered');
@@ -577,7 +626,7 @@ export const fetchProductBySlug = async (slug) => {
 
 export const fetchRelatedProducts = async (categorySlug) => {
   try {
-    const response = await fetch(`/api/products/related/${categorySlug}`);
+    const response = await fetchWithTimeout(`/api/products/related/${categorySlug}`);
     const contentType = response.headers.get("content-type");
     if (!response.ok || !contentType || !contentType.includes("application/json")) {
       throw new Error('Fallback triggered');
@@ -596,7 +645,7 @@ export const fetchRelatedProducts = async (categorySlug) => {
 
 export const fetchBlogCategories = async () => {
   try {
-    const response = await fetch('/api/blog-categories');
+    const response = await fetchWithTimeout('/api/blog-categories');
     const contentType = response.headers.get("content-type");
     if (!response.ok || !contentType || !contentType.includes("application/json")) {
       throw new Error('Fallback triggered');
@@ -615,7 +664,7 @@ export const fetchBlogCategories = async () => {
 
 export const fetchFeaturedBlog = async () => {
   try {
-    const response = await fetch('/api/blogs/featured');
+    const response = await fetchWithTimeout('/api/blogs/featured');
     const contentType = response.headers.get("content-type");
     if (!response.ok || !contentType || !contentType.includes("application/json")) {
       throw new Error('Fallback triggered');
@@ -640,7 +689,7 @@ export const fetchFeaturedBlog = async () => {
 export const fetchBlogs = async (filters = {}) => {
   try {
     const queryParams = new URLSearchParams(filters).toString();
-    const response = await fetch(`/api/blogs?${queryParams}`);
+    const response = await fetchWithTimeout(`/api/blogs?${queryParams}`);
     const contentType = response.headers.get("content-type");
     if (!response.ok || !contentType || !contentType.includes("application/json")) {
       throw new Error('Fallback triggered');
@@ -677,7 +726,7 @@ export const fetchBlogs = async (filters = {}) => {
 
 export const fetchBlogBySlug = async (slug) => {
   try {
-    const response = await fetch(`/api/blogs/${slug}`);
+    const response = await fetchWithTimeout(`/api/blogs/${slug}`);
     const contentType = response.headers.get("content-type");
     if (!response.ok || !contentType || !contentType.includes("application/json")) {
       throw new Error('Fallback triggered');
@@ -740,7 +789,7 @@ export const fetchBlogBySlug = async (slug) => {
 
 export const fetchRelatedBlogs = async (categorySlug) => {
   try {
-    const response = await fetch(`/api/blogs/related/${categorySlug}`);
+    const response = await fetchWithTimeout(`/api/blogs/related/${categorySlug}`);
     const contentType = response.headers.get("content-type");
     if (!response.ok || !contentType || !contentType.includes("application/json")) {
       throw new Error('Fallback triggered');
@@ -818,7 +867,7 @@ export const deleteCertification = async (id) => {
 // Admin Testimonial API Methods
 export const fetchTestimonials = async () => {
   try {
-    const response = await fetch('/api/testimonials');
+    const response = await fetchWithTimeout('/api/testimonials');
     if (!response.ok) throw new Error('Failed to fetch testimonials');
     const data = await response.json();
     return data.data;
