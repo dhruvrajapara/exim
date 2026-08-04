@@ -4,7 +4,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { fetchHeroSlides } from '../services/api';
 import Reveal from './Reveal';
 import { useSettings } from '../contexts/SettingsContext';
-
+import { Helmet } from 'react-helmet-async';
 export default function Hero() {
   const { settings } = useSettings();
   const [slides, setSlides] = useState(() => {
@@ -72,7 +72,13 @@ export default function Hero() {
   if (slides.length === 0) return null;
 
   return (
-    <section
+    <>
+      {slides.length > 0 && slides[0].image_path && (
+        <Helmet>
+          <link rel="preload" as="image" href={slides[0].image_path} fetchPriority="high" />
+        </Helmet>
+      )}
+      <section
       className={`relative w-full ${heroHeightClass} bg-[#000821] text-white overflow-hidden`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -194,5 +200,6 @@ export default function Hero() {
         </>
       )}
     </section>
+    </>
   );
 }
