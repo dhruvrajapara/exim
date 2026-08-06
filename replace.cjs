@@ -27,7 +27,7 @@ files.forEach(file => {
     let original = content;
     
     // Case sensitive replacements
-    content = content.replace(/BiteExport/g, 'ABC Export');
+    content = content.replace(/BiteExport/g, 'Bite Export');
     content = content.replace(/biteexport\.com/g, 'abcexport.com');
 
     if (content !== original) {

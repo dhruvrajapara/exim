@@ -82,7 +82,7 @@ export default function BlogDetailPage() {
     "datePublished": blog.published_date,
     "author": [{
         "@type": "Person",
-        "name": blog.author || "ABC Export",
+        "name": blog.author || "Bite Export",
         "url": `https://example.com/author/${blog.author?.toLowerCase().replace(' ', '-')}`
       }]
   };

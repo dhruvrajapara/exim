@@ -89,7 +89,7 @@ export default function ImageGalleryPage() {
               className="text-[16px] max-w-2xl whitespace-pre-wrap"
               style={{ color: heroSetting?.extra_data?.descriptionColor || (heroSetting?.extra_data?.backgroundImage ? '#F3F4F6' : '#4B5563') }}
             >
-              {heroSetting?.description || "Discover the visual story behind ABC Export's commitment to quality, sustainability, and global trade excellence."}
+              {heroSetting?.description || "Discover the visual story behind Bite Export's commitment to quality, sustainability, and global trade excellence."}
             </p>
           </motion.div>
         </div>

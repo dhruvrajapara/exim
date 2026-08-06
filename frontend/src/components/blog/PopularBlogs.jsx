@@ -59,7 +59,7 @@ export default function PopularBlogs({ blogs }) {
                     <div className="flex items-center justify-between border-t border-gray-100 pt-5 mt-auto">
                       <div className="flex flex-col">
                         <span className="text-[12px] text-gray-400 uppercase tracking-wider font-bold">Author</span>
-                        <span className="text-[14px] font-medium text-dark">{blog.author || 'ABC Export'}</span>
+                        <span className="text-[14px] font-medium text-dark">{blog.author || 'Bite Export'}</span>
                       </div>
                       
                       <div className="w-[40px] h-[40px] rounded-full bg-[#EAF4FF] text-[#0B63CE] flex items-center justify-center group-hover:bg-[#0B63CE] group-hover:text-white transition-colors duration-300">

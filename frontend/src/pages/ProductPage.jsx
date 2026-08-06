@@ -22,9 +22,9 @@ export default function ProductPage() {
   const schema = {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    "name": "Premium Export Products - ABC Export",
+    "name": "Premium Export Products - Bite Export",
     "url": "https://example.com/product",
-    "description": "ABC Export provides premium dehydrated vegetables, spices, and agricultural products with international export quality standards."
+    "description": "Bite Export provides premium dehydrated vegetables, spices, and agricultural products with international export quality standards."
   };
 
   if (isLoading) {
@@ -39,7 +39,7 @@ export default function ProductPage() {
     <div className="w-full bg-[#F9FAFB] min-h-screen">
       <SEO
         title="Products"
-        description="ABC Export provides premium dehydrated vegetables, spices, and agricultural products with international export quality standards."
+        description="Bite Export provides premium dehydrated vegetables, spices, and agricultural products with international export quality standards."
         canonical="https://example.com/product"
         schema={schema}
       />
