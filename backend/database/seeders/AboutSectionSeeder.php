@@ -14,11 +14,11 @@ class AboutSectionSeeder extends Seeder
     public function run(): void
     {
         $section = AboutSection::create([
-            'label' => 'About Bite Export',
+            'label' => 'About Nebulix Exim',
             'heading' => 'Empowering Global Trade Through Innovation & Trust',
-            'description' => 'Bite Export is a premier international trading enterprise bridging the gap between innovative manufacturers and global markets. We ensure seamless logistics, top-tier quality assurance, and robust supply chain networks to deliver excellence worldwide.',
+            'description' => 'Nebulix Exim is a premier international trading enterprise bridging the gap between innovative manufacturers and global markets. We ensure seamless logistics, top-tier quality assurance, and robust supply chain networks to deliver excellence worldwide.',
             'image_path' => '/hero.png', // Using existing placeholder
-            'image_alt' => 'Bite Export Global Logistics',
+            'image_alt' => 'Nebulix Exim Global Logistics',
             'image_title' => 'Global Logistics',
             'btn_text' => 'View More Details',
             'btn_url' => '/about',
