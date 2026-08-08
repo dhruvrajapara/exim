@@ -7,7 +7,7 @@ import ContactFAQ from '../components/contact/ContactFAQ';
 import ContactCTA from '../components/contact/ContactCTA';
 
 export default function ContactPage() {
-  
+
   const breadcrumbSchema = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -49,7 +49,7 @@ export default function ContactPage() {
 
   return (
     <div className="w-full bg-[#F9FAFB] min-h-screen">
-      <SEO 
+      <SEO
         title="Contact Us"
         description="Get in touch with Bite Export for premium dehydrated vegetables and spices. Request quotations and explore international trade opportunities."
         canonical="https://example.com/contact"

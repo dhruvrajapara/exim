@@ -34,7 +34,7 @@ export default function BlogDetailSidebar({ relatedBlogs }) {
 
   return (
     <div className="w-full flex flex-col gap-8 sticky top-24">
-      
+
       {/* 1. Export Inquiry CTA Widget */}
       <div className="bg-[var(--color-cta-bg,#0B63CE)] rounded-[20px] p-8 text-white shadow-xl relative overflow-hidden">
         <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl -mr-10 -mt-10"></div>
@@ -63,7 +63,7 @@ export default function BlogDetailSidebar({ relatedBlogs }) {
         <ul className="flex flex-col gap-3">
           {categories.map((cat, idx) => (
             <li key={cat.id || idx}>
-              <Link 
+              <Link
                 to={`/blog?category=${cat.slug}`}
                 className="flex items-center justify-between text-[15px] font-medium text-gray-600 hover:text-[#0B63CE] transition-colors group p-2 hover:bg-[#EAF4FF] rounded-[10px]"
               >

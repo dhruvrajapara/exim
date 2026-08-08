@@ -42,7 +42,7 @@ export default function WebsiteAppearance() {
     contact_business_hours: '',
     contact_map_width: '100%',
     contact_map_height: '400px',
-    contact_faqs: [{question: '', answer: ''}],
+    contact_faqs: [{ question: '', answer: '' }],
     origin_country: 'India',
     social_facebook: '',
     social_facebook: '',
@@ -56,12 +56,12 @@ export default function WebsiteAppearance() {
     whatsapp_float_enabled: false,
     whatsapp_float_number: '',
     whatsapp_float_message: 'Hello, I want to know more!',
-    footer_quick_links: [{label: '', url: ''}],
-    footer_product_links: [{label: '', url: ''}],
+    footer_quick_links: [{ label: '', url: '' }],
+    footer_product_links: [{ label: '', url: '' }],
     header_btn_enabled: false,
     header_btn_label: 'Contact Us',
     header_btn_type: 'link', // 'link' or 'pdf'
-    header_btn_link: {label: '', url: ''},
+    header_btn_link: { label: '', url: '' },
     blog_enabled: true,
     sidebar_cta_title: 'Need Bulk Quantity?',
     sidebar_cta_description: 'Partner with Bite Export for premium dehydrated agriculture products delivered globally.',
@@ -116,22 +116,22 @@ export default function WebsiteAppearance() {
             else if (['footer_quick_links', 'footer_product_links', 'contact_faqs'].includes(key)) {
               try {
                 const parsed = JSON.parse(json.data[key]);
-                newFormData[key] = Array.isArray(parsed) && parsed.length > 0 ? parsed : (key === 'contact_faqs' ? [{question: '', answer: ''}] : [{label: '', url: ''}]);
+                newFormData[key] = Array.isArray(parsed) && parsed.length > 0 ? parsed : (key === 'contact_faqs' ? [{ question: '', answer: '' }] : [{ label: '', url: '' }]);
               } catch (e) {
-                newFormData[key] = key === 'contact_faqs' ? [{question: '', answer: ''}] : [{label: '', url: ''}];
+                newFormData[key] = key === 'contact_faqs' ? [{ question: '', answer: '' }] : [{ label: '', url: '' }];
               }
             }
             else if (key === 'header_btn_link') {
               try {
-                newFormData[key] = JSON.parse(json.data[key]) || {label: '', url: ''};
+                newFormData[key] = JSON.parse(json.data[key]) || { label: '', url: '' };
               } catch (e) {
-                newFormData[key] = {label: '', url: ''};
+                newFormData[key] = { label: '', url: '' };
               }
             }
             else newFormData[key] = json.data[key];
           });
           setFormData(newFormData);
-          
+
           if (json.data.header_logo_url) setHeaderLogoPreview(json.data.header_logo_url);
           if (json.data.footer_logo_url) setFooterLogoPreview(json.data.footer_logo_url);
           if (json.data.favicon_url) setFaviconPreview(json.data.favicon_url);
@@ -165,10 +165,10 @@ export default function WebsiteAppearance() {
       const newArray = [...prev[key]];
       if (field === null && typeof value === 'object') {
         // Replace the whole object or merge it, updating url, type, reference_id, and optionally label if empty
-        newArray[index] = { 
-          ...newArray[index], 
-          url: value.url, 
-          type: value.type, 
+        newArray[index] = {
+          ...newArray[index],
+          url: value.url,
+          type: value.type,
           reference_id: value.reference_id,
           label: newArray[index].label || value.label || ''
         };
@@ -183,11 +183,11 @@ export default function WebsiteAppearance() {
     setFormData(prev => ({ ...prev, [key]: [...prev[key], ''] }));
   };
 
-  const addObjectArrayItem = (key, defaultObj = {label: '', url: ''}) => {
+  const addObjectArrayItem = (key, defaultObj = { label: '', url: '' }) => {
     setFormData(prev => ({ ...prev, [key]: [...prev[key], defaultObj] }));
   };
 
-  const removeArrayItem = (index, key, isObject = false, defaultObj = {label: '', url: ''}) => {
+  const removeArrayItem = (index, key, isObject = false, defaultObj = { label: '', url: '' }) => {
     setFormData(prev => {
       const newArray = prev[key].filter((_, i) => i !== index);
       const fallback = isObject ? [defaultObj] : [''];
@@ -241,7 +241,7 @@ export default function WebsiteAppearance() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSaving(true);
-    
+
     const submitData = new FormData();
     Object.keys(formData).forEach(key => {
       if (['contact_office_addresses', 'contact_phones', 'contact_emails'].includes(key)) {
@@ -265,7 +265,7 @@ export default function WebsiteAppearance() {
     if (faviconFile) submitData.append('favicon', faviconFile);
     if (headerBtnPdfFile) submitData.append('header_btn_pdf', headerBtnPdfFile);
     if (sidebarCataloguePdfFile) submitData.append('sidebar_catalogue_pdf', sidebarCataloguePdfFile);
-    
+
     submitData.append('_method', 'PUT');
 
     try {
@@ -280,10 +280,10 @@ export default function WebsiteAppearance() {
       if (res.ok) {
         setSuccessMessage('Website settings updated successfully!');
         setTimeout(() => setSuccessMessage(''), 3000);
-        
+
         // Dispatch custom event to tell app to refresh settings
         window.dispatchEvent(new Event('website-settings-updated'));
-        
+
       } else {
         const err = await res.json();
         alert(err.message || 'Error saving settings');
@@ -312,7 +312,7 @@ export default function WebsiteAppearance() {
             <h1 className="text-2xl font-bold text-gray-900">Website Appearance</h1>
             <p className="text-gray-500 text-sm mt-1">Manage global branding, colors, and contact info.</p>
           </div>
-          <button 
+          <button
             onClick={handleSubmit}
             disabled={isSaving}
             className={`btn-primary flex items-center px-5 py-2.5 rounded-lg text-sm font-medium ${isSaving ? 'opacity-70 cursor-not-allowed' : ''}`}
@@ -362,12 +362,12 @@ export default function WebsiteAppearance() {
 
           {/* Main Content Area */}
           <div className="flex-grow bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-            
+
             {/* Brand Identity Tab */}
             {activeTab === 'brand' && (
               <div className="space-y-6 animate-fade-in">
                 <h2 className="text-lg font-semibold text-gray-800 border-b pb-3">Brand Logos</h2>
-                
+
                 <div className="mb-6">
                   <label className="block text-sm font-medium text-gray-700 mb-1">Global Logo Height (px)</label>
                   <p className="text-xs text-gray-500 mb-2">Width will adjust automatically to maintain aspect ratio.</p>
@@ -378,7 +378,7 @@ export default function WebsiteAppearance() {
                   {/* Header Logo */}
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">Header Logo (Light Background)</label>
-                    <div 
+                    <div
                       onClick={() => headerLogoRef.current?.click()}
                       className="w-full h-[150px] border-2 border-dashed border-gray-300 rounded-xl flex items-center justify-center cursor-pointer hover:bg-gray-50 transition-all bg-gray-50 overflow-hidden relative"
                     >
@@ -390,11 +390,11 @@ export default function WebsiteAppearance() {
                       <input type="file" ref={headerLogoRef} onChange={(e) => handleImageChange(e, 'header')} accept="image/*" className="hidden" />
                     </div>
                   </div>
-                  
+
                   {/* Footer Logo */}
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">Footer Logo (Dark Background)</label>
-                    <div 
+                    <div
                       onClick={() => footerLogoRef.current?.click()}
                       className="w-full h-[150px] border-2 border-dashed border-gray-300 rounded-xl flex items-center justify-center cursor-pointer transition-all bg-[#000821] overflow-hidden relative"
                     >
@@ -410,7 +410,7 @@ export default function WebsiteAppearance() {
                   {/* Favicon */}
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">Favicon Icon (Browser Tab)</label>
-                    <div 
+                    <div
                       onClick={() => faviconRef.current?.click()}
                       className="w-full h-[150px] border-2 border-dashed border-gray-300 rounded-xl flex items-center justify-center cursor-pointer hover:bg-gray-50 transition-all bg-gray-50 overflow-hidden relative"
                     >
@@ -430,7 +430,7 @@ export default function WebsiteAppearance() {
             {activeTab === 'header' && (
               <div className="space-y-8 animate-fade-in">
                 <h2 className="text-lg font-semibold text-gray-800 border-b pb-3">Header Appearance</h2>
-                
+
                 <div className="flex flex-col gap-2">
                   <div className="flex items-center gap-3">
                     <input type="checkbox" name="header_transparent" id="header_transparent" checked={formData.header_transparent} onChange={handleChange} className="w-5 h-5 text-[#0B63CE] rounded" />
@@ -440,7 +440,7 @@ export default function WebsiteAppearance() {
                 </div>
 
                 <h2 className="text-lg font-semibold text-gray-800 border-b pb-3 mt-8">Header Action Button</h2>
-                
+
                 <div className="flex items-center gap-3">
                   <input type="checkbox" name="header_btn_enabled" id="header_btn_enabled" checked={formData.header_btn_enabled} onChange={handleChange} className="w-5 h-5 text-[#0B63CE] rounded" />
                   <label htmlFor="header_btn_enabled" className="text-sm font-medium text-gray-700 cursor-pointer">Enable Header Action Button</label>
@@ -466,8 +466,8 @@ export default function WebsiteAppearance() {
                       <div className="pt-4 border-t border-gray-200">
                         <label className="block text-sm font-medium text-gray-700 mb-2">Upload PDF Document</label>
                         <div className="flex items-center gap-4">
-                          <input 
-                            type="file" 
+                          <input
+                            type="file"
                             accept="application/pdf"
                             onChange={handlePdfChange}
                             className="block w-full text-sm text-gray-500
@@ -484,9 +484,9 @@ export default function WebsiteAppearance() {
                     ) : (
                       <div className="pt-4 border-t border-gray-200">
                         <label className="block text-sm font-medium text-gray-700 mb-2">Select Page or Route</label>
-                        <UrlSelector 
-                          value={formData.header_btn_link} 
-                          onChange={(val) => setFormData(prev => ({...prev, header_btn_link: val}))} 
+                        <UrlSelector
+                          value={formData.header_btn_link}
+                          onChange={(val) => setFormData(prev => ({ ...prev, header_btn_link: val }))}
                         />
                       </div>
                     )}
@@ -503,7 +503,7 @@ export default function WebsiteAppearance() {
                     <h2 className="text-lg font-semibold text-gray-800">Global Theme Colors</h2>
                     <p className="text-sm text-gray-500 mt-1">These colors will be applied automatically across the entire website frontend.</p>
                   </div>
-                  <button 
+                  <button
                     type="button"
                     onClick={() => {
                       setFormData(prev => ({
@@ -523,23 +523,23 @@ export default function WebsiteAppearance() {
                     Reset to Defaults
                   </button>
                 </div>
-                
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {['theme_primary_color', 'theme_secondary_color', 'theme_accent_color', 'theme_bg_color', 'theme_text_color', 'theme_breadcrumb_color', 'theme_footer_bg_color', 'theme_cta_bg_color'].map(colorKey => (
                     <div key={colorKey}>
                       <label className="block text-sm font-medium text-gray-700 mb-2 capitalize">{colorKey.replace(/_/g, ' ')}</label>
                       <div className="flex items-center gap-3">
-                        <input 
-                          type="color" 
+                        <input
+                          type="color"
                           name={colorKey}
-                          value={formData[colorKey]} 
+                          value={formData[colorKey]}
                           onChange={handleChange}
                           className="w-12 h-12 rounded cursor-pointer border border-gray-300"
                         />
-                        <input 
-                          type="text" 
+                        <input
+                          type="text"
                           name={colorKey}
-                          value={formData[colorKey]} 
+                          value={formData[colorKey]}
                           onChange={handleChange}
                           className="flex-grow border border-gray-300 rounded-lg px-3 py-2 text-sm focus:border-[#0B63CE] focus:ring-1 focus:ring-[#0B63CE] outline-none"
                         />
@@ -547,7 +547,7 @@ export default function WebsiteAppearance() {
                     </div>
                   ))}
                 </div>
-                
+
                 <div className="mt-8 p-6 border rounded-xl" style={{ backgroundColor: formData.theme_bg_color }}>
                   <h3 className="font-bold mb-4" style={{ color: formData.theme_text_color }}>Live Preview</h3>
                   <button className="px-6 py-2 rounded-lg text-white font-medium shadow-md transition-transform hover:scale-105" style={{ backgroundColor: formData.theme_primary_color }}>
@@ -621,7 +621,7 @@ export default function WebsiteAppearance() {
                     <label className="block text-sm font-medium text-gray-700 mb-1">Business Hours</label>
                     <input type="text" name="contact_business_hours" value={formData.contact_business_hours} onChange={handleChange} placeholder="e.g. Monday - Saturday, 9:00 AM - 6:00 PM" className="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:border-[#0B63CE] outline-none" />
                   </div>
-                  
+
                   {/* WhatsApp Floating Button */}
                   <div className="md:col-span-2 mt-4 pt-4 border-t border-gray-100">
                     <h3 className="text-md font-semibold text-gray-800 mb-4">WhatsApp Floating Button</h3>
@@ -678,12 +678,12 @@ export default function WebsiteAppearance() {
                               <textarea value={faq.answer} onChange={(e) => handleObjectArrayChange(index, 'contact_faqs', 'answer', e.target.value)} rows="3" className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:border-[#0B63CE] outline-none resize-none bg-white" placeholder="e.g. You can request a quotation by..."></textarea>
                             </div>
                           </div>
-                          <button type="button" onClick={() => removeArrayItem(index, 'contact_faqs', true, {question: '', answer: ''})} className="mt-6 text-red-500 hover:text-red-700 p-2 bg-white rounded-lg border border-red-100 hover:bg-red-50 transition-colors">
+                          <button type="button" onClick={() => removeArrayItem(index, 'contact_faqs', true, { question: '', answer: '' })} className="mt-6 text-red-500 hover:text-red-700 p-2 bg-white rounded-lg border border-red-100 hover:bg-red-50 transition-colors">
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
                           </button>
                         </div>
                       ))}
-                      <button type="button" onClick={() => addObjectArrayItem('contact_faqs', {question: '', answer: ''})} className="text-sm text-[#0B63CE] font-medium hover:underline flex items-center">
+                      <button type="button" onClick={() => addObjectArrayItem('contact_faqs', { question: '', answer: '' })} className="text-sm text-[#0B63CE] font-medium hover:underline flex items-center">
                         <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" /></svg> Add Question
                       </button>
                     </div>
@@ -701,11 +701,11 @@ export default function WebsiteAppearance() {
                   {['facebook', 'instagram', 'linkedin', 'youtube', 'twitter'].map(platform => (
                     <div key={platform} className="flex items-center gap-4 p-4 border border-gray-100 rounded-lg bg-gray-50/50">
                       <div className="w-24 shrink-0 font-medium capitalize text-sm text-gray-700">{platform}</div>
-                      <input 
-                        type="url" 
-                        name={`social_${platform}`} 
-                        value={formData[`social_${platform}`]} 
-                        onChange={handleChange} 
+                      <input
+                        type="url"
+                        name={`social_${platform}`}
+                        value={formData[`social_${platform}`]}
+                        onChange={handleChange}
                         placeholder={`https://${platform}.com/...`}
                         className="flex-grow border border-gray-300 rounded-lg px-3 py-2 text-sm focus:border-[#0B63CE] outline-none"
                       />
@@ -728,7 +728,7 @@ export default function WebsiteAppearance() {
                 </div>
 
                 <h2 className="text-lg font-semibold text-gray-800 border-b pb-3 mt-8">Footer Settings</h2>
-                
+
                 <div className="mb-6">
                   <label className="block text-sm font-medium text-gray-700 mb-1">Footer Description</label>
                   <p className="text-xs text-gray-500 mb-2">Text displayed below the logo in the footer.</p>
@@ -750,9 +750,9 @@ export default function WebsiteAppearance() {
                       </div>
                       <div className="flex-1">
                         <label className="block text-xs font-medium text-gray-500 mb-1">Page / Route</label>
-                        <UrlSelector 
-                          value={item} 
-                          onChange={(val) => handleObjectArrayChange(index, 'footer_quick_links', null, val)} 
+                        <UrlSelector
+                          value={item}
+                          onChange={(val) => handleObjectArrayChange(index, 'footer_quick_links', null, val)}
                         />
                       </div>
                       <button type="button" onClick={() => removeArrayItem(index, 'footer_quick_links', true)} className="px-3 py-2 text-red-500 hover:bg-red-50 rounded-lg transition border border-transparent hover:border-red-100 h-[38px]">Remove</button>
@@ -772,9 +772,9 @@ export default function WebsiteAppearance() {
                       </div>
                       <div className="flex-1">
                         <label className="block text-xs font-medium text-gray-500 mb-1">Page / Route</label>
-                        <UrlSelector 
-                          value={item} 
-                          onChange={(val) => handleObjectArrayChange(index, 'footer_product_links', null, val)} 
+                        <UrlSelector
+                          value={item}
+                          onChange={(val) => handleObjectArrayChange(index, 'footer_product_links', null, val)}
                         />
                       </div>
                       <button type="button" onClick={() => removeArrayItem(index, 'footer_product_links', true)} className="px-3 py-2 text-red-500 hover:bg-red-50 rounded-lg transition border border-transparent hover:border-red-100 h-[38px]">Remove</button>
@@ -788,8 +788,8 @@ export default function WebsiteAppearance() {
                   <div className="mb-6">
                     <label className="block text-sm font-medium text-gray-700 mb-2">Upload Sidebar Catalogue PDF</label>
                     <div className="flex items-center gap-4">
-                      <input 
-                        type="file" 
+                      <input
+                        type="file"
                         accept="application/pdf"
                         onChange={(e) => handlePdfChange(e, 'sidebar')}
                         className="block w-full text-sm text-gray-500
@@ -844,17 +844,17 @@ export default function WebsiteAppearance() {
             {activeTab === 'security' && (
               <div className="space-y-6 animate-fade-in">
                 <h2 className="text-lg font-semibold text-gray-800 border-b pb-3">Website Security</h2>
-                
+
                 <div className="bg-gray-50 p-6 rounded-xl border border-gray-100">
                   <div className="flex items-start gap-4">
                     <div className="pt-1">
-                      <input 
-                        type="checkbox" 
-                        name="disable_copy_protection" 
-                        id="disable_copy_protection" 
-                        checked={formData.disable_copy_protection} 
-                        onChange={handleChange} 
-                        className="w-5 h-5 text-[#0B63CE] rounded cursor-pointer" 
+                      <input
+                        type="checkbox"
+                        name="disable_copy_protection"
+                        id="disable_copy_protection"
+                        checked={formData.disable_copy_protection}
+                        onChange={handleChange}
+                        className="w-5 h-5 text-[#0B63CE] rounded cursor-pointer"
                       />
                     </div>
                     <div>

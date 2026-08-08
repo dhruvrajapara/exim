@@ -59,7 +59,7 @@ export default function AboutTeam() {
 
   return (
     <section className="w-full py-[40px] lg:py-[50px] bg-[#f9fafb] relative overflow-hidden">
-      
+
       {/* JSON-LD Schema for Team Members (SEO Boost) */}
       <Helmet>
         {team.map((member) => (
@@ -85,7 +85,7 @@ export default function AboutTeam() {
       </Helmet>
 
       <div className="container-custom relative z-10">
-        
+
         {/* Section Header */}
         <Reveal delay={0} className="text-center mb-10 lg:mb-16">
           <span className="text-secondary font-semibold tracking-widest uppercase text-[12px] md:text-[14px] mb-3 block">
@@ -102,20 +102,20 @@ export default function AboutTeam() {
         {/* Team Grid */}
         <div className="flex flex-wrap justify-center gap-6 lg:gap-8">
           {team.map((member, index) => (
-            <Reveal 
+            <Reveal
               key={member.id || index}
               delay={index * 150}
               className={`${getGridClasses(team.length)} group bg-white rounded-[20px] p-6 lg:p-8 border border-gray-100 shadow-sm hover:shadow-[0_20px_40px_rgba(53,153,255,0.1)] hover:border-secondary/50 transition-all duration-300 transform hover:-translate-y-2 flex flex-col items-center text-center h-full overflow-hidden relative`}
             >
-              
+
               {/* Decorative background shape on hover */}
               <div className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-secondary/[0.03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
 
               {/* Profile Image Wrapper */}
               <div className="w-[160px] h-[160px] lg:w-[200px] lg:h-[200px] rounded-full p-[4px] border border-gray-200 group-hover:border-secondary transition-colors duration-300 mb-6 relative z-10">
-                <img 
-                  src={member.profile_image} 
-                  alt={member.full_name} 
+                <img
+                  src={member.profile_image}
+                  alt={member.full_name}
                   loading="lazy"
                   width="200"
                   height="200"
@@ -129,7 +129,7 @@ export default function AboutTeam() {
                 <h3 className="font-rubik font-semibold text-[20px] md:text-[22px] text-dark leading-tight mb-1 group-hover:text-secondary transition-colors">
                   {member.full_name}
                 </h3>
-                
+
                 <p className="text-secondary font-medium text-[14px] md:text-[15px] mb-3">
                   {member.role}
                 </p>

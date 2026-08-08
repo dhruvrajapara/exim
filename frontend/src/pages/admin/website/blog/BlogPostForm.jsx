@@ -1,9 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { 
   Box, Typography, Button, TextField, Switch, FormControlLabel,
-  FormControl, InputLabel, Select, MenuItem, Paper, Grid
+  FormControl, InputLabel, Select, MenuItem, Paper, Grid,
+  Dialog, DialogTitle, DialogContent, DialogActions, IconButton
 } from '@mui/material';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
+import TableChartIcon from '@mui/icons-material/TableChart';
+import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'sonner';
 import ReactQuill from 'react-quill-new';
@@ -13,6 +17,7 @@ export default function BlogPostForm() {
   const { id } = useParams();
   const navigate = useNavigate();
   const isEditing = !!id;
+  const quillRef = useRef(null);
 
   const [categories, setCategories] = useState([]);
   const [previewImage, setPreviewImage] = useState('');
@@ -27,6 +32,15 @@ export default function BlogPostForm() {
     is_active: true,
     is_featured: false,
     featured_image: null
+  });
+
+  // Dynamic Table Builder State
+  const [tableDialogOpen, setTableDialogOpen] = useState(false);
+  const [tableData, setTableData] = useState({
+    rows: [
+      ['Feature', 'Dehydrated Onion', 'Fresh Onion'],
+      ['Moisture', 'Low', 'High']
+    ]
   });
 
   useEffect(() => {
@@ -95,6 +109,71 @@ export default function BlogPostForm() {
     }
   };
 
+  // Table Builder Functions
+  const handleAddColumn = () => {
+    setTableData(prev => ({
+      rows: prev.rows.map(row => [...row, ''])
+    }));
+  };
+
+  const handleRemoveColumn = (colIndex) => {
+    if (tableData.rows[0].length <= 1) return;
+    setTableData(prev => ({
+      rows: prev.rows.map(row => row.filter((_, i) => i !== colIndex))
+    }));
+  };
+
+  const handleAddRow = () => {
+    setTableData(prev => ({
+      rows: [...prev.rows, new Array(prev.rows[0].length).fill('')]
+    }));
+  };
+
+  const handleRemoveRow = (rowIndex) => {
+    if (tableData.rows.length <= 1) return;
+    setTableData(prev => ({
+      rows: prev.rows.filter((_, i) => i !== rowIndex)
+    }));
+  };
+
+  const handleCellChange = (val, rowIndex, colIndex) => {
+    setTableData(prev => {
+      const newRows = [...prev.rows];
+      newRows[rowIndex] = [...newRows[rowIndex]];
+      newRows[rowIndex][colIndex] = val;
+      return { rows: newRows };
+    });
+  };
+
+  const insertDynamicTable = () => {
+    let tbodyHtml = tableData.rows.map((row, i) => {
+      const bgColor = i % 2 !== 0 ? '#fafafa' : '#ffffff';
+      const rowHtml = row.map((cell) => 
+        `<td style="padding: 16px; border: 1px solid #e0e0e0;">${cell}</td>`
+      ).join('');
+      return `<tr style="background-color: ${bgColor};">${rowHtml}</tr>`;
+    }).join('');
+
+    const tableHtml = `
+      <div style="overflow-x: auto; margin: 20px 0;">
+        <table style="width: 100%; border-collapse: collapse; text-align: left; border: 1px solid #e0e0e0; font-family: sans-serif;">
+          <tbody>
+            ${tbodyHtml}
+          </tbody>
+        </table>
+      </div>
+      <p><br></p>
+    `;
+    
+    // Append to current content
+    setFormData(prev => ({
+      ...prev,
+      content: prev.content + tableHtml
+    }));
+    toast.success("Table inserted into content");
+    setTableDialogOpen(false);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = new FormData();
@@ -136,6 +215,19 @@ export default function BlogPostForm() {
       toast.error('An error occurred');
     }
   };
+
+  // Configure quill modules
+  const modules = useMemo(() => ({
+    toolbar: [
+      [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+      ['bold', 'italic', 'underline', 'strike'],
+      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+      [{ 'color': [] }, { 'background': [] }],
+      [{ 'align': [] }],
+      ['link', 'image', 'video'],
+      ['clean']
+    ]
+  }), []);
 
   return (
     <Box sx={{ p: 3 }}>
@@ -179,11 +271,23 @@ export default function BlogPostForm() {
                 '& .ql-container': { flexGrow: 1, minHeight: '400px', borderBottomLeftRadius: 4, borderBottomRightRadius: 4, fontSize: '16px' },
                 '& .ql-toolbar': { borderTopLeftRadius: 4, borderTopRightRadius: 4 }
               }}>
-                <Typography variant="subtitle2" sx={{ mb: 1, color: 'text.secondary' }}>Content</Typography>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
+                  <Typography variant="subtitle2" sx={{ color: 'text.secondary' }}>Content</Typography>
+                  <Button 
+                    variant="outlined" 
+                    size="small" 
+                    startIcon={<TableChartIcon />}
+                    onClick={() => setTableDialogOpen(true)}
+                  >
+                    Build Dynamic Table
+                  </Button>
+                </Box>
                 <ReactQuill 
+                  ref={quillRef}
                   theme="snow" 
                   value={formData.content} 
                   onChange={handleQuillChange} 
+                  modules={modules}
                 />
               </Box>
             </Paper>
@@ -270,6 +374,77 @@ export default function BlogPostForm() {
 
         </Box>
       </form>
+
+      {/* Dynamic Table Builder Dialog */}
+      <Dialog 
+        open={tableDialogOpen} 
+        onClose={() => setTableDialogOpen(false)}
+        maxWidth="md"
+        fullWidth
+      >
+        <DialogTitle>Build Dynamic Table</DialogTitle>
+        <DialogContent dividers>
+          <Box sx={{ overflowX: 'auto' }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, minWidth: 600 }}>
+              
+              {/* Controls for Columns */}
+              <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 1 }}>
+                <Button variant="outlined" size="small" startIcon={<AddIcon />} onClick={handleAddColumn}>
+                  Add Column
+                </Button>
+              </Box>
+
+              {/* Rows */}
+              {tableData.rows.map((row, rowIndex) => (
+                <Box key={`r-${rowIndex}`} sx={{ display: 'flex', gap: 1, position: 'relative' }}>
+                  {row.map((cell, colIndex) => (
+                    <Box key={`c-${rowIndex}-${colIndex}`} sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+                      <TextField 
+                        size="small"
+                        fullWidth
+                        placeholder="Cell data..."
+                        value={cell}
+                        onChange={(e) => handleCellChange(e.target.value, rowIndex, colIndex)}
+                      />
+                      {/* Column Delete Button - show only on first row */}
+                      {rowIndex === 0 && tableData.rows[0].length > 1 && (
+                        <Button 
+                          size="small" 
+                          color="error" 
+                          sx={{ mt: 0.5, alignSelf: 'center', fontSize: '0.75rem', py: 0 }}
+                          onClick={() => handleRemoveColumn(colIndex)}
+                        >
+                          Delete Col
+                        </Button>
+                      )}
+                    </Box>
+                  ))}
+                  
+                  {/* Row Delete Button */}
+                  {tableData.rows.length > 1 && (
+                    <Box sx={{ display: 'flex', alignItems: 'flex-start' }}>
+                      <IconButton size="small" color="error" onClick={() => handleRemoveRow(rowIndex)}>
+                        <DeleteIcon fontSize="small" />
+                      </IconButton>
+                    </Box>
+                  )}
+                </Box>
+              ))}
+
+              <Box>
+                <Button variant="text" startIcon={<AddIcon />} onClick={handleAddRow}>
+                  Add Row
+                </Button>
+              </Box>
+              
+            </Box>
+          </Box>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setTableDialogOpen(false)}>Cancel</Button>
+          <Button variant="contained" onClick={insertDynamicTable}>Insert into Editor</Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 }

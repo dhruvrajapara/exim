@@ -4,13 +4,13 @@ const path = require('path');
 function walk(dir) {
     let results = [];
     const list = fs.readdirSync(dir);
-    list.forEach(function(file) {
+    list.forEach(function (file) {
         if (file === 'node_modules' || file === 'vendor' || file === '.git' || file === 'dist') return;
         file = dir + '/' + file;
         const stat = fs.statSync(file);
-        if (stat && stat.isDirectory()) { 
+        if (stat && stat.isDirectory()) {
             results = results.concat(walk(file));
-        } else { 
+        } else {
             if (file.endsWith('.jsx') || file.endsWith('.html') || file.endsWith('.php') || file.endsWith('.js')) {
                 results.push(file);
             }
@@ -25,7 +25,7 @@ let replacedCount = 0;
 files.forEach(file => {
     let content = fs.readFileSync(file, 'utf8');
     let original = content;
-    
+
     // Case sensitive replacements
     content = content.replace(/BiteExport/g, 'Bite Export');
     content = content.replace(/biteexport\.com/g, 'abcexport.com');

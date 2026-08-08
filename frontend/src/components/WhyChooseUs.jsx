@@ -25,16 +25,16 @@ export default function WhyChooseUs() {
   if (isLoading) {
     return (
       <section className="w-full py-[40px] lg:py-[50px] bg-white animate-pulse">
-         <div className="container-custom">
-            <div className="h-4 bg-gray-200 w-32 mx-auto mb-3 rounded"></div>
-            <div className="h-10 bg-gray-200 w-64 mx-auto mb-4 rounded"></div>
-            <div className="h-4 bg-gray-200 w-96 mx-auto mb-12 rounded"></div>
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-              {[1, 2, 3, 4, 5, 6, 7, 8].map(i => (
-                <div key={i} className="bg-gray-100 h-[220px] rounded-[16px] w-full"></div>
-              ))}
-            </div>
-         </div>
+        <div className="container-custom">
+          <div className="h-4 bg-gray-200 w-32 mx-auto mb-3 rounded"></div>
+          <div className="h-10 bg-gray-200 w-64 mx-auto mb-4 rounded"></div>
+          <div className="h-4 bg-gray-200 w-96 mx-auto mb-12 rounded"></div>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+            {[1, 2, 3, 4, 5, 6, 7, 8].map(i => (
+              <div key={i} className="bg-gray-100 h-[220px] rounded-[16px] w-full"></div>
+            ))}
+          </div>
+        </div>
       </section>
     );
   }
@@ -44,7 +44,7 @@ export default function WhyChooseUs() {
   return (
     <section className="w-full py-[40px] lg:py-[50px] bg-white">
       <div className="container-custom">
-        
+
         {/* Section Header */}
         <Reveal delay={0} className="text-center mb-10 md:mb-12">
           <span className="text-secondary font-semibold tracking-[0.2em] uppercase text-[12px] md:text-[14px] mb-3 block">
@@ -55,7 +55,7 @@ export default function WhyChooseUs() {
               const titleText = sectionSetting?.title || 'Why Choose Bite Export';
               const words = titleText.split(' ');
               if (words.length <= 1) return titleText;
-              
+
               const lastWord = words.pop();
               return (
                 <>
@@ -72,14 +72,14 @@ export default function WhyChooseUs() {
         {/* Features Grid - 2 on Mobile/Tablet, 4 on Desktop */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
           {features.map((feature, index) => (
-            <Reveal 
-              key={feature.id || index} 
+            <Reveal
+              key={feature.id || index}
               delay={(index % 4) * 100} // Horizontal Cascading effect (0ms, 100ms, 200ms, 300ms)
               className="h-full"
             >
               {/* Premium Feature Card */}
               <div className="group bg-white rounded-[16px] p-5 md:p-6 lg:p-8 flex flex-col items-center text-center h-full border border-gray-100 shadow-sm hover:border-secondary/50 hover:shadow-[0_12px_30px_rgba(53,153,255,0.12)] transition-all duration-300 transform hover:-translate-y-2 overflow-hidden">
-                
+
                 {/* Dynamic Icon Wrapper */}
                 <div className="w-[44px] h-[44px] lg:w-[56px] lg:h-[56px] rounded-full bg-secondary/10 text-secondary flex items-center justify-center mb-4 md:mb-6 group-hover:scale-110 group-hover:bg-secondary group-hover:text-white transition-all duration-300 shadow-sm group-hover:shadow-md">
                   <span className="text-[24px] lg:text-[30px] flex items-center justify-center">
@@ -91,7 +91,7 @@ export default function WhyChooseUs() {
                 <h3 className="font-rubik font-semibold text-[15px] md:text-[18px] text-dark mb-2 leading-snug group-hover:text-secondary transition-colors line-clamp-2">
                   {feature.title}
                 </h3>
-                
+
                 <p className="text-[13px] md:text-[14px] text-text/80 leading-[1.6] line-clamp-3">
                   {feature.short_description || feature.description}
                 </p>

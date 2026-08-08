@@ -22,15 +22,15 @@ export default function BlogDetailPage() {
   useEffect(() => {
     const loadData = async () => {
       setLoading(true);
-      
+
       const data = await fetchBlogBySlug(slug);
       setBlog(data);
-      
+
       if (data) {
         const related = await fetchRelatedBlogs(data.category?.slug || '');
         setRelatedBlogs(related);
       }
-      
+
       setLoading(false);
       window.scrollTo(0, 0);
     };
@@ -81,15 +81,15 @@ export default function BlogDetailPage() {
     "image": [blog.featured_image],
     "datePublished": blog.published_date,
     "author": [{
-        "@type": "Person",
-        "name": blog.author || "Bite Export",
-        "url": `https://example.com/author/${blog.author?.toLowerCase().replace(' ', '-')}`
-      }]
+      "@type": "Person",
+      "name": blog.author || "Bite Export",
+      "url": `https://example.com/author/${blog.author?.toLowerCase().replace(' ', '-')}`
+    }]
   };
 
   return (
     <div className="w-full bg-[#F9FAFB] min-h-screen">
-      <SEO 
+      <SEO
         title={blog.title}
         description={blog.short_description}
         canonical={`https://example.com/blog/${blog.slug}`}
@@ -111,14 +111,14 @@ export default function BlogDetailPage() {
       <section className="py-12 md:py-16 bg-white">
         <div className="container-custom">
           <div className="flex flex-col lg:flex-row gap-12 lg:gap-16">
-            
+
             {/* Left: Article Prose Content (70%) */}
             <div className="w-full lg:w-[70%]">
-              
+
               <BlogContent content={blog.content} />
-              
+
               <BlogShare />
-              
+
             </div>
 
             {/* Right: Sticky Sidebar (30%) */}

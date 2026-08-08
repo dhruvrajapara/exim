@@ -1,9 +1,9 @@
 import { Helmet } from 'react-helmet-async';
 
-export default function SEO({ 
-  title, 
-  description, 
-  canonical, 
+export default function SEO({
+  title,
+  description,
+  canonical,
   type = 'website',
   image = '/icon.png',
   schema,

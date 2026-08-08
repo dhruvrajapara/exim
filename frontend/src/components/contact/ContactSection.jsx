@@ -13,7 +13,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { useSettings } from '../../contexts/SettingsContext';
 export default function ContactSection() {
   const { settings } = useSettings();
-  
+
   const [formData, setFormData] = useState({
     name: '',
     company: '',

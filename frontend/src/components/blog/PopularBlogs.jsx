@@ -29,10 +29,10 @@ export default function PopularBlogs({ blogs }) {
             >
               <Link to={`/blog/${blog.slug}`} className="block group h-full">
                 <div className="h-full bg-white rounded-[18px] border border-[#E5E7EB] overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col">
-                  
+
                   <div className="aspect-[4/3] overflow-hidden relative">
-                    <img 
-                      src={blog.featured_image} 
+                    <img
+                      src={blog.featured_image}
                       alt={blog.title}
                       className="w-full h-full object-contain bg-gray-50 group-hover:scale-105 transition-transform duration-700 ease-out"
                     />
@@ -51,7 +51,7 @@ export default function PopularBlogs({ blogs }) {
                     <h3 className="font-rubik text-[22px] font-bold text-dark leading-tight mb-3 group-hover:text-[#0B63CE] transition-colors line-clamp-2">
                       {blog.title}
                     </h3>
-                    
+
                     <p className="text-gray-600 text-[15px] line-clamp-3 mb-6 flex-grow">
                       {blog.short_description}
                     </p>
@@ -61,13 +61,13 @@ export default function PopularBlogs({ blogs }) {
                         <span className="text-[12px] text-gray-400 uppercase tracking-wider font-bold">Author</span>
                         <span className="text-[14px] font-medium text-dark">{blog.author || 'Bite Export'}</span>
                       </div>
-                      
+
                       <div className="w-[40px] h-[40px] rounded-full bg-[#EAF4FF] text-[#0B63CE] flex items-center justify-center group-hover:bg-[#0B63CE] group-hover:text-white transition-colors duration-300">
                         <ArrowForwardIcon fontSize="small" className="-rotate-45 group-hover:rotate-0 transition-transform duration-300" />
                       </div>
                     </div>
                   </div>
-                  
+
                 </div>
               </Link>
             </motion.div>

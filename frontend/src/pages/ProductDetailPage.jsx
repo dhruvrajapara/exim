@@ -199,7 +199,7 @@ export default function ProductDetailPage() {
         {/* Full Product Description (Rich Text) */}
         {product.full_description && (
           <div className="w-full mb-16 md:mb-24 bg-white rounded-[20px] p-6 md:p-10 lg:p-12 shadow-sm border border-gray-100">
-            <div 
+            <div
               className="prose prose-sm md:prose-base lg:prose-lg max-w-none prose-headings:text-dark prose-p:text-gray-600 prose-a:text-primary hover:prose-a:text-secondary prose-img:rounded-xl prose-h1:text-[24px] md:prose-h1:text-[32px] prose-h2:text-[20px] md:prose-h2:text-[28px] prose-h3:text-[18px] md:prose-h3:text-[22px]"
               dangerouslySetInnerHTML={{ __html: cleanHtml(product.full_description) }}
             />

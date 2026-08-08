@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  fetchAdminWhyChooseUs, 
-  createWhyChooseUs, 
-  updateWhyChooseUs, 
+import {
+  fetchAdminWhyChooseUs,
+  createWhyChooseUs,
+  updateWhyChooseUs,
   deleteWhyChooseUs,
   fetchSectionSetting,
   updateSectionSetting
@@ -17,12 +17,12 @@ import { getIconComponent } from '../../../../components/IconResolver';
 const WhyChooseUsAdmin = () => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
-  
+
   // Modal states
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMode, setModalMode] = useState('add');
   const [currentItem, setCurrentItem] = useState(null);
-  
+
   // Form states
   const [formData, setFormData] = useState({
     title: '',
@@ -31,7 +31,7 @@ const WhyChooseUsAdmin = () => {
   });
   const [iconImageFile, setIconImageFile] = useState(null);
   const [formLoading, setFormLoading] = useState(false);
-  
+
   // Delete confirm state
   const [deleteId, setDeleteId] = useState(null);
 
@@ -175,14 +175,14 @@ const WhyChooseUsAdmin = () => {
           <p className="text-sm text-gray-500 mt-1">Manage the features displayed on the About page.</p>
         </div>
         <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
-          <button 
+          <button
             onClick={() => setIsSectionOpen(!isSectionOpen)}
             className="w-full sm:w-auto justify-center bg-white border border-gray-300 text-gray-700 px-5 py-2.5 rounded-lg flex items-center font-medium transition-colors hover:bg-gray-50 shadow-sm"
           >
             <EditIcon className="w-5 h-5 mr-2" />
             {isSectionOpen ? 'Close Header Settings' : 'Edit Section Header'}
           </button>
-          <button 
+          <button
             onClick={handleOpenAdd}
             className="w-full sm:w-auto justify-center bg-[#0B63CE] hover:bg-[#0950A7] text-white px-5 py-2.5 rounded-lg flex items-center font-medium transition-colors shadow-sm"
           >
@@ -206,16 +206,16 @@ const WhyChooseUsAdmin = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Subtitle (e.g. WHY CHOOSE US)</label>
-                  <input type="text" value={sectionSetting.subtitle} onChange={(e) => setSectionSetting({...sectionSetting, subtitle: e.target.value})} className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-[#0B63CE] focus:border-[#0B63CE] sm:text-sm" />
+                  <input type="text" value={sectionSetting.subtitle} onChange={(e) => setSectionSetting({ ...sectionSetting, subtitle: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-[#0B63CE] focus:border-[#0B63CE] sm:text-sm" />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Main Title</label>
-                  <input type="text" value={sectionSetting.title} onChange={(e) => setSectionSetting({...sectionSetting, title: e.target.value})} className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-[#0B63CE] focus:border-[#0B63CE] sm:text-sm" />
+                  <input type="text" value={sectionSetting.title} onChange={(e) => setSectionSetting({ ...sectionSetting, title: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-[#0B63CE] focus:border-[#0B63CE] sm:text-sm" />
                 </div>
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
-                <textarea rows="3" value={sectionSetting.description} onChange={(e) => setSectionSetting({...sectionSetting, description: e.target.value})} className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-[#0B63CE] focus:border-[#0B63CE] sm:text-sm resize-none"></textarea>
+                <textarea rows="3" value={sectionSetting.description} onChange={(e) => setSectionSetting({ ...sectionSetting, description: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-[#0B63CE] focus:border-[#0B63CE] sm:text-sm resize-none"></textarea>
               </div>
               <div className="flex justify-end">
                 <button type="submit" disabled={savingSection} className="px-5 py-2 text-sm font-medium text-white bg-[#0B63CE] rounded-lg hover:bg-[#0950A7] disabled:opacity-50">
@@ -320,7 +320,7 @@ const WhyChooseUsAdmin = () => {
                       type="text"
                       required
                       value={formData.title}
-                      onChange={(e) => setFormData({...formData, title: e.target.value})}
+                      onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                       className="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:ring-[#0B63CE] focus:border-[#0B63CE] text-sm"
                       placeholder="Enter feature title"
                     />
@@ -335,13 +335,13 @@ const WhyChooseUsAdmin = () => {
                       <input
                         type="text"
                         value={formData.icon}
-                        onChange={(e) => setFormData({...formData, icon: e.target.value})}
+                        onChange={(e) => setFormData({ ...formData, icon: e.target.value })}
                         className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-xl focus:ring-[#0B63CE] focus:border-[#0B63CE] text-sm"
                         placeholder="e.g. fa-solid fa-star or https://link/icon.png"
                       />
                     </div>
                     <p className="mt-1 text-xs text-gray-500">
-                      Paste a FontAwesome class or an image URL. 
+                      Paste a FontAwesome class or an image URL.
                       <a href="https://fontawesome.com/search?ic=free-collection" target="_blank" rel="noopener noreferrer" className="text-[#0B63CE] hover:underline ml-1">
                         Find Icons
                       </a>
@@ -355,7 +355,7 @@ const WhyChooseUsAdmin = () => {
                     required
                     rows="3"
                     value={formData.short_description}
-                    onChange={(e) => setFormData({...formData, short_description: e.target.value})}
+                    onChange={(e) => setFormData({ ...formData, short_description: e.target.value })}
                     className="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:ring-[#0B63CE] focus:border-[#0B63CE] text-sm resize-none"
                     placeholder="Enter short description"
                   ></textarea>

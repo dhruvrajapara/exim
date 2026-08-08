@@ -45,26 +45,26 @@ export default function ProductPage() {
       />
 
       {/* Hero Banner matched to BlogHeroRedesign */}
-      <section 
+      <section
         className="relative h-[250px] overflow-hidden flex items-center bg-cover bg-center"
         style={{
-          background: heroSetting?.extra_data?.backgroundImage 
+          background: heroSetting?.extra_data?.backgroundImage
             ? `url(${heroSetting.extra_data.backgroundImage}) center/cover no-repeat`
-            : (heroSetting?.extra_data?.backgroundColor 
-                ? `linear-gradient(to right, rgba(11, 99, 206, 0.05), ${heroSetting.extra_data.backgroundColor})`
-                : 'linear-gradient(to right, rgba(11, 99, 206, 0.05), #EAF4FF)')
+            : (heroSetting?.extra_data?.backgroundColor
+              ? `linear-gradient(to right, rgba(11, 99, 206, 0.05), ${heroSetting.extra_data.backgroundColor})`
+              : 'linear-gradient(to right, rgba(11, 99, 206, 0.05), #EAF4FF)')
         }}
       >
-        
+
         {/* Abstract Dot Pattern */}
-        <div 
+        <div
           className="absolute inset-0 opacity-10 pointer-events-none"
           style={{ backgroundImage: 'radial-gradient(#0B63CE 1px, transparent 1px)', backgroundSize: '24px 24px' }}
         ></div>
 
         {/* Optional overlay if there is a background image, to ensure text readability */}
         {heroSetting?.extra_data?.backgroundImage && (
-          <div 
+          <div
             className="absolute inset-0"
             style={{
               backgroundColor: heroSetting?.extra_data?.overlayColor || '#000000',
@@ -74,7 +74,7 @@ export default function ProductPage() {
         )}
 
         <div className="container-custom relative z-10">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
@@ -87,13 +87,13 @@ export default function ProductPage() {
               <span className="text-[#0B63CE]">Products</span>
             </nav>
 
-            <h1 
+            <h1
               className="font-rubik text-[36px] md:text-[48px] font-bold leading-tight mb-3 tracking-tight"
               style={{ color: heroSetting?.extra_data?.textColor || '#1F2937' }}
             >
               {heroSetting?.title || "Premium Export Products"}
             </h1>
-            <p 
+            <p
               className="text-[16px] max-w-2xl whitespace-pre-wrap"
               style={{ color: heroSetting?.extra_data?.descriptionColor || (heroSetting?.extra_data?.backgroundImage ? '#F3F4F6' : '#4B5563') }}
             >

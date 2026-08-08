@@ -1,6 +1,6 @@
 const fetchWithTimeout = async (resource, options = {}) => {
   const { timeout = 8000 } = options;
-  
+
   // Generate a safe cache key
   const cacheKey = `api_cache_${resource}`;
   const isGetRequest = !options.method || options.method === 'GET';
@@ -15,7 +15,7 @@ const fetchWithTimeout = async (resource, options = {}) => {
     try {
       const response = await fetch(resource, { ...options, signal: controller.signal });
       clearTimeout(id);
-      
+
       // If successful and is JSON, save to cache for the NEXT visit
       if (response.ok && isGetRequest) {
         const contentType = response.headers.get("content-type");
@@ -36,7 +36,7 @@ const fetchWithTimeout = async (resource, options = {}) => {
   if (cachedData) {
     // Quietly update cache in background (Stale-while-revalidate)
     fetchFromServer().catch(e => console.warn('Background fetch failed:', e.message));
-    
+
     // Instantly return the cached response
     return new Response(cachedData, {
       status: 200,
@@ -267,7 +267,7 @@ export const fetchFooter = async () => {
     return {
       footer: {
         company_logo: '/hero.png',
-        company_description: 'Nebulix Exim is a trusted merchant exporter specializing in premium dehydrated vegetables, spices, and agricultural products, serving buyers across international markets.',
+        company_description: 'Bite Export is a trusted merchant exporter specializing in premium dehydrated vegetables, spices, and agricultural products, serving buyers across international markets.',
         social_links: [
           { platform: 'facebook', url: 'https://facebook.com' },
           { platform: 'instagram', url: 'https://instagram.com' },
@@ -296,7 +296,7 @@ export const fetchFooter = async () => {
           'info@nebulixexim.com',
           'sales@nebulixexim.com'
         ],
-        copyright_text: `© ${new Date().getFullYear()} Nebulix Exim. All Rights Reserved.`,
+        copyright_text: `© ${new Date().getFullYear()} Bite Export. All Rights Reserved.`,
         bottom_links: []
       },
       categories: [
@@ -359,7 +359,7 @@ export const createWhyChooseUs = async (formData) => {
       },
       body: formData,
     });
-    
+
     if (!response.ok) {
       throw new Error(`Failed to create item. Status: ${response.status}`);
     }
@@ -380,7 +380,7 @@ export const updateWhyChooseUs = async (id, formData) => {
       },
       body: formData,
     });
-    
+
     if (!response.ok) {
       throw new Error(`Failed to update item. Status: ${response.status}`);
     }
@@ -396,7 +396,7 @@ export const deleteWhyChooseUs = async (id) => {
     const response = await fetch(`/api/admin/why-choose-us/${id}`, {
       method: 'DELETE',
     });
-    
+
     if (!response.ok) {
       throw new Error(`Failed to delete item. Status: ${response.status}`);
     }
@@ -420,21 +420,21 @@ export const fetchVisionMission = async () => {
     // Suppressed console.error to keep the console clean during frontend development
     // Fallback data
     return [
-      { 
-        id: 1, 
-        type: 'vision', 
-        label: 'OUR VISION', 
-        title: 'Empowering Global Trade', 
-        description: 'To become the world\'s most trusted exporter of premium agricultural products, bridging the gap between local farmers and international markets with uncompromising quality and sustainable practices.', 
-        icon: 'Visibility' 
+      {
+        id: 1,
+        type: 'vision',
+        label: 'OUR VISION',
+        title: 'Empowering Global Trade',
+        description: 'To become the world\'s most trusted exporter of premium agricultural products, bridging the gap between local farmers and international markets with uncompromising quality and sustainable practices.',
+        icon: 'Visibility'
       },
-      { 
-        id: 2, 
-        type: 'mission', 
-        label: 'OUR MISSION', 
-        title: 'Delivering Excellence Daily', 
-        description: 'To source, process, and deliver the finest quality products while maintaining competitive pricing, strict international food safety standards, and building long-lasting partnerships globally.', 
-        icon: 'TrackChanges' 
+      {
+        id: 2,
+        type: 'mission',
+        label: 'OUR MISSION',
+        title: 'Delivering Excellence Daily',
+        description: 'To source, process, and deliver the finest quality products while maintaining competitive pricing, strict international food safety standards, and building long-lasting partnerships globally.',
+        icon: 'TrackChanges'
       }
     ];
   }
@@ -464,7 +464,7 @@ export const createVisionMission = async (formData) => {
       },
       body: formData,
     });
-    
+
     if (!response.ok) {
       throw new Error(`Failed to create vision/mission. Status: ${response.status}`);
     }
@@ -485,7 +485,7 @@ export const updateVisionMission = async (id, formData) => {
       },
       body: formData,
     });
-    
+
     if (!response.ok) {
       throw new Error(`Failed to update vision/mission. Status: ${response.status}`);
     }
@@ -501,7 +501,7 @@ export const deleteVisionMission = async (id) => {
     const response = await fetch(`/api/admin/vision-mission/${id}`, {
       method: 'DELETE',
     });
-    
+
     if (!response.ok) {
       throw new Error(`Failed to delete vision/mission. Status: ${response.status}`);
     }
@@ -579,7 +579,7 @@ export const fetchProductBySlug = async (slug) => {
     }
     const data = await response.json();
     const product = data.data;
-    
+
     // Format backend data to match frontend expectations
     return {
       id: product.id,
@@ -735,14 +735,14 @@ export const fetchBlogBySlug = async (slug) => {
     return data.data;
   } catch (error) {
     const blogTitle = slug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
-    
+
     const storedViews = localStorage.getItem(`blog_views_${slug}`);
     let viewsCount = storedViews ? parseInt(storedViews, 10) : 12450;
-    
+
     // Simulate analytics increment
     viewsCount += 1;
     localStorage.setItem(`blog_views_${slug}`, viewsCount);
-    
+
     return {
       id: 100,
       title: blogTitle || 'The Ultimate Guide to Exporting Dehydrated Vegetables in 2026',
@@ -967,7 +967,7 @@ export const createTeamMember = async (formData) => {
     } catch (e) {
       throw e;
     }
-    
+
     if (!response.ok) throw new Error(data.message || 'Failed to create team member');
     return data;
   } catch (error) {

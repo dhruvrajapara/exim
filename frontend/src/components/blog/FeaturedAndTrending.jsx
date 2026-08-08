@@ -15,9 +15,9 @@ export default function FeaturedAndTrending({ featuredBlog, trendingBlogs }) {
     <section className="py-12 md:py-16 bg-white">
       <div className="container-custom">
         <div className="flex flex-col lg:flex-row gap-8">
-          
+
           {/* Left: Featured Blog (70%) */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
@@ -26,8 +26,8 @@ export default function FeaturedAndTrending({ featuredBlog, trendingBlogs }) {
             <Link to={`/blog/${featuredBlog.slug}`} className="block group">
               <div className="rounded-[24px] overflow-hidden bg-white border border-[#E5E7EB] shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-2">
                 <div className="aspect-[16/9] overflow-hidden relative">
-                  <img 
-                    src={featuredBlog.featured_image} 
+                  <img
+                    src={featuredBlog.featured_image}
                     alt={featuredBlog.title}
                     className="w-full h-full object-contain bg-gray-50 group-hover:scale-105 transition-transform duration-700 ease-in-out"
                   />
@@ -37,7 +37,7 @@ export default function FeaturedAndTrending({ featuredBlog, trendingBlogs }) {
                     </span>
                   </div>
                 </div>
-                
+
                 <div className="p-8 md:p-10">
                   <div className="flex items-center gap-6 text-gray-500 text-[14px] font-medium mb-4">
                     <div className="flex items-center gap-1.5">
@@ -53,7 +53,7 @@ export default function FeaturedAndTrending({ featuredBlog, trendingBlogs }) {
                   <h2 className="font-rubik text-[28px] md:text-[36px] font-bold text-dark leading-tight mb-4 group-hover:text-[#0B63CE] transition-colors line-clamp-2">
                     {featuredBlog.title}
                   </h2>
-                  
+
                   <p className="text-gray-600 text-[16px] md:text-[18px] mb-8 line-clamp-2 leading-relaxed">
                     {featuredBlog.short_description}
                   </p>
@@ -72,7 +72,7 @@ export default function FeaturedAndTrending({ featuredBlog, trendingBlogs }) {
           </motion.div>
 
           {/* Right: Trending Articles (30%) */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
@@ -81,17 +81,17 @@ export default function FeaturedAndTrending({ featuredBlog, trendingBlogs }) {
             <h3 className="font-rubik text-[24px] font-bold text-dark mb-6 pl-2 border-l-4 border-[#0B63CE]">
               Trending Articles
             </h3>
-            
+
             <div className="flex flex-col gap-4">
               {trendingBlogs.slice(0, 4).map((blog) => (
-                <Link 
-                  key={blog.id} 
+                <Link
+                  key={blog.id}
                   to={`/blog/${blog.slug}`}
                   className="group flex gap-4 p-3 rounded-[16px] hover:bg-[#EAF4FF] transition-colors duration-300 border border-transparent hover:border-[#0B63CE]/20"
                 >
                   <div className="w-[100px] h-[100px] flex-shrink-0 rounded-[12px] overflow-hidden">
-                    <img 
-                      src={blog.featured_image} 
+                    <img
+                      src={blog.featured_image}
                       alt={blog.title}
                       className="w-full h-full object-contain bg-gray-50 group-hover:scale-110 transition-transform duration-500"
                     />
