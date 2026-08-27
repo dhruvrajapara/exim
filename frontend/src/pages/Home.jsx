@@ -48,9 +48,9 @@ export default function Home() {
 
   return (
     <>
-      <SEO title={settings?.seo_home_title || "Bite Export - Premium Food Export Company"}
+      <SEO title={settings?.seo_home_title || "padmeshwara - Premium Food Export Company"}
         exactTitle={true}
-        description={settings?.seo_home_description || "Bite Export is a leading global supplier of premium quality agricultural products, food ingredients, and raw materials. Discover our wide range of export items."}
+        description={settings?.seo_home_description || "padmeshwara is a leading global supplier of premium quality agricultural products, food ingredients, and raw materials. Discover our wide range of export items."}
         canonical={window.location.href}
         schema={schema}
       />

@@ -60,11 +60,11 @@ Route::get('/llms.txt', function () {
         $productLinks .= "- [{$product->name}]({$baseUrl}/product/{$product->slug})\n";
     }
 
-    $content = "# Bite Export\n\n";
-    $content .= "**BiteExport** is a trusted merchant exporter and global supplier of premium-quality dehydrated vegetables, spices, food ingredients, and agricultural products from India. We provide export-grade products that meet international quality standards, serving importers, wholesalers, distributors, food manufacturers, and retail brands across global markets. Our product range includes dehydrated onion, dehydrated garlic, spice powders, herbs, and other agricultural commodities, sourced from reliable manufacturing partners and carefully inspected for consistent quality. With a strong focus on competitive pricing, customized packaging, timely delivery, and customer satisfaction, BiteExport is committed to building long-term business relationships through dependable export solutions..\n\n";
+    $content = "# padmeshwara\n\n";
+    $content .= "**padmeshwara** is a trusted merchant exporter and global supplier of premium-quality dehydrated vegetables, spices, food ingredients, and agricultural products from India. We provide export-grade products that meet international quality standards, serving importers, wholesalers, distributors, food manufacturers, and retail brands across global markets. Our product range includes dehydrated onion, dehydrated garlic, spice powders, herbs, and other agricultural commodities, sourced from reliable manufacturing partners and carefully inspected for consistent quality. With a strong focus on competitive pricing, customized packaging, timely delivery, and customer satisfaction, padmeshwara is committed to building long-term business relationships through dependable export solutions..\n\n";
     
     $content .= "## About\n\n";
-    $content .= "BiteExport connects Indian farmers directly with the global market, ensuring fair prices for producers while providing international buyers with consistent, high-quality agricultural products. We handle everything from sourcing and quality testing to packaging and export logistics, ensuring a seamless supply chain.\n\n";
+    $content .= "padmeshwara connects Indian farmers directly with the global market, ensuring fair prices for producers while providing international buyers with consistent, high-quality agricultural products. We handle everything from sourcing and quality testing to packaging and export logistics, ensuring a seamless supply chain.\n\n";
     $content .= "- [About Us]({$baseUrl}/about)\n\n";
 
     $content .= "## Main Pages\n\n";

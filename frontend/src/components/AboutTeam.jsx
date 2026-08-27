@@ -44,7 +44,7 @@ export default function AboutTeam() {
 
   const subtitle = sectionSetting?.subtitle || 'OUR TEAM';
   const titleText = sectionSetting?.title || 'Meet Our Team';
-  const description = sectionSetting?.description || 'Behind Bite Export is a dedicated team committed to delivering quality products, reliable export services, and long-term partnerships with global buyers.';
+  const description = sectionSetting?.description || 'Behind padmeshwara is a dedicated team committed to delivering quality products, reliable export services, and long-term partnerships with global buyers.';
 
   const titleWords = titleText.split(' ');
   const lastWord = titleWords.pop();
@@ -73,7 +73,7 @@ export default function AboutTeam() {
               "description": member.short_description,
               "worksFor": {
                 "@type": "Organization",
-                "name": "Bite Export"
+                "name": "padmeshwara"
               },
               "sameAs": [
                 member.social_links?.linkedin,

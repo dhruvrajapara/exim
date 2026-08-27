@@ -27,8 +27,8 @@ files.forEach(file => {
     let original = content;
 
     // Case sensitive replacements
-    content = content.replace(/BiteExport/g, 'Bite Export');
-    content = content.replace(/biteexport\.com/g, 'abcexport.com');
+    content = content.replace(/padmeshwara/g, 'padmeshwara');
+    content = content.replace(/padmeshwara\.com/g, 'abcexport.com');
 
     if (content !== original) {
         fs.writeFileSync(file, content, 'utf8');

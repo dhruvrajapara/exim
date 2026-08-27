@@ -49,7 +49,7 @@ const TeamMembers = () => {
   const [sectionSetting, setSectionSetting] = useState({
     subtitle: 'OUR TEAM',
     title: 'Meet Our Team',
-    description: 'Behind Bite Export is a dedicated team committed to delivering quality products, reliable export services, and long-term partnerships with global buyers.'
+    description: 'Behind padmeshwara is a dedicated team committed to delivering quality products, reliable export services, and long-term partnerships with global buyers.'
   });
   const [savingSection, setSavingSection] = useState(false);
   const [isSectionOpen, setIsSectionOpen] = useState(false);
@@ -71,7 +71,7 @@ const TeamMembers = () => {
         setSectionSetting({
           subtitle: data.subtitle || 'OUR TEAM',
           title: data.title || 'Meet Our Team',
-          description: data.description || 'Behind Bite Export is a dedicated team committed to delivering quality products, reliable export services, and long-term partnerships with global buyers.'
+          description: data.description || 'Behind padmeshwara is a dedicated team committed to delivering quality products, reliable export services, and long-term partnerships with global buyers.'
         });
       }
     } catch (error) {

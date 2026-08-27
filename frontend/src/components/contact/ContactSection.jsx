@@ -248,7 +248,7 @@ export default function ContactSection() {
                   <div className="flex items-start gap-3 mt-2">
                     <input type="checkbox" name="agreed" id="agreed" required checked={formData.agreed} onChange={handleChange} className="mt-1 w-4 h-4 rounded border-gray-300 text-[#0B63CE] focus:ring-[#0B63CE]" />
                     <label htmlFor="agreed" className="text-[14px] text-gray-500 leading-relaxed cursor-pointer">
-                      I agree to the Privacy Policy and consent to {settings?.contact_company_name || 'Bite Export'} processing my personal data for the purpose of handling my inquiry.
+                      I agree to the Privacy Policy and consent to {settings?.contact_company_name || 'padmeshwara'} processing my personal data for the purpose of handling my inquiry.
                     </label>
                   </div>
 

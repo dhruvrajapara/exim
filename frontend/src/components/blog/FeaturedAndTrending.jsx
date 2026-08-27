@@ -60,7 +60,7 @@ export default function FeaturedAndTrending({ featuredBlog, trendingBlogs }) {
 
                   <div className="flex items-center justify-between border-t border-gray-100 pt-6">
                     <div className="font-medium text-gray-800">
-                      By {featuredBlog.author || 'Bite Export'}
+                      By {featuredBlog.author || 'padmeshwara'}
                     </div>
                     <div className="flex items-center gap-2 text-[#0B63CE] font-bold group-hover:gap-4 transition-all">
                       Read More <ArrowForwardIcon fontSize="small" />

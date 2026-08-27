@@ -38,8 +38,8 @@ const WhyChooseUsAdmin = () => {
   // Section Settings State
   const [sectionSetting, setSectionSetting] = useState({
     subtitle: 'WHY CHOOSE US',
-    title: 'Why Choose Bite Export',
-    description: 'At Bite Export, we deliver premium-quality agricultural products backed by reliable export services, international standards, and long-term business relationships.'
+    title: 'Why Choose padmeshwara',
+    description: 'At padmeshwara, we deliver premium-quality agricultural products backed by reliable export services, international standards, and long-term business relationships.'
   });
   const [savingSection, setSavingSection] = useState(false);
   const [isSectionOpen, setIsSectionOpen] = useState(false);
@@ -55,8 +55,8 @@ const WhyChooseUsAdmin = () => {
       if (data) {
         setSectionSetting({
           subtitle: data.subtitle || 'WHY CHOOSE US',
-          title: data.title || 'Why Choose Bite Export',
-          description: data.description || 'At Bite Export, we deliver premium-quality agricultural products backed by reliable export services, international standards, and long-term business relationships.'
+          title: data.title || 'Why Choose padmeshwara',
+          description: data.description || 'At padmeshwara, we deliver premium-quality agricultural products backed by reliable export services, international standards, and long-term business relationships.'
         });
       }
     } catch (error) {

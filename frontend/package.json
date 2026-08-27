@@ -8,7 +8,7 @@
     "build": "vite build",
     "lint": "oxlint",
     "preview": "vite preview",
-    "deploy": "npm run build && scp -P 65002 -r dist/* u371897237@147.93.17.198:domains/biteexport.com/project-files/backend/public/ && scp -P 65002 -r dist/* u510886501@82.25.125.213:domains/nebulixexim.com/exim_core/backend/public/"
+    "deploy": "npm run build && scp -P 65002 -r dist/* u371897237@147.93.17.198:domains/padmeshwara.com/project-files/backend/public/ && scp -P 65002 -r dist/* u510886501@82.25.125.213:domains/nebulixexim.com/exim_core/backend/public/"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

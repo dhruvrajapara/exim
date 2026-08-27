@@ -15,7 +15,7 @@ export default function ContactCTA() {
               Ready to Start Your Import Journey?
             </h2>
             <p className="text-gray-300 text-[16px] md:text-[20px] mb-10 leading-relaxed">
-              Partner with Bite Export for premium dehydrated food products and reliable export services worldwide.
+              Partner with padmeshwara for premium dehydrated food products and reliable export services worldwide.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">

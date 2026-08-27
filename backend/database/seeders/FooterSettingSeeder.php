@@ -15,7 +15,7 @@ class FooterSettingSeeder extends Seeder
     {
         FooterSetting::create([
             'company_logo' => '/hero.png', // Temporary placeholder for the white logo
-            'company_description' => 'Bite Export is a trusted merchant exporter specializing in premium dehydrated vegetables, spices, and agricultural products, serving buyers across international markets.',
+            'company_description' => 'padmeshwara is a trusted merchant exporter specializing in premium dehydrated vegetables, spices, and agricultural products, serving buyers across international markets.',
             'social_links' => [
                 ['platform' => 'facebook', 'url' => 'https://facebook.com'],
                 ['platform' => 'instagram', 'url' => 'https://instagram.com'],
@@ -44,7 +44,7 @@ class FooterSettingSeeder extends Seeder
                 'info@nebulixexim.com',
                 'sales@nebulixexim.com'
             ],
-            'copyright_text' => '© ' . date('Y') . ' Bite Export. All Rights Reserved.',
+            'copyright_text' => '© ' . date('Y') . ' padmeshwara. All Rights Reserved.',
             'bottom_links' => []
         ]);
     }

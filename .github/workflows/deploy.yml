@@ -18,7 +18,7 @@ jobs:
           key: ${{ secrets.HOSTINGER_SSH_KEY }}
           port: ${{ secrets.HOSTINGER_PORT }}
           script: |
-            cd ~/domains/biteexport.com/project-files
+            cd ~/domains/padmeshwara.com/project-files
             git pull origin main
             cp -r frontend/dist/* backend/public/
             cd backend

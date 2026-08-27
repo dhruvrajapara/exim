@@ -33,7 +33,7 @@ export default function WebsiteAppearance() {
     theme_breadcrumb_color: '#6B7280',
     theme_footer_bg_color: '#000821',
     theme_cta_bg_color: '#0B63CE',
-    contact_company_name: 'Bite Export',
+    contact_company_name: 'padmeshwara',
     contact_office_addresses: [''],
     contact_google_map_url: '',
     contact_phones: [''],
@@ -64,7 +64,7 @@ export default function WebsiteAppearance() {
     header_btn_link: { label: '', url: '' },
     blog_enabled: true,
     sidebar_cta_title: 'Need Bulk Quantity?',
-    sidebar_cta_description: 'Partner with Bite Export for premium dehydrated agriculture products delivered globally.',
+    sidebar_cta_description: 'Partner with padmeshwara for premium dehydrated agriculture products delivered globally.',
     newsletter_title: 'Stay Updated with Export Market Insights',
     newsletter_description: 'Get export tips, buyer trends and global food industry updates delivered straight to your inbox.',
     microsoft_clarity_enabled: false,
@@ -809,7 +809,7 @@ export default function WebsiteAppearance() {
                   </div>
                   <div className="mb-6">
                     <label className="block text-sm font-medium text-gray-700 mb-1">Sidebar CTA Description</label>
-                    <textarea name="sidebar_cta_description" value={formData.sidebar_cta_description} onChange={handleChange} rows="3" className="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:border-[#0B63CE] outline-none" placeholder="Partner with Bite Export for premium dehydrated agriculture products delivered globally."></textarea>
+                    <textarea name="sidebar_cta_description" value={formData.sidebar_cta_description} onChange={handleChange} rows="3" className="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:border-[#0B63CE] outline-none" placeholder="Partner with padmeshwara for premium dehydrated agriculture products delivered globally."></textarea>
                   </div>
                 </div>
 
