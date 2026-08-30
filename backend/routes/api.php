@@ -117,8 +117,10 @@ Route::prefix('admin')->group(function () {
     Route::put('/inquiries/{id}/status', [\App\Http\Controllers\Api\InquiryController::class, 'updateStatus']);
     Route::delete('/inquiries/{id}', [\App\Http\Controllers\Api\InquiryController::class, 'destroy']);
 
-    // Subscribers
+    // Subscribers & Campaign Logs
     Route::get('/subscribers', [\App\Http\Controllers\Api\SubscriberController::class, 'index']);
+    Route::post('/subscribers/send-campaign', [\App\Http\Controllers\Api\SubscriberController::class, 'sendCampaign']);
+    Route::get('/subscribers/campaign-logs', [\App\Http\Controllers\Api\SubscriberController::class, 'getCampaignLogs']);
     Route::delete('/subscribers/{id}', [\App\Http\Controllers\Api\SubscriberController::class, 'destroy']);
 });
 

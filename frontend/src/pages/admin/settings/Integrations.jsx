@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import SaveIcon from '@mui/icons-material/Save';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ExtensionIcon from '@mui/icons-material/Extension';
+import EmailIcon from '@mui/icons-material/Email';
 
 export default function Integrations() {
   const [formData, setFormData] = useState({
@@ -11,6 +12,13 @@ export default function Integrations() {
     gsc_enabled: false,
     gsc_site_url: '',
     gsc_service_account_json: '',
+    smtp_host: '',
+    smtp_port: '465',
+    smtp_username: '',
+    smtp_password: '',
+    smtp_encryption: 'ssl',
+    smtp_from_address: '',
+    smtp_from_name: 'BiteExport',
   });
 
   const [isLoading, setIsLoading] = useState(true);
@@ -60,6 +68,13 @@ export default function Integrations() {
           if (json.data.gsc_service_account_json !== undefined && json.data.gsc_service_account_json !== null) {
             newFormData.gsc_service_account_json = json.data.gsc_service_account_json;
           }
+
+          // SMTP fields
+          ['smtp_host', 'smtp_port', 'smtp_username', 'smtp_password', 'smtp_encryption', 'smtp_from_address', 'smtp_from_name'].forEach(key => {
+            if (json.data[key] !== undefined && json.data[key] !== null) {
+              newFormData[key] = json.data[key];
+            }
+          });
           
           setFormData(newFormData);
         }
@@ -91,6 +106,15 @@ export default function Integrations() {
     submitData.append('gsc_site_url', formData.gsc_site_url || '');
     submitData.append('gsc_service_account_json', formData.gsc_service_account_json || '');
 
+    // Append SMTP fields
+    submitData.append('smtp_host', formData.smtp_host || '');
+    submitData.append('smtp_port', formData.smtp_port || '465');
+    submitData.append('smtp_username', formData.smtp_username || '');
+    submitData.append('smtp_password', formData.smtp_password || '');
+    submitData.append('smtp_encryption', formData.smtp_encryption || 'ssl');
+    submitData.append('smtp_from_address', formData.smtp_from_address || '');
+    submitData.append('smtp_from_name', formData.smtp_from_name || 'BiteExport');
+
     submitData.append('_method', 'PUT');
 
     try {
@@ -103,7 +127,7 @@ export default function Integrations() {
       });
 
       if (res.ok) {
-        setSuccessMessage('Integrations settings updated successfully!');
+        setSuccessMessage('Integrations & SMTP settings updated successfully!');
         setTimeout(() => setSuccessMessage(''), 3000);
       } else {
         const err = await res.json();
@@ -124,14 +148,14 @@ export default function Integrations() {
   return (
     <>
       <Helmet>
-        <title>Integrations | Admin</title>
+        <title>Integrations & Email Setup | Admin</title>
       </Helmet>
 
       <div className="max-w-4xl mx-auto p-6 animate-fade-in">
         <div className="flex justify-between items-center mb-8">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">Analytics & Integrations</h1>
-            <p className="text-gray-500 text-sm mt-1">Manage third-party tracking scripts and connections.</p>
+            <h1 className="text-2xl font-bold text-gray-900">Analytics, Integrations & SMTP Setup</h1>
+            <p className="text-gray-500 text-sm mt-1">Manage third-party tracking scripts, Search Console API, and outgoing email server settings.</p>
           </div>
           <button 
             onClick={handleSubmit}
@@ -151,6 +175,102 @@ export default function Integrations() {
         )}
 
         <div className="space-y-6">
+
+          {/* Email / SMTP Configuration Card */}
+          <div className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
+            <div className="p-6">
+              <div className="flex items-start justify-between mb-6">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-green-50 rounded-lg flex items-center justify-center text-green-600">
+                    <EmailIcon />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-bold text-gray-900">SMTP Email Server Setup</h3>
+                    <p className="text-sm text-gray-500">Configure outgoing email address (e.g. info@biteexport.com) for sending campaigns.</p>
+                  </div>
+                </div>
+                <div className={`px-3 py-1 rounded-full text-xs font-semibold ${formData.smtp_host && formData.smtp_username ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}`}>
+                  {formData.smtp_host && formData.smtp_username ? 'Configured' : 'Not Configured'}
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 bg-gray-50/50 p-5 rounded-lg border border-gray-100">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">SMTP Host</label>
+                  <input 
+                    type="text" 
+                    name="smtp_host" 
+                    value={formData.smtp_host || ''} 
+                    onChange={handleChange} 
+                    className="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:border-[#0B63CE] outline-none bg-white" 
+                    placeholder="e.g. smtp.hostinger.com or smtp.gmail.com" 
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">SMTP Port</label>
+                  <input 
+                    type="text" 
+                    name="smtp_port" 
+                    value={formData.smtp_port || '465'} 
+                    onChange={handleChange} 
+                    className="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:border-[#0B63CE] outline-none bg-white" 
+                    placeholder="465 for SSL or 587 for TLS" 
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">SMTP Username / Email</label>
+                  <input 
+                    type="email" 
+                    name="smtp_username" 
+                    value={formData.smtp_username || ''} 
+                    onChange={handleChange} 
+                    className="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:border-[#0B63CE] outline-none bg-white" 
+                    placeholder="info@biteexport.com" 
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">SMTP Password</label>
+                  <input 
+                    type="password" 
+                    name="smtp_password" 
+                    value={formData.smtp_password || ''} 
+                    onChange={handleChange} 
+                    className="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:border-[#0B63CE] outline-none bg-white" 
+                    placeholder="Email Account Password" 
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Encryption Method</label>
+                  <select 
+                    name="smtp_encryption" 
+                    value={formData.smtp_encryption || 'ssl'} 
+                    onChange={handleChange} 
+                    className="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:border-[#0B63CE] outline-none bg-white"
+                  >
+                    <option value="ssl">SSL (Port 465)</option>
+                    <option value="tls">TLS (Port 587)</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Sender From Name</label>
+                  <input 
+                    type="text" 
+                    name="smtp_from_name" 
+                    value={formData.smtp_from_name || 'BiteExport'} 
+                    onChange={handleChange} 
+                    className="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:border-[#0B63CE] outline-none bg-white" 
+                    placeholder="BiteExport" 
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
           {/* Microsoft Clarity Card */}
           <div className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
             <div className="p-6">
@@ -196,46 +316,6 @@ export default function Integrations() {
                     Enable Microsoft Clarity Tracking
                   </label>
                 </div>
-              </div>
-
-              <div className="mt-6">
-                <button 
-                  type="button" 
-                  onClick={() => setIsClarityGuideOpen(!isClarityGuideOpen)}
-                  className="flex items-center justify-between w-full p-4 bg-gray-50 rounded-lg border border-gray-200 text-sm font-medium text-gray-700 hover:bg-gray-100 transition-colors"
-                >
-                  How to Connect Microsoft Clarity
-                  <span className="text-gray-400">{isClarityGuideOpen ? '▲' : '▼'}</span>
-                </button>
-                
-                {isClarityGuideOpen && (
-                  <div className="p-5 border border-t-0 border-gray-200 rounded-b-lg bg-white text-sm text-gray-600 space-y-5">
-                    <div>
-                      <h4 className="font-semibold text-gray-900 mb-1">Step 1: Create Microsoft Clarity Account</h4>
-                      <p>Open: <a href="https://clarity.microsoft.com" target="_blank" rel="noreferrer" className="text-[#0B63CE] hover:underline">https://clarity.microsoft.com</a></p>
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-gray-900 mb-1">Step 2: Create New Project</h4>
-                      <ul className="list-disc pl-5 space-y-1">
-                        <li>Enter Website Name</li>
-                        <li>Enter Website URL</li>
-                        <li>Select Category</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-gray-900 mb-1">Step 3: Copy Project ID</h4>
-                      <p>Go to: Settings &rarr; Setup &rarr; Install manually, and copy the Project ID.</p>
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-gray-900 mb-1">Step 4: Add Project ID</h4>
-                      <p>Paste the Project ID in the field above and enable tracking.</p>
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-gray-900 mb-1">Step 5: Verify</h4>
-                      <p>Open your website, wait 15-30 minutes, and check the Clarity dashboard for session recordings and heatmaps.</p>
-                    </div>
-                  </div>
-                )}
               </div>
             </div>
           </div>
@@ -299,44 +379,9 @@ export default function Integrations() {
                   </label>
                 </div>
               </div>
-
-              <div className="mt-6">
-                <button 
-                  type="button" 
-                  onClick={() => setIsGscGuideOpen(!isGscGuideOpen)}
-                  className="flex items-center justify-between w-full p-4 bg-gray-50 rounded-lg border border-gray-200 text-sm font-medium text-gray-700 hover:bg-gray-100 transition-colors"
-                >
-                  How to Connect Google Search Console API
-                  <span className="text-gray-400">{isGscGuideOpen ? '▲' : '▼'}</span>
-                </button>
-                
-                {isGscGuideOpen && (
-                  <div className="p-5 border border-t-0 border-gray-200 rounded-b-lg bg-white text-sm text-gray-600 space-y-5">
-                    <div>
-                      <h4 className="font-semibold text-gray-900 mb-1">Step 1: Open Google Cloud Console</h4>
-                      <p>Go to <a href="https://console.cloud.google.com/" target="_blank" rel="noreferrer" className="text-[#0B63CE] hover:underline">Google Cloud Console</a> and create or select your project.</p>
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-gray-900 mb-1">Step 2: Enable Google Search Console API</h4>
-                      <p>In APIs & Services &rarr; Library, search for <strong>Google Search Console API</strong> and click <strong>Enable</strong>.</p>
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-gray-900 mb-1">Step 3: Create Service Account & Keys</h4>
-                      <p>In Credentials &rarr; Create Credentials &rarr; Service Account. Create it, then open the Keys tab, click <strong>Add Key &rarr; Create new key (JSON)</strong> and download the JSON file.</p>
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-gray-900 mb-1">Step 4: Grant Access in Search Console</h4>
-                      <p>Open <a href="https://search.google.com/search-console" target="_blank" rel="noreferrer" className="text-[#0B63CE] hover:underline">Google Search Console</a>, select your property &rarr; Settings &rarr; Users and permissions &rarr; Add User. Add the Service Account Email address (e.g. `your-service-account@project.iam.gserviceaccount.com`) as <strong>Viewer</strong>.</p>
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-gray-900 mb-1">Step 5: Paste Details & Save</h4>
-                      <p>Paste the Property URL and the JSON Key file contents above, check "Enable", and click Save Changes.</p>
-                    </div>
-                  </div>
-                )}
-              </div>
             </div>
           </div>
+
         </div>
       </div>
     </>

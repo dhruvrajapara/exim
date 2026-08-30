@@ -1055,10 +1055,10 @@ export const getAdminSubscribers = async () => {
     const response = await fetch('/api/admin/subscribers');
     if (!response.ok) throw new Error('Failed to fetch subscribers');
     const data = await response.json();
-    return data.data;
+    return data.data || [];
   } catch (error) {
     console.error('Error fetching admin subscribers:', error);
-    throw error;
+    return [];
   }
 };
 
@@ -1072,5 +1072,16 @@ export const deleteSubscriber = async (id) => {
   } catch (error) {
     console.error('Error deleting subscriber:', error);
     throw error;
+  }
+};
+
+export const getCampaignLogs = async () => {
+  try {
+    const response = await fetch('/api/admin/subscribers/campaign-logs');
+    if (!response.ok) throw new Error('Failed to fetch campaign logs');
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching campaign logs:', error);
+    return [];
   }
 };

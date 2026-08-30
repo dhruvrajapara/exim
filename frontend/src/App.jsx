@@ -49,6 +49,7 @@ const BlogPageHeroSection = lazy(() => import('./pages/admin/website/blog/BlogPa
 const ContactPageHeroSection = lazy(() => import('./pages/admin/website/contact/ContactPageHeroSection'));
 const InquiriesList = lazy(() => import('./pages/admin/inquiries/InquiriesList'));
 const Subscribers = lazy(() => import('./pages/admin/Subscribers'));
+const SendCampaignPage = lazy(() => import('./pages/admin/subscribers/SendCampaign'));
 const Profile = lazy(() => import('./pages/admin/Profile'));
 import { useLocation } from 'react-router-dom';
 
@@ -128,6 +129,7 @@ function App() {
               
               <Route path="inquiries" element={<InquiriesList />} />
               <Route path="subscribers" element={<Subscribers />} />
+              <Route path="subscribers/send-campaign" element={<SendCampaignPage />} />
               
               <Route path="profile" element={<Profile />} />
               
