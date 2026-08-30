@@ -204,7 +204,13 @@ export default function SendCampaignPage() {
       console.error('Error loading products', e);
     }
 
-    // Load Footer Address & Email from DB
+    // Check if user has saved custom HTML body in localStorage
+    const savedCustomHtml = localStorage.getItem('saved_email_html_body');
+    if (savedCustomHtml) {
+      setHtmlContent(savedCustomHtml);
+    }
+
+    // Load Footer Address & Email from DB and replace dynamically
     try {
       const fData = await fetchFooter();
       if (fData && fData.footer) {
@@ -594,7 +600,10 @@ export default function SendCampaignPage() {
                 rows={16}
                 required
                 value={htmlContent}
-                onChange={(e) => setHtmlContent(e.target.value)}
+                onChange={(e) => {
+                  setHtmlContent(e.target.value);
+                  localStorage.setItem('saved_email_html_body', e.target.value);
+                }}
                 className="w-full border border-gray-300 rounded-lg p-4 text-xs font-mono bg-gray-50 focus:border-[#0B63CE] outline-none"
               />
             )}

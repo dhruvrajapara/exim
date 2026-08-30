@@ -187,75 +187,26 @@ class SubscriberController extends Controller
             ]);
         }
 
-        $sentCount = 0;
-        $failedCount = 0;
-        $lastErrorMessage = '';
+        $dispatchedCount = 0;
 
         foreach ($uniqueRecipients as $recipient) {
-            $userEmail = $recipient['email'];
-            $userName = ucwords(str_replace(['.', '_', '-'], ' ', $recipient['name']));
-
-            // Dynamic Personalization Tag Replacements
-            $personalizedSubject = str_replace(
-                ['{name}', '{email}'],
-                [$userName, $userEmail],
-                $request->subject
+            \App\Jobs\SendCampaignEmailJob::dispatch(
+                $recipient,
+                $request->subject,
+                $request->html_content,
+                $attachmentPath,
+                $attachmentName,
+                $request->recipient_type,
+                $smtpSettings
             );
-
-            $personalizedHtml = str_replace(
-                ['{name}', '{email}'],
-                [$userName, $userEmail],
-                $request->html_content
-            );
-
-            try {
-                \Illuminate\Support\Facades\Mail::to($userEmail)->send(
-                    new \App\Mail\CampaignMail($personalizedSubject, $personalizedHtml, $attachmentPath, $attachmentName)
-                );
-                $sentCount++;
-
-                \App\Models\CampaignLog::create([
-                    'subject' => $personalizedSubject,
-                    'recipient_email' => $userEmail,
-                    'recipient_name' => $userName,
-                    'recipient_type' => $request->recipient_type,
-                    'status' => 'sent',
-                    'error_message' => null,
-                    'pdf_attachment_name' => $attachmentName
-                ]);
-            } catch (\Exception $e) {
-                $lastErrorMessage = $e->getMessage();
-                \Illuminate\Support\Facades\Log::error("Failed to send campaign mail to {$userEmail}: " . $lastErrorMessage);
-                $failedCount++;
-
-                \App\Models\CampaignLog::create([
-                    'subject' => $personalizedSubject,
-                    'recipient_email' => $userEmail,
-                    'recipient_name' => $userName,
-                    'recipient_type' => $request->recipient_type,
-                    'status' => 'failed',
-                    'error_message' => $lastErrorMessage,
-                    'pdf_attachment_name' => $attachmentName
-                ]);
-            }
-        }
-
-        // Clean up temporary PDF attachment file
-        if ($attachmentPath && file_exists($attachmentPath)) {
-            @unlink($attachmentPath);
-        }
-
-        $msg = "Campaign result: Sent: {$sentCount}, Failed: {$failedCount}.";
-        if ($failedCount > 0 && !empty($lastErrorMessage)) {
-            $msg .= " Error: {$lastErrorMessage}";
+            $dispatchedCount++;
         }
 
         return response()->json([
-            'success' => $sentCount > 0,
-            'message' => $msg,
-            'sent_count' => $sentCount,
-            'failed_count' => $failedCount,
-            'error_detail' => $lastErrorMessage
+            'success' => true,
+            'message' => "Campaign broadcast started in background for {$dispatchedCount} recipients! Check Broadcast Logs for progress.",
+            'sent_count' => $dispatchedCount,
+            'failed_count' => 0
         ]);
     }
 
