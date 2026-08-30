@@ -20,6 +20,12 @@ class DashboardController extends Controller
 
         $recentEnquiries = Inquiry::orderBy('created_at', 'desc')->take(5)->get();
 
+        $gscService = new \App\Services\GoogleSearchConsoleService();
+        $gscData = null;
+        if ($gscService->isConnected()) {
+            $gscData = $gscService->getAnalyticsData(30);
+        }
+
         return response()->json([
             'success' => true,
             'data' => [
@@ -29,7 +35,11 @@ class DashboardController extends Controller
                     'published_blogs' => $publishedBlogs,
                     'total_users' => $totalUsers
                 ],
-                'recent_enquiries' => $recentEnquiries
+                'recent_enquiries' => $recentEnquiries,
+                'gsc' => [
+                    'connected' => $gscService->isConnected(),
+                    'data' => $gscData
+                ]
             ]
         ]);
     }

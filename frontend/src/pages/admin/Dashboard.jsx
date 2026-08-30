@@ -135,37 +135,106 @@ export default function Dashboard() {
         <div className="lg:col-span-2 bg-white rounded-xl shadow-sm border border-gray-100 flex flex-col">
           <div className="p-6 border-b border-gray-50 flex items-center justify-between">
             <div>
-              <h3 className="text-lg font-bold text-gray-900">Traffic & Engagement</h3>
-              <p className="text-[13px] text-gray-500 mt-1">Overview of your website performance</p>
-            </div>
-            <button className="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-50 rounded-md transition-colors">
-              <MoreVertIcon />
-            </button>
-          </div>
-          <div className="p-6 flex-1 flex flex-col min-h-[350px]">
-            {/* Minimalist Chart Mockup */}
-            <div className="w-full h-full flex-1 flex items-end gap-2 sm:gap-4 relative pt-10">
-              {/* Grid Lines */}
-              <div className="absolute inset-0 flex flex-col justify-between pb-6 pointer-events-none">
-                {[1, 2, 3, 4, 5].map(line => (
-                  <div key={line} className="w-full border-b border-dashed border-gray-200"></div>
-                ))}
+              <div className="flex items-center gap-2">
+                <h3 className="text-lg font-bold text-gray-900">Search Performance</h3>
+                {dashboardData?.gsc?.connected ? (
+                  <span className="bg-green-100 text-green-700 text-xs font-semibold px-2.5 py-0.5 rounded-full">
+                    Google Search Console Live
+                  </span>
+                ) : (
+                  <span className="bg-amber-100 text-amber-700 text-xs font-semibold px-2.5 py-0.5 rounded-full">
+                    Demo Mode
+                  </span>
+                )}
               </div>
-              {/* Bars */}
-              {[40, 70, 45, 90, 65, 80, 55, 100, 75, 85, 60, 95].map((height, i) => (
-                <div key={i} className="flex-1 flex flex-col justify-end items-center z-10 group relative h-full">
-                   <div 
-                     className="w-full bg-blue-100 group-hover:bg-blue-200 rounded-t-sm transition-colors relative" 
-                     style={{ height: `${height}%` }}
-                   >
-                     <div className="absolute top-0 left-0 right-0 h-1 bg-[#0B63CE] rounded-t-sm group-hover:h-2 transition-all"></div>
-                   </div>
-                   <span className="text-[10px] sm:text-xs text-gray-400 mt-3 absolute -bottom-6">
-                     {['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][i]}
-                   </span>
-                </div>
-              ))}
+              <p className="text-[13px] text-gray-500 mt-1">
+                {dashboardData?.gsc?.connected
+                  ? 'Organic search clicks & impressions from Google Search Console'
+                  : 'Connect Google Search Console API in Settings to view live organic analytics'}
+              </p>
             </div>
+            {!dashboardData?.gsc?.connected && (
+              <a
+                href="/admin/settings/integrations"
+                className="text-xs font-semibold bg-[#0B63CE] text-white px-3 py-1.5 rounded-lg hover:bg-blue-700 transition-colors"
+              >
+                Connect GSC
+              </a>
+            )}
+          </div>
+
+          <div className="p-6 flex-1 flex flex-col min-h-[350px]">
+            {dashboardData?.gsc?.connected && dashboardData?.gsc?.data?.chart?.length > 0 ? (
+              <div className="flex flex-col h-full">
+                {/* Summary Metrics */}
+                <div className="grid grid-cols-3 gap-4 mb-6 p-4 bg-gray-50 rounded-lg">
+                  <div>
+                    <p className="text-xs text-gray-500 font-medium">Total Clicks (30 Days)</p>
+                    <p className="text-xl font-bold text-gray-900">{dashboardData.gsc.data.total_clicks}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-gray-500 font-medium">Total Impressions</p>
+                    <p className="text-xl font-bold text-gray-900">{dashboardData.gsc.data.total_impressions}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-gray-500 font-medium">Average CTR</p>
+                    <p className="text-xl font-bold text-[#0B63CE]">{dashboardData.gsc.data.ctr}%</p>
+                  </div>
+                </div>
+
+                {/* Dynamic Bar Chart */}
+                <div className="w-full flex-1 flex items-end gap-1.5 sm:gap-2 relative pt-6 min-h-[200px]">
+                  <div className="absolute inset-0 flex flex-col justify-between pb-6 pointer-events-none">
+                    {[1, 2, 3, 4].map((line) => (
+                      <div key={line} className="w-full border-b border-dashed border-gray-200"></div>
+                    ))}
+                  </div>
+                  {dashboardData.gsc.data.chart.slice(-15).map((item, i) => {
+                    const maxClicks = Math.max(...dashboardData.gsc.data.chart.map((c) => c.clicks), 1);
+                    const heightPercent = Math.max((item.clicks / maxClicks) * 100, 8);
+                    return (
+                      <div key={i} className="flex-1 flex flex-col justify-end items-center z-10 group relative h-full">
+                        <div
+                          className="w-full bg-blue-500/80 group-hover:bg-[#0B63CE] rounded-t-sm transition-all relative"
+                          style={{ height: `${heightPercent}%` }}
+                        >
+                          <div className="opacity-0 group-hover:opacity-100 absolute -top-8 left-1/2 -translate-x-1/2 bg-gray-900 text-white text-[10px] px-2 py-1 rounded shadow pointer-events-none whitespace-nowrap z-20">
+                            {item.clicks} clicks ({item.impressions} imp)
+                          </div>
+                        </div>
+                        <span className="text-[10px] text-gray-400 mt-2 truncate w-full text-center">
+                          {item.date}
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            ) : (
+              /* Fallback / Mockup view with setup hint */
+              <div className="w-full h-full flex-1 flex flex-col justify-between relative">
+                <div className="w-full flex-1 flex items-end gap-2 sm:gap-4 relative pt-10">
+                  <div className="absolute inset-0 flex flex-col justify-between pb-6 pointer-events-none">
+                    {[1, 2, 3, 4, 5].map((line) => (
+                      <div key={line} className="w-full border-b border-dashed border-gray-200"></div>
+                    ))}
+                  </div>
+                  {[40, 70, 45, 90, 65, 80, 55, 100, 75, 85, 60, 95].map((height, i) => (
+                    <div key={i} className="flex-1 flex flex-col justify-end items-center z-10 group relative h-full">
+                      <div
+                        className="w-full bg-blue-100 group-hover:bg-blue-200 rounded-t-sm transition-colors relative"
+                        style={{ height: `${height}%` }}
+                      >
+                        <div className="absolute top-0 left-0 right-0 h-1 bg-[#0B63CE] rounded-t-sm group-hover:h-2 transition-all"></div>
+                      </div>
+                      <span className="text-[10px] sm:text-xs text-gray-400 mt-3 absolute -bottom-6">
+                        {['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][i]}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </div>
         

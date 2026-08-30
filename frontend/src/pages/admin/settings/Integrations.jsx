@@ -8,12 +8,16 @@ export default function Integrations() {
   const [formData, setFormData] = useState({
     microsoft_clarity_enabled: false,
     microsoft_clarity_project_id: '',
+    gsc_enabled: false,
+    gsc_site_url: '',
+    gsc_service_account_json: '',
   });
 
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
   const [isClarityGuideOpen, setIsClarityGuideOpen] = useState(false);
+  const [isGscGuideOpen, setIsGscGuideOpen] = useState(false);
 
   useEffect(() => {
     fetchSettings();
@@ -42,6 +46,20 @@ export default function Integrations() {
           if (json.data.microsoft_clarity_project_id !== undefined && json.data.microsoft_clarity_project_id !== null && json.data.microsoft_clarity_project_id !== 'null') {
             newFormData.microsoft_clarity_project_id = json.data.microsoft_clarity_project_id;
           }
+
+          if (json.data.gsc_enabled === 'true' || json.data.gsc_enabled === '1') {
+            newFormData.gsc_enabled = true;
+          } else if (json.data.gsc_enabled === 'false' || json.data.gsc_enabled === '0') {
+            newFormData.gsc_enabled = false;
+          }
+
+          if (json.data.gsc_site_url !== undefined && json.data.gsc_site_url !== null) {
+            newFormData.gsc_site_url = json.data.gsc_site_url;
+          }
+
+          if (json.data.gsc_service_account_json !== undefined && json.data.gsc_service_account_json !== null) {
+            newFormData.gsc_service_account_json = json.data.gsc_service_account_json;
+          }
           
           setFormData(newFormData);
         }
@@ -69,10 +87,10 @@ export default function Integrations() {
     const submitData = new FormData();
     submitData.append('microsoft_clarity_enabled', formData.microsoft_clarity_enabled ? 'true' : 'false');
     submitData.append('microsoft_clarity_project_id', formData.microsoft_clarity_project_id || '');
+    submitData.append('gsc_enabled', formData.gsc_enabled ? 'true' : 'false');
+    submitData.append('gsc_site_url', formData.gsc_site_url || '');
+    submitData.append('gsc_service_account_json', formData.gsc_service_account_json || '');
 
-    // Add required CSRF / Auth tokens if any (typically handled by axios, but using fetch here as in WebsiteAppearance)
-    // The previous WebsiteAppearance used _method: PUT and basic fetch without explicit token if it's relying on cookies or the Laravel setup handles it.
-    // Wait, WebsiteAppearance used `method: 'POST'` and `submitData.append('_method', 'PUT');`
     submitData.append('_method', 'PUT');
 
     try {
@@ -216,27 +234,103 @@ export default function Integrations() {
                       <h4 className="font-semibold text-gray-900 mb-1">Step 5: Verify</h4>
                       <p>Open your website, wait 15-30 minutes, and check the Clarity dashboard for session recordings and heatmaps.</p>
                     </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
 
-                    <div className="pt-4 border-t border-gray-100 mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <h4 className="font-semibold text-gray-900 mb-2">Benefits:</h4>
-                        <ul className="space-y-1">
-                          <li className="flex items-center gap-2"><CheckCircleIcon fontSize="inherit" className="text-green-500" /> Heatmaps</li>
-                          <li className="flex items-center gap-2"><CheckCircleIcon fontSize="inherit" className="text-green-500" /> Session recordings</li>
-                          <li className="flex items-center gap-2"><CheckCircleIcon fontSize="inherit" className="text-green-500" /> Click tracking</li>
-                          <li className="flex items-center gap-2"><CheckCircleIcon fontSize="inherit" className="text-green-500" /> Scroll tracking</li>
-                          <li className="flex items-center gap-2"><CheckCircleIcon fontSize="inherit" className="text-green-500" /> User behavior analysis</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <h4 className="font-semibold text-gray-900 mb-2">Supported:</h4>
-                        <ul className="space-y-1">
-                          <li className="flex items-center gap-2"><CheckCircleIcon fontSize="inherit" className="text-green-500" /> React</li>
-                          <li className="flex items-center gap-2"><CheckCircleIcon fontSize="inherit" className="text-green-500" /> Laravel</li>
-                          <li className="flex items-center gap-2"><CheckCircleIcon fontSize="inherit" className="text-green-500" /> SPA Websites</li>
-                          <li className="flex items-center gap-2"><CheckCircleIcon fontSize="inherit" className="text-green-500" /> Public Website Pages</li>
-                        </ul>
-                      </div>
+          {/* Google Search Console Card */}
+          <div className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
+            <div className="p-6">
+              <div className="flex items-start justify-between mb-6">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-red-50 rounded-lg flex items-center justify-center text-red-600">
+                    <ExtensionIcon />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-bold text-gray-900">Google Search Console API</h3>
+                    <p className="text-sm text-gray-500">Fetch real-time organic search clicks, impressions, and performance for your Admin Dashboard.</p>
+                  </div>
+                </div>
+                <div className={`px-3 py-1 rounded-full text-xs font-semibold ${formData.gsc_enabled && formData.gsc_site_url && formData.gsc_service_account_json ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-600'}`}>
+                  {formData.gsc_enabled && formData.gsc_site_url && formData.gsc_service_account_json ? 'Connected' : 'Not Connected'}
+                </div>
+              </div>
+
+              <div className="space-y-6 bg-gray-50/50 p-5 rounded-lg border border-gray-100">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Search Console Property URL</label>
+                  <p className="text-xs text-gray-500 mb-2">Exact site URL registered in your Google Search Console (e.g. https://yourdomain.com/)</p>
+                  <input 
+                    type="text" 
+                    name="gsc_site_url" 
+                    value={formData.gsc_site_url || ''} 
+                    onChange={handleChange} 
+                    className="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:border-[#0B63CE] outline-none bg-white" 
+                    placeholder="https://yourdomain.com/" 
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Service Account JSON Key</label>
+                  <p className="text-xs text-gray-500 mb-2">Paste the complete contents of your Google Cloud Service Account JSON key file</p>
+                  <textarea 
+                    name="gsc_service_account_json" 
+                    rows={4}
+                    value={formData.gsc_service_account_json || ''} 
+                    onChange={handleChange} 
+                    className="w-full border border-gray-300 rounded-lg p-3 text-xs font-mono focus:border-[#0B63CE] outline-none bg-white" 
+                    placeholder='{"type": "service_account", "project_id": "...", "private_key": "..."}' 
+                  />
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <input 
+                    type="checkbox" 
+                    name="gsc_enabled" 
+                    id="gsc_enabled" 
+                    checked={formData.gsc_enabled} 
+                    onChange={handleChange} 
+                    className="w-5 h-5 text-[#0B63CE] rounded border-gray-300" 
+                  />
+                  <label htmlFor="gsc_enabled" className="text-sm font-medium text-gray-700 cursor-pointer">
+                    Enable Google Search Console Integration
+                  </label>
+                </div>
+              </div>
+
+              <div className="mt-6">
+                <button 
+                  type="button" 
+                  onClick={() => setIsGscGuideOpen(!isGscGuideOpen)}
+                  className="flex items-center justify-between w-full p-4 bg-gray-50 rounded-lg border border-gray-200 text-sm font-medium text-gray-700 hover:bg-gray-100 transition-colors"
+                >
+                  How to Connect Google Search Console API
+                  <span className="text-gray-400">{isGscGuideOpen ? '▲' : '▼'}</span>
+                </button>
+                
+                {isGscGuideOpen && (
+                  <div className="p-5 border border-t-0 border-gray-200 rounded-b-lg bg-white text-sm text-gray-600 space-y-5">
+                    <div>
+                      <h4 className="font-semibold text-gray-900 mb-1">Step 1: Open Google Cloud Console</h4>
+                      <p>Go to <a href="https://console.cloud.google.com/" target="_blank" rel="noreferrer" className="text-[#0B63CE] hover:underline">Google Cloud Console</a> and create or select your project.</p>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-gray-900 mb-1">Step 2: Enable Google Search Console API</h4>
+                      <p>In APIs & Services &rarr; Library, search for <strong>Google Search Console API</strong> and click <strong>Enable</strong>.</p>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-gray-900 mb-1">Step 3: Create Service Account & Keys</h4>
+                      <p>In Credentials &rarr; Create Credentials &rarr; Service Account. Create it, then open the Keys tab, click <strong>Add Key &rarr; Create new key (JSON)</strong> and download the JSON file.</p>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-gray-900 mb-1">Step 4: Grant Access in Search Console</h4>
+                      <p>Open <a href="https://search.google.com/search-console" target="_blank" rel="noreferrer" className="text-[#0B63CE] hover:underline">Google Search Console</a>, select your property &rarr; Settings &rarr; Users and permissions &rarr; Add User. Add the Service Account Email address (e.g. `your-service-account@project.iam.gserviceaccount.com`) as <strong>Viewer</strong>.</p>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-gray-900 mb-1">Step 5: Paste Details & Save</h4>
+                      <p>Paste the Property URL and the JSON Key file contents above, check "Enable", and click Save Changes.</p>
                     </div>
                   </div>
                 )}
