@@ -162,6 +162,9 @@ class SubscriberController extends Controller
             move_uploaded_file($file->getPathname(), $attachmentPath);
         }
 
+        // Prevent PHP & Nginx 504 Gateway Timeout during email broadcast
+        set_time_limit(300);
+
         // Dynamic SMTP configuration
         $smtpSettings = \App\Models\WebsiteSetting::whereIn('key', [
             'smtp_host', 'smtp_port', 'smtp_username', 'smtp_password', 'smtp_encryption', 'smtp_from_address', 'smtp_from_name'
@@ -178,6 +181,7 @@ class SubscriberController extends Controller
                 'mail.mailers.smtp.username' => $smtpSettings['smtp_username'],
                 'mail.mailers.smtp.password' => $smtpSettings['smtp_password'] ?? '',
                 'mail.mailers.smtp.scheme' => $scheme,
+                'mail.mailers.smtp.timeout' => 15,
                 'mail.from.address' => $smtpSettings['smtp_from_address'] ?: $smtpSettings['smtp_username'],
                 'mail.from.name' => $smtpSettings['smtp_from_name'] ?: 'BiteExport'
             ]);
@@ -234,6 +238,11 @@ class SubscriberController extends Controller
                     'pdf_attachment_name' => $attachmentName
                 ]);
             }
+        }
+
+        // Clean up temporary PDF attachment file
+        if ($attachmentPath && file_exists($attachmentPath)) {
+            @unlink($attachmentPath);
         }
 
         $msg = "Campaign result: Sent: {$sentCount}, Failed: {$failedCount}.";
