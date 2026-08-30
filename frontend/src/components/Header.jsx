@@ -3,19 +3,22 @@ import { NavLink, Link, useLocation } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import { useSettings } from '../contexts/SettingsContext';
+import RFQModal from './RFQModal';
 
 const navItems = [
   { name: 'Home', path: '/' },
   { name: 'About', path: '/about' },
-  { name: 'Product', path: '/product' },
+  { name: 'Our Products', path: '/product' },
   { name: 'Blog', path: '/blog' },
-  { name: 'Image', path: '/image' }
+  { name: 'Gallery', path: '/gallery' },
+  { name: 'Contact Us', path: '/contact' }
 ];
 
 export default function Header() {
   const { settings } = useSettings();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isRfqOpen, setIsRfqOpen] = useState(false);
   const location = useLocation();
 
   const isHomePage = location.pathname === '/';
@@ -103,19 +106,19 @@ export default function Header() {
           </nav>
 
           {/* Header Action Button (Desktop/Tablet) */}
-          {settings?.header_btn_enabled && (
-            <div className="hidden md:flex flex-shrink-0 items-center justify-end lg:w-auto">
-              {settings.header_btn_type === 'pdf' ? (
-                <a href={settings.header_btn_pdf_url} target="_blank" rel="noopener noreferrer" className="btn-primary whitespace-nowrap">
-                  {settings.header_btn_label || 'Download'}
-                </a>
-              ) : (
-                <Link to={settings.header_btn_link?.url || '/contact'} className="btn-primary whitespace-nowrap">
-                  {settings.header_btn_label || 'Contact'}
-                </Link>
-              )}
-            </div>
-          )}
+          <div className="hidden md:flex flex-shrink-0 items-center justify-end gap-3 lg:w-auto">
+            <button
+              onClick={() => setIsRfqOpen(true)}
+              className="btn-primary whitespace-nowrap bg-[#0B63CE] text-white hover:bg-blue-700 shadow-sm"
+            >
+              Request Quote
+            </button>
+            {settings?.header_btn_enabled && settings.header_btn_type === 'pdf' && (
+              <a href={settings.header_btn_pdf_url} target="_blank" rel="noopener noreferrer" className="btn-primary bg-green-700 text-white whitespace-nowrap">
+                {settings.header_btn_label || 'Download Catalogue'}
+              </a>
+            )}
+          </div>
 
           {/* Mobile Hamburger Menu */}
           <button 
@@ -185,6 +188,8 @@ export default function Header() {
           </div>
         )}
       </div>
+
+      <RFQModal isOpen={isRfqOpen} onClose={() => setIsRfqOpen(false)} />
     </>
   );
 }

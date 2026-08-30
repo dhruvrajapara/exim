@@ -73,13 +73,13 @@ export default function ProductListing() {
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "https://example.com/"
+        "item": "https://biteexport.com/"
       },
       {
         "@type": "ListItem",
         "position": 2,
         "name": "Products",
-        "item": "https://example.com/product"
+        "item": "https://biteexport.com/product"
       }
     ]
   };
@@ -91,7 +91,7 @@ export default function ProductListing() {
       "@type": "ListItem",
       "position": 3,
       "name": catName,
-      "item": `https://example.com/product?category=${activeCategory}`
+      "item": `https://biteexport.com/product?category=${activeCategory}`
     });
   }
 

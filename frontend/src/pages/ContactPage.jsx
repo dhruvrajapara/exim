@@ -12,24 +12,25 @@ export default function ContactPage() {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://example.com/" },
-      { "@type": "ListItem", "position": 2, "name": "Contact Us", "item": "https://example.com/contact" }
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://biteexport.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Contact Us", "item": "https://biteexport.com/contact" }
     ]
   };
 
   const localBusinessSchema = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    "name": "Bite Export",
-    "image": "https://example.com/logo.png",
-    "url": "https://example.com",
-    "telephone": "+919876543210",
-    "email": "info@abcexport.com",
+    "name": "BiteExport",
+    "image": "https://biteexport.com/storage/branding/370d8eb2-5d71-46bb-a509-309ee27ebec0.png",
+    "url": "https://biteexport.com",
+    "telephone": "+919274721033",
+    "email": "info@biteexport.com",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "Corporate Office",
+      "streetAddress": "480, AR Mall, Mota Varachha",
       "addressLocality": "Surat",
       "addressRegion": "Gujarat",
+      "postalCode": "394101",
       "addressCountry": "IN"
     },
     "openingHoursSpecification": {
@@ -51,8 +52,8 @@ export default function ContactPage() {
     <div className="w-full bg-[#F9FAFB] min-h-screen">
       <SEO
         title="Contact Us"
-        description="Get in touch with Bite Export for premium dehydrated vegetables and spices. Request quotations and explore international trade opportunities."
-        canonical="https://example.com/contact"
+        description="Get in touch with BiteExport, merchant exporter and global sourcing partner from India. Request quotations for dehydrated onion, garlic, and spices."
+        canonical="https://biteexport.com/contact"
       />
 
       <Helmet>

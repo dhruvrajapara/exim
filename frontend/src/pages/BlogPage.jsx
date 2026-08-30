@@ -54,13 +54,13 @@ export default function BlogPage() {
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "https://example.com/"
+        "item": "https://biteexport.com/"
       },
       {
         "@type": "ListItem",
         "position": 2,
         "name": "Blog",
-        "item": "https://example.com/blog"
+        "item": "https://biteexport.com/blog"
       }
     ]
   };
@@ -68,9 +68,9 @@ export default function BlogPage() {
   return (
     <div className="w-full bg-[#F9FAFB] min-h-screen">
       <SEO
-        title="Blog"
-        description="Latest export news, market trends, food industry updates, business guides and international trade insights."
-        canonical="https://example.com/blog"
+        title="Blog & Insights"
+        description="Explore BiteExport's insights on international trade, dehydrated food ingredient trends, market guides, and export quality standards."
+        canonical="https://biteexport.com/blog"
       />
 
       <Helmet>

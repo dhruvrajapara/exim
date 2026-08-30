@@ -22,9 +22,9 @@ export default function ProductPage() {
   const schema = {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    "name": "Premium Export Products - Bite Export",
-    "url": "https://example.com/product",
-    "description": "Bite Export provides premium dehydrated vegetables, spices, and agricultural products with international export quality standards."
+    "name": "Export Products - BiteExport",
+    "url": "https://biteexport.com/product",
+    "description": "BiteExport provides export-grade dehydrated onion, dehydrated garlic, spices, and agricultural ingredients with strict quality inspection standards."
   };
 
   if (isLoading) {
@@ -38,9 +38,9 @@ export default function ProductPage() {
   return (
     <div className="w-full bg-[#F9FAFB] min-h-screen">
       <SEO
-        title="Products"
-        description="Bite Export provides premium dehydrated vegetables, spices, and agricultural products with international export quality standards."
-        canonical="https://example.com/product"
+        title="Our Products"
+        description="Explore BiteExport's catalog of premium dehydrated onion flakes, garlic powder, spices, and agricultural ingredients sourced from India."
+        canonical="https://biteexport.com/product"
         schema={schema}
       />
 

@@ -17,16 +17,24 @@ class InquiryController extends Controller
             'name' => 'required|string|max:255',
             'company' => 'required|string|max:255',
             'email' => 'required|email|max:255',
-            'phone' => 'nullable|string|max:20',
+            'phone' => 'nullable|string|max:30',
             'country' => 'required|string|max:255',
             'product' => 'required|string|max:255',
+            'quantity' => 'nullable|string|max:100',
+            'quantity_unit' => 'nullable|string|max:50',
+            'packaging_requirement' => 'nullable|string|max:255',
+            'destination_port' => 'nullable|string|max:255',
+            'incoterm' => 'nullable|string|max:50',
+            'private_labelling' => 'nullable|string|max:10',
+            'sample_required' => 'nullable|string|max:10',
             'message' => 'required|string',
         ]);
 
         $inquiry = Inquiry::create($validated);
 
         return response()->json([
-            'message' => 'Inquiry submitted successfully.',
+            'success' => true,
+            'message' => 'Request for Quotation submitted successfully. Our export sales team will contact you within 24 hours.',
             'data' => $inquiry
         ], 201);
     }

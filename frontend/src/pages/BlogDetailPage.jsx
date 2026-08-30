@@ -67,24 +67,38 @@ export default function BlogDetailPage() {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://example.com/" },
-      { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://example.com/blog" },
-      { "@type": "ListItem", "position": 3, "name": blog.category?.name || 'Uncategorized', "item": `https://example.com/blog?category=${blog.category?.slug || ''}` },
-      { "@type": "ListItem", "position": 4, "name": blog.title, "item": `https://example.com/blog/${blog.slug}` }
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://biteexport.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://biteexport.com/blog" },
+      { "@type": "ListItem", "position": 3, "name": blog.category?.name || 'Uncategorized', "item": `https://biteexport.com/blog?category=${blog.category?.slug || ''}` },
+      { "@type": "ListItem", "position": 4, "name": blog.title, "item": `https://biteexport.com/blog/${blog.slug}` }
     ]
+  };
+
+  const getFullImageUrl = (img) => {
+    if (!img) return 'https://biteexport.com/placeholder.png';
+    if (img.startsWith('http')) return img;
+    return `https://biteexport.com/storage/${img.replace(/^\//, '')}`;
   };
 
   const articleSchema = {
     "@context": "https://schema.org",
-    "@type": "Article",
+    "@type": "BlogPosting",
     "headline": blog.title,
-    "image": [blog.featured_image],
-    "datePublished": blog.published_date,
+    "image": [getFullImageUrl(blog.featured_image)],
+    "datePublished": blog.published_date || blog.created_at,
     "author": [{
-      "@type": "Person",
-      "name": blog.author || "Bite Export",
-      "url": `https://example.com/author/${blog.author?.toLowerCase().replace(' ', '-')}`
-    }]
+      "@type": "Organization",
+      "name": "BiteExport",
+      "url": "https://biteexport.com"
+    }],
+    "publisher": {
+      "@type": "Organization",
+      "name": "BiteExport",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://biteexport.com/storage/branding/370d8eb2-5d71-46bb-a509-309ee27ebec0.png"
+      }
+    }
   };
 
   return (
@@ -92,7 +106,8 @@ export default function BlogDetailPage() {
       <SEO
         title={blog.title}
         description={blog.short_description}
-        canonical={`https://example.com/blog/${blog.slug}`}
+        canonical={`https://biteexport.com/blog/${blog.slug}`}
+        image={getFullImageUrl(blog.featured_image)}
       />
 
       <Helmet>

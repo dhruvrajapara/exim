@@ -126,9 +126,15 @@ export default function Hero() {
                 )}
 
                 <Reveal delay={100}>
-                  <h1 className="text-[36px] md:text-[48px] lg:text-[56px] xl:text-[64px] font-bold leading-[1.1] text-white line-clamp-3">
-                    {slide.heading}
-                  </h1>
+                  {index === 0 ? (
+                    <h1 className="text-[36px] md:text-[48px] lg:text-[56px] xl:text-[64px] font-bold leading-[1.1] text-white line-clamp-3">
+                      {slide.heading}
+                    </h1>
+                  ) : (
+                    <h2 className="text-[36px] md:text-[48px] lg:text-[56px] xl:text-[64px] font-bold leading-[1.1] text-white line-clamp-3">
+                      {slide.heading}
+                    </h2>
+                  )}
                 </Reveal>
 
                 {slide.description && (

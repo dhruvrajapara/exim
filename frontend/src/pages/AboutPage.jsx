@@ -39,7 +39,11 @@ export default function AboutPage() {
 
   return (
     <div className="w-full bg-white flex flex-col font-sans">
-      <SEO title="About Us" description="About Export - Premium Export Company" canonical="https://example.com/about" />
+      <SEO 
+        title="About Us" 
+        description="Learn about BiteExport, a trusted merchant exporter and global sourcing partner from India specializing in dehydrated vegetables and agricultural food ingredients." 
+        canonical="https://biteexport.com/about" 
+      />
       
       {order.map(sectionId => {
         const Component = componentsMap[sectionId];

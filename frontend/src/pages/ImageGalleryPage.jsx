@@ -32,8 +32,8 @@ export default function ImageGalleryPage() {
     <div className="w-full bg-[#F9FAFB] min-h-screen">
       <SEO
         title="Gallery"
-        description="Explore our export milestones, global buyer meetings, advanced manufacturing processes, and international trade fair participations."
-        canonical="https://example.com/image"
+        description="Explore BiteExport's export milestones, quality inspection photos, container loading, and global shipping operations."
+        canonical="https://biteexport.com/gallery"
       />
 
       {/* Hero Banner matched to BlogHeroRedesign */}

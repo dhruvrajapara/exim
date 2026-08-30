@@ -13,6 +13,13 @@ class Inquiry extends Model
         'phone',
         'country',
         'product',
+        'quantity',
+        'quantity_unit',
+        'packaging_requirement',
+        'destination_port',
+        'incoterm',
+        'private_labelling',
+        'sample_required',
         'message',
         'status',
     ];

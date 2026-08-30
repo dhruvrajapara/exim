@@ -70,19 +70,19 @@ export default function ProductDetailPage() {
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "https://example.com/"
+        "item": "https://biteexport.com/"
       },
       {
         "@type": "ListItem",
         "position": 2,
         "name": "Products",
-        "item": "https://example.com/product"
+        "item": "https://biteexport.com/product"
       },
       {
         "@type": "ListItem",
         "position": 3,
         "name": product.name,
-        "item": `https://example.com/product/${product.slug}`
+        "item": `https://biteexport.com/product/${product.slug}`
       }
     ]
   };
@@ -93,22 +93,27 @@ export default function ProductDetailPage() {
     return html.replace(/<[^>]*>?/gm, '').replace(/&nbsp;/g, ' ').trim();
   };
 
+  const getFullImageUrl = (img) => {
+    if (!img) return 'https://biteexport.com/placeholder.png';
+    if (img.startsWith('http')) return img;
+    return `https://biteexport.com/storage/${img.replace(/^\//, '')}`;
+  };
+
   const productSchema = {
     "@context": "https://schema.org",
     "@type": "Product",
     "name": product.name,
-    "image": product.image_path || product.main_image || (product.gallery && product.gallery.length > 0 ? product.gallery[0] : 'https://example.com/placeholder.png'),
+    "image": getFullImageUrl(product.image_path || product.main_image || (product.gallery && product.gallery.length > 0 ? product.gallery[0] : null)),
     "description": stripHtml(product.short_description),
     "sku": product.slug,
     "brand": {
       "@type": "Brand",
-      "name": "Bite Export"
+      "name": "BiteExport"
     }
   };
 
   const cleanHtml = (html) => {
     if (!html) return '';
-    // Replace non-breaking spaces with standard spaces to allow natural wrapping
     return html.replace(/&nbsp;/g, ' ');
   };
 
@@ -157,8 +162,8 @@ export default function ProductDetailPage() {
       <SEO
         title={product.name}
         description={stripHtml(product.short_description)}
-        canonical={`https://example.com/product/${product.slug}`}
-        image={product.seo_image || product.image_path || (product.gallery && product.gallery.length > 0 ? product.gallery[0] : '/placeholder.png')}
+        canonical={`https://biteexport.com/product/${product.slug}`}
+        image={getFullImageUrl(product.seo_image || product.image_path || (product.gallery && product.gallery.length > 0 ? product.gallery[0] : null))}
       />
 
       <Helmet>

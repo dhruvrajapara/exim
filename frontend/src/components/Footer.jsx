@@ -15,6 +15,9 @@ import CallIcon from '@mui/icons-material/Call';
 import EmailIcon from '@mui/icons-material/Email';
 import PublicIcon from '@mui/icons-material/Public'; // Fallback icon
 
+import TwitterIcon from '@mui/icons-material/Twitter';
+import XIcon from '@mui/icons-material/X';
+
 const getSocialIcon = (platform) => {
   switch (platform?.toLowerCase()) {
     case 'facebook': return <FacebookIcon fontSize="small" />;
@@ -22,6 +25,8 @@ const getSocialIcon = (platform) => {
     case 'linkedin': return <LinkedInIcon fontSize="small" />;
     case 'youtube': return <YouTubeIcon fontSize="small" />;
     case 'whatsapp': return <WhatsAppIcon fontSize="small" />;
+    case 'twitter': return <TwitterIcon fontSize="small" />;
+    case 'x': return <XIcon fontSize="small" />;
     default: return <PublicIcon fontSize="small" />;
   }
 };
@@ -224,6 +229,15 @@ export default function Footer() {
             {displayCopyright}
           </p>
           <div className="flex gap-4 md:gap-6 flex-wrap justify-start">
+            <Link to="/privacy-policy" className="text-[13px] text-gray-500 hover:text-primary transition-colors">
+              Privacy Policy
+            </Link>
+            <Link to="/terms-conditions" className="text-[13px] text-gray-500 hover:text-primary transition-colors">
+              Terms & Conditions
+            </Link>
+            <Link to="/disclaimer" className="text-[13px] text-gray-500 hover:text-primary transition-colors">
+              Disclaimer
+            </Link>
             {footer.bottom_links?.map((link, index) => (
               <Link 
                 key={index}

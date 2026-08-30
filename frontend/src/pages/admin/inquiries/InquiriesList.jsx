@@ -212,12 +212,41 @@ export default function InquiriesList() {
                   {selectedInquiry.phone || 'N/A'}
                 </a>
               </div>
-              <div className="col-span-2">
+              <div>
                 <p className="text-xs text-gray-500 font-bold uppercase mb-1">Country</p>
                 <p className="text-sm font-medium">{selectedInquiry.country}</p>
               </div>
+
+              {selectedInquiry.quantity && (
+                <div>
+                  <p className="text-xs text-gray-500 font-bold uppercase mb-1">Quantity</p>
+                  <p className="text-sm font-medium">{selectedInquiry.quantity} {selectedInquiry.quantity_unit || ''}</p>
+                </div>
+              )}
+
+              {selectedInquiry.incoterm && (
+                <div>
+                  <p className="text-xs text-gray-500 font-bold uppercase mb-1">Incoterm</p>
+                  <p className="text-sm font-medium">{selectedInquiry.incoterm}</p>
+                </div>
+              )}
+
+              {selectedInquiry.destination_port && (
+                <div>
+                  <p className="text-xs text-gray-500 font-bold uppercase mb-1">Destination Port</p>
+                  <p className="text-sm font-medium">{selectedInquiry.destination_port}</p>
+                </div>
+              )}
+
+              {selectedInquiry.private_labelling && (
+                <div>
+                  <p className="text-xs text-gray-500 font-bold uppercase mb-1">Private Labelling</p>
+                  <p className="text-sm font-medium">{selectedInquiry.private_labelling}</p>
+                </div>
+              )}
+
               <div className="col-span-2 bg-gray-50 p-4 rounded-lg border border-gray-100">
-                <p className="text-xs text-gray-500 font-bold uppercase mb-2">Message</p>
+                <p className="text-xs text-gray-500 font-bold uppercase mb-2">Specifications & Message</p>
                 <p className="text-sm text-gray-800 whitespace-pre-wrap">{selectedInquiry.message}</p>
               </div>
             </div>

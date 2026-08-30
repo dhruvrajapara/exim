@@ -1,12 +1,17 @@
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
 import RequestQuoteIcon from '@mui/icons-material/RequestQuote';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import RFQModal from '../RFQModal';
 
 export default function ProductInfo({ product }) {
+  const [isRfqOpen, setIsRfqOpen] = useState(false);
+
   const cleanHtml = (html) => {
     if (!html) return '';
     return html.replace(/&nbsp;/g, ' ');
   };
+
+  const whatsappText = encodeURIComponent(`Hi BiteExport team, I would like to get a quotation for ${product.name}.`);
 
   return (
     <div className="flex flex-col h-full justify-start w-full">
@@ -32,16 +37,16 @@ export default function ProductInfo({ product }) {
 
       {/* CTA Buttons */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-auto w-full pt-4">
-        <Link 
-          to={`/contact?product=${product.slug}`}
+        <button 
+          onClick={() => setIsRfqOpen(true)}
           className="btn-primary w-full h-[50px] md:h-[54px] rounded-[12px] flex items-center justify-center gap-2 shadow-lg shadow-primary/20 hover:shadow-primary/40 hover:-translate-y-1 transition-all duration-300 text-[15px] md:text-[16px] font-medium"
         >
           <RequestQuoteIcon fontSize="small" />
           Request Quote
-        </Link>
+        </button>
         
         <a 
-          href={`https://wa.me/1234567890?text=I'm interested in ${product.name}`}
+          href={`https://wa.me/919274721033?text=${whatsappText}`}
           target="_blank"
           rel="noopener noreferrer"
           className="w-full h-[50px] md:h-[54px] rounded-[12px] flex items-center justify-center gap-2 border-2 border-[#25D366] text-[#25D366] hover:bg-[#25D366] hover:text-white transition-all duration-300 text-[15px] md:text-[16px] font-medium"
@@ -50,7 +55,8 @@ export default function ProductInfo({ product }) {
           WhatsApp Inquiry
         </a>
       </div>
-      
+
+      <RFQModal isOpen={isRfqOpen} onClose={() => setIsRfqOpen(false)} initialProduct={product.name} />
     </div>
   );
 }
