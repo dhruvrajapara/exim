@@ -33,6 +33,7 @@ Route::post('/subscribers', [\App\Http\Controllers\Api\SubscriberController::cla
 
 // Admin Routes (Currently Unprotected for testing, later wrapped in auth:sanctum middleware)
 Route::prefix('admin')->group(function () {
+    Route::post('/login', [\App\Http\Controllers\Api\AuthController::class, 'login']);
     Route::get('/dashboard', [\App\Http\Controllers\Api\DashboardController::class, 'index']);
     Route::put('/profile', [\App\Http\Controllers\Api\ProfileController::class, 'update']);
     

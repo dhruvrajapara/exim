@@ -9,11 +9,6 @@ export const AuthProvider = ({ children }) => {
 
   // Initialize from local storage on mount
   useEffect(() => {
-    // Initialize default admin credentials if not set
-    if (!localStorage.getItem('adminCredentials')) {
-      localStorage.setItem('adminCredentials', JSON.stringify({ email: 'admin@abcexport.com', password: 'admin123' }));
-    }
-
     const storedAuth = localStorage.getItem('adminAuth');
     const storedUser = localStorage.getItem('adminUser');
     
@@ -26,27 +21,33 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = async (email, password) => {
-    // Mock Authentication Logic
-    // In a real app, this would be an API call to Laravel backend
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        const credentials = JSON.parse(localStorage.getItem('adminCredentials') || '{"email":"admin@abcexport.com","password":"admin123"}');
-        
-        if (email === credentials.email && password === credentials.password) {
-          const userData = { email, name: 'Admin', role: 'admin' };
-          
-          setIsAuthenticated(true);
-          setUser(userData);
-          
-          localStorage.setItem('adminAuth', 'true');
-          localStorage.setItem('adminUser', JSON.stringify(userData));
-          
-          resolve({ success: true });
-        } else {
-          reject(new Error('Invalid email or password'));
-        }
-      }, 800); // Simulate network delay
-    });
+    try {
+      const response = await fetch('/api/admin/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Invalid email or password');
+      }
+
+      const userData = data.user;
+      setIsAuthenticated(true);
+      setUser(userData);
+
+      localStorage.setItem('adminAuth', 'true');
+      localStorage.setItem('adminUser', JSON.stringify(userData));
+
+      return { success: true };
+    } catch (error) {
+      throw error;
+    }
   };
 
   const updateProfile = async (newEmail, currentPassword, newPassword) => {
@@ -69,13 +70,6 @@ export const AuthProvider = ({ children }) => {
       if (!response.ok) {
         throw new Error(data.message || 'Failed to update profile');
       }
-
-      // Update local credentials to maintain the mock login for now, but also we updated db
-      const updatedCredentials = {
-        email: data.user.email,
-        password: newPassword || currentPassword
-      };
-      localStorage.setItem('adminCredentials', JSON.stringify(updatedCredentials));
 
       const updatedUser = { ...user, email: data.user.email };
       setUser(updatedUser);
