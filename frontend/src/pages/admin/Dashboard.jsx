@@ -288,6 +288,105 @@ export default function Dashboard() {
         </div>
         
       </div>
+
+      {/* Extended Google Search Console Detailed Tables */}
+      {dashboardData?.gsc?.connected && dashboardData?.gsc?.data && (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10 animate-fade-in">
+          
+          {/* Top Search Keywords Table */}
+          <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <h3 className="text-base font-bold text-gray-900">Top Search Keywords (Google)</h3>
+                <p className="text-xs text-gray-500 mt-0.5">Top search terms bringing organic traffic</p>
+              </div>
+              <span className="text-xs font-semibold bg-blue-50 text-[#0B63CE] px-2.5 py-1 rounded-full">
+                Last 30 Days
+              </span>
+            </div>
+
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-xs">
+                <thead className="bg-gray-50 text-gray-500 font-semibold border-b border-gray-100">
+                  <tr>
+                    <th className="py-2.5 px-3">Keyword / Query</th>
+                    <th className="py-2.5 px-3 text-right">Clicks</th>
+                    <th className="py-2.5 px-3 text-right">Impressions</th>
+                    <th className="py-2.5 px-3 text-right">CTR</th>
+                    <th className="py-2.5 px-3 text-right">Avg Position</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-100 text-gray-700">
+                  {dashboardData.gsc.data.top_queries?.length > 0 ? (
+                    dashboardData.gsc.data.top_queries.map((q, idx) => (
+                      <tr key={idx} className="hover:bg-gray-50/60 transition-colors">
+                        <td className="py-2.5 px-3 font-medium text-gray-900 max-w-[200px] truncate" title={q.keyword}>
+                          {q.keyword}
+                        </td>
+                        <td className="py-2.5 px-3 text-right font-bold text-gray-900">{q.clicks}</td>
+                        <td className="py-2.5 px-3 text-right text-gray-500">{q.impressions}</td>
+                        <td className="py-2.5 px-3 text-right text-[#0B63CE] font-semibold">{q.ctr}%</td>
+                        <td className="py-2.5 px-3 text-right text-emerald-700 font-semibold">#{q.position}</td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan={5} className="py-6 text-center text-gray-400">No keyword data available</td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* Top Performing Landing Pages */}
+          <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <h3 className="text-base font-bold text-gray-900">Top Landing Pages</h3>
+                <p className="text-xs text-gray-500 mt-0.5">Most visited pages from organic search</p>
+              </div>
+              <span className="text-xs font-semibold bg-emerald-50 text-emerald-700 px-2.5 py-1 rounded-full">
+                Organic Traffic
+              </span>
+            </div>
+
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-xs">
+                <thead className="bg-gray-50 text-gray-500 font-semibold border-b border-gray-100">
+                  <tr>
+                    <th className="py-2.5 px-3">Page URL</th>
+                    <th className="py-2.5 px-3 text-right">Clicks</th>
+                    <th className="py-2.5 px-3 text-right">Impressions</th>
+                    <th className="py-2.5 px-3 text-right">CTR</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-100 text-gray-700">
+                  {dashboardData.gsc.data.top_pages?.length > 0 ? (
+                    dashboardData.gsc.data.top_pages.map((p, idx) => (
+                      <tr key={idx} className="hover:bg-gray-50/60 transition-colors">
+                        <td className="py-2.5 px-3 font-medium text-gray-900 max-w-[220px] truncate" title={p.url}>
+                          <a href={p.url} target="_blank" rel="noreferrer" className="hover:text-[#0B63CE] hover:underline">
+                            {p.url}
+                          </a>
+                        </td>
+                        <td className="py-2.5 px-3 text-right font-bold text-gray-900">{p.clicks}</td>
+                        <td className="py-2.5 px-3 text-right text-gray-500">{p.impressions}</td>
+                        <td className="py-2.5 px-3 text-right text-[#0B63CE] font-semibold">{p.ctr}%</td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan={4} className="py-6 text-center text-gray-400">No page data available</td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      )}
     </div>
   );
 }

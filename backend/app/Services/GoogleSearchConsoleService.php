@@ -53,34 +53,24 @@ class GoogleSearchConsoleService
 
         try {
             $service = new SearchConsole($this->client);
-            $request = new SearchAnalyticsQueryRequest();
-
             $endDate = date('Y-m-d', strtotime('-2 days')); // GSC has ~2-day latency
             $startDate = date('Y-m-d', strtotime("-{$days} days"));
 
-            $request->setStartDate($startDate);
-            $request->setEndDate($endDate);
-            $request->setDimensions(['date']);
-            $request->setRowLimit(100);
+            // 1. Fetch Date Chart & Overall Totals
+            $dateReq = new SearchAnalyticsQueryRequest();
+            $dateReq->setStartDate($startDate);
+            $dateReq->setEndDate($endDate);
+            $dateReq->setDimensions(['date']);
+            $dateReq->setRowLimit(100);
 
-            $response = $service->sites_searchAnalytics->query($this->siteUrl, $request);
-            $rows = $response->getRows();
-
-            if (!$rows) {
-                return [
-                    'clicks' => 0,
-                    'impressions' => 0,
-                    'ctr' => 0,
-                    'position' => 0,
-                    'chart' => []
-                ];
-            }
+            $dateRes = $service->sites_searchAnalytics->query($this->siteUrl, $dateReq);
+            $dateRows = $dateRes->getRows() ?? [];
 
             $totalClicks = 0;
             $totalImpressions = 0;
             $chartData = [];
 
-            foreach ($rows as $row) {
+            foreach ($dateRows as $row) {
                 $clicks = $row->getClicks();
                 $impressions = $row->getImpressions();
                 $dateKey = $row->getKeys()[0] ?? '';
@@ -97,11 +87,77 @@ class GoogleSearchConsoleService
 
             $ctr = $totalImpressions > 0 ? round(($totalClicks / $totalImpressions) * 100, 2) : 0;
 
+            // 2. Fetch Top Keywords / Queries
+            $queryReq = new SearchAnalyticsQueryRequest();
+            $queryReq->setStartDate($startDate);
+            $queryReq->setEndDate($endDate);
+            $queryReq->setDimensions(['query']);
+            $queryReq->setRowLimit(10);
+
+            $queryRes = $service->sites_searchAnalytics->query($this->siteUrl, $queryReq);
+            $queryRows = $queryRes->getRows() ?? [];
+
+            $topQueries = [];
+            foreach ($queryRows as $row) {
+                $topQueries[] = [
+                    'keyword' => $row->getKeys()[0] ?? '',
+                    'clicks' => $row->getClicks(),
+                    'impressions' => $row->getImpressions(),
+                    'ctr' => round($row->getCtr() * 100, 2),
+                    'position' => round($row->getPosition(), 1)
+                ];
+            }
+
+            // 3. Fetch Top Pages
+            $pageReq = new SearchAnalyticsQueryRequest();
+            $pageReq->setStartDate($startDate);
+            $pageReq->setEndDate($endDate);
+            $pageReq->setDimensions(['page']);
+            $pageReq->setRowLimit(10);
+
+            $pageRes = $service->sites_searchAnalytics->query($this->siteUrl, $pageReq);
+            $pageRows = $pageRes->getRows() ?? [];
+
+            $topPages = [];
+            foreach ($pageRows as $row) {
+                $fullUrl = $row->getKeys()[0] ?? '';
+                $parsedPath = parse_url($fullUrl, PHP_URL_PATH) ?: '/';
+                $topPages[] = [
+                    'url' => $parsedPath,
+                    'clicks' => $row->getClicks(),
+                    'impressions' => $row->getImpressions(),
+                    'ctr' => round($row->getCtr() * 100, 2),
+                    'position' => round($row->getPosition(), 1)
+                ];
+            }
+
+            // 4. Fetch Top Countries
+            $countryReq = new SearchAnalyticsQueryRequest();
+            $countryReq->setStartDate($startDate);
+            $countryReq->setEndDate($endDate);
+            $countryReq->setDimensions(['country']);
+            $countryReq->setRowLimit(5);
+
+            $countryRes = $service->sites_searchAnalytics->query($this->siteUrl, $countryReq);
+            $countryRows = $countryRes->getRows() ?? [];
+
+            $topCountries = [];
+            foreach ($countryRows as $row) {
+                $topCountries[] = [
+                    'country' => strtoupper($row->getKeys()[0] ?? ''),
+                    'clicks' => $row->getClicks(),
+                    'impressions' => $row->getImpressions(),
+                ];
+            }
+
             return [
                 'total_clicks' => $totalClicks,
                 'total_impressions' => $totalImpressions,
                 'ctr' => $ctr,
-                'chart' => $chartData
+                'chart' => $chartData,
+                'top_queries' => $topQueries,
+                'top_pages' => $topPages,
+                'top_countries' => $topCountries
             ];
 
         } catch (\Exception $e) {
