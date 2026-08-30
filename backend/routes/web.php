@@ -19,7 +19,7 @@ Route::get('/sitemap.xml', function () {
     ];
 
     // Dynamic Products
-    $products = Product::where('status', 'active')->get();
+    $products = Product::active()->get();
     foreach ($products as $product) {
         $urls[] = [
             'loc' => $baseUrl . '/product/' . $product->slug,
@@ -33,6 +33,15 @@ Route::get('/sitemap.xml', function () {
         $urls[] = [
             'loc' => $baseUrl . '/blog/' . $blog->slug,
             'priority' => '0.8'
+        ];
+    }
+
+    // Legal pages
+    $legalPages = ['privacy-policy', 'terms-conditions', 'disclaimer'];
+    foreach ($legalPages as $page) {
+        $urls[] = [
+            'loc' => $baseUrl . '/' . $page,
+            'priority' => '0.5'
         ];
     }
 
@@ -92,6 +101,13 @@ Route::get('/llms.txt', function () {
     return response($content, 200)
         ->header('Content-Type', 'text/plain; charset=UTF-8');
 });
+// Permanent 301 Redirect for legacy /products URL
+Route::get('/products', function () {
+    $queryString = request()->getQueryString();
+    $target = '/product' . ($queryString ? '?' . $queryString : '');
+    return redirect($target, 301);
+});
+
 Route::get('/{any}', function () {
     $path = public_path('index.html');
     if (file_exists($path)) {

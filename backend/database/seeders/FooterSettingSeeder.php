@@ -33,18 +33,15 @@ class FooterSettingSeeder extends Seeder
                 ['label' => 'Contact', 'url' => '/contact'],
             ],
             'office_addresses' => [
-                '123 Export Avenue, Global Trade Center, Mumbai, India',
-                '45 International Business Hub, Dubai, UAE'
+                '480, AR Mall, Mota Varachha, Surat, Gujarat 394101, India'
             ],
             'contact_numbers' => [
-                '+91 98765 43210',
-                '+971 50 123 4567'
+                '+91 92747 21033'
             ],
             'email_addresses' => [
-                'info@nebulixexim.com',
-                'sales@nebulixexim.com'
+                'info@biteexport.com'
             ],
-            'copyright_text' => '© ' . date('Y') . ' Bite Export. All Rights Reserved.',
+            'copyright_text' => '© ' . date('Y') . ' BiteExport. All Rights Reserved.',
             'bottom_links' => []
         ]);
     }

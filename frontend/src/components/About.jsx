@@ -88,9 +88,9 @@ export default function About() {
             </p>
 
             {/* Statistics Grid (1 Row of 4 on Desktop, 2x2 on Mobile/Tablet) */}
-            {data.active_statistics && data.active_statistics.length > 0 && (
+            {data.active_statistics && data.active_statistics.filter(s => !s.number_value?.includes('+')).length > 0 && (
               <div className="w-full grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-6">
-                {data.active_statistics.slice(0, 4).map((stat) => (
+                {data.active_statistics.filter(s => !s.number_value?.includes('+')).slice(0, 4).map((stat) => (
                   <div 
                     key={stat.id} 
                     className="bg-light rounded-[12px] p-4 flex flex-col items-center lg:items-start shadow-sm hover:shadow-md transition-all duration-300 transform hover:-translate-y-1 border border-border h-full justify-center"

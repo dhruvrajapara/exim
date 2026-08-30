@@ -41,7 +41,7 @@ export default function AboutPage() {
     <div className="w-full bg-white flex flex-col font-sans">
       <SEO 
         title="About Us" 
-        description="Learn about BiteExport, a trusted merchant exporter and global sourcing partner from India specializing in dehydrated vegetables and agricultural food ingredients." 
+        description="Learn about BiteExport, a premier Manufacturer & Exporter from India specializing in dehydrated vegetables, garlic, onion, and agricultural food ingredients." 
         canonical="https://biteexport.com/about" 
       />
       

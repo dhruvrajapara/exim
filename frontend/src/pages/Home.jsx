@@ -9,6 +9,8 @@ import Testimonials from '../components/Testimonials';
 import LatestBlogs from '../components/LatestBlogs';
 import ExportMap from '../components/ExportMap';
 
+import WhyChooseUs from '../components/WhyChooseUs';
+
 export default function Home() {
   const { settings } = useSettings();
 
@@ -29,11 +31,7 @@ export default function Home() {
       "postalCode": "394101",
       "addressCountry": "IN"
     },
-    "sameAs": [
-      "https://facebook.com",
-      "https://instagram.com",
-      "https://linkedin.com"
-    ]
+    "sameAs": []
   };
 
   const websiteSchema = {
@@ -49,6 +47,7 @@ export default function Home() {
     Hero,
     About,
     ProductCategories,
+    WhyChooseUs,
     FeaturedProducts,
     Certifications,
     Testimonials,
@@ -56,7 +55,7 @@ export default function Home() {
     ExportMap,
   };
 
-  const defaultOrder = ['Hero', 'About', 'ProductCategories', 'ExportMap', 'FeaturedProducts', 'Certifications', 'Testimonials', 'LatestBlogs'];
+  const defaultOrder = ['Hero', 'About', 'ProductCategories', 'WhyChooseUs', 'ExportMap', 'FeaturedProducts', 'Certifications', 'Testimonials', 'LatestBlogs'];
   let order = defaultOrder;
 
   if (settings?.homepage_section_order) {
@@ -73,9 +72,9 @@ export default function Home() {
 
   return (
     <>
-      <SEO title={settings?.seo_home_title || "BiteExport - Merchant Exporter & Global Sourcing Partner"}
+      <SEO title={settings?.seo_home_title || "BiteExport - Manufacturer & Exporter of Dehydrated Onion, Garlic & Spices"}
         exactTitle={true}
-        description={settings?.seo_home_description || "BiteExport is a trusted merchant exporter and global sourcing partner from India specializing in dehydrated onion, garlic, spices, and agricultural ingredients."}
+        description={settings?.seo_home_description || "BiteExport is a leading Manufacturer & Exporter from India specializing in premium dehydrated onion, dehydrated garlic, spices, and agricultural food ingredients."}
         canonical="https://biteexport.com/"
         schema={combinedSchema}
       />

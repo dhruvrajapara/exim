@@ -84,6 +84,7 @@ function App() {
             <Route index element={<Home />} />
             <Route path="about" element={<AboutPage />} />
             <Route path="product" element={<ProductPage />} />
+            <Route path="products" element={<Navigate to="/product" replace />} />
             <Route path="product/:slug" element={<ProductDetailPage />} />
             <Route path="blog" element={<BlogPage />} />
             <Route path="blog/:slug" element={<BlogDetailPage />} />

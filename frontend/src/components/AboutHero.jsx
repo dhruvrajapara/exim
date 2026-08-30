@@ -82,15 +82,15 @@ export default function AboutHero() {
 
             <Reveal delay={300} className="mb-8">
               <p className="text-[15px] md:text-[16px] lg:text-[18px] text-gray-300 max-w-xl leading-[1.7] opacity-90 font-light">
-                {aboutData?.description || 'Bite Export is a trusted Indian merchant exporter delivering premium dehydrated vegetables, spices, and agricultural products to global markets with quality, consistency, and reliable export services.'}
+                {aboutData?.description || 'BiteExport is a premier Manufacturer & Exporter from India delivering high-quality dehydrated vegetables, spices, and agricultural products to global markets with consistency and international standards.'}
               </p>
             </Reveal>
 
             {/* Dynamic Trust Points (Rendered in 2 Columns) */}
-            {stats.length > 0 && (
+            {stats.filter(s => !s.number_value?.includes('+')).length > 0 && (
               <Reveal delay={400} className="w-full mb-10">
                 <div className="grid grid-cols-2 gap-y-3 gap-x-3 md:gap-x-4 max-w-xl mx-auto lg:mx-0">
-                  {stats.map((stat, idx) => (
+                  {stats.filter(s => !s.number_value?.includes('+')).map((stat, idx) => (
                     <div key={idx} className="flex flex-col md:flex-row items-center md:items-start justify-center md:justify-start gap-2 md:gap-3 text-gray-200 bg-white/5 border border-white/10 rounded-[10px] p-3 hover:bg-white/10 hover:border-secondary/40 transition-all duration-300 group text-center md:text-left">
                       <CheckCircleOutlinedIcon className="text-secondary flex-shrink-0 group-hover:scale-110 transition-transform" fontSize="small" />
                       <span className="text-[13px] md:text-[15px] font-medium leading-tight">

@@ -52,7 +52,7 @@ export default function ContactPage() {
     <div className="w-full bg-[#F9FAFB] min-h-screen">
       <SEO
         title="Contact Us"
-        description="Get in touch with BiteExport, merchant exporter and global sourcing partner from India. Request quotations for dehydrated onion, garlic, and spices."
+        description="Get in touch with BiteExport, leading Manufacturer & Exporter from India. Request quotations for dehydrated onion, garlic, and spices."
         canonical="https://biteexport.com/contact"
       />
 
