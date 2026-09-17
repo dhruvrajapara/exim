@@ -168,7 +168,7 @@ export default function Hero() {
       {slides.length > 1 && (
         <>
           {/* Desktop Controls (Arrows) */}
-          <div className="hidden md:flex absolute bottom-8 left-12 z-30 items-center space-x-2 bg-white/5 backdrop-blur-xl px-5 py-3 rounded-full border border-white/10 shadow-lg">
+          <div className="hidden md:flex absolute bottom-12 right-12 md:right-24 lg:right-28 z-30 items-center space-x-2 bg-white/5 backdrop-blur-xl px-5 py-3 rounded-full border border-white/10 shadow-lg">
             <button
               onClick={handlePrev}
               className="p-2 text-white/50 hover:text-white transition-colors focus:outline-none rounded-full flex items-center justify-center"
