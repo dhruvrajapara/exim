@@ -82,7 +82,7 @@ export default function ProductCategories() {
             <Reveal key={category.id} delay={index * 100}>
               <Link 
                 to={`/product?category=${category.slug}`}
-                className="group relative flex flex-col h-full bg-white rounded-[16px] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2 border border-gray-100"
+                className="group relative flex flex-col h-full bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1.5 border border-gray-200 hover:border-primary/40 focus:outline-none focus:ring-2 focus:ring-primary"
               >
                 {/* Image Container with Zoom Effect */}
                 <div className="w-full aspect-square lg:aspect-auto lg:h-[300px] overflow-hidden relative bg-gray-50">

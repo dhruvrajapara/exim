@@ -141,10 +141,10 @@ export default function FeaturedProducts() {
                     dangerouslySetInnerHTML={{ __html: product.short_description?.replace(/&nbsp;/g, ' ') }} 
                   />
 
-                  <div className="mt-auto w-full border-t border-gray-50 pt-3">
-                    <span className="text-primary font-medium text-[13px] md:text-[14px] flex items-center justify-center group-hover:underline">
+                  <div className="mt-auto w-full border-t border-gray-100 pt-3">
+                    <span className="w-full inline-flex items-center justify-center gap-1.5 h-[38px] rounded-lg bg-primary/10 text-primary font-semibold text-xs md:text-sm group-hover:bg-primary group-hover:text-white transition-all duration-300">
                       View Details
-                      <ArrowForwardIcon fontSize="small" className="ml-1 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
+                      <ArrowForwardIcon fontSize="small" className="transform group-hover:translate-x-1 transition-transform duration-300" />
                     </span>
                   </div>
                 </div>

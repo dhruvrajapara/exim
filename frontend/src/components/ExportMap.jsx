@@ -193,12 +193,12 @@ export default function ExportMap() {
 
       {/* Export Destinations Legend & Badges */}
       {exportCountries.length > 0 && (
-        <div className="max-w-4xl mx-auto px-4 mt-6">
-          <p className="text-xs uppercase tracking-widest text-muted font-semibold mb-3">Key Export Destinations</p>
-          <div className="flex flex-wrap gap-2 justify-center" aria-label="Export countries list">
+        <div className="max-w-4xl mx-auto px-4 mt-2 mb-4">
+          <p className="text-sm font-bold text-dark mb-3 text-center">Key Export Destinations</p>
+          <div className="flex flex-wrap gap-2.5 justify-center" aria-label="Export countries list">
             {exportCountries.map((country, idx) => (
-              <span key={idx} className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-800 border border-emerald-200 shadow-sm">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 mr-2" aria-hidden="true"></span>
+              <span key={idx} className="inline-flex items-center px-3.5 py-1.5 rounded-full text-xs md:text-sm font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200 shadow-sm transition-transform hover:scale-105">
+                <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 mr-2 shrink-0" aria-hidden="true"></span>
                 {country}
               </span>
             ))}

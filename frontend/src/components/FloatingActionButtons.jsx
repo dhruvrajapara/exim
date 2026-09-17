@@ -34,7 +34,7 @@ export default function FloatingActionButtons() {
       {/* Scroll to Top Button */}
       <button
         onClick={scrollToTop}
-        className={`w-10 h-10 md:w-12 md:h-12 bg-[#000821]/80 hover:bg-primary text-white rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-500 border border-white/10 backdrop-blur-md group ${
+        className={`w-11 h-11 md:w-12 md:h-12 bg-[#000821]/80 hover:bg-primary text-white rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 border border-white/10 backdrop-blur-md group ${
           isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-8 scale-50 pointer-events-none'
         }`}
         aria-label="Scroll to top"
@@ -48,7 +48,7 @@ export default function FloatingActionButtons() {
           href={`https://wa.me/${settings.whatsapp_float_number.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(settings.whatsapp_float_message || '')}`}
           target="_blank"
           rel="noopener noreferrer"
-          className={`relative flex items-center justify-center w-12 h-12 md:w-14 md:h-14 bg-[#25D366] text-white rounded-full shadow-[0_4px_15px_rgba(37,211,102,0.3)] hover:shadow-[0_8px_25px_rgba(37,211,102,0.5)] transition-all duration-500 group ${
+          className={`relative flex items-center justify-center w-12 h-12 md:w-14 md:h-14 bg-[#25D366] text-white rounded-full shadow-[0_4px_15px_rgba(37,211,102,0.3)] hover:shadow-[0_8px_25px_rgba(37,211,102,0.5)] transition-all duration-300 group ${
             isVisible ? 'opacity-100 translate-y-0 scale-100 hover:-translate-y-1' : 'opacity-0 translate-y-8 scale-50 pointer-events-none'
           }`}
           aria-label="Chat on WhatsApp"

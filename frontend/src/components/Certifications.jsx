@@ -87,7 +87,7 @@ export default function Certifications() {
         {/* Section Header */}
         <Reveal delay={0} className="text-center mb-10 md:mb-12">
           {sectionData.subtitle && (
-            <span className="text-primary font-semibold tracking-widest uppercase text-sm mb-2 block">
+            <span className="text-primary font-semibold tracking-wide text-sm mb-2 block">
               {sectionData.subtitle}
             </span>
           )}
@@ -112,22 +112,21 @@ export default function Certifications() {
               className="group bg-white rounded-[12px] md:rounded-[16px] border border-border hover:border-primary shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-2 flex flex-col items-center text-center p-3 md:p-6 overflow-hidden"
             >
               {/* Logo Area */}
-              <div className="relative w-full h-16 md:h-24 mb-6 md:mb-8 flex items-center justify-center">
+              <div className="relative w-full h-16 md:h-24 mb-4 md:mb-6 flex flex-col items-center justify-center">
                 <img 
                   src={cert.logo_path} 
                   alt={`${cert.name} Logo`} 
                   loading="lazy"
                   className="max-h-full max-w-full object-contain transition-transform duration-300 group-hover:scale-105"
                 />
-                
-                {/* Verified Badge (Absolute) */}
-                <div 
-                  className="absolute bottom-0 right-0 translate-x-1 translate-y-2 bg-primary/10 text-primary p-1 md:px-2 md:py-0.5 rounded-full text-[10px] md:text-[11px] font-bold flex items-center justify-center border-2 border-white"
-                  title={cert.verification_badge_text}
-                >
-                  <VerifiedIcon fontSize="inherit" className="md:mr-1" />
-                  <span className="hidden md:inline">{cert.verification_badge_text}</span>
-                </div>
+              </div>
+
+              {/* Verified Badge */}
+              <div 
+                className="mb-3 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-semibold inline-flex items-center justify-center gap-1 shadow-sm"
+              >
+                <VerifiedIcon fontSize="small" className="text-emerald-600" />
+                <span>{cert.verification_badge_text || "Verified Exporter"}</span>
               </div>
 
               {/* Names */}
