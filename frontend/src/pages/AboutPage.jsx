@@ -15,6 +15,15 @@ export default function AboutPage() {
     window.scrollTo(0, 0);
   }, []);
 
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://biteexport.com/" },
+      { "@type": "ListItem", "position": 2, "name": "About Us", "item": "https://biteexport.com/about" }
+    ]
+  };
+
   const componentsMap = {
     AboutHero,
     WhyChooseUs,
@@ -43,6 +52,7 @@ export default function AboutPage() {
         title="About Us" 
         description="Learn about BiteExport, a premier Manufacturer & Exporter from India specializing in dehydrated vegetables, garlic, onion, and agricultural food ingredients." 
         canonical="https://biteexport.com/about" 
+        schema={breadcrumbSchema}
       />
       
       {order.map(sectionId => {

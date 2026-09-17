@@ -19,13 +19,24 @@ export default function ProductPage() {
       .finally(() => setIsLoading(false));
   }, []);
 
-  const schema = {
+  const breadcrumbSchema = {
     "@context": "https://schema.org",
-    "@type": "WebPage",
-    "name": "Export Products - BiteExport",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://biteexport.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Products", "item": "https://biteexport.com/product" }
+    ]
+  };
+
+  const collectionSchema = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Export Products Catalog - BiteExport",
     "url": "https://biteexport.com/product",
     "description": "BiteExport provides export-grade dehydrated onion, dehydrated garlic, spices, and agricultural ingredients with strict quality inspection standards."
   };
+
+  const combinedSchema = [breadcrumbSchema, collectionSchema];
 
   if (isLoading) {
     return (
@@ -41,7 +52,7 @@ export default function ProductPage() {
         title="Our Products"
         description="Explore BiteExport's catalog of premium dehydrated onion flakes, garlic powder, spices, and agricultural ingredients sourced from India."
         canonical="https://biteexport.com/product"
-        schema={schema}
+        schema={combinedSchema}
       />
 
       {/* Hero Banner matched to BlogHeroRedesign */}
