@@ -1,4 +1,4 @@
-import{n as e,s as t,t as n}from"./jsx-runtime-D8nDyRPw.js";import{t as r}from"./index.esm-DMCDXRBc.js";import{l as i}from"./chunk-KS7C4IRE-CX-W09v2.js";import{t as a}from"./Send-DQrC2lNV.js";import{A as o,R as s,T as c}from"./api-D0BLBOR4.js";import{t as l}from"./ArrowBack-HLCtC3_K.js";var u=t(e(),1),d=n(),f=[{id:`dehydrated_products`,name:`Template 1: Premium Dehydrated Food Ingredients (Red/White Onion & Garlic)`,subject:`BiteExport - Premium Dehydrated Food Ingredients Catalogue`,html:`<!DOCTYPE html>
+import{n as e,s as t,t as n}from"./jsx-runtime-D8nDyRPw.js";import{t as r}from"./index.esm-DMCDXRBc.js";import{l as i}from"./chunk-KS7C4IRE-CX-W09v2.js";import{t as a}from"./Send-DQrC2lNV.js";import{A as o,R as s,T as c}from"./api-C30U7tcT.js";import{t as l}from"./ArrowBack-HLCtC3_K.js";var u=t(e(),1),d=n(),f=[{id:`dehydrated_products`,name:`Template 1: Premium Dehydrated Food Ingredients (Red/White Onion & Garlic)`,subject:`BiteExport - Premium Dehydrated Food Ingredients Catalogue`,html:`<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
