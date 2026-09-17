@@ -107,17 +107,17 @@ export default function FeaturedProducts() {
           )}
         </Reveal>
 
-        {/* Products Grid - Mobile: 2x3 (6 items), Desktop: 4x2 (8 items) */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-10 md:mb-12">
-          {products.map((product, index) => (
+        {/* Products Grid - 4 items in a clean responsive grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-10 md:mb-12">
+          {products.slice(0, 4).map((product, index) => (
             <Reveal 
               key={product.id}
               delay={(index % 4) * 100}
-              className={index >= 6 ? 'hidden lg:block' : 'block'}
+              className="h-full flex"
             >
               <Link 
                 to={`/product/${product.slug}`}
-                className="group flex flex-col h-full bg-white rounded-[16px] overflow-hidden shadow-sm border border-gray-100 hover:border-primary/30 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
+                className="group flex flex-col w-full h-full bg-white rounded-[16px] overflow-hidden shadow-sm border border-gray-100 hover:border-primary/30 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
               >
                 {/* Image Area */}
                 <div className="w-full aspect-square overflow-hidden bg-gray-50 relative">
@@ -130,19 +130,19 @@ export default function FeaturedProducts() {
                 </div>
 
                 {/* Content Area */}
-                <div className="p-4 md:p-5 flex flex-col flex-grow items-center text-center bg-white border-t border-border/50">
+                <div className="p-4 md:p-5 flex flex-col flex-grow text-center bg-white border-t border-border/50">
                   <h3 className="font-rubik font-semibold text-[15px] md:text-[18px] text-dark mb-2 group-hover:text-primary transition-colors line-clamp-1">
                     {product.name}
                   </h3>
                   
-                  {/* CSS-Only Truncation for Mobile */}
+                  {/* CSS-Only Truncation */}
                   <div 
                     className="text-gray-600 text-sm line-clamp-2 mb-4 [&>p]:mb-0 [&>p]:inline break-words flex-grow"
                     dangerouslySetInnerHTML={{ __html: product.short_description?.replace(/&nbsp;/g, ' ') }} 
                   />
 
                   <div className="mt-auto w-full border-t border-gray-100 pt-3">
-                    <span className="w-full inline-flex items-center justify-center gap-1.5 h-[38px] rounded-lg bg-primary text-white font-semibold text-xs md:text-sm hover:bg-primary/90 shadow-sm transition-all duration-300">
+                    <span className="w-full inline-flex items-center justify-center gap-1.5 h-[40px] rounded-xl bg-primary text-white font-semibold text-xs md:text-sm hover:bg-primary/90 shadow-sm transition-all duration-300">
                       View Details
                       <ArrowForwardIcon fontSize="small" className="transform group-hover:translate-x-1 transition-transform duration-300" />
                     </span>
@@ -154,12 +154,13 @@ export default function FeaturedProducts() {
         </div>
 
         {/* View All Products Button */}
-        <div className="flex justify-center">
+        <div className="mt-12 flex justify-center">
           <Link 
             to="/product"
-            className="btn-primary h-[48px] px-8 rounded-[12px] shadow-sm hover:shadow-lg transition-all duration-300 hover:scale-[1.02] flex items-center text-[16px]"
+            className="btn-primary h-[48px] px-8 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 hover:scale-[1.02] flex items-center gap-2 text-[16px]"
           >
-            View All Products
+            <span>View All Products</span>
+            <ArrowForwardIcon fontSize="small" />
           </Link>
         </div>
       </div>

@@ -188,21 +188,25 @@ export default function Footer() {
           {/* Column 4: Contact Information */}
           {(displayAddresses?.length > 0 || finalPhones?.length > 0 || finalEmails?.length > 0) && (
             <div className="flex flex-col items-start pb-4 md:pb-6">
-              <h3 className="text-white font-rubik font-semibold text-lg mb-6">Contact Us</h3>
-              <div className="flex flex-col gap-4 w-full max-w-[280px]">
+              <h3 className="text-white font-rubik font-semibold text-[18px] mb-6">Contact Us</h3>
+              <div className="flex flex-col gap-3.5 w-full max-w-[280px]">
                 
                 {/* Addresses */}
                 {displayAddresses?.map((address, index) => (
                   <div key={`addr-${index}`} className="flex items-start gap-3">
-                    <LocationOnIcon fontSize="small" className="text-primary mt-1 shrink-0" />
-                    <span className="text-xs md:text-sm text-gray-400 leading-relaxed text-left">{address}</span>
+                    <div className="w-8 h-8 rounded-full border border-gray-700 flex items-center justify-center text-primary shrink-0 bg-white/5">
+                      <LocationOnIcon fontSize="small" />
+                    </div>
+                    <span className="text-xs md:text-sm text-gray-400 leading-relaxed text-left pt-1">{address}</span>
                   </div>
                 ))}
 
                 {/* Phones */}
                 {finalPhones?.map((phone, index) => (
                   <div key={`phone-${index}`} className="flex items-center gap-3">
-                    <CallIcon fontSize="small" className="text-primary shrink-0" />
+                    <div className="w-8 h-8 rounded-full border border-gray-700 flex items-center justify-center text-primary shrink-0 bg-white/5">
+                      <CallIcon fontSize="small" />
+                    </div>
                     <a href={`tel:${phone.replace(/[^0-9+]/g, '')}`} className="text-xs md:text-sm text-gray-400 hover:text-primary transition-colors">
                       {phone}
                     </a>
@@ -212,7 +216,9 @@ export default function Footer() {
                 {/* Emails */}
                 {finalEmails?.map((email, index) => (
                   <div key={`email-${index}`} className="flex items-center gap-3">
-                    <EmailIcon fontSize="small" className="text-primary shrink-0" />
+                    <div className="w-8 h-8 rounded-full border border-gray-700 flex items-center justify-center text-primary shrink-0 bg-white/5">
+                      <EmailIcon fontSize="small" />
+                    </div>
                     <a href={`mailto:${email}`} className="text-xs md:text-sm text-gray-400 hover:text-primary transition-colors">
                       {email}
                     </a>

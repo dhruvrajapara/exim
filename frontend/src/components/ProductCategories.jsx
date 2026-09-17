@@ -103,7 +103,7 @@ export default function ProductCategories() {
                 </div>
 
                 {/* Content Box */}
-                <div className="p-4 md:p-6 flex flex-col flex-grow items-center text-center bg-white z-10 relative border-t border-border/50">
+                <div className="p-5 md:p-6 flex flex-col flex-grow items-center text-center bg-white z-10 relative border-t border-border/50">
                   <h3 className="font-rubik font-semibold text-[16px] md:text-[20px] text-dark mb-2 group-hover:text-primary transition-colors">
                     {category.name}
                   </h3>
@@ -112,9 +112,11 @@ export default function ProductCategories() {
                       {category.short_description}
                     </p>
                   )}
-                  <div className="mt-auto pt-2 flex items-center text-xs md:text-sm font-semibold text-primary group-hover:underline">
-                    <span>View Products</span>
-                    <ArrowForwardIcon fontSize="small" className="ml-1 w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
+                  <div className="mt-auto pt-3 w-full">
+                    <span className="btn-outline-dark w-full text-xs md:text-sm h-[40px]">
+                      View Products
+                      <ArrowForwardIcon fontSize="small" className="ml-1 w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
+                    </span>
                   </div>
                 </div>
               </Link>

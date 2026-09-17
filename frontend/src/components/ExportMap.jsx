@@ -194,7 +194,8 @@ export default function ExportMap() {
       {/* Export Destinations Legend & Badges */}
       {exportCountries.length > 0 && (
         <div className="max-w-4xl mx-auto px-4 mt-2 mb-4">
-          <p className="text-sm font-bold text-dark mb-3 text-center">Key Export Destinations</p>
+          <p className="text-sm font-bold text-dark mb-1 text-center">Global Export Coverage & Key Destinations</p>
+          <p className="text-xs text-gray-500 mb-3 text-center">Highlighted countries represent active global logistics & delivery network coverage.</p>
           <div className="flex flex-wrap gap-2.5 justify-center" aria-label="Export countries list">
             {exportCountries.map((country, idx) => (
               <span key={idx} className="inline-flex items-center px-3.5 py-1.5 rounded-full text-xs md:text-sm font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200 shadow-sm transition-transform hover:scale-105">

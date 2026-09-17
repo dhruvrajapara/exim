@@ -147,8 +147,8 @@ export default function Hero() {
 
                 <Reveal delay={300} className="w-full sm:w-auto">
                   <div className="flex flex-col sm:flex-row gap-4 pt-6 w-full sm:w-auto">
-                    <a href={slide.primary_btn_url} className="btn-primary w-full sm:w-auto px-8">
-                      {slide.primary_btn_text}
+                    <a href={slide.primary_btn_url || '/contact'} className="btn-primary w-full sm:w-auto px-8">
+                      {slide.primary_btn_text === 'Request a Quote' ? 'Request Quote' : (slide.primary_btn_text || 'Request Quote')}
                     </a>
                     {slide.secondary_btn_text && (
                       <a href={slide.secondary_btn_url} className="btn-outline w-full sm:w-auto px-8">
@@ -168,7 +168,7 @@ export default function Hero() {
       {slides.length > 1 && (
         <>
           {/* Desktop Controls (Arrows) */}
-          <div className="hidden md:flex absolute bottom-12 right-12 z-30 items-center space-x-2 bg-white/5 backdrop-blur-xl px-5 py-3 rounded-full border border-white/10 shadow-lg">
+          <div className="hidden md:flex absolute bottom-8 left-12 z-30 items-center space-x-2 bg-white/5 backdrop-blur-xl px-5 py-3 rounded-full border border-white/10 shadow-lg">
             <button
               onClick={handlePrev}
               className="p-2 text-white/50 hover:text-white transition-colors focus:outline-none rounded-full flex items-center justify-center"

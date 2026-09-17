@@ -89,7 +89,7 @@ export default function WhyChooseUs() {
 
                 {/* Typography Container */}
                 <div className="flex flex-col items-center justify-start flex-grow">
-                  <h3 className="font-rubik font-semibold text-[14px] md:text-[16px] lg:text-[17px] text-dark mb-2 leading-snug group-hover:text-secondary transition-colors line-clamp-2 min-h-[42px] md:min-h-[48px] flex items-center justify-center">
+                  <h3 className="font-rubik font-semibold text-[15px] md:text-[17px] text-dark mb-2 leading-snug group-hover:text-secondary transition-colors line-clamp-2">
                     {feature.title}
                   </h3>
 

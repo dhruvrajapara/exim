@@ -121,7 +121,7 @@ export default function Testimonials() {
         {/* Section Header */}
         <Reveal delay={0} className="text-center mb-10 md:mb-12">
           {sectionData.subtitle && (
-            <span className="text-primary font-semibold tracking-widest uppercase text-[12px] md:text-[14px] mb-3 block">
+            <span className="text-primary font-semibold tracking-wide text-sm mb-3 block">
               {sectionData.subtitle}
             </span>
           )}
