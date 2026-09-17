@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import SearchIcon from '@mui/icons-material/Search';
 
 import SEO from '../components/SEO';
+import NotFoundPage from './NotFoundPage';
 import BlogDetailHero from '../components/blog/BlogDetailHero';
 import BlogContent from '../components/blog/BlogContent';
 import BlogShare from '../components/blog/BlogShare';
@@ -47,20 +48,7 @@ export default function BlogDetailPage() {
   }
 
   if (!blog) {
-    return (
-      <div className="w-full min-h-screen flex flex-col items-center justify-center bg-[#F9FAFB]">
-        <div className="w-[80px] h-[80px] rounded-full bg-gray-100 flex items-center justify-center text-gray-400 mb-6">
-          <SearchIcon fontSize="large" />
-        </div>
-        <h1 className="font-rubik text-[32px] font-bold text-dark mb-4">Article Not Found</h1>
-        <p className="text-gray-500 mb-8 max-w-md text-center">
-          The article you are looking for might have been removed, had its name changed, or is temporarily unavailable.
-        </p>
-        <a href="/blog" className="px-8 py-4 bg-[#0B63CE] text-white font-bold rounded-[12px] hover:bg-dark transition-colors">
-          Back to Blog
-        </a>
-      </div>
-    );
+    return <NotFoundPage />;
   }
 
   const breadcrumbSchema = {

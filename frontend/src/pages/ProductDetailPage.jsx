@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 
 import SEO from '../components/SEO';
+import NotFoundPage from './NotFoundPage';
 import ProductGallery from '../components/product/ProductGallery';
 import ProductInfo from '../components/product/ProductInfo';
 import ProductSpecifications from '../components/product/ProductSpecifications';
@@ -52,13 +53,7 @@ export default function ProductDetailPage() {
   }
 
   if (error || !product) {
-    return (
-      <div className="w-full min-h-screen pt-[120px] flex flex-col items-center justify-center text-center px-6">
-        <h1 className="text-4xl font-bold mb-4">Product Not Found</h1>
-        <p className="mb-6 text-gray-500">The product you are looking for does not exist or has been removed.</p>
-        <Link to="/product" className="btn-primary">Back to Products</Link>
-      </div>
-    );
+    return <NotFoundPage />;
   }
 
   // Generate Breadcrumb Schema
