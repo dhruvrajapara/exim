@@ -117,7 +117,9 @@ export default function ExportMap() {
                           pressed: { outline: "none" },
                         }}
                         className={isTarget ? "pulse-destination" : ""}
-                      />
+                      >
+                        <title>{isOrigin ? `Origin: ${geo.properties.name}` : isTarget ? `Export Market: ${geo.properties.name}` : geo.properties.name}</title>
+                      </Geography>
                     );
                   })}
 
@@ -188,6 +190,21 @@ export default function ExportMap() {
           </Geographies>
         </ComposableMap>
       </div>
+
+      {/* Export Destinations Legend & Badges */}
+      {exportCountries.length > 0 && (
+        <div className="max-w-4xl mx-auto px-4 mt-6">
+          <p className="text-xs uppercase tracking-widest text-muted font-semibold mb-3">Key Export Destinations</p>
+          <div className="flex flex-wrap gap-2 justify-center" aria-label="Export countries list">
+            {exportCountries.map((country, idx) => (
+              <span key={idx} className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-800 border border-emerald-200 shadow-sm">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 mr-2" aria-hidden="true"></span>
+                {country}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
 
       <style dangerouslySetInnerHTML={{__html: `
         .animated-dashed-line {

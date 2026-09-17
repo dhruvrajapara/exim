@@ -137,7 +137,7 @@ export default function FeaturedProducts() {
                   
                   {/* CSS-Only Truncation for Mobile */}
                   <div 
-                    className="text-gray-600 text-sm line-clamp-2 mb-4 [&>p]:mb-0 [&>p]:inline break-words"
+                    className="text-gray-600 text-sm line-clamp-2 mb-4 [&>p]:mb-0 [&>p]:inline break-words flex-grow"
                     dangerouslySetInnerHTML={{ __html: product.short_description?.replace(/&nbsp;/g, ' ') }} 
                   />
 

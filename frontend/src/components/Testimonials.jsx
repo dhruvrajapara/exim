@@ -174,56 +174,58 @@ export default function Testimonials() {
           >
             {testimonials.map((testimonial, index) => (
               <SwiperSlide key={testimonial.id || index} className="h-auto">
-                <div className="bg-white rounded-[20px] p-6 lg:p-8 border border-gray-100 shadow-sm hover:shadow-[0_15px_35px_rgba(3,150,57,0.08)] transition-all duration-300 h-full flex flex-col mx-1 my-2">
+                <div className="bg-white rounded-[20px] p-6 lg:p-8 border border-gray-100 shadow-sm hover:shadow-[0_15px_35px_rgba(3,150,57,0.08)] transition-all duration-300 h-full flex flex-col justify-between max-w-md mx-auto my-2">
                   
-                  {/* Client Info Header */}
-                  <div className="flex items-center mb-5">
-                    {testimonial.avatar_url ? (
-                      <img 
-                        src={testimonial.avatar_url} 
-                        alt={testimonial.client_name}
-                        loading="lazy"
-                        className="w-[56px] h-[56px] rounded-full object-cover border-2 border-primary/20 p-[2px]"
-                        onError={(e) => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'flex'; }}
-                      />
-                    ) : (
-                      <div className="w-[56px] h-[56px] rounded-full bg-primary/10 border-2 border-primary/20 flex items-center justify-center text-primary font-bold text-xl uppercase shrink-0">
-                        {testimonial.client_name ? testimonial.client_name.charAt(0) : 'C'}
-                      </div>
-                    )}
-                    <div className="ml-4">
-                      <h4 className="font-rubik font-bold text-dark text-[17px] leading-tight mb-0.5">
-                        {testimonial.client_name}
-                      </h4>
-                      <p className="text-[12px] text-text/80 font-medium">
-                        {testimonial.company_name}
-                      </p>
-                      <div className="flex items-center text-[11px] text-gray-500 mt-0.5 font-semibold">
-                         <img 
-                           src={`https://flagcdn.com/20x15/${testimonial.flag_code}.png`} 
-                           alt={testimonial.country} 
-                           className="w-[14px] h-[10px] mr-1 shadow-sm" 
-                         />
-                         {testimonial.country}
+                  <div>
+                    {/* Client Info Header */}
+                    <div className="flex items-center mb-5">
+                      {testimonial.avatar_url ? (
+                        <img 
+                          src={testimonial.avatar_url} 
+                          alt={testimonial.client_name}
+                          loading="lazy"
+                          className="w-[56px] h-[56px] rounded-full object-cover border-2 border-primary/20 p-[2px]"
+                          onError={(e) => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'flex'; }}
+                        />
+                      ) : (
+                        <div className="w-[56px] h-[56px] rounded-full bg-primary/10 border-2 border-primary/20 flex items-center justify-center text-primary font-bold text-xl uppercase shrink-0">
+                          {testimonial.client_name ? testimonial.client_name.charAt(0) : 'C'}
+                        </div>
+                      )}
+                      <div className="ml-4">
+                        <h3 className="font-rubik font-bold text-dark text-base md:text-lg leading-tight mb-0.5">
+                          {testimonial.client_name}
+                        </h3>
+                        <p className="text-xs text-muted font-medium">
+                          {testimonial.company_name}
+                        </p>
+                        <div className="flex items-center text-xs text-gray-500 mt-0.5 font-semibold">
+                           <img 
+                             src={`https://flagcdn.com/20x15/${testimonial.flag_code}.png`} 
+                             alt={testimonial.country} 
+                             className="w-[14px] h-[10px] mr-1 shadow-sm" 
+                           />
+                           {testimonial.country}
+                        </div>
                       </div>
                     </div>
-                  </div>
 
-                  {/* Star Rating */}
-                  <div className="flex text-[#FFB800] mb-4">
-                    {[...Array(5)].map((_, i) => (
-                      <StarIcon 
-                        key={i} 
-                        fontSize="small" 
-                        className={i < testimonial.star_rating ? "" : "text-gray-200"} 
-                      />
-                    ))}
-                  </div>
+                    {/* Star Rating */}
+                    <div className="flex text-[#FFB800] mb-4">
+                      {[...Array(5)].map((_, i) => (
+                        <StarIcon 
+                          key={i} 
+                          fontSize="small" 
+                          className={i < testimonial.star_rating ? "" : "text-gray-200"} 
+                        />
+                      ))}
+                    </div>
 
-                  {/* Review Description */}
-                  <p className="text-[14px] lg:text-[15px] text-text/90 italic leading-[1.8] flex-grow">
-                    "{testimonial.review_text}"
-                  </p>
+                    {/* Review Description */}
+                    <p className="text-sm lg:text-base text-text/90 italic leading-relaxed">
+                      "{testimonial.review_text}"
+                    </p>
+                  </div>
                   
                 </div>
               </SwiperSlide>

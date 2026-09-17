@@ -19,6 +19,7 @@ const ContactPage = lazy(() => import('./pages/ContactPage'));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 const TermsConditions = lazy(() => import('./pages/TermsConditions'));
 const Disclaimer = lazy(() => import('./pages/Disclaimer'));
+const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 
 // Lazy load Admin Components
 const AdminLogin = lazy(() => import('./pages/admin/AdminLogin'));
@@ -94,7 +95,7 @@ function App() {
             <Route path="privacy-policy" element={<PrivacyPolicy />} />
             <Route path="terms-conditions" element={<TermsConditions />} />
             <Route path="disclaimer" element={<Disclaimer />} />
-            <Route path="*" element={<><SEO title="Page Not Found" /><div className="p-8 text-center"><h1 className="text-4xl font-bold mb-4">404 - Not Found</h1><p>The page you are looking for does not exist.</p></div></>} />
+            <Route path="*" element={<NotFoundPage />} />
           </Route>
 
           {/* Admin Routes */}

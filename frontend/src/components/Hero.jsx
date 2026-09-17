@@ -119,7 +119,7 @@ export default function Hero() {
               <div className="w-full md:w-[80%] lg:w-[60%] flex flex-col justify-center items-start text-left space-y-4 md:space-y-6">
                 {slide.label && (
                   <Reveal delay={0}>
-                    <span className="text-sm md:text-base font-semibold tracking-widest uppercase text-[#6BC72A] opacity-90">
+                    <span className="text-sm md:text-base font-semibold tracking-wide text-primary-light opacity-90">
                       {slide.label}
                     </span>
                   </Reveal>
@@ -151,7 +151,7 @@ export default function Hero() {
                       {slide.primary_btn_text}
                     </a>
                     {slide.secondary_btn_text && (
-                      <a href={slide.secondary_btn_url} className="inline-flex items-center justify-center bg-white/10 hover:bg-white/20 text-white h-[48px] px-8 rounded-md transition-all duration-300 backdrop-blur-md border border-white/20 w-full sm:w-auto">
+                      <a href={slide.secondary_btn_url} className="btn-outline w-full sm:w-auto px-8">
                         {slide.secondary_btn_text}
                       </a>
                     )}
