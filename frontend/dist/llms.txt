@@ -1,0 +1,26 @@
+# Bite Export
+
+**BiteExport** is a trusted merchant exporter and global supplier of premium-quality dehydrated vegetables, spices, food ingredients, and agricultural products from India. We provide export-grade products that meet international quality standards, serving importers, wholesalers, distributors, food manufacturers, and retail brands across global markets.
+
+## About
+BiteExport connects Indian farmers directly with the global market, ensuring fair prices for producers while providing international buyers with consistent, high-quality agricultural products. We handle everything from sourcing and quality testing to packaging and export logistics, ensuring a seamless supply chain.
+- [About Us](https://biteexport.com/about)
+
+## Main Pages
+- [Home](https://biteexport.com/)
+- [About Us](https://biteexport.com/about)
+- [Products](https://biteexport.com/product)
+- [Gallery](https://biteexport.com/gallery)
+
+## Product Categories
+- [Dehydrated Onion](https://biteexport.com/product?category=dehydrated-onion)
+- [Dehydrated Garlic](https://biteexport.com/product?category=dehydrated-garlic)
+- [Spice Powder](https://biteexport.com/product?category=spice-powder)
+- [Vegetable Powder](https://biteexport.com/product?category=vegetable-powder)
+- [Herbs](https://biteexport.com/product?category=herbs)
+
+## Resources
+- [Blog](https://biteexport.com/blog)
+
+## Contact
+- [Contact Us](https://biteexport.com/contact)
