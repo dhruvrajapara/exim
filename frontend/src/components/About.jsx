@@ -74,7 +74,7 @@ export default function About() {
           {/* Left Side: Content & Statistics (w-[55%] on Desktop) */}
           <Reveal delay={0} className="w-full lg:w-[55%] flex flex-col justify-center items-center lg:items-start text-center lg:text-left h-full py-4">
             {data.label && (
-              <span className="text-primary font-semibold tracking-widest uppercase text-sm mb-3 block">
+              <span className="text-primary font-semibold tracking-wide text-sm mb-3 block">
                 {data.label}
               </span>
             )}

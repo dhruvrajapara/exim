@@ -142,7 +142,7 @@ export default function FeaturedProducts() {
                   />
 
                   <div className="mt-auto w-full border-t border-gray-100 pt-3">
-                    <span className="w-full inline-flex items-center justify-center gap-1.5 h-[38px] rounded-lg bg-primary/10 text-primary font-semibold text-xs md:text-sm group-hover:bg-primary group-hover:text-white transition-all duration-300">
+                    <span className="w-full inline-flex items-center justify-center gap-1.5 h-[38px] rounded-lg bg-primary text-white font-semibold text-xs md:text-sm hover:bg-primary/90 shadow-sm transition-all duration-300">
                       View Details
                       <ArrowForwardIcon fontSize="small" className="transform group-hover:translate-x-1 transition-transform duration-300" />
                     </span>

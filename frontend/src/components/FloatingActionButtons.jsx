@@ -29,7 +29,7 @@ export default function FloatingActionButtons() {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-50 flex flex-col gap-3 md:gap-4 items-center">
+    <div className="fixed bottom-6 right-4 sm:right-6 md:bottom-8 md:right-8 lg:right-10 z-50 flex flex-col gap-3 md:gap-4 items-center">
       
       {/* Scroll to Top Button */}
       <button

@@ -81,20 +81,22 @@ export default function WhyChooseUs() {
               <div className="group bg-white rounded-[16px] p-5 md:p-6 lg:p-8 flex flex-col items-center text-center h-full border border-gray-100 shadow-sm hover:border-secondary/50 hover:shadow-[0_12px_30px_rgba(53,153,255,0.12)] transition-all duration-300 transform hover:-translate-y-2 overflow-hidden">
 
                 {/* Dynamic Icon Wrapper */}
-                <div className="w-[44px] h-[44px] lg:w-[56px] lg:h-[56px] rounded-full bg-secondary/10 text-secondary flex items-center justify-center mb-4 md:mb-6 group-hover:scale-110 group-hover:bg-secondary group-hover:text-white transition-all duration-300 shadow-sm group-hover:shadow-md">
+                <div className="w-[44px] h-[44px] lg:w-[56px] lg:h-[56px] rounded-full bg-secondary/10 text-secondary flex items-center justify-center mb-4 md:mb-6 group-hover:scale-110 group-hover:bg-secondary group-hover:text-white transition-all duration-300 shadow-sm group-hover:shadow-md shrink-0">
                   <span className="text-[24px] lg:text-[30px] flex items-center justify-center">
                     {getIconComponent(feature.icon, { fontSize: 'inherit' })}
                   </span>
                 </div>
 
-                {/* Typography */}
-                <h3 className="font-rubik font-semibold text-[15px] md:text-[18px] text-dark mb-2 leading-snug group-hover:text-secondary transition-colors line-clamp-2">
-                  {feature.title}
-                </h3>
+                {/* Typography Container */}
+                <div className="flex flex-col items-center justify-start flex-grow">
+                  <h3 className="font-rubik font-semibold text-[14px] md:text-[16px] lg:text-[17px] text-dark mb-2 leading-snug group-hover:text-secondary transition-colors line-clamp-2 min-h-[42px] md:min-h-[48px] flex items-center justify-center">
+                    {feature.title}
+                  </h3>
 
-                <p className="text-[13px] md:text-[14px] text-text/80 leading-[1.6] line-clamp-3">
-                  {feature.short_description || feature.description}
-                </p>
+                  <p className="text-[13px] md:text-[14px] text-text/80 leading-[1.6] line-clamp-3">
+                    {feature.short_description || feature.description}
+                  </p>
+                </div>
 
               </div>
             </Reveal>

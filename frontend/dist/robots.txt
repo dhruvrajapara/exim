@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# Block Admin Routes from Crawlers
+Disallow: /admin
+Disallow: /admin/
+Disallow: /api/admin/
+
+# Sitemap Location
+Sitemap: https://biteexport.com/sitemap.xml
