@@ -178,12 +178,12 @@ export default function ProductDetailPage() {
       <div className="container-custom">
 
         {/* Breadcrumb Navigation */}
-        <nav aria-label="Breadcrumb" className="flex items-center text-[13px] md:text-[14px] font-medium mb-8 md:mb-12 pt-5" style={{ color: settings?.theme_breadcrumb_color || '#6B7280' }}>
-          <Link to="/" className="hover:text-primary transition-colors">Home</Link>
-          <KeyboardArrowRightIcon fontSize="small" className="mx-1" />
-          <Link to="/product" className="hover:text-primary transition-colors">Products</Link>
-          <KeyboardArrowRightIcon fontSize="small" className="mx-1" />
-          <span className="text-dark line-clamp-1">{product.name}</span>
+        <nav aria-label="Breadcrumb" className="flex items-center text-[13px] md:text-[14px] font-medium mb-8 md:mb-12 pt-5" style={{ color: (settings?.theme_breadcrumb_color && !['#ffffff', '#fff', 'white'].includes(settings.theme_breadcrumb_color.toLowerCase())) ? settings.theme_breadcrumb_color : '#6B7280' }}>
+          <Link to="/" className="text-gray-600 hover:text-primary transition-colors">Home</Link>
+          <KeyboardArrowRightIcon fontSize="small" className="mx-1 text-gray-400" />
+          <Link to="/product" className="text-gray-600 hover:text-primary transition-colors">Products</Link>
+          <KeyboardArrowRightIcon fontSize="small" className="mx-1 text-gray-400" />
+          <span className="text-dark font-semibold line-clamp-1">{product.name}</span>
         </nav>
 
         {/* Hero Product Section (Gallery + Info) */}
