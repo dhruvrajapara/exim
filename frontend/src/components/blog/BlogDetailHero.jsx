@@ -27,27 +27,27 @@ export default function BlogDetailHero({ blog }) {
             className="w-full lg:w-[60%]"
           >
             {/* Breadcrumb */}
-            <nav aria-label="Breadcrumb" className="flex flex-wrap items-center text-[13px] md:text-[14px] font-medium mb-6 gap-y-2" style={{ color: settings?.theme_breadcrumb_color || '#6B7280' }}>
-              <Link to="/" className="hover:text-[#0B63CE] transition-colors">Home</Link>
-              <KeyboardArrowRightIcon fontSize="small" className="mx-1 opacity-50" />
-              <Link to="/blog" className="hover:text-[#0B63CE] transition-colors">Blog</Link>
-              <KeyboardArrowRightIcon fontSize="small" className="mx-1 opacity-50" />
-              <Link to={`/blog?category=${blog.category?.slug || ''}`} className="hover:text-[#0B63CE] transition-colors">
+            <nav aria-label="Breadcrumb" className="flex flex-wrap items-center text-[13px] md:text-[14px] font-medium mb-6 gap-y-2" style={{ color: (settings?.theme_breadcrumb_color && !['#ffffff', '#fff', 'white'].includes(settings.theme_breadcrumb_color.toLowerCase())) ? settings.theme_breadcrumb_color : '#6B7280' }}>
+              <Link to="/" className="text-gray-600 hover:text-[#0B63CE] transition-colors">Home</Link>
+              <KeyboardArrowRightIcon fontSize="small" className="mx-1 text-gray-400" />
+              <Link to="/blog" className="text-gray-600 hover:text-[#0B63CE] transition-colors">Blog</Link>
+              <KeyboardArrowRightIcon fontSize="small" className="mx-1 text-gray-400" />
+              <Link to={`/blog?category=${blog.category?.slug || ''}`} className="text-gray-600 hover:text-[#0B63CE] transition-colors">
                 {blog.category?.name || 'Uncategorized'}
               </Link>
-              <KeyboardArrowRightIcon fontSize="small" className="mx-1 opacity-50" />
-              <span className="text-[#0B63CE] truncate max-w-[200px]">{blog.title}</span>
+              <KeyboardArrowRightIcon fontSize="small" className="mx-1 text-gray-400" />
+              <span className="text-[#0B63CE] font-semibold truncate max-w-[200px]">{blog.title}</span>
             </nav>
 
             <span className="inline-block bg-[#EAF4FF] text-[#0B63CE] px-4 py-1.5 rounded-full text-[13px] font-bold uppercase tracking-wide mb-6">
               {blog.category?.name || 'Uncategorized'}
             </span>
 
-            <h1 className="font-rubik text-[36px] md:text-[48px] font-bold text-dark leading-[1.2] mb-6">
+            <h1 className="font-rubik text-[26px] sm:text-[32px] md:text-[38px] font-bold text-dark leading-[1.25] mb-4">
               {blog.title}
             </h1>
 
-            <p className="text-gray-600 text-[18px] md:text-[20px] leading-relaxed mb-8 max-w-2xl">
+            <p className="text-gray-600 text-[15px] md:text-[16px] leading-relaxed mb-6 max-w-2xl">
               {blog.short_description}
             </p>
 
